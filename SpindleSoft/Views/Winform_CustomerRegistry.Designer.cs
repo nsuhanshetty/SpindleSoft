@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
@@ -40,36 +40,33 @@
             this.lblMobile = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvCustomerRegister = new System.Windows.Forms.DataGridView();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.progBarStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomerRegister)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStrip_Label});
+            this.lblStatus,
+            this.progBarStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 365);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(577, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
-            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
-            // toolStripProgressBar1
+            // lblStatus
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
-            // 
-            // toolStrip_Label
-            // 
-            this.toolStrip_Label.Name = "toolStrip_Label";
-            this.toolStrip_Label.Size = new System.Drawing.Size(460, 17);
-            this.toolStrip_Label.Spring = true;
-            this.toolStrip_Label.Text = "Search Completed";
-            this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(460, 17);
+            this.lblStatus.Spring = true;
+            this.lblStatus.Text = "Search Completed";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox1
             // 
@@ -93,6 +90,8 @@
             this.txtPhoneNo.Name = "txtPhoneNo";
             this.txtPhoneNo.Size = new System.Drawing.Size(115, 20);
             this.txtPhoneNo.TabIndex = 100;
+            this.txtPhoneNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtPhoneNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNo_Validating);
             // 
             // txtMobNo
             // 
@@ -101,6 +100,8 @@
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(115, 20);
             this.txtMobNo.TabIndex = 97;
+            this.txtMobNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtMobNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtMobNo_Validating);
             // 
             // label1
             // 
@@ -117,6 +118,8 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(115, 20);
             this.txtName.TabIndex = 96;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // lblName
             // 
@@ -156,6 +159,15 @@
             this.dgvCustomerRegister.TabIndex = 0;
             this.dgvCustomerRegister.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellContentClick);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // progBarStatus
+            // 
+            this.progBarStatus.Name = "progBarStatus";
+            this.progBarStatus.Size = new System.Drawing.Size(100, 16);
+            // 
             // Winform_CustomerRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -173,6 +185,7 @@
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomerRegister)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,8 +194,7 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.GroupBox groupBox1;
         internal System.Windows.Forms.TextBox txtMobNo;
         internal System.Windows.Forms.TextBox txtName;
@@ -192,5 +204,7 @@
         internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvCustomerRegister;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ToolStripProgressBar progBarStatus;
     }
 }

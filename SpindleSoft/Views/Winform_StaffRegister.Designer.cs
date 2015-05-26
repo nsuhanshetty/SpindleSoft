@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
@@ -35,13 +36,15 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.lblMobile = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvStaffRregister = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStaffRregister)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -66,6 +69,8 @@
             this.txtPhoneNo.Name = "txtPhoneNo";
             this.txtPhoneNo.Size = new System.Drawing.Size(115, 20);
             this.txtPhoneNo.TabIndex = 100;
+            this.txtPhoneNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtPhoneNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNo_Validating);
             // 
             // txtMobNo
             // 
@@ -74,6 +79,8 @@
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(115, 20);
             this.txtMobNo.TabIndex = 97;
+            this.txtMobNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtMobNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtMobNo_Validating);
             // 
             // label1
             // 
@@ -90,6 +97,8 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(115, 20);
             this.txtName.TabIndex = 96;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // lblName
             // 
@@ -109,15 +118,16 @@
             this.lblMobile.TabIndex = 99;
             this.lblMobile.Text = "Mobile No.";
             // 
-            // dataGridView1
+            // dgvStaffRregister
             // 
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(2, 72);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(563, 286);
-            this.dataGridView1.TabIndex = 3;
+            this.dgvStaffRregister.AllowUserToDeleteRows = false;
+            this.dgvStaffRregister.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStaffRregister.Location = new System.Drawing.Point(2, 72);
+            this.dgvStaffRregister.Name = "dgvStaffRregister";
+            this.dgvStaffRregister.ReadOnly = true;
+            this.dgvStaffRregister.Size = new System.Drawing.Size(563, 286);
+            this.dgvStaffRregister.TabIndex = 3;
+            this.dgvStaffRregister.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStaffRregister_CellContentClick);
             // 
             // statusStrip1
             // 
@@ -143,21 +153,26 @@
             this.toolStrip_Label.Text = "Search Completed";
             this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // Winform_StaffRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(568, 381);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvStaffRregister);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_StaffRegister";
             this.Text = "Staff Register";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStaffRregister)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,9 +187,10 @@
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Label lblName;
         internal System.Windows.Forms.Label lblMobile;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvStaffRregister;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

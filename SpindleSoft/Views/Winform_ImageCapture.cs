@@ -8,20 +8,18 @@ namespace SpindleSoft.Views
     public partial class Winform_ImageCapture : Form
     {
         private WCC.clsWC objwcc = new clsWC();
-        private WinForm_CustomerDetails _customerDetails;
-        private Bitmap fimage;
+        private PictureBox pcb;
 
-        public Winform_ImageCapture(WinForm_CustomerDetails _customerDetails)
+        public Winform_ImageCapture(PictureBox pcb)
         {
             InitializeComponent();
-            this._customerDetails = _customerDetails;
+            this.pcb = pcb;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Bitmap fimage = CaptureImage();
-            _customerDetails.pcbCustImage.Image = fimage;
-            _customerDetails.btnCapture.Enabled = true;
+            this.pcb.Image = fimage;
             this.Close();
         }
 
@@ -43,15 +41,6 @@ namespace SpindleSoft.Views
             cmbCameraSelect.SelectedIndex = 0;
             objwcc.OpenPreviewWindow(picCapture.Height, picCapture.Width, long.Parse(picCapture.Handle.ToString()));
             timer1.Start();
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //if (f % 2 == 0)
-            //{
-            fimage = CaptureImage();
-            //}
-            //f = f + 1;
         }
     }
 }

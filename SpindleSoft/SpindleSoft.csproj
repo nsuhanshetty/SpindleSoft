@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
+    <Compile Include="Helpers\Main_Helper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Model\Alteration.cs" />
     <Compile Include="Model\Expense.cs" />

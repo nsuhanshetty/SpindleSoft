@@ -74,16 +74,27 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pnlSearch = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.dgvSearch = new System.Windows.Forms.DataGridView();
             this.rdbSales = new System.Windows.Forms.RadioButton();
-            this.cmbSearch = new System.Windows.Forms.ComboBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.rdbAlteration = new System.Windows.Forms.RadioButton();
             this.lblSearchText = new System.Windows.Forms.Label();
             this.rdbCustomer = new System.Windows.Forms.RadioButton();
             this.rdbOrders = new System.Windows.Forms.RadioButton();
+            this.pnlDeliveryStatus = new System.Windows.Forms.Panel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dgvDeliverToday = new System.Windows.Forms.DataGridView();
+            this.dgvDeliverOncoming = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
+            this.pnlDeliveryStatus.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverToday)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverOncoming)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -100,7 +111,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(762, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1354, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -408,12 +419,13 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.exitToolStripMenuItem.Text = "&Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 435);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(762, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1354, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -430,8 +442,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtSearch);
+            this.groupBox1.Controls.Add(this.dgvSearch);
             this.groupBox1.Controls.Add(this.rdbSales);
-            this.groupBox1.Controls.Add(this.cmbSearch);
             this.groupBox1.Controls.Add(this.btnAdd);
             this.groupBox1.Controls.Add(this.rdbAlteration);
             this.groupBox1.Controls.Add(this.lblSearchText);
@@ -439,11 +452,32 @@
             this.groupBox1.Controls.Add(this.rdbOrders);
             this.groupBox1.Location = new System.Drawing.Point(3, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(281, 142);
+            this.groupBox1.Size = new System.Drawing.Size(281, 399);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select Category";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(9, 114);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(256, 20);
+            this.txtSearch.TabIndex = 7;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            // 
+            // dgvSearch
+            // 
+            this.dgvSearch.AllowUserToAddRows = false;
+            this.dgvSearch.AllowUserToDeleteRows = false;
+            this.dgvSearch.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSearch.Location = new System.Drawing.Point(9, 140);
+            this.dgvSearch.Name = "dgvSearch";
+            this.dgvSearch.ReadOnly = true;
+            this.dgvSearch.Size = new System.Drawing.Size(255, 244);
+            this.dgvSearch.TabIndex = 1;
+            this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
             // 
             // rdbSales
             // 
@@ -455,16 +489,6 @@
             this.rdbSales.Text = "Sales";
             this.rdbSales.UseVisualStyleBackColor = true;
             this.rdbSales.CheckedChanged += new System.EventHandler(this.rdbSales_CheckedChanged);
-            // 
-            // cmbSearch
-            // 
-            this.cmbSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
-            this.cmbSearch.FormattingEnabled = true;
-            this.cmbSearch.Location = new System.Drawing.Point(9, 113);
-            this.cmbSearch.Name = "cmbSearch";
-            this.cmbSearch.Size = new System.Drawing.Size(256, 21);
-            this.cmbSearch.TabIndex = 0;
-            this.cmbSearch.TextChanged += new System.EventHandler(this.cmbSearch_TextChanged);
             // 
             // btnAdd
             // 
@@ -523,11 +547,65 @@
             this.rdbOrders.UseVisualStyleBackColor = true;
             this.rdbOrders.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
+            // pnlDeliveryStatus
+            // 
+            this.pnlDeliveryStatus.Controls.Add(this.groupBox4);
+            this.pnlDeliveryStatus.Controls.Add(this.groupBox2);
+            this.pnlDeliveryStatus.Location = new System.Drawing.Point(299, 28);
+            this.pnlDeliveryStatus.Name = "pnlDeliveryStatus";
+            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1051, 250);
+            this.pnlDeliveryStatus.TabIndex = 3;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Location = new System.Drawing.Point(378, 5);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(346, 233);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Alteration Delivery Status";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.dgvDeliverOncoming);
+            this.groupBox2.Controls.Add(this.dgvDeliverToday);
+            this.groupBox2.Location = new System.Drawing.Point(12, 5);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(346, 233);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Order Delivery Status";
+            // 
+            // dgvDeliverToday
+            // 
+            this.dgvDeliverToday.AllowUserToAddRows = false;
+            this.dgvDeliverToday.AllowUserToDeleteRows = false;
+            this.dgvDeliverToday.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvDeliverToday.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDeliverToday.Location = new System.Drawing.Point(6, 40);
+            this.dgvDeliverToday.Name = "dgvDeliverToday";
+            this.dgvDeliverToday.ReadOnly = true;
+            this.dgvDeliverToday.Size = new System.Drawing.Size(165, 187);
+            this.dgvDeliverToday.TabIndex = 2;
+            // 
+            // dgvDeliverOncoming
+            // 
+            this.dgvDeliverOncoming.AllowUserToAddRows = false;
+            this.dgvDeliverOncoming.AllowUserToDeleteRows = false;
+            this.dgvDeliverOncoming.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvDeliverOncoming.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDeliverOncoming.Location = new System.Drawing.Point(175, 40);
+            this.dgvDeliverOncoming.Name = "dgvDeliverOncoming";
+            this.dgvDeliverOncoming.ReadOnly = true;
+            this.dgvDeliverOncoming.Size = new System.Drawing.Size(165, 187);
+            this.dgvDeliverOncoming.TabIndex = 3;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(762, 457);
+            this.ClientSize = new System.Drawing.Size(1354, 457);
+            this.Controls.Add(this.pnlDeliveryStatus);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -543,6 +621,11 @@
             this.pnlSearch.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
+            this.pnlDeliveryStatus.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverToday)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverOncoming)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -595,13 +678,19 @@
         private System.Windows.Forms.ToolStripMenuItem updateSpindleSoftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ComboBox cmbSearch;
         private System.Windows.Forms.ToolStripMenuItem itemMasterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCatalogueToolStripMenuItem1;
         private System.Windows.Forms.RadioButton rdbSales;
         private System.Windows.Forms.ToolStripMenuItem salaryDetailsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem importCustomersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customerMeasurementToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dgvSearch;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Panel pnlDeliveryStatus;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.DataGridView dgvDeliverOncoming;
+        private System.Windows.Forms.DataGridView dgvDeliverToday;
     }
 }
 

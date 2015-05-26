@@ -12,6 +12,7 @@ namespace SpindleSoft.Savers
     // http://www.briangrinstead.com/blog/multipart-form-post-in-c
     public static class FormUpload
     {
+        //todo : Send webrequest using async/ await
         private static readonly Encoding encoding = Encoding.UTF8;
         public static HttpWebResponse MultipartFormDataPost(string postUrl, string userAgent, Dictionary<string, object> postParameters)
         {

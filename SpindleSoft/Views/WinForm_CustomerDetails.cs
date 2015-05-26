@@ -22,31 +22,19 @@ namespace SpindleSoft.Views
             InitializeComponent();
         }
 
-        public WinForm_CustomerDetails(Customer _customer)
+        public WinForm_CustomerDetails(Customer _cust)
         {
             InitializeComponent();
+            
+            this._cust = _cust;
 
             /*Load Controls*/
-            txtAddress.Text = _customer.Address;
-            txtEmailID.Text = _customer.Email;
-            txtMobNo.Text = _customer.Mobile_No;
-            txtName.Text = _customer.Name;
-            txtPhoneNo.Text = _customer.Phone_No;
-            pcbCustImage.Image = GetImage(_customer.Image);
-        }
-
-        private static Image GetImage(Object _objImage)
-        {
-            Image _image;
-            if (_objImage == null)
-                return null;
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bf.Serialize(ms, _objImage);
-                _image = Image.FromStream(ms);
-            }
-            return _image;
+            txtAddress.Text = _cust.Address;
+            txtEmailID.Text = _cust.Email;
+            txtMobNo.Text = _cust.Mobile_No;
+            txtName.Text = _cust.Name;
+            txtPhoneNo.Text = _cust.Phone_No;
+            pcbCustImage.Image = _cust.Image;
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -73,10 +61,10 @@ namespace SpindleSoft.Views
             this._cust.Image = pcbCustImage.Image;
 
             UpdateStatus("Saving..", 50);
-            bool response = PeoplePracticeSaver.CreateCustomer(this._cust);
+            bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
 
             UpdateStatus("Saving..", 75);
-            response = PeoplePracticeSaver.CreateCustomerImage(this._cust.Image,this._cust.Mobile_No);
+            response = PeoplePracticeSaver.SaveCustomerImage(this._cust.Image,this._cust.Mobile_No);
 
             if (response)
             {
@@ -104,12 +92,6 @@ namespace SpindleSoft.Views
                 MessageBox.Show("");
                 return;
             }
-        }
-
-        private void btnCapture_Click(object sender, EventArgs e)
-        {
-            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this);
-            _imageCapture.ShowDialog();
         }
 
         #region _Validations
@@ -143,7 +125,7 @@ namespace SpindleSoft.Views
             {
                 // Cancel the event and select the text to be corrected by the user.
                 e.Cancel = true;
-                txtName.Select(0, txtMobNo.TextLength);
+                txtMobNo.Select(0, txtMobNo.TextLength);
             }
         }
 
@@ -181,7 +163,7 @@ namespace SpindleSoft.Views
             {
                 // Cancel the event and select the text to be corrected by the user.
                 e.Cancel = true;
-                txtName.Select(0, txtPhoneNo.TextLength);
+                txtPhoneNo.Select(0, txtPhoneNo.TextLength);
             }
         }
         #endregion _Validations
@@ -195,7 +177,7 @@ namespace SpindleSoft.Views
 
         private void btnCapture_Click_1(object sender, EventArgs e)
         {
-            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this);
+            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbCustImage);
             _imageCapture.ShowDialog();
         }
 

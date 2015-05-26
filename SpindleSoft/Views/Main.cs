@@ -11,12 +11,17 @@ using System.Windows.Forms;
 namespace SpindleSoft
 {
     using SpindleSoft.Builders;
+    using SpindleSoft.Helpers;
     using SpindleSoft.Model;
     using SpindleSoft.Savers;
     using SpindleSoft.Views;
 
     public partial class Main : Form
     {
+        private enum SearchStates { Order, Customer, Alteration, Sales }
+
+        private SearchStates searchState { get; set; }
+
         public Main()
         {
             InitializeComponent();
@@ -44,34 +49,38 @@ namespace SpindleSoft
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSearchText("Search Customer Name/ Mobile No.");
+            UpdateSearchText("Search Customer Mobile No.");
+            this.searchState = SearchStates.Customer;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSearchText("Search Order No.");
+            this.searchState = SearchStates.Order;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSearchText("Search Alteration No.");
+            this.searchState = SearchStates.Alteration;
         }
 
         private void rdbSales_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSearchText("Search Sale No.");
+            this.searchState = SearchStates.Sales;
         }
 
 
         private void UpdateSearchText(string _updateText)
         {
             lblSearchText.Text = _updateText;
-            cmbSearch.Focus();
+            txtSearch.Focus();
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void addCustomerToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -157,20 +166,50 @@ namespace SpindleSoft
             //
         }
 
-        private void cmbSearch_TextChanged(object sender, EventArgs e)
+        private void cmbSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<Customer> _custList = PeoplePracticeBuilder.GetCustomersList("",cmbSearch.Text,"");
-            if (_custList.Count == 0)   
-            {
-                cmbSearch.DataSource = null;
-            }
-            else
-            {
-                cmbSearch.DataSource = new List<String>(_custList.Select(c => c.Mobile_No).Distinct());
-            }
-            return;
+            //if (String.IsNullOrEmpty(cmbSearch.Text))
+            //    return;
+
+            //Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(cmbSearch.Text);
+            //_cust.Image = PeoplePracticeBuilder.GetCustomerImage(cmbSearch.Text);
+
+            ////shouldnt happen but for safety.
+            ////todo: Let customer know that bad has happened
+            //if (_cust == null && _cust.Image == null) return;
+
+            //new WinForm_CustomerDetails(_cust).ShowDialog();
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(txtSearch.Text)) return;
+            dgvSearch.DataSource= Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);           
+
 
         }
+
+        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var mobileNo = dgvSearch.Rows[e.RowIndex].Cells[1].Value.ToString();
+            if (String.IsNullOrEmpty(mobileNo))
+                return;
+
+            Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(mobileNo);
+            _cust.Image = PeoplePracticeBuilder.GetCustomerImage(mobileNo);
+
+            //shouldnt happen but for safety.
+            //todo: Let customer know that bad has happened
+            if (_cust == null && _cust.Image == null) return;
+
+            new WinForm_CustomerDetails(_cust).ShowDialog();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 
 }

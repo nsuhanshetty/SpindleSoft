@@ -64,15 +64,13 @@ namespace SpindleSoft.Model
     {
         public int StaffID { get; set; }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public int MobileNo { get; set; }
-
-        public int PhoneNo { get; set; }
+        public string MobileNo { get; set; }
 
         public string Address { get; set; }
 
-        public Image ImageLocation { get; set; }
+        public Image Image { get; set; }
     }
 
     public class Group
