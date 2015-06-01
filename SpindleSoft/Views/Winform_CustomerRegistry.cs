@@ -23,7 +23,7 @@ namespace SpindleSoft.Views
         private void Winform_StaffRegister_Load(object sender, EventArgs e)
         {
             /*todo: Akash : get Customer based on updated desc*/
-            dgvCustomerRegister.DataSource = PeoplePracticeBuilder.GetCustomersList("", "", "");
+            //dgvCustomerRegister.DataSource = PeoplePracticeBuilder.GetCustomersList("", "", "");
         }
 
         #region Events
@@ -35,69 +35,84 @@ namespace SpindleSoft.Views
                                          MessageBoxDefaultButton.Button2);
 
             if (_dialogResult == DialogResult.No) return;
-            
-            Customer _customer = PeoplePracticeBuilder.GetCustomerInfo(dgvCustomerRegister.Rows[e.RowIndex].Cells[2].Value.ToString());
+
+            var mobNo = dgvCustomerRegister.Rows[e.RowIndex].Cells["Mobile_No"].Value.ToString();
+            Customer _customer = PeoplePracticeBuilder.GetCustomerInfo(mobNo);
+            _customer.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(mobNo);
+
             new WinForm_CustomerDetails(_customer).ShowDialog();
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            
+            lblStatus.Text = "Searching...";
+            progBarStatus.Value = 50;
+
             dgvCustomerRegister.DataSource = PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
+            dgvCustomerRegister.Columns.RemoveAt(0);
+            dgvCustomerRegister.Columns.RemoveAt(4);
+            dgvCustomerRegister.Columns.Remove("image");
+            dgvCustomerRegister.Columns.Remove("address");
+
+            if(dgvCustomerRegister.RowCount == 0)
+                lblStatus.Text = "No Results Found";
+            else
+                lblStatus.Text = dgvCustomerRegister.RowCount + " Results Found";
+            progBarStatus.Value = 100;
         }
         #endregion Events
 
         #region Validation
-        private void txtName_Validating(object sender, CancelEventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtName.Text)) return;
+      //  private void txtName_Validating(object sender, CancelEventArgs e)
+      //  {
+      //      if (String.IsNullOrEmpty(txtName.Text)) return;
 
-            Match _match = Regex.Match(txtName.Text, "^[a-zA-Z\\s]+$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      "For example '9880123456'";
-            errorProvider1.SetError(txtName, errorMsg);
+      //      Match _match = Regex.Match(txtName.Text, "^[a-zA-Z\\s]+$");
+      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
+      //"For example '9880123456'";
+      //      errorProvider1.SetError(txtName, errorMsg);
 
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtName.Select(0, txtName.TextLength);
-            }
-        }
+      //      if (errorMsg != "")
+      //      {
+      //          // Cancel the event and select the text to be corrected by the user.
+      //          e.Cancel = true;
+      //          txtName.Select(0, txtName.TextLength);
+      //      }
+      //  }
 
-        private void txtMobNo_Validating(object sender, CancelEventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtMobNo.Text)) return;
+      //  private void txtMobNo_Validating(object sender, CancelEventArgs e)
+      //  {
+      //      if (String.IsNullOrEmpty(txtMobNo.Text)) return;
 
-            Match _match = Regex.Match(txtMobNo.Text, "\\d{10}$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      "For example '9880123456'";
-            errorProvider1.SetError(txtMobNo, errorMsg);
+      //      Match _match = Regex.Match(txtMobNo.Text, "\\d{10}$");
+      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
+      //"For example '9880123456'";
+      //      errorProvider1.SetError(txtMobNo, errorMsg);
 
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtMobNo.Select(0, txtMobNo.TextLength);
-            }
-        }
+      //      if (errorMsg != "")
+      //      {
+      //          // Cancel the event and select the text to be corrected by the user.
+      //          e.Cancel = true;
+      //          txtMobNo.Select(0, txtMobNo.TextLength);
+      //      }
+      //  }
 
-        private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtPhoneNo.Text)) return;
+      //  private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
+      //  {
+      //      if (String.IsNullOrEmpty(txtPhoneNo.Text)) return;
 
-            Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      "For example '9880123456'";
-            errorProvider1.SetError(txtPhoneNo, errorMsg);
+      //      Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
+      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
+      //"For example '9880123456'";
+      //      errorProvider1.SetError(txtPhoneNo, errorMsg);
 
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtPhoneNo.Select(0, txtPhoneNo.TextLength);
-            }
-        }
+      //      if (errorMsg != "")
+      //      {
+      //          // Cancel the event and select the text to be corrected by the user.
+      //          e.Cancel = true;
+      //          txtPhoneNo.Select(0, txtPhoneNo.TextLength);
+      //      }
+      //  }
         #endregion Validation
     }
 }

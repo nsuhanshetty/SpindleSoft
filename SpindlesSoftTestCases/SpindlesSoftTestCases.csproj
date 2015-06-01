@@ -68,7 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="PeoplePractice_Tests\CustomerTestCases.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaffTestCases.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpindleSoft\SpindleSoft.csproj">

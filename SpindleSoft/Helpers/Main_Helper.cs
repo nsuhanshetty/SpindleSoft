@@ -1,6 +1,7 @@
 ﻿using SpindleSoft.Builders;
 using SpindleSoft.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -21,8 +22,8 @@ namespace SpindleSoft.Helpers
         public static DataTable GetDataSource(string searchState, string searchText)
         {
             //todo: need to send only two properties and only top 10
-            DataTable _dataTable = null; 
-           //Dictionary<string,string> dataSourceList = null;
+            DataTable _dataTable = null;
+            //Dictionary<string,string> dataSourceList = null;
             switch (searchState)
             {
                 case "Customer":
@@ -32,12 +33,16 @@ namespace SpindleSoft.Helpers
                         //_custList.Select(c => i => new { i.Name, i.Mobile_No }).ToList());
                         _dataTable = ToDataTable(_custList);
                         _dataTable.Columns.Remove("ID");
-                        //_dataTable.Columns.Remove("phone_no");
+                        _dataTable.Columns.Remove("phone_no");
+                        _dataTable.Columns.Remove("email");
+                        _dataTable.Columns.Remove("address");
+                        _dataTable.Columns.Remove("image");
+                        _dataTable.Columns.Remove("ReferralID");
                     }
                     break;
                 case "Order":
-                    //var dataSourceList = null;
-                    //break;
+                //var dataSourceList = null;
+                //break;
                 default:
                     //var dataSourceList = null;
                     break;

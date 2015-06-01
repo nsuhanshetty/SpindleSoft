@@ -29,8 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.progBarStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
@@ -41,7 +45,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvCustomerRegister = new System.Windows.Forms.DataGridView();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.progBarStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -68,6 +71,11 @@
             this.lblStatus.Text = "Search Completed";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // progBarStatus
+            // 
+            this.progBarStatus.Name = "progBarStatus";
+            this.progBarStatus.Size = new System.Drawing.Size(100, 16);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtPhoneNo);
@@ -91,7 +99,6 @@
             this.txtPhoneNo.Size = new System.Drawing.Size(115, 20);
             this.txtPhoneNo.TabIndex = 100;
             this.txtPhoneNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-            this.txtPhoneNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNo_Validating);
             // 
             // txtMobNo
             // 
@@ -101,7 +108,6 @@
             this.txtMobNo.Size = new System.Drawing.Size(115, 20);
             this.txtMobNo.TabIndex = 97;
             this.txtMobNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-            this.txtMobNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtMobNo_Validating);
             // 
             // label1
             // 
@@ -119,7 +125,6 @@
             this.txtName.Size = new System.Drawing.Size(115, 20);
             this.txtName.TabIndex = 96;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // lblName
             // 
@@ -150,23 +155,43 @@
             // dgvCustomerRegister
             // 
             this.dgvCustomerRegister.AllowUserToDeleteRows = false;
+            this.dgvCustomerRegister.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCustomerRegister.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomerRegister.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCustomerRegister.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCustomerRegister.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCustomerRegister.Location = new System.Drawing.Point(0, 0);
             this.dgvCustomerRegister.Name = "dgvCustomerRegister";
             this.dgvCustomerRegister.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCustomerRegister.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCustomerRegister.Size = new System.Drawing.Size(563, 286);
             this.dgvCustomerRegister.TabIndex = 0;
-            this.dgvCustomerRegister.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellContentClick);
+            this.dgvCustomerRegister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellContentClick);
             // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // progBarStatus
-            // 
-            this.progBarStatus.Name = "progBarStatus";
-            this.progBarStatus.Size = new System.Drawing.Size(100, 16);
             // 
             // Winform_CustomerRegister
             // 
@@ -177,6 +202,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "Winform_CustomerRegister";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Customer Registry";
             this.Load += new System.EventHandler(this.Winform_StaffRegister_Load);
             this.statusStrip1.ResumeLayout(false);

@@ -61,8 +61,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,19 +69,15 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.txtMobNo = new System.Windows.Forms.TextBox();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.CancelToolStrip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.grpBoxCustMeasure = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbMemImage)).BeginInit();
-            this.toolStrip1.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.grpBoxCustMeasure.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -94,7 +88,7 @@
             this.groupBox1.Location = new System.Drawing.Point(8, 191);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(563, 240);
-            this.groupBox1.TabIndex = 118;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Measurement Details";
             // 
@@ -119,7 +113,7 @@
             this.groupBox4.Location = new System.Drawing.Point(6, 19);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(551, 97);
-            this.groupBox4.TabIndex = 121;
+            this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Basic Measurement";
             // 
@@ -129,7 +123,7 @@
             this.textBox6.MaxLength = 10;
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(104, 20);
-            this.textBox6.TabIndex = 104;
+            this.textBox6.TabIndex = 6;
             // 
             // label7
             // 
@@ -146,7 +140,7 @@
             this.textBox5.MaxLength = 10;
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(104, 20);
-            this.textBox5.TabIndex = 102;
+            this.textBox5.TabIndex = 7;
             // 
             // label6
             // 
@@ -172,7 +166,7 @@
             this.textBox13.MaxLength = 100;
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(109, 20);
-            this.textBox13.TabIndex = 100;
+            this.textBox13.TabIndex = 5;
             // 
             // label15
             // 
@@ -189,7 +183,7 @@
             this.textBox14.MaxLength = 100;
             this.textBox14.Name = "textBox14";
             this.textBox14.Size = new System.Drawing.Size(109, 20);
-            this.textBox14.TabIndex = 98;
+            this.textBox14.TabIndex = 2;
             // 
             // label5
             // 
@@ -239,7 +233,7 @@
             this.textBox2.MaxLength = 100;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(104, 20);
-            this.textBox2.TabIndex = 4;
+            this.textBox2.TabIndex = 1;
             // 
             // textBox1
             // 
@@ -247,7 +241,7 @@
             this.textBox1.MaxLength = 100;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(104, 20);
-            this.textBox1.TabIndex = 92;
+            this.textBox1.TabIndex = 4;
             // 
             // label3
             // 
@@ -269,7 +263,7 @@
             this.groupBox3.Location = new System.Drawing.Point(6, 181);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(551, 52);
-            this.groupBox3.TabIndex = 120;
+            this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Sleeve Measurement";
             // 
@@ -287,7 +281,7 @@
             this.textBox10.Location = new System.Drawing.Point(64, 19);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(104, 20);
-            this.textBox10.TabIndex = 98;
+            this.textBox10.TabIndex = 0;
             // 
             // textBox11
             // 
@@ -295,7 +289,7 @@
             this.textBox11.MaxLength = 100;
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(109, 20);
-            this.textBox11.TabIndex = 102;
+            this.textBox11.TabIndex = 2;
             // 
             // label12
             // 
@@ -321,7 +315,7 @@
             this.textBox12.MaxLength = 100;
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(104, 20);
-            this.textBox12.TabIndex = 99;
+            this.textBox12.TabIndex = 1;
             // 
             // groupBox2
             // 
@@ -334,7 +328,7 @@
             this.groupBox2.Location = new System.Drawing.Point(6, 122);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(551, 52);
-            this.groupBox2.TabIndex = 119;
+            this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bottom Measurement";
             // 
@@ -352,7 +346,7 @@
             this.textBox9.Location = new System.Drawing.Point(64, 19);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(104, 20);
-            this.textBox9.TabIndex = 98;
+            this.textBox9.TabIndex = 0;
             // 
             // textBox7
             // 
@@ -360,7 +354,7 @@
             this.textBox7.MaxLength = 100;
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(108, 20);
-            this.textBox7.TabIndex = 102;
+            this.textBox7.TabIndex = 2;
             // 
             // label10
             // 
@@ -386,23 +380,7 @@
             this.textBox8.MaxLength = 100;
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(104, 20);
-            this.textBox8.TabIndex = 99;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStrip_Label});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 434);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(578, 22);
-            this.statusStrip1.TabIndex = 120;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            this.textBox8.TabIndex = 1;
             // 
             // toolStrip_Label
             // 
@@ -475,33 +453,6 @@
             this.txtMobNo.Size = new System.Drawing.Size(162, 20);
             this.txtMobNo.TabIndex = 127;
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.CancelToolStrip,
-            this.toolStripSeparator1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip1.Size = new System.Drawing.Size(578, 54);
-            this.toolStrip1.TabIndex = 133;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripButton1.Size = new System.Drawing.Size(47, 51);
-            this.toolStripButton1.Text = "Cancel";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
             // CancelToolStrip
             // 
             this.CancelToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("CancelToolStrip.Image")));
@@ -517,34 +468,35 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 54);
             // 
-            // groupBox5
+            // grpBoxCustMeasure
             // 
-            this.groupBox5.Controls.Add(this.pcbMemImage);
-            this.groupBox5.Controls.Add(this.txtMobNo);
-            this.groupBox5.Controls.Add(this.txtPhoneNo);
-            this.groupBox5.Controls.Add(this.lblName);
-            this.groupBox5.Controls.Add(this.label1);
-            this.groupBox5.Controls.Add(this.txtName);
-            this.groupBox5.Controls.Add(this.lblMobile);
-            this.groupBox5.Location = new System.Drawing.Point(8, 55);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(563, 130);
-            this.groupBox5.TabIndex = 134;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Customer Details";
+            this.grpBoxCustMeasure.Controls.Add(this.pcbMemImage);
+            this.grpBoxCustMeasure.Controls.Add(this.txtMobNo);
+            this.grpBoxCustMeasure.Controls.Add(this.txtPhoneNo);
+            this.grpBoxCustMeasure.Controls.Add(this.lblName);
+            this.grpBoxCustMeasure.Controls.Add(this.label1);
+            this.grpBoxCustMeasure.Controls.Add(this.txtName);
+            this.grpBoxCustMeasure.Controls.Add(this.lblMobile);
+            this.grpBoxCustMeasure.Enabled = false;
+            this.grpBoxCustMeasure.Location = new System.Drawing.Point(8, 55);
+            this.grpBoxCustMeasure.Name = "grpBoxCustMeasure";
+            this.grpBoxCustMeasure.Size = new System.Drawing.Size(563, 130);
+            this.grpBoxCustMeasure.TabIndex = 2;
+            this.grpBoxCustMeasure.TabStop = false;
+            this.grpBoxCustMeasure.Text = "Customer Details";
             // 
             // Winform_MeasurementAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(578, 456);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.grpBoxCustMeasure);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_MeasurementAdd";
             this.Text = "Measurement Details";
             this.Load += new System.EventHandler(this.Winform_MeasurementAdd_Load);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.grpBoxCustMeasure, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -552,13 +504,9 @@
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbMemImage)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.grpBoxCustMeasure.ResumeLayout(false);
+            this.grpBoxCustMeasure.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -594,9 +542,6 @@
         internal System.Windows.Forms.Label label10;
         internal System.Windows.Forms.Label label9;
         internal System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         internal System.Windows.Forms.TextBox txtPhoneNo;
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.PictureBox pcbMemImage;
@@ -604,14 +549,13 @@
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Label lblName;
         internal System.Windows.Forms.TextBox txtMobNo;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox grpBoxCustMeasure;
         internal System.Windows.Forms.TextBox textBox5;
         internal System.Windows.Forms.Label label6;
         internal System.Windows.Forms.TextBox textBox6;
         internal System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
     }
 }

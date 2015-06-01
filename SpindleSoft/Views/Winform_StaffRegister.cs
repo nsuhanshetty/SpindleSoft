@@ -68,11 +68,30 @@ namespace SpindleSoft.Views
         #region Events
         private void dgvStaffRregister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            DialogResult _dialogResult = MessageBox.Show("Do you want to Modify the details of Staff " +
+                                         Convert.ToString(dgvStaffRregister.Rows[e.RowIndex].Cells[1].Value),
+                                         "Modify Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                                         MessageBoxDefaultButton.Button2);
 
+            if (_dialogResult == DialogResult.No) return;
+
+            var mobNo = dgvStaffRregister.Rows[e.RowIndex].Cells[2].Value.ToString();
+            SpindleSoft.Model.Staff _staff = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffInfo(mobNo);
+            _staff.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffImage(mobNo);
+
+            new Winform_StaffDetails(_staff).ShowDialog();
         }
         private void txtName_TextChanged(object sender, EventArgs e)
         {
+            lblStatus.Text = "Searching..";
+            progBarStatus.Value = 50;
             dgvStaffRregister.DataSource = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
+
+            if (dgvStaffRregister.RowCount == 0)
+                lblStatus.Text = "No Results found.";
+            else
+                lblStatus.Text = dgvStaffRregister.RowCount + " Results found.";
+            progBarStatus.Value = 100;
         }
         #endregion Events
     }

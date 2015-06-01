@@ -1,174 +1,165 @@
-﻿using Newtonsoft.Json;
-using SpindleSoft.Model;
+﻿using SpindleSoft.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Net;
 using System.Reflection;
+using NHibernate.Linq;
+using NHibernate.Criterion;
+using System.Linq;
+using System.Threading.Tasks;
+//using NHibernate;
 
 namespace SpindleSoft.Builders
 {
-    class PeoplePracticeBuilder
+    public class PeoplePracticeBuilder
     {
-        //private static Uri BaseUri = new Uri("http://192.168.0.104:14041");
-        private static Uri BaseUri = new Uri(System.Configuration.ConfigurationManager.AppSettings.Get("BaseUri"));
+        //todo: appsettings not working for path
+        static string customerPicPath = "d:\\CustomerImages";
+        //System.Windows.Forms.Application.StartupPath + "\\CustomerImages";
+        static string StaffImagePath = "d:\\StaffImages";
+        //System.Windows.Forms.Application.StartupPath + "\\StaffImages";
 
         #region CustomerBuilder
-        public static List<Customer> GetCustomersList(string name, string mobileno, string phoneno)
+        public static List<Customer> GetCustomersList(string name = "", string mobileno = "", string phoneno = "")
         {
-            //todo: Akash : like "%<value>%" must be replaced with like "<value>%"
-            Uri uri = new Uri(BaseUri ,"customer/get?name=" + name + "&mobile_no=" + mobileno + " &phoneno=" + phoneno);
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
+            List<Customer> _cust = new List<Customer>();
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                string query = "select c.Name,c.Mobile_No,c.Phone_No from customer c where (c.Name like :Name)" +
+                "and (c.Mobile_No like :Mobile_No) and (c.Phone_No like :Phone_No) order by c.UpdatedTime desc";
+                 
+                NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
+                   .SetParameter("Name", name + "%")
+                   .SetParameter("Mobile_No", mobileno + "%")
+                   .SetParameter("Phone_No", phoneno + "%"))
+                   .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Customer)));
+               return _cust = sqlQuery.List<Customer>() as List<Customer>;
+                
+                //var _custs = session.QueryOver<Customer>()
+                //      .WhereRestrictionOn(c => c.Mobile_No).IsLike(mobileno + '%')
+                //      .And(Restrictions.On<Customer>(c => c.Name).IsLike(name + '%'))
+                //      .And(Restrictions.On<Customer>(c => c.Phone_No).IsLike(phoneno + '%'))
+                //     .List() as List<Customer>;
+               // return _custs;
+            }
+
+        }
+
+        public static Customer GetCustomerInfo(string mobNo)
+        {
+            Customer _cust = new Customer();
             try
             {
-                using (var webResponse = (HttpWebResponse)webRequest.GetResponse())
+                using (var session = NHibernateHelper.OpenSession())
                 {
-                    var reader = new StreamReader(webResponse.GetResponseStream());
-                    string s = reader.ReadToEnd();
-                    return JsonConvert.DeserializeObject<List<Customer>>(s);
+                    _cust = (from cust in session.Query<Customer>()
+                             where cust.Mobile_No == mobNo
+                             select cust).Single();
                 }
+                return _cust;
             }
-            catch (WebException ex)
+            catch(Exception)
             {
-                //add to log4net
+                //todo: log4net
                 return null;
             }
         }
 
-        /*public static DataTable GetCustomersTable(string name, string mobileno, string phoneno)
+        public static Customer GetCustomerInfo(int ID)
         {
-            //todo: Akash : like "%<value>%" must be replaced with like "<value>%"
-            Uri uri = new Uri(BaseUri, "customer/get?name=" + name + "&mobile_no=" + mobileno + " &phoneno=" + phoneno);
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
+            Customer _cust = new Customer();
             try
             {
-                using (var webResponse = (HttpWebResponse)webRequest.GetResponse())
+                using (var session = NHibernateHelper.OpenSession())
                 {
-                    var reader = new StreamReader(webResponse.GetResponseStream());
-                    string s = reader.ReadToEnd();
-                    return ToDataTable(JsonConvert.DeserializeObject<List<Customer>>(s));
+                    _cust = (from cust in session.Query<Customer>()
+                             where cust.ID == ID
+                             select cust).Single();
                 }
+                return _cust;
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                //add to log4net
-                return null;
-            }
-        }*/
-
-        public static Customer GetCustomerInfo(string mobileno)
-        {
-            Uri uri = new Uri(BaseUri, "customer/get?name=&mobile=" + mobileno + "&phone=");
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
-            try
-            {
-                using (var webResponse = (HttpWebResponse)webRequest.GetResponse())
-                {
-                    var reader = new StreamReader(webResponse.GetResponseStream());
-                    string s = reader.ReadToEnd();
-                    List<Customer> _custList =  JsonConvert.DeserializeObject<List<Customer>>(s);
-                    return _custList[0];
-                }
-            }
-            catch (WebException ex)
-            {
-                //add to log4net
-                Logger.Error(ex);
+                //todo: log4net
                 return null;
             }
         }
 
-        public static Image GetCustomerImage(string mobileNo)
+        public static Image GetCustomerImage(string mobNo)
         {
-            Uri uri = new Uri(BaseUri, "customer/get/image/" + mobileNo);
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
             try
             {
-                using (HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse())
+                using (Image image = Image.FromFile(customerPicPath + "\\" + mobNo + ".png"))
                 {
-                    using (var reader = new StreamReader(webResponse.GetResponseStream()))
-                    {
-                        return Image.FromStream(reader.BaseStream);
-                    }
+                    Bitmap bitmap = new Bitmap(image);
+                    return bitmap;
                 }
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Status.ToString());
-                //todo : add to log4net;
+                //todo: log4net
                 return null;
-                throw;
-            }
+            }          
         }
 
         #endregion CustomerBuilder
 
         #region Staff
-        public static List<Staff> GetStaffList(string name, string mobileno, string phoneno)
+        public static List<Staff> GetStaffList(string name = "", string mobNo = "", string phNo = "")
         {
-            //todo: Akash : like "%<value>%" must be replaced with like "<value>%"
-            Uri uri = new Uri(BaseUri, "staff/get?name=" + name + "&mobile_no=" + mobileno + " &phoneno=" + phoneno);
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
+            List<Staff> staff = new List<Staff>();
             try
             {
-                using (var webResponse = (HttpWebResponse)webRequest.GetResponse())
+                using (var session = NHibernateHelper.OpenSession())
                 {
-                    var reader = new StreamReader(webResponse.GetResponseStream());
-                    string s = reader.ReadToEnd();
-                    return JsonConvert.DeserializeObject<List<Staff>>(s);
+                    staff = session.QueryOver<Staff>()
+                         .WhereRestrictionOn(c => c.Mobile_No).IsLike(mobNo + '%')
+                         .And(Restrictions.On<Staff>(c => c.Name).IsLike(name + '%'))
+                         .And(Restrictions.On<Staff>(c => c.Phone_No).IsLike(phNo + '%')).List() as List<Staff>;
                 }
+                return staff;
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                //add to log4net
+                //todo: log4net
                 return null;
             }
         }
 
-        public static Staff GetStaffInfo(string mobileno)
+        public static Staff GetStaffInfo(string mobNo)
         {
-            Uri uri = new Uri(BaseUri, "staff/get?name=&mobile=" + mobileno + "&phone=");
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
             try
             {
-                using (var webResponse = (HttpWebResponse)webRequest.GetResponse())
+                using (var session = NHibernateHelper.OpenSession())
                 {
-                    var reader = new StreamReader(webResponse.GetResponseStream());
-                    string s = reader.ReadToEnd();
-                    List<Staff> _custList = JsonConvert.DeserializeObject<List<Staff>>(s);
-                    return _custList[0];
+                    var staff = (from _staff in session.Query<Staff>()
+                                 where _staff.Mobile_No == mobNo
+                                 select _staff).Single();
+                    return staff;
                 }
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                //add to log4net
-                Logger.Error(ex);
+                //todo: log4net
                 return null;
             }
         }
 
         public static Image GetStaffImage(string mobileNo)
         {
-            Uri uri = new Uri(BaseUri, "staff/get/image/" + mobileNo);
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
             try
             {
-                using (HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse())
+                using (Image image = Image.FromFile(StaffImagePath + "\\" + mobileNo + ".png"))
                 {
-                    using (var reader = new StreamReader(webResponse.GetResponseStream()))
-                    {
-                        return Image.FromStream(reader.BaseStream);
-                    }
+                    Bitmap bitmap = new Bitmap(image);
+                    return bitmap;
                 }
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Status.ToString());
-                //todo : add to log4net;
+                //todo: log4net
                 return null;
-                throw;
             }
         }
         #endregion Staff

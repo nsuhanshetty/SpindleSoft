@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace SpindleSoft.Views
 {
-    public partial class Winform_MeasurementAdd : Form
+    public partial class Winform_MeasurementAdd : Winform_DetailsFormat
     {
         public Winform_MeasurementAdd()
         {

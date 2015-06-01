@@ -3,142 +3,106 @@ using SpindleSoft.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 
 namespace SpindleSoft.Savers
 {
-    class PeoplePracticeSaver
+    public class PeoplePracticeSaver
     {
         //private static Uri BaseUri = new Uri("http://192.168.0.106:14041");
-        private static Uri BaseUri = new Uri(System.Configuration.ConfigurationManager.AppSettings.Get("BaseUri"));
+        //private static Uri BaseUri = new Uri(System.Configuration.ConfigurationManager.AppSettings.Get("BaseUri"));
+
+        static string CustomerImagePath = "d:\\CustomerImages";
+        //System.Windows.Forms.Application.StartupPath + "\\CustomerImages";
+        static string StaffImagePath = "d:\\StaffImages";
+        //System.Windows.Forms.Application.StartupPath + "\\StaffImages";
 
         #region Customer
         public static bool SaveCustomerInfo(Customer _customer)
         {
-            var json = JsonConvert.SerializeObject(_customer);
-            HttpWebRequest _request = HttpWebRequest.CreateHttp(new Uri(BaseUri, "customer/save"));
-            _request.ContentType = "application/json";
-            _request.Method = "POST";
             try
             {
-                using (StreamWriter _swriter = new StreamWriter(_request.GetRequestStream()))
+                using (var session = NHibernateHelper.OpenSession())
                 {
-                    _swriter.WriteAsync(json);
-                }
-
-                using (var _webResponse = (HttpWebResponse)_request.GetResponse())
-                {
-                    return (_webResponse.StatusCode == HttpStatusCode.Created) ? true : false;
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.SaveOrUpdate(_customer);
+                        transaction.Commit();
+                        return true;
+                    }
                 }
             }
-            catch(WebException ex)
+            catch (Exception)
             {
-                //todo: log in log4net
-                Logger.Error(ex);
                 return false;
+                //throw;
             }
+
         }
 
-        public static bool SaveCustomerImage(Image _image, string mobile_no)
+        public static bool SaveCustomerImage(Image image, string mobNo)
         {
-            byte[] _imageByte = (byte[])new ImageConverter().ConvertTo(_image, typeof(byte[]));
-
-            //todo: Check if Server Or Client error and let customer know abt it.
-            //todo: Akash : Use customer id instead of mobile no
-            //todo: image updation failing
+            string filePath = string.Format("{0}\\{1}.png", CustomerImagePath, mobNo);
             try
             {
-                //todo: try to implement using restSharp
-                Uri _uri = new Uri(BaseUri, "customer/upload/image");
+                if (!System.IO.Directory.Exists(CustomerImagePath))
+                    System.IO.Directory.CreateDirectory(CustomerImagePath);
+                else if (System.IO.File.Exists(filePath))
+                    System.IO.File.Delete(filePath);
 
-                //todo: make following codes inline
-                Dictionary<string, object> _postParameters = new Dictionary<string, object>();
-                _postParameters.Add("file", new FormUpload.FileParameter(_imageByte));
-                _postParameters.Add("mobile", mobile_no);
-
-                HttpWebResponse webResponse = FormUpload.MultipartFormDataPost(_uri.ToString(), "someone", _postParameters);
-
-                // Process response
-                StreamReader responseReader = new StreamReader(webResponse.GetResponseStream());
-                string fullResponse = responseReader.ReadToEnd();
-                webResponse.Close();
-
-                //todo : Akash : Send response with ack for adding image
-                //todo : Based on the ack we need to return success
+                image.Save(filePath);
                 return true;
-            }                
-            catch(WebException ex)
+            }
+            catch (Exception)
             {
-                //todo: log in log4net
+                //todo: log4.net
                 return false;
             }
         }
         #endregion Customer
 
         #region Staff
-        //todo : use async/await
-        public static bool SaveStaffInfo(Staff _staff)
+        public static bool SaveStaffInfo(Staff staff)
         {
-            var json = JsonConvert.SerializeObject(_staff);
-            HttpWebRequest _request = HttpWebRequest.CreateHttp(new Uri(BaseUri, "staff/save"));
-            _request.ContentType = "application/json";
-            _request.Method = "POST";
             try
             {
-                using (StreamWriter _swriter = new StreamWriter(_request.GetRequestStream()))
+                using (var session = NHibernateHelper.OpenSession())
                 {
-                    _swriter.WriteAsync(json);
-                }
-
-                using (var _webResponse = (HttpWebResponse)_request.GetResponse())
-                {
-                    return (_webResponse.StatusCode == HttpStatusCode.Created) ? true : false;
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.SaveOrUpdate(staff);
+                        transaction.Commit();
+                        return true;
+                    }
                 }
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                //todo: log in log4net
-                Logger.Error(ex);
+                //todo: log4net
                 return false;
             }
+
         }
 
-        public static bool SaveStaffImage(Image _image, string mobile_no)
+        public static bool SaveStaffImage(Image image, string mobNo)
         {
-            byte[] _imageByte = (byte[])new ImageConverter().ConvertTo(_image, typeof(byte[]));
-
-            //todo: Check its Server Or Client error and let customer know abt it.
-            //todo: Akash : Use customer id instead of mobile no
-            //todo: image updation failing
-            //todo: use async and await
+            string filePath = string.Format("{0}\\{1}.png", StaffImagePath, mobNo);
             try
             {
-                //todo: try to implement using restSharp
-                Uri _uri = new Uri(BaseUri, "staff/upload/image");
+                if (!System.IO.Directory.Exists(StaffImagePath))
+                    System.IO.Directory.CreateDirectory(StaffImagePath);
+                else if (System.IO.File.Exists(filePath))
+                    System.IO.File.Delete(filePath);
 
-                //todo: make following codes inline
-                //todo:Akash: use StaffID as primary Key
-                Dictionary<string, object> _postParameters = new Dictionary<string, object>();
-                _postParameters.Add("file", new FormUpload.FileParameter(_imageByte));
-                _postParameters.Add("mobile", mobile_no);
-                //_postParameters.Add("StaffID", ID);
-
-                HttpWebResponse webResponse = FormUpload.MultipartFormDataPost(_uri.ToString(), "someone", _postParameters);
-
-                // Process response
-                StreamReader responseReader = new StreamReader(webResponse.GetResponseStream());
-                string fullResponse = responseReader.ReadToEnd();
-                webResponse.Close();
-
-                //todo : Akash : Send response with ack for adding image
-                //todo : Based on the ack we need to return success
+                image.Save(filePath, ImageFormat.Png);
                 return true;
             }
-            catch (WebException ex)
+            catch (Exception)
             {
-                //todo: log in log4net
+                //todo: log4.net
                 return false;
             }
         }

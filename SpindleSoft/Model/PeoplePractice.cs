@@ -9,25 +9,27 @@ namespace SpindleSoft.Model
     public class Customer
     {
         //[JsonIgnore]
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
 
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [JsonProperty(PropertyName = "mobile_no")]
-        public string Mobile_No { get; set; }
+        public virtual string Mobile_No { get; set; }
 
         [JsonProperty(PropertyName = "phone_no")]
-        public string Phone_No { get; set; }
+        public virtual string Phone_No { get; set; }
 
         [JsonProperty(PropertyName = "address")]
-        public string Address { get; set; }
+        public virtual string Address { get; set; }
 
         [JsonProperty(PropertyName = "email")]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
         //[JsonIgnore]
-        public Image Image { get; set; }
+        public virtual Image Image { get; set; }
+
+        public virtual int ReferralID { get; set; }
 
         //public object updated_at { get; set; }
 
@@ -35,6 +37,7 @@ namespace SpindleSoft.Model
 
         public Customer(string _name, string _mobileNo, string _phoneNo, string _address, string _email)
         {
+            //this.ID = _id;
             this.Name = _name;
             this.Mobile_No = _mobileNo;
             this.Phone_No = _phoneNo;
@@ -62,16 +65,33 @@ namespace SpindleSoft.Model
 
     public class Staff
     {
-        public int StaffID { get; set; }
+        public virtual int ID { get; set; }
 
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public string MobileNo { get; set; }
+        public virtual string Mobile_No { get; set; }
 
-        public string Address { get; set; }
+        public virtual string Phone_No { get; set; }
 
-        public Image Image { get; set; }
+        public virtual string Address { get; set; }
+
+        public virtual Image Image { get; set; }
+
+        public virtual bool IsTemporary { get; set; }
+
+        public Staff() { }
+
+        public Staff(string name, string mobNo, string phNo, string address="", bool isTempo=true)
+        {
+            this.Name = name;
+            this.Mobile_No = mobNo;
+            this.Phone_No = phNo;
+            this.Address = address;
+            this.IsTemporary = isTempo;
+        }
     }
+
+
 
     public class Group
     {

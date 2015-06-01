@@ -11,12 +11,14 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Linq;
 using SpindleSoft.Savers;
+using System.Threading.Tasks;
 
 namespace SpindleSoft.Views
 {
     public partial class WinForm_CustomerDetails : Winform_DetailsFormat
     {
         Customer _cust = new Customer();
+        Customer refCust = new Customer();
         public WinForm_CustomerDetails()
         {
             InitializeComponent();
@@ -35,6 +37,14 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtPhoneNo.Text = _cust.Phone_No;
             pcbCustImage.Image = _cust.Image;
+
+
+            refCust = PeoplePracticeBuilder.GetCustomerInfo(_cust.ReferralID);
+            if (refCust == null) return;
+
+            txtRefMob.Text = refCust.Mobile_No;
+            txtRefName.Text = refCust.Name;
+            pcbReferral.Image = refCust.Image;
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -51,14 +61,23 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
+            //need to handle this situation well
+            string[] input = {"txtAddress","txtEmailID"};
+            if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
+            {
+                return;
+            }
+
+            //todo: use delegate to cut overhead of UpdateStatus();
             UpdateStatus("Saving..", 25);
-            //set customer
             this._cust.Name = txtName.Text;
             this._cust.Mobile_No = txtMobNo.Text;
             this._cust.Phone_No = txtPhoneNo.Text;
             this._cust.Email = txtEmailID.Text;
             this._cust.Address = txtAddress.Text;
             this._cust.Image = pcbCustImage.Image;
+            this._cust.Image = pcbCustImage.Image;
+            this._cust.ReferralID = refCust.ID;
 
             UpdateStatus("Saving..", 50);
             bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
@@ -75,12 +94,16 @@ namespace SpindleSoft.Views
             {
                 UpdateStatus("Error Saving Customer", 100);
             }
+
+            Winform_AddCustomer addCust = Application.OpenForms["Winform_AddCustomer"] as Winform_AddCustomer;
+            if (addCust != null)
+                addCust.LoadDgv();
         }
 
         //todo: Remove AddReferralToolStrip_Click
         private void AddReferralToolStrip_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Add Referral Working");
+            new Winform_AddCustomer().ShowDialog();            
         }
 
         //todo: Remove MeasurementDetailsToolStrip_Click
@@ -171,8 +194,11 @@ namespace SpindleSoft.Views
         private void WinForm_CustomerDetails_Load(object sender, EventArgs e)
         {
             //todo: remove toolStripParent.Items.Add
-            //this.toolStripParent.Items.Add(this.AddReferralToolStrip);
+            this.toolStripParent.Items.Add(this.AddReferralToolStrip);
             //this.toolStripParent.Items.Add(this.MeasurementDetailsToolStrip);
+
+            //get customers names
+            //Winform_AddCustomer
         }
 
         private void btnCapture_Click_1(object sender, EventArgs e)
@@ -182,43 +208,54 @@ namespace SpindleSoft.Views
         }
 
         #region AddReferral
-        private void cmbRefMobNo_TextChanged(object sender, EventArgs e)
+        //private void cmbRefMobNo_TextChanged(object sender, EventArgs e)
+        //{
+        //    //todo: Reset controls if cmbRefMobNo.Text == ""
+        //    System.Collections.IList _custList = PeoplePracticeBuilder.GetCustomersList("", cmbRefMobNo.Text, "");
+        //    if (_custList != null || _custList.Count == 0)
+        //    {
+        //        //cmbRefMobNo.DataSource = from cust in _custList
+        //        //                         select cust.Mobile_No;
+        //    }
+        //}
+
+        //private void cmbRefMobNo_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    UpdateStatus("Fetching Referral...", 50);
+
+        //    if (String.IsNullOrEmpty(cmbRefMobNo.Text))
+        //    {
+        //        //todo: use utility to reset the controls
+        //        //pcbReferral.Image = get resource
+        //        txtName.Text = "";
+        //        return;
+        //    }
+
+        //    //set referral
+        //    Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(cmbRefMobNo.Text);
+        //    Image _custImage = PeoplePracticeBuilder.GetCustomerImage(cmbRefMobNo.Text);
+
+        //    if (_custImage == null || _custImage == null)
+        //    {
+        //        //show msgbox;
+        //        UpdateStatus("Error Fetching Referral", 100);
+        //        return;
+        //    }
+
+        //    UpdateStatus("Referral Added", 100);
+        //    txtRefName.Text = _cust.Name;
+        //    pcbReferral.Image = _custImage;
+        //}
+
+        public void UpdateCustomerControl(Customer refCustomer)
         {
-            //todo: Reset controls if cmbRefMobNo.Text == ""
-            List<Customer> _custList = PeoplePracticeBuilder.GetCustomersList("", cmbRefMobNo.Text, "");
-            if (_custList != null || _custList.Count == 0)
-            {
-                cmbRefMobNo.DataSource = from cust in _custList
-                                         select cust.Mobile_No;
-            }
-        }
+            if (refCustomer == null) return;
+            
+            //this._cust = customer;
 
-        private void cmbRefMobNo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateStatus("Fetching Referral...", 50);
-
-            if (String.IsNullOrEmpty(cmbRefMobNo.Text))
-            {
-                //todo: use utility to reset the controls
-                //pcbReferral.Image = get resource
-                txtName.Text = "";
-                return;
-            }
-
-            //set referral
-            Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(cmbRefMobNo.Text);
-            Image _custImage = PeoplePracticeBuilder.GetCustomerImage(cmbRefMobNo.Text);
-
-            if (_custImage == null || _custImage == null)
-            {
-                //show msgbox;
-                UpdateStatus("Error Fetching Referral", 100);
-                return;
-            }
-
-            UpdateStatus("Referral Added", 100);
-            txtRefName.Text = _cust.Name;
-            pcbReferral.Image = _custImage;
+            txtRefName.Text = refCustomer.Name;
+            txtRefMob.Text = refCustomer.Mobile_No;
+            pcbReferral.Image = refCustomer.Image;
         }
         #endregion AddReferral
     }

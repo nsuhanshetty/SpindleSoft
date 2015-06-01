@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -40,6 +46,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -66,6 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
+    <Compile Include="Builders\PeoplePracticeBuilderRestApi.cs" />
+    <Compile Include="FluentMapping\OrdersMapping.cs" />
+    <Compile Include="Savers\PeoplePracticeSaverRestApi.cs" />
+    <Compile Include="FluentMapping\PeoplePracticeMapping.cs" />
     <Compile Include="Helpers\Main_Helper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Model\Alteration.cs" />
@@ -74,8 +87,14 @@
     <Compile Include="Model\PeoplePractice.cs" />
     <Compile Include="Model\Orders.cs" />
     <Compile Include="Model\PromotionalSMS.cs" />
+    <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Savers\FormUpload.cs" />
     <Compile Include="Savers\PeoplePracticeSaver.cs" />
+    <Compile Include="SpindleSoftDbDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpindleSoftDbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\Validation.cs" />
     <Compile Include="Views\Main.cs">
       <SubType>Form</SubType>
@@ -90,6 +109,12 @@
     </Compile>
     <Compile Include="Views\DesignControl.Designer.cs">
       <DependentUpon>DesignControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_AddCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_AddCustomer.Designer.cs">
+      <DependentUpon>Winform_AddCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_AlterationRegister.cs">
       <SubType>Form</SubType>
@@ -227,6 +252,9 @@
     <EmbeddedResource Include="Views\DesignControl.resx">
       <DependentUpon>DesignControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_AddCustomer.resx">
+      <DependentUpon>Winform_AddCustomer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_AlterationRegister.resx">
       <DependentUpon>Winform_AlterationRegister.cs</DependentUpon>
     </EmbeddedResource>
@@ -298,6 +326,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SpindleSoftDbDataSet.xsc">
+      <DependentUpon>SpindleSoftDbDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="SpindleSoftDbDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SpindleSoftDbDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SpindleSoftDbDataSet.xss">
+      <DependentUpon>SpindleSoftDbDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -307,6 +346,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\measure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Link.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

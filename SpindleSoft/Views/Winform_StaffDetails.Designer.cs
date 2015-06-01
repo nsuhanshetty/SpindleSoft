@@ -35,6 +35,12 @@
             this.pcbStaffImage = new System.Windows.Forms.PictureBox();
             this.btnCapture = new System.Windows.Forms.Button();
             this.grbMemPersonDetail = new System.Windows.Forms.GroupBox();
+            this.lblPhoneNo = new System.Windows.Forms.Label();
+            this.txtPhoneNo = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.grpBoxStaffType = new System.Windows.Forms.GroupBox();
+            this.rdbTemp = new System.Windows.Forms.RadioButton();
+            this.rdbPerm = new System.Windows.Forms.RadioButton();
             this.lblAddress = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.lblMobile = new System.Windows.Forms.Label();
@@ -44,15 +50,11 @@
             this.CancelToolStrip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.grpBoxStaffType = new System.Windows.Forms.GroupBox();
-            this.rdbPerm = new System.Windows.Forms.RadioButton();
-            this.rdbTemp = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.grbMemNo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbStaffImage)).BeginInit();
             this.grbMemPersonDetail.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.grpBoxStaffType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip_Label
@@ -100,6 +102,8 @@
             // 
             // grbMemPersonDetail
             // 
+            this.grbMemPersonDetail.Controls.Add(this.lblPhoneNo);
+            this.grbMemPersonDetail.Controls.Add(this.txtPhoneNo);
             this.grbMemPersonDetail.Controls.Add(this.label1);
             this.grbMemPersonDetail.Controls.Add(this.grpBoxStaffType);
             this.grbMemPersonDetail.Controls.Add(this.lblAddress);
@@ -110,15 +114,74 @@
             this.grbMemPersonDetail.Controls.Add(this.txtMobNo);
             this.grbMemPersonDetail.Location = new System.Drawing.Point(159, 62);
             this.grbMemPersonDetail.Name = "grbMemPersonDetail";
-            this.grbMemPersonDetail.Size = new System.Drawing.Size(354, 192);
+            this.grbMemPersonDetail.Size = new System.Drawing.Size(354, 225);
             this.grbMemPersonDetail.TabIndex = 0;
             this.grbMemPersonDetail.TabStop = false;
             this.grbMemPersonDetail.Text = "Personal Details";
             // 
+            // lblPhoneNo
+            // 
+            this.lblPhoneNo.AutoSize = true;
+            this.lblPhoneNo.Location = new System.Drawing.Point(12, 94);
+            this.lblPhoneNo.Name = "lblPhoneNo";
+            this.lblPhoneNo.Size = new System.Drawing.Size(82, 13);
+            this.lblPhoneNo.TabIndex = 96;
+            this.lblPhoneNo.Text = "Phone No. [+0 ]";
+            // 
+            // txtPhoneNo
+            // 
+            this.txtPhoneNo.Location = new System.Drawing.Point(98, 87);
+            this.txtPhoneNo.MaxLength = 10;
+            this.txtPhoneNo.Name = "txtPhoneNo";
+            this.txtPhoneNo.Size = new System.Drawing.Size(243, 20);
+            this.txtPhoneNo.TabIndex = 2;
+            this.txtPhoneNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNo_Validating);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 190);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.TabIndex = 95;
+            this.label1.Text = "Staff Type";
+            // 
+            // grpBoxStaffType
+            // 
+            this.grpBoxStaffType.Controls.Add(this.rdbTemp);
+            this.grpBoxStaffType.Controls.Add(this.rdbPerm);
+            this.grpBoxStaffType.Location = new System.Drawing.Point(98, 176);
+            this.grpBoxStaffType.Name = "grpBoxStaffType";
+            this.grpBoxStaffType.Size = new System.Drawing.Size(243, 36);
+            this.grpBoxStaffType.TabIndex = 4;
+            this.grpBoxStaffType.TabStop = false;
+            // 
+            // rdbTemp
+            // 
+            this.rdbTemp.AutoSize = true;
+            this.rdbTemp.Location = new System.Drawing.Point(144, 14);
+            this.rdbTemp.Name = "rdbTemp";
+            this.rdbTemp.Size = new System.Drawing.Size(75, 17);
+            this.rdbTemp.TabIndex = 1;
+            this.rdbTemp.Text = "Temporary";
+            this.rdbTemp.UseVisualStyleBackColor = true;
+            // 
+            // rdbPerm
+            // 
+            this.rdbPerm.AutoSize = true;
+            this.rdbPerm.Checked = true;
+            this.rdbPerm.Location = new System.Drawing.Point(32, 14);
+            this.rdbPerm.Name = "rdbPerm";
+            this.rdbPerm.Size = new System.Drawing.Size(76, 17);
+            this.rdbPerm.TabIndex = 0;
+            this.rdbPerm.TabStop = true;
+            this.rdbPerm.Text = "Permanent";
+            this.rdbPerm.UseVisualStyleBackColor = true;
+            // 
             // lblAddress
             // 
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(12, 90);
+            this.lblAddress.Location = new System.Drawing.Point(12, 126);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(45, 13);
             this.lblAddress.TabIndex = 93;
@@ -126,12 +189,12 @@
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(86, 87);
+            this.txtAddress.Location = new System.Drawing.Point(98, 116);
             this.txtAddress.MaxLength = 100;
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(243, 51);
-            this.txtAddress.TabIndex = 2;
+            this.txtAddress.TabIndex = 3;
             this.txtAddress.Validating += new System.ComponentModel.CancelEventHandler(this.txtAddress_Validating);
             // 
             // lblMobile
@@ -139,13 +202,13 @@
             this.lblMobile.AutoSize = true;
             this.lblMobile.Location = new System.Drawing.Point(12, 61);
             this.lblMobile.Name = "lblMobile";
-            this.lblMobile.Size = new System.Drawing.Size(58, 13);
+            this.lblMobile.Size = new System.Drawing.Size(85, 13);
             this.lblMobile.TabIndex = 84;
-            this.lblMobile.Text = "Mobile No.";
+            this.lblMobile.Text = "Mobile No. [+91]";
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(86, 27);
+            this.txtName.Location = new System.Drawing.Point(98, 29);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(243, 20);
             this.txtName.TabIndex = 0;
@@ -163,7 +226,7 @@
             // 
             // txtMobNo
             // 
-            this.txtMobNo.Location = new System.Drawing.Point(86, 57);
+            this.txtMobNo.Location = new System.Drawing.Point(98, 58);
             this.txtMobNo.MaxLength = 10;
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(243, 20);
@@ -189,53 +252,11 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // grpBoxStaffType
-            // 
-            this.grpBoxStaffType.Controls.Add(this.rdbTemp);
-            this.grpBoxStaffType.Controls.Add(this.rdbPerm);
-            this.grpBoxStaffType.Enabled = false;
-            this.grpBoxStaffType.Location = new System.Drawing.Point(86, 144);
-            this.grpBoxStaffType.Name = "grpBoxStaffType";
-            this.grpBoxStaffType.Size = new System.Drawing.Size(243, 36);
-            this.grpBoxStaffType.TabIndex = 94;
-            this.grpBoxStaffType.TabStop = false;
-            // 
-            // rdbPerm
-            // 
-            this.rdbPerm.AutoSize = true;
-            this.rdbPerm.Checked = true;
-            this.rdbPerm.Location = new System.Drawing.Point(32, 14);
-            this.rdbPerm.Name = "rdbPerm";
-            this.rdbPerm.Size = new System.Drawing.Size(76, 17);
-            this.rdbPerm.TabIndex = 0;
-            this.rdbPerm.TabStop = true;
-            this.rdbPerm.Text = "Permanent";
-            this.rdbPerm.UseVisualStyleBackColor = true;
-            // 
-            // rdbTemp
-            // 
-            this.rdbTemp.AutoSize = true;
-            this.rdbTemp.Location = new System.Drawing.Point(144, 14);
-            this.rdbTemp.Name = "rdbTemp";
-            this.rdbTemp.Size = new System.Drawing.Size(75, 17);
-            this.rdbTemp.TabIndex = 1;
-            this.rdbTemp.Text = "Temporary";
-            this.rdbTemp.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 160);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
-            this.label1.TabIndex = 95;
-            this.label1.Text = "Staff Type";
-            // 
             // Winform_StaffDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(517, 283);
+            this.ClientSize = new System.Drawing.Size(517, 324);
             this.Controls.Add(this.grbMemNo);
             this.Controls.Add(this.grbMemPersonDetail);
             this.Name = "Winform_StaffDetails";
@@ -246,9 +267,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pcbStaffImage)).EndInit();
             this.grbMemPersonDetail.ResumeLayout(false);
             this.grbMemPersonDetail.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.grpBoxStaffType.ResumeLayout(false);
             this.grpBoxStaffType.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,5 +295,10 @@
         private System.Windows.Forms.RadioButton rdbTemp;
         private System.Windows.Forms.RadioButton rdbPerm;
         internal System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        internal System.Windows.Forms.Label lblPhoneNo;
+        internal System.Windows.Forms.TextBox txtPhoneNo;
     }
 }

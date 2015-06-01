@@ -34,7 +34,6 @@
             this.addCustomerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCustomerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.customerRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importCustomersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerMeasurementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchCustomerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +41,7 @@
             this.salaryRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,18 +83,33 @@
             this.rdbCustomer = new System.Windows.Forms.RadioButton();
             this.rdbOrders = new System.Windows.Forms.RadioButton();
             this.pnlDeliveryStatus = new System.Windows.Forms.Panel();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnAltSMS = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dgvUpCominAlt = new System.Windows.Forms.DataGridView();
+            this.dgvAltDel = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dgvDeliverToday = new System.Windows.Forms.DataGridView();
-            this.dgvDeliverOncoming = new System.Windows.Forms.DataGridView();
+            this.btnDelSMS = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblCurrCount = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dgvUpCominDel = new System.Windows.Forms.DataGridView();
+            this.dgvCurrDel = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             this.pnlDeliveryStatus.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominAlt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltDel)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverToday)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverOncoming)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominDel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCurrDel)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -130,7 +145,6 @@
             this.addCustomerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCustomerToolStripMenuItem1,
             this.customerRegisterToolStripMenuItem,
-            this.importCustomersToolStripMenuItem,
             this.customerMeasurementToolStripMenuItem});
             this.addCustomerToolStripMenuItem.Name = "addCustomerToolStripMenuItem";
             this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
@@ -149,13 +163,6 @@
             this.customerRegisterToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.customerRegisterToolStripMenuItem.Text = "Customer Register";
             this.customerRegisterToolStripMenuItem.Click += new System.EventHandler(this.customerRegisterToolStripMenuItem_Click);
-            // 
-            // importCustomersToolStripMenuItem
-            // 
-            this.importCustomersToolStripMenuItem.Name = "importCustomersToolStripMenuItem";
-            this.importCustomersToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.importCustomersToolStripMenuItem.Text = "Import Customers";
-            this.importCustomersToolStripMenuItem.Click += new System.EventHandler(this.importCustomersToolStripMenuItem_Click);
             // 
             // customerMeasurementToolStripMenuItem
             // 
@@ -197,7 +204,8 @@
             // groupsToolStripMenuItem
             // 
             this.groupsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addGroupsToolStripMenuItem});
+            this.addGroupsToolStripMenuItem,
+            this.groupRegisterToolStripMenuItem});
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
             this.groupsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.groupsToolStripMenuItem.Text = "Groups";
@@ -205,9 +213,15 @@
             // addGroupsToolStripMenuItem
             // 
             this.addGroupsToolStripMenuItem.Name = "addGroupsToolStripMenuItem";
-            this.addGroupsToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.addGroupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addGroupsToolStripMenuItem.Text = "Add Groups";
             this.addGroupsToolStripMenuItem.Click += new System.EventHandler(this.addGroupsToolStripMenuItem_Click);
+            // 
+            // groupRegisterToolStripMenuItem
+            // 
+            this.groupRegisterToolStripMenuItem.Name = "groupRegisterToolStripMenuItem";
+            this.groupRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.groupRegisterToolStripMenuItem.Text = "Group Register";
             // 
             // ordersToolStripMenuItem
             // 
@@ -456,7 +470,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select Category";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // txtSearch
             // 
@@ -470,14 +483,15 @@
             // 
             this.dgvSearch.AllowUserToAddRows = false;
             this.dgvSearch.AllowUserToDeleteRows = false;
+            this.dgvSearch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSearch.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSearch.Location = new System.Drawing.Point(9, 140);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
-            this.dgvSearch.Size = new System.Drawing.Size(255, 244);
+            this.dgvSearch.Size = new System.Drawing.Size(255, 210);
             this.dgvSearch.TabIndex = 1;
-            this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
+            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
             // 
             // rdbSales
             // 
@@ -549,56 +563,190 @@
             // 
             // pnlDeliveryStatus
             // 
-            this.pnlDeliveryStatus.Controls.Add(this.groupBox4);
+            this.pnlDeliveryStatus.Controls.Add(this.groupBox3);
             this.pnlDeliveryStatus.Controls.Add(this.groupBox2);
-            this.pnlDeliveryStatus.Location = new System.Drawing.Point(299, 28);
+            this.pnlDeliveryStatus.Location = new System.Drawing.Point(302, 28);
             this.pnlDeliveryStatus.Name = "pnlDeliveryStatus";
-            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1051, 250);
+            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1058, 258);
             this.pnlDeliveryStatus.TabIndex = 3;
             // 
-            // groupBox4
+            // groupBox3
             // 
-            this.groupBox4.Location = new System.Drawing.Point(378, 5);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(346, 233);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Alteration Delivery Status";
+            this.groupBox3.Controls.Add(this.btnAltSMS);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.dgvUpCominAlt);
+            this.groupBox3.Controls.Add(this.dgvAltDel);
+            this.groupBox3.Location = new System.Drawing.Point(535, 5);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(517, 233);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Alteration Delivery Status";
+            // 
+            // btnAltSMS
+            // 
+            this.btnAltSMS.Location = new System.Drawing.Point(170, 14);
+            this.btnAltSMS.Name = "btnAltSMS";
+            this.btnAltSMS.Size = new System.Drawing.Size(80, 23);
+            this.btnAltSMS.TabIndex = 13;
+            this.btnAltSMS.Text = "Send SMS";
+            this.btnAltSMS.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.MediumBlue;
+            this.label7.Location = new System.Drawing.Point(373, 24);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "4";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.MediumBlue;
+            this.label6.Location = new System.Drawing.Point(100, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(13, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "5";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(260, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(116, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Upcoming Deliveries  - ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 24);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(99, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Current Deliveries - ";
+            // 
+            // dgvUpCominAlt
+            // 
+            this.dgvUpCominAlt.AllowUserToAddRows = false;
+            this.dgvUpCominAlt.AllowUserToDeleteRows = false;
+            this.dgvUpCominAlt.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvUpCominAlt.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUpCominAlt.Location = new System.Drawing.Point(263, 40);
+            this.dgvUpCominAlt.Name = "dgvUpCominAlt";
+            this.dgvUpCominAlt.ReadOnly = true;
+            this.dgvUpCominAlt.Size = new System.Drawing.Size(249, 187);
+            this.dgvUpCominAlt.TabIndex = 3;
+            this.dgvUpCominAlt.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUpCominAlt_CellContentClick);
+            // 
+            // dgvAltDel
+            // 
+            this.dgvAltDel.AllowUserToAddRows = false;
+            this.dgvAltDel.AllowUserToDeleteRows = false;
+            this.dgvAltDel.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvAltDel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAltDel.Location = new System.Drawing.Point(6, 40);
+            this.dgvAltDel.Name = "dgvAltDel";
+            this.dgvAltDel.ReadOnly = true;
+            this.dgvAltDel.Size = new System.Drawing.Size(244, 187);
+            this.dgvAltDel.TabIndex = 2;
+            this.dgvAltDel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.dgvDeliverOncoming);
-            this.groupBox2.Controls.Add(this.dgvDeliverToday);
-            this.groupBox2.Location = new System.Drawing.Point(12, 5);
+            this.groupBox2.Controls.Add(this.btnDelSMS);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.lblCurrCount);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.dgvUpCominDel);
+            this.groupBox2.Controls.Add(this.dgvCurrDel);
+            this.groupBox2.Location = new System.Drawing.Point(8, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(346, 233);
+            this.groupBox2.Size = new System.Drawing.Size(519, 233);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Order Delivery Status";
             // 
-            // dgvDeliverToday
+            // btnDelSMS
             // 
-            this.dgvDeliverToday.AllowUserToAddRows = false;
-            this.dgvDeliverToday.AllowUserToDeleteRows = false;
-            this.dgvDeliverToday.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvDeliverToday.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDeliverToday.Location = new System.Drawing.Point(6, 40);
-            this.dgvDeliverToday.Name = "dgvDeliverToday";
-            this.dgvDeliverToday.ReadOnly = true;
-            this.dgvDeliverToday.Size = new System.Drawing.Size(165, 187);
-            this.dgvDeliverToday.TabIndex = 2;
+            this.btnDelSMS.Location = new System.Drawing.Point(173, 14);
+            this.btnDelSMS.Name = "btnDelSMS";
+            this.btnDelSMS.Size = new System.Drawing.Size(80, 23);
+            this.btnDelSMS.TabIndex = 11;
+            this.btnDelSMS.Text = "Send SMS";
+            this.btnDelSMS.UseVisualStyleBackColor = true;
             // 
-            // dgvDeliverOncoming
+            // label5
             // 
-            this.dgvDeliverOncoming.AllowUserToAddRows = false;
-            this.dgvDeliverOncoming.AllowUserToDeleteRows = false;
-            this.dgvDeliverOncoming.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvDeliverOncoming.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDeliverOncoming.Location = new System.Drawing.Point(175, 40);
-            this.dgvDeliverOncoming.Name = "dgvDeliverOncoming";
-            this.dgvDeliverOncoming.ReadOnly = true;
-            this.dgvDeliverOncoming.Size = new System.Drawing.Size(165, 187);
-            this.dgvDeliverOncoming.TabIndex = 3;
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.MediumBlue;
+            this.label5.Location = new System.Drawing.Point(375, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(13, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "4";
+            // 
+            // lblCurrCount
+            // 
+            this.lblCurrCount.AutoSize = true;
+            this.lblCurrCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblCurrCount.Location = new System.Drawing.Point(102, 24);
+            this.lblCurrCount.Name = "lblCurrCount";
+            this.lblCurrCount.Size = new System.Drawing.Size(13, 13);
+            this.lblCurrCount.TabIndex = 9;
+            this.lblCurrCount.Text = "5";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(263, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(116, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Upcoming Deliveries. - ";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Current Deliveries - ";
+            // 
+            // dgvUpCominDel
+            // 
+            this.dgvUpCominDel.AllowUserToAddRows = false;
+            this.dgvUpCominDel.AllowUserToDeleteRows = false;
+            this.dgvUpCominDel.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvUpCominDel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUpCominDel.Location = new System.Drawing.Point(266, 40);
+            this.dgvUpCominDel.Name = "dgvUpCominDel";
+            this.dgvUpCominDel.ReadOnly = true;
+            this.dgvUpCominDel.Size = new System.Drawing.Size(246, 187);
+            this.dgvUpCominDel.TabIndex = 3;
+            this.dgvUpCominDel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // dgvCurrDel
+            // 
+            this.dgvCurrDel.AllowUserToAddRows = false;
+            this.dgvCurrDel.AllowUserToDeleteRows = false;
+            this.dgvCurrDel.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvCurrDel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCurrDel.Location = new System.Drawing.Point(6, 40);
+            this.dgvCurrDel.Name = "dgvCurrDel";
+            this.dgvCurrDel.ReadOnly = true;
+            this.dgvCurrDel.Size = new System.Drawing.Size(247, 187);
+            this.dgvCurrDel.TabIndex = 2;
+            this.dgvCurrDel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDeliverToday_CellContentClick);
             // 
             // Main
             // 
@@ -623,9 +771,14 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
             this.pnlDeliveryStatus.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominAlt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltDel)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverToday)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeliverOncoming)).EndInit();
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominDel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCurrDel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -682,15 +835,27 @@
         private System.Windows.Forms.ToolStripMenuItem addCatalogueToolStripMenuItem1;
         private System.Windows.Forms.RadioButton rdbSales;
         private System.Windows.Forms.ToolStripMenuItem salaryDetailsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem importCustomersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customerMeasurementToolStripMenuItem;
         private System.Windows.Forms.DataGridView dgvSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Panel pnlDeliveryStatus;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.DataGridView dgvDeliverOncoming;
-        private System.Windows.Forms.DataGridView dgvDeliverToday;
+        private System.Windows.Forms.DataGridView dgvCurrDel;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DataGridView dgvUpCominAlt;
+        private System.Windows.Forms.DataGridView dgvAltDel;
+        private System.Windows.Forms.DataGridView dgvUpCominDel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblCurrCount;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolStripMenuItem groupRegisterToolStripMenuItem;
+        private System.Windows.Forms.Button btnDelSMS;
+        private System.Windows.Forms.Button btnAltSMS;
     }
 }
 

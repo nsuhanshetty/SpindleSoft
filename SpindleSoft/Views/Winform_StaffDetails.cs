@@ -1,5 +1,7 @@
-﻿using SpindleSoft.Savers;
+﻿using SpindleSoft.Model;
+using SpindleSoft.Savers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -8,12 +10,39 @@ namespace SpindleSoft.Views
 {
     public partial class Winform_StaffDetails : Winform_DetailsFormat
     {
-        SpindleSoft.Model.Staff _staff = new Model.Staff();
+        Staff _staff = new Staff();
 
+        #region Ctor
         public Winform_StaffDetails()
         {
             InitializeComponent();
         }
+
+        public Winform_StaffDetails(Staff _staff)
+        {
+            InitializeComponent();
+
+            this._staff = _staff;
+
+            /*Load Controls*/
+            txtAddress.Text = _staff.Address;
+            txtMobNo.Text = _staff.Mobile_No;
+            txtName.Text = _staff.Name;
+            txtPhoneNo.Text = _staff.Phone_No;
+            pcbStaffImage.Image = _staff.Image;
+
+            if (_staff.IsTemporary)
+            {
+                rdbPerm.Checked = false;
+                rdbTemp.Checked = true;
+            }
+            else
+            {
+                rdbPerm.Checked = true;
+                rdbTemp.Checked = false;
+            }
+        }
+        #endregion Ctor
 
         #region Validations
         private void txtName_Validated(object sender, EventArgs e)
@@ -65,14 +94,32 @@ namespace SpindleSoft.Views
                 errorProvider1.SetError(txtAddress, "");
             }
         }
+
+        private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtPhoneNo.Text == String.Empty)
+                return;
+
+            Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
+            string errorMsg = _match.Success ? "" : "Invalid Input for Phone Number\n" +
+  " For example '8012345678'";
+            errorProvider1.SetError(txtPhoneNo, errorMsg);
+
+            if (errorMsg != "")
+            {
+                // Cancel the event and select the text to be corrected by the user.
+                e.Cancel = true;
+                txtPhoneNo.Select(0, txtPhoneNo.TextLength);
+            }
+        }
         #endregion Validations
 
+        #region Events
         private void btnCapture_Click(object sender, EventArgs e)
         {
             Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbStaffImage);
             _imageCapture.ShowDialog();
         }
-
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
         {
@@ -87,18 +134,27 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            UpdateStatus("Saving..", 25);
+            //need to handle this situation well
+            string[] input = { "txtPhoneNo" };
+            if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
+            {
+                return;
+            }
+
+            UpdateStatus("Validating..", 25);
             //set customer
             this._staff.Name = txtName.Text;
-            this._staff.MobileNo = txtMobNo.Text;
+            this._staff.Mobile_No = txtMobNo.Text;
             this._staff.Address = txtAddress.Text;
+            this._staff.Phone_No = txtPhoneNo.Text;
             this._staff.Image = pcbStaffImage.Image;
+            this._staff.IsTemporary = rdbPerm.Checked == true ? false : true;
 
-            UpdateStatus("Saving..", 50);
+            UpdateStatus("Saving Staff Info..", 50);
             bool response = PeoplePracticeSaver.SaveStaffInfo(this._staff);
 
-            UpdateStatus("Saving..", 75);
-            response = PeoplePracticeSaver.SaveStaffImage(this._staff.Image, this._staff.MobileNo);
+            UpdateStatus("Saving Staff Image..", 75);
+            response = PeoplePracticeSaver.SaveStaffImage(this._staff.Image, this._staff.Mobile_No);
 
             if (response)
             {
@@ -110,6 +166,7 @@ namespace SpindleSoft.Views
                 UpdateStatus("Error Saving Staff Details", 100);
             }
         }
+        #endregion events
 
     }
 }

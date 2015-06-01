@@ -48,9 +48,9 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.process1 = new System.Diagnostics.Process();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtRefMob = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtRefName = new System.Windows.Forms.TextBox();
-            this.cmbRefMobNo = new System.Windows.Forms.ComboBox();
             this.pcbReferral = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.grbMemPersonDetail.SuspendLayout();
@@ -235,18 +235,25 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtRefMob);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtRefName);
-            this.groupBox1.Controls.Add(this.cmbRefMobNo);
             this.groupBox1.Controls.Add(this.pcbReferral);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(12, 259);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(509, 130);
             this.groupBox1.TabIndex = 124;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Referred By Details";
+            // 
+            // txtRefMob
+            // 
+            this.txtRefMob.Enabled = false;
+            this.txtRefMob.Location = new System.Drawing.Point(246, 61);
+            this.txtRefMob.Name = "txtRefMob";
+            this.txtRefMob.Size = new System.Drawing.Size(243, 20);
+            this.txtRefMob.TabIndex = 113;
             // 
             // label3
             // 
@@ -264,16 +271,6 @@
             this.txtRefName.Name = "txtRefName";
             this.txtRefName.Size = new System.Drawing.Size(243, 20);
             this.txtRefName.TabIndex = 111;
-            // 
-            // cmbRefMobNo
-            // 
-            this.cmbRefMobNo.FormattingEnabled = true;
-            this.cmbRefMobNo.Location = new System.Drawing.Point(246, 61);
-            this.cmbRefMobNo.Name = "cmbRefMobNo";
-            this.cmbRefMobNo.Size = new System.Drawing.Size(243, 21);
-            this.cmbRefMobNo.TabIndex = 110;
-            this.cmbRefMobNo.SelectedIndexChanged += new System.EventHandler(this.cmbRefMobNo_SelectedIndexChanged);
-            this.cmbRefMobNo.TextChanged += new System.EventHandler(this.cmbRefMobNo_TextChanged);
             // 
             // pcbReferral
             // 
@@ -331,7 +328,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         internal System.Windows.Forms.PictureBox pcbReferral;
         internal System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbRefMobNo;
         internal System.Windows.Forms.PictureBox pcbCustImage;
         internal System.Windows.Forms.Button btnCapture;
         internal System.Windows.Forms.Label lblPhoneNo;
@@ -346,5 +342,6 @@
         internal System.Windows.Forms.TextBox txtMobNo;
         private System.Windows.Forms.TextBox txtRefName;
         internal System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtRefMob;
     }
 }

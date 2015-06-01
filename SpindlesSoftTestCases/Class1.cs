@@ -3,7 +3,6 @@ using System.Drawing;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using SpindleSoft.Model;
 using System.Collections.Generic;
 using System;
@@ -31,7 +30,7 @@ namespace SpindleSoftTest
         [TestCase("akashid", "8973150426", "7242496392", "address", "akash@gmail.com"),
         TestCase("akashied", "8971100725", "", "", "")]
         [Test]
-        public void CreateCustomer_Test(string name, string mobile_no, string phone_no, string address, string email)
+        public void CreateCustomer_TestRestApi(string name, string mobile_no, string phone_no, string address, string email)
         {
             Customer _customer = new Customer(name, mobile_no, phone_no, address, email);
 
@@ -56,22 +55,36 @@ namespace SpindleSoftTest
                 Assert.AreEqual(_webResponse.StatusCode, HttpStatusCode.Created);
             }
         }
+
+        [TestCase("akashid", "8973150426", "7242496392", "address", "akash@gmail.com"),
+        TestCase("akashied", "8971100725", "", "", ""),
+        TestCase("akashin", "8971100727", "7242496394", "", "")]
+        [Test]
+        public void CreateCustomer_Test(string name, string mobile_no, string phone_no, string address, string email)
+        {
+            Customer _customer = new Customer(name, mobile_no, phone_no, address, email);
+
+            bool _saved = SpindleSoft.Savers.PeoplePracticeSaver.SaveCustomerInfo(_customer);
+
+            Assert.AreEqual(_saved, true);
+
+        }
         #endregion Create
 
         #region CreateImage
-        [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\AddReferral.png","8971150421", true)]
+        [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\AddReferral.png", "8971150421", true)]
         [Test]
-        public void PCreateCustomerImage_Test(string fileName, string mobile_no, bool _bool)
+        public void PCreateCustomerImageRestApi_Test(string fileName, string mobile_no, bool _bool)
         {
             //todo: try to implement using restSharp
-             Image _image = Image.FromFile(fileName);
+            Image _image = Image.FromFile(fileName);
             byte[] _imageByte = (byte[])new ImageConverter().ConvertTo(_image, typeof(byte[]));
             Uri _uri = new Uri(BASE_URI, "customer/upload/image");
-            
+
             //todo: make following codes inline
-            Dictionary<string, object> _postParameters = new Dictionary<string,object>();
-            _postParameters.Add("file",new FormUpload.FileParameter(_imageByte));
-            _postParameters.Add("mobile",mobile_no);
+            Dictionary<string, object> _postParameters = new Dictionary<string, object>();
+            _postParameters.Add("file", new FormUpload.FileParameter(_imageByte));
+            _postParameters.Add("mobile", mobile_no);
 
             HttpWebResponse webResponse = FormUpload.MultipartFormDataPost(_uri.ToString(), "someone", _postParameters);
 
@@ -109,6 +122,15 @@ namespace SpindleSoftTest
             //}
         }
 
+        //[TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\AddReferral.png", 123)]
+        //[Test]
+        //public void PCreateCustomerImage_Test(string fileName, int id)
+        //{
+        //    //todo: try to implement using restSharp
+        //    Image _image = Image.FromFile(fileName);
+        //    bool _saved = PeoplePracticeSaver.SaveCustomerImage(_image, id);
+        //}
+
         //[TestCase("",8971150421,false)]
         //[TestCase("", "", false)]
         //[Test]
@@ -137,12 +159,25 @@ namespace SpindleSoftTest
         TestCase("", "", "824"),
         TestCase("", "89", "")]
         [Test]
-        public void PGetAllCustomers_Test(string name, string mobileno, string phoneno)
+        public void PGetAllCustomers_TestRestApi(string name, string mobileno, string phoneno)
         {
             Uri uri = new Uri(BASE_URI, "customer/get?name=" + name + "&mobile=" + mobileno + "&phone=" + phoneno);
             List<Customer> customers = GetCustomersList(uri);
             Assert.Greater(customers.Count, 0);
             System.Diagnostics.Debug.WriteLine("name=" + name + ", mobile=" + mobileno + ", phone=" + phoneno);
+        }
+
+        [TestCase("", "", ""),
+        TestCase("akash", "", ""),
+        TestCase("akash", "89", "724249639"),
+        TestCase("", "", "7242496392"),
+        TestCase("", "8973", "")]
+        [Test]
+        public void PGetAllCustomers_Test(string name, string mobileno, string phoneno)
+        {
+
+            List<Customer> customers = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(name, mobileno, phoneno);
+            Assert.Greater(customers.Count, 0);
         }
 
         /// <summary>

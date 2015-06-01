@@ -4,7 +4,7 @@ using log4net.Config;
 
 namespace SpindleSoft
 {
-    internal static class Program
+    internal class Program
     {
         /// <summary>
         /// The main entry point for the application.

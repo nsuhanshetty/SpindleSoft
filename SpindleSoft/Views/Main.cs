@@ -47,6 +47,7 @@ namespace SpindleSoft
             new Winform_OrderRegister().ShowDialog();
         }
 
+        #region SearchTxt
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSearchText("Search Customer Mobile No.");
@@ -71,18 +72,20 @@ namespace SpindleSoft
             this.searchState = SearchStates.Sales;
         }
 
-
         private void UpdateSearchText(string _updateText)
         {
             lblSearchText.Text = _updateText;
             txtSearch.Focus();
         }
+        #endregion SearchTxt
 
         private void Main_Load(object sender, EventArgs e)
         {
-
+            /*load delivery dgv*/
+            /*load alteration dgv*/
         }
 
+        #region toolstrip
         private void addCustomerToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             new WinForm_CustomerDetails().ShowDialog();
@@ -139,6 +142,7 @@ namespace SpindleSoft
         {
 
         }
+        #endregion toolstrip
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -148,11 +152,6 @@ namespace SpindleSoft
                 new WinForm_CustomerDetails().ShowDialog();
             //else
             //    new Winform_AlterationsDetails().ShowDialog();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void salaryRegisterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -184,9 +183,7 @@ namespace SpindleSoft
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(txtSearch.Text)) return;
-            dgvSearch.DataSource= Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);           
-
-
+            dgvSearch.DataSource = Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);
         }
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -209,6 +206,62 @@ namespace SpindleSoft
         {
             this.Close();
         }
+
+        #region Alteration
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            /*
+            *Date
+            *Customer Name
+            *MobileNo
+            *send sms
+            //*postpone - 2mrw 
+            */
+
+            /*get pending and today's Alterations*/
+        }
+
+        private void dgvUpCominAlt_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            /*
+            *Date
+            *Customer Name
+            *MobileNo
+            *send sms
+            *pick Order
+            */
+
+            /*get upcoming's Alteration*/
+        }
+        #endregion Alteration
+
+        #region Order
+        private void dgvDeliverToday_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            /*
+             *Date
+             *Customer Name
+             *MobileNo
+             *send sms
+             //*postpone - 2mrw 
+             */
+
+            /*get pending and today's orders*/
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            /*
+             *Date
+             *Customer Name
+             *MobileNo
+             *send sms
+             *pick Order
+             */
+
+            /*get upcoming's orders*/
+        }
+        #endregion Order
 
     }
 
