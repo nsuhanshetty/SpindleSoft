@@ -74,9 +74,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilderRestApi.cs" />
+    <Compile Include="Builders\SaleBuilder.cs" />
     <Compile Include="FluentMapping\OrdersMapping.cs" />
+    <Compile Include="FluentMapping\SaleMapping.cs" />
+    <Compile Include="Model\SaleItem.cs" />
+    <Compile Include="Savers\AlterationSaver.cs" />
+    <Compile Include="Savers\OrderSaver.cs" />
     <Compile Include="Savers\PeoplePracticeSaverRestApi.cs" />
     <Compile Include="FluentMapping\PeoplePracticeMapping.cs" />
     <Compile Include="Helpers\Main_Helper.cs" />
@@ -90,6 +96,7 @@
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Savers\FormUpload.cs" />
     <Compile Include="Savers\PeoplePracticeSaver.cs" />
+    <Compile Include="Savers\SalesSaver.cs" />
     <Compile Include="SpindleSoftDbDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,6 +116,18 @@
     </Compile>
     <Compile Include="Views\DesignControl.Designer.cs">
       <DependentUpon>DesignControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_SKURegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_SKURegister.Designer.cs">
+      <DependentUpon>Winform_SKURegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_VendorsRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_VendorsRegister.Designer.cs">
+      <DependentUpon>Winform_VendorsRegister.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_AddCustomer.cs">
       <SubType>Form</SubType>
@@ -139,6 +158,12 @@
     </Compile>
     <Compile Include="Views\Winform_ImageCapture.Designer.cs">
       <DependentUpon>Winform_ImageCapture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_MeasurementDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_MeasurementDetails.Designer.cs">
+      <DependentUpon>Winform_MeasurementDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_OrderDetails.cs">
       <SubType>Form</SubType>
@@ -212,6 +237,18 @@
     <Compile Include="Views\WinForm_Abstract.Designer.cs">
       <DependentUpon>WinForm_Abstract.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Winform_OrderType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_OrderType.Designer.cs">
+      <DependentUpon>Winform_OrderType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForm_SKUDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForm_SKUDetails.Designer.cs">
+      <DependentUpon>WinForm_SKUDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Winform_SMSRegister.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,6 +273,12 @@
     <Compile Include="Views\Winform_StaffRegister.Designer.cs">
       <DependentUpon>Winform_StaffRegister.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Winform_VendorDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_VendorDetails.Designer.cs">
+      <DependentUpon>Winform_VendorDetails.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Views\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -252,6 +295,12 @@
     <EmbeddedResource Include="Views\DesignControl.resx">
       <DependentUpon>DesignControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_SKURegister.resx">
+      <DependentUpon>Winform_SKURegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_VendorsRegister.resx">
+      <DependentUpon>Winform_VendorsRegister.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_AddCustomer.resx">
       <DependentUpon>Winform_AddCustomer.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_ImageCapture.resx">
       <DependentUpon>Winform_ImageCapture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_MeasurementDetails.resx">
+      <DependentUpon>Winform_MeasurementDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_OrderDetails.resx">
       <DependentUpon>Winform_OrderDetails.cs</DependentUpon>
@@ -303,6 +355,12 @@
     <EmbeddedResource Include="Views\WinForm_Abstract.resx">
       <DependentUpon>WinForm_Abstract.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_OrderType.resx">
+      <DependentUpon>Winform_OrderType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForm_SKUDetails.resx">
+      <DependentUpon>WinForm_SKUDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_SMSRegister.resx">
       <DependentUpon>Winform_SMSRegister.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_StaffRegister.resx">
       <DependentUpon>Winform_StaffRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_VendorDetails.resx">
+      <DependentUpon>Winform_VendorDetails.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="log4net.config" />
     <None Include="packages.config" />
@@ -349,6 +410,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Health.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shopping-bag-blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

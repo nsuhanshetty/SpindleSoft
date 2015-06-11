@@ -53,6 +53,7 @@ namespace SpindleSoft.Views
             dgvCustomerRegister.Columns.RemoveAt(4);
             dgvCustomerRegister.Columns.Remove("image");
             dgvCustomerRegister.Columns.Remove("address");
+            dgvCustomerRegister.Columns.Remove("ReferralID");
 
             if(dgvCustomerRegister.RowCount == 0)
                 lblStatus.Text = "No Results Found";

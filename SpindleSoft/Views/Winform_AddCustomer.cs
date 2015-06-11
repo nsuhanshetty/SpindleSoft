@@ -43,7 +43,7 @@ namespace SpindleSoft.Views
         {
             DialogResult _dialogResult = MessageBox.Show("Do you want to Create Order for Customer " +
                                          Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value), 
-                                         "Modify Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                                         "Add Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                                          MessageBoxDefaultButton.Button2);
 
             if (_dialogResult == DialogResult.No) return;
@@ -59,6 +59,10 @@ namespace SpindleSoft.Views
             WinForm_CustomerDetails custDetails = Application.OpenForms["WinForm_CustomerDetails"] as WinForm_CustomerDetails;
             if (custDetails != null)
                 custDetails.UpdateCustomerControl(_cust);
+
+            Winform_AlterationsDetails altDetails = Application.OpenForms["Winform_AlterationsDetails"] as Winform_AlterationsDetails;
+            if (altDetails != null)
+                altDetails.UpdateCustomerControl(_cust);
 
             this.Close();
         }

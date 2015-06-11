@@ -107,5 +107,30 @@ namespace SpindleSoft.Savers
             }
         }
         #endregion Staff
+
+        #region Vendor
+
+        public static bool SaveVendorInfo(Vendors vendor)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        session.SaveOrUpdate(vendor);
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                //log4net 
+                return false;
+            }
+        }
+
+        #endregion Vendor
     }
 }

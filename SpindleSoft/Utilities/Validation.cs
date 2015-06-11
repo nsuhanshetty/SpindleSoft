@@ -65,6 +65,10 @@ namespace SpindleSoft.Utilities
         /// <returns></returns>
         public static bool IsNullOrEmpty(Control container, Boolean Recurse, List<string> ExceptionControl = null)
         {
+            //todo: need to make it better
+            if (ExceptionControl == null)
+                ExceptionControl = new List<string>();
+
             foreach (Control ctrol in container.Controls)
             {
                 if ((ctrol is TextBox || ctrol is RichTextBox) && (!ExceptionControl.Contains(ctrol.Name)))
@@ -80,32 +84,44 @@ namespace SpindleSoft.Utilities
                 {
                     if (((PictureBox)ctrol).Image == null)
                     {
-                        MessageBox.Show("Employee Image is Mandatory and cannot be empty." + Environment.NewLine + "Please insert and try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(ctrol.Name + " Image is Mandatory and cannot be empty." + Environment.NewLine + "Please insert and try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
+                }
+                if (ctrol is ComboBox)
+                {
+                    if ((string.IsNullOrEmpty(((ComboBox)ctrol).Text)) && (!ExceptionControl.Contains(ctrol.Name)))
+                    {
+                        MessageBox.Show("ComboBox " + ctrol.Name + " is Mandatory and cannot be empty." + Environment.NewLine + "Please insert and try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
                 }
                 if (Recurse)
                 {
-                    switch (ctrol.Name.Substring(0, 3).ToLower())
-                    {
-                        case "tab":
-                            TabPage tp = (TabPage)ctrol;
-                            if (IsNullOrEmpty(tp, Recurse, ExceptionControl) == true)
-                                return true;
-                            break;
+                    if ((ctrol is TabPage || ctrol is Panel || ctrol is GroupBox) && IsNullOrEmpty(ctrol, Recurse, ExceptionControl))
+                        return true;
 
-                        case "pnl":
-                            Panel pnl = (Panel)ctrol;
-                            if (IsNullOrEmpty(pnl, Recurse, ExceptionControl) == true)
-                                return true;
-                            break;
 
-                        case "grb":
-                            GroupBox grbx = (GroupBox)ctrol;
-                            if (IsNullOrEmpty(grbx, Recurse, ExceptionControl) == true)
-                                return true;
-                            break;
-                    }
+                    //switch (ctrol.GetType().ToString())
+                    //{
+                    //    case "TabPage":
+                    //        TabPage tp = (TabPage)ctrol;
+                    //        if (IsNullOrEmpty(tp, Recurse, ExceptionControl) == true)
+                    //            return true;
+                    //        break;
+
+                    //    case "Panel":
+                    //        Panel pnl = (Panel)ctrol;
+                    //        if (IsNullOrEmpty(pnl, Recurse, ExceptionControl) == true)
+                    //            return true;
+                    //        break;
+
+                    //    case "GroupBox":
+                    //        GroupBox grbx = (GroupBox)ctrol;
+                    //        if (IsNullOrEmpty(grbx, Recurse, ExceptionControl) == true)
+                    //            return true;
+                    //        break;
+                    //}
                 }
 
                 //if (Recurse)

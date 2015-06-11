@@ -39,4 +39,20 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.IsTemporary);
         }
     }
+
+    class VendorMapping : ClassMap<Vendors>
+    {
+        public VendorMapping()
+        {
+            Id(x => x.ID);
+            Map(x => x.Name);
+            Map(x => x.MobileNo);
+            Map(x => x.Address);
+            Map(x => x.BankUserName);
+            Map(x => x.AccNo);
+            Map(x => x.BankName);
+            Map(x => x.IFSCCode);
+        }
+    }
+
 }

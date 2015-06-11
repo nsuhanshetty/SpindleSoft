@@ -150,8 +150,10 @@ namespace SpindleSoft
                 new Winform_OrderDetails().ShowDialog();
             else if (rdbCustomer.Checked)
                 new WinForm_CustomerDetails().ShowDialog();
-            //else
-            //    new Winform_AlterationsDetails().ShowDialog();
+            else if (rdbAlteration.Checked)
+                new Winform_AlterationsDetails().ShowDialog();
+            else if (rdbSales.Checked)
+                new WinForm_SKUDetails().ShowDialog();
         }
 
         private void salaryRegisterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -262,6 +264,18 @@ namespace SpindleSoft
             /*get upcoming's orders*/
         }
         #endregion Order
+
+        private void addCatalogueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new WinForm_SKUDetails().ShowDialog();
+        }
+
+        private void stockCheckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_SKURegister().ShowDialog();
+        }
+
+
 
     }
 

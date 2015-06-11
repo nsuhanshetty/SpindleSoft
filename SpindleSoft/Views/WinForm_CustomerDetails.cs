@@ -44,7 +44,7 @@ namespace SpindleSoft.Views
 
             txtRefMob.Text = refCust.Mobile_No;
             txtRefName.Text = refCust.Name;
-            pcbReferral.Image = refCust.Image;
+            pcbReferral.Image = PeoplePracticeBuilder.GetCustomerImage(refCust.Mobile_No);
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -250,8 +250,8 @@ namespace SpindleSoft.Views
         public void UpdateCustomerControl(Customer refCustomer)
         {
             if (refCustomer == null) return;
-            
-            //this._cust = customer;
+
+            this.refCust = refCustomer;
 
             txtRefName.Text = refCustomer.Name;
             txtRefMob.Text = refCustomer.Mobile_No;

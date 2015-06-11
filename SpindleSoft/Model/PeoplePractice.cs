@@ -101,4 +101,37 @@ namespace SpindleSoft.Model
 
         public List<Customer> CustomerList { get; set; }
     }
+
+    public class Vendors
+    {
+        public virtual int ID{ get; set; }
+
+        public virtual string Name { get; set; }
+
+        public virtual string MobileNo { get; set; }
+
+        public virtual string Address { get; set; }
+
+        public virtual string BankName { get; set; }
+
+        public virtual string AccNo { get; set; }
+
+        public virtual string IFSCCode { get; set; }
+
+        public virtual string BankUserName { get; set; }
+
+        public Vendors(string name,string mobno, string address, string bankusername, string accno, string bankname,string IfscNo)
+        {
+            this.Name = name;
+            this.MobileNo = mobno;
+            this.Address = address;
+
+            this.BankUserName = bankusername;
+            this.AccNo = accno;
+            this.BankName = bankname;
+            this.IFSCCode = IfscNo;
+        }
+
+        public Vendors(){ }
+    }
 }

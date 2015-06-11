@@ -28,20 +28,20 @@ namespace SpindleSoft.Builders
             {
                 string query = "select c.Name,c.Mobile_No,c.Phone_No from customer c where (c.Name like :Name)" +
                 "and (c.Mobile_No like :Mobile_No) and (c.Phone_No like :Phone_No) order by c.UpdatedTime desc";
-                 
+
                 NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
                    .SetParameter("Name", name + "%")
                    .SetParameter("Mobile_No", mobileno + "%")
                    .SetParameter("Phone_No", phoneno + "%"))
                    .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Customer)));
-               return _cust = sqlQuery.List<Customer>() as List<Customer>;
-                
+                return _cust = sqlQuery.List<Customer>() as List<Customer>;
+
                 //var _custs = session.QueryOver<Customer>()
                 //      .WhereRestrictionOn(c => c.Mobile_No).IsLike(mobileno + '%')
                 //      .And(Restrictions.On<Customer>(c => c.Name).IsLike(name + '%'))
                 //      .And(Restrictions.On<Customer>(c => c.Phone_No).IsLike(phoneno + '%'))
                 //     .List() as List<Customer>;
-               // return _custs;
+                // return _custs;
             }
 
         }
@@ -59,7 +59,7 @@ namespace SpindleSoft.Builders
                 }
                 return _cust;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 //todo: log4net
                 return null;
@@ -100,7 +100,7 @@ namespace SpindleSoft.Builders
             {
                 //todo: log4net
                 return null;
-            }          
+            }
         }
 
         #endregion CustomerBuilder
@@ -163,6 +163,24 @@ namespace SpindleSoft.Builders
             }
         }
         #endregion Staff
+
+        #region Vendor
+        public static List<Vendors> GetVendorsList(string name = "", string mobileno = "")
+        {
+            List<Vendors> _vend = new List<Vendors>();
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                string query = "select v.Name,v.MobileNo,v.ID from vendors v where (v.Name like :Name)" +
+                "and (v.MobileNo like :Mobile_No) order by v.UpdatedTime desc";
+
+                NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
+                   .SetParameter("Name", name + "%")
+                   .SetParameter("Mobile_No", mobileno + "%"))
+                   .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Vendors)));
+                return _vend = sqlQuery.List<Vendors>() as List<Vendors>;
+            }
+        }
+        #endregion Vendor
 
         public static DataTable ToDataTable<T>(List<T> items)
         {

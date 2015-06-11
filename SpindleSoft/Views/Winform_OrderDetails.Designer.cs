@@ -52,7 +52,7 @@
             this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.AddCustomerToolStrip = new System.Windows.Forms.ToolStripButton();
-            this.NewCustomerToolStrip = new System.Windows.Forms.ToolStripButton();
+            this.NewOrderTypeToolStrip = new System.Windows.Forms.ToolStripButton();
             this.AddReferralToolStrip = new System.Windows.Forms.ToolStripButton();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.OrderType = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -199,7 +199,6 @@
             // 
             // dgvOrderItems
             // 
-            this.dgvOrderItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrderItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrderItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.OrderType,
@@ -213,6 +212,8 @@
             this.dgvOrderItems.Size = new System.Drawing.Size(560, 131);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgvOrderItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGridView1_DataError);
+            this.dgvOrderItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvOrderItems_EditingControlShowing);
             // 
             // grpBoxCustomer
             // 
@@ -289,10 +290,16 @@
             this.AddCustomerToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.AddCustomerToolStrip.Click += new System.EventHandler(this.AddCustomerToolStrip_Click);
             // 
-            // NewCustomerToolStrip
+            // NewOrderTypeToolStrip
             // 
-            this.NewCustomerToolStrip.Name = "NewCustomerToolStrip";
-            this.NewCustomerToolStrip.Size = new System.Drawing.Size(23, 23);
+            this.NewOrderTypeToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("NewOrderTypeToolStrip.Image")));
+            this.NewOrderTypeToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.NewOrderTypeToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewOrderTypeToolStrip.Name = "NewOrderTypeToolStrip";
+            this.NewOrderTypeToolStrip.Size = new System.Drawing.Size(76, 51);
+            this.NewOrderTypeToolStrip.Text = "New Order Type";
+            this.NewOrderTypeToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.NewOrderTypeToolStrip.Click += new System.EventHandler(this.NewOrderTypeToolStrip_Click);
             // 
             // AddReferralToolStrip
             // 
@@ -305,31 +312,36 @@
             // 
             // OrderType
             // 
+            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.OrderType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.OrderType.HeaderText = "Clothing Type";
             this.OrderType.Name = "OrderType";
-            this.OrderType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.OrderType.Width = 103;
             // 
             // OrderQuantity
             // 
             this.OrderQuantity.HeaderText = "Quantity";
             this.OrderQuantity.Name = "OrderQuantity";
+            this.OrderQuantity.Width = 104;
             // 
             // OrderPrice
             // 
             this.OrderPrice.HeaderText = "Price";
             this.OrderPrice.Name = "OrderPrice";
+            this.OrderPrice.Width = 103;
             // 
             // OrderMeasurement
             // 
             this.OrderMeasurement.HeaderText = "Edit Measurement";
             this.OrderMeasurement.Name = "OrderMeasurement";
             this.OrderMeasurement.Text = "Edit";
+            this.OrderMeasurement.Width = 104;
             // 
             // OrderMeasureInherit
             // 
             this.OrderMeasureInherit.HeaderText = "Inherit";
             this.OrderMeasureInherit.Name = "OrderMeasureInherit";
+            this.OrderMeasureInherit.Width = 103;
             // 
             // Winform_OrderDetails
             // 
@@ -398,7 +410,7 @@
         
         //Toolstrip Add
         internal System.Windows.Forms.ToolStripButton AddCustomerToolStrip;
-        internal System.Windows.Forms.ToolStripButton NewCustomerToolStrip;
+        internal System.Windows.Forms.ToolStripButton NewOrderTypeToolStrip;
         private System.Windows.Forms.DataGridViewComboBoxColumn OrderType;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderPrice;
