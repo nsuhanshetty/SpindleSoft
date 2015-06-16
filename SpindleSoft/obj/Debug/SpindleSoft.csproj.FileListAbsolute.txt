@@ -52,3 +52,5 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.csprojResolveAssemblyReference.cache
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_SKURegister.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.WinForm_SKUDetails.resources
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_SalesDetails.resources
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_SalesRegister.resources

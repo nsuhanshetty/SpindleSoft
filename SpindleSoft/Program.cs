@@ -15,6 +15,7 @@ namespace SpindleSoft
             BasicConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            var session = NHibernateHelper.OpenSession();
             Application.Run(new Main());
         }
     }

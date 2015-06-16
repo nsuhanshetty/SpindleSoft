@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace SpindleSoft.FluentMapping
 {
-    class SaleMapping
+    class SKUItemMapping : ClassMap<SKUItem>
     {
-
-    }
-
-    class SaleItemMapping: ClassMap<SaleItem>
-    {
-        public SaleItemMapping()
+        public SKUItemMapping()
         {
             Id(x => x.ID).GeneratedBy.Identity();
             Map(x => x.Name);
@@ -28,6 +23,31 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.IsSelfMade);
             Map(x => x.Size);
             Map(x => x.VendorID);
+            Map(x => x.Quantity);
+        }
+    }
+
+    class SaleMapping : ClassMap<Sale>
+    {
+        public SaleMapping()
+        {
+            Id(x => x.ID).GeneratedBy.Identity();
+            Map(x => x.CustID);
+            Map(x => x.SaleItems);
+            Map(x => x.TotalPrice);
+            Map(x => x.AmountPaid);
+            Map(x => x.DateOfSale);
+        }
+    }
+
+    class SaleItemMapping : ClassMap<SaleItem>
+    {
+        public SaleItemMapping()
+        {
+            Id(x => x.ID).GeneratedBy.Identity();
+            Map(x => x.SKUID);
+            Map(x => x.Quantity);
+            Map(x => x.DateOfUpdate);
         }
     }
 }

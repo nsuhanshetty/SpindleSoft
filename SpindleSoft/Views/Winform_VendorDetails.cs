@@ -34,7 +34,7 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            if (Utilities.Validation.IsNullOrEmpty(this, true,null))
+            if (Utilities.Validation.IsNullOrEmpty(this, true))
             {
                 return;
             }
@@ -61,6 +61,8 @@ namespace SpindleSoft.Views
             Winform_VendorsRegister addSaleReg = Application.OpenForms["Winform_VendorsRegister"] as Winform_VendorsRegister;
             if (addSaleReg != null)
                 addSaleReg.LoadDgv();
+
+            this.Close();
 
         }
 

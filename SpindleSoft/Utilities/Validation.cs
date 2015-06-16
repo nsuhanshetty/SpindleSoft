@@ -54,6 +54,13 @@ namespace SpindleSoft.Utilities
                 e.Handled = true;
         }
 
+        public static bool IsNullOrEmpty(Control container, Boolean Recurse, string exception)
+        {
+            List<string> exceptionlist = new List<string>();
+            exceptionlist.Add(exception);
+
+            return IsNullOrEmpty(container, Recurse, exceptionlist);
+        }
         //todo: add the following function to winform_abstract 
         //todo: rewrite the code to fetch using foreach() txt's first and image later - use linq with lambdha
         /// <summary>
@@ -80,7 +87,7 @@ namespace SpindleSoft.Utilities
                         return true;
                     }
                 }
-                if (ctrol is PictureBox)
+                if (ctrol is PictureBox && (!ExceptionControl.Contains(ctrol.Name)))
                 {
                     if (((PictureBox)ctrol).Image == null)
                     {
@@ -88,7 +95,7 @@ namespace SpindleSoft.Utilities
                         return true;
                     }
                 }
-                if (ctrol is ComboBox)
+                if (ctrol is ComboBox && (!ExceptionControl.Contains(ctrol.Name)))
                 {
                     if ((string.IsNullOrEmpty(((ComboBox)ctrol).Text)) && (!ExceptionControl.Contains(ctrol.Name)))
                     {
@@ -98,7 +105,7 @@ namespace SpindleSoft.Utilities
                 }
                 if (Recurse)
                 {
-                    if ((ctrol is TabPage || ctrol is Panel || ctrol is GroupBox) && IsNullOrEmpty(ctrol, Recurse, ExceptionControl))
+                    if ((ctrol is TabPage || ctrol is Panel || ctrol is GroupBox) && (!ExceptionControl.Contains(ctrol.Name)) && IsNullOrEmpty(ctrol, Recurse, ExceptionControl))
                         return true;
 
 

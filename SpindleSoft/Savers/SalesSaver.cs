@@ -9,7 +9,7 @@ namespace SpindleSoft.Savers
 {
     public class SalesSaver
     {
-        public static bool SaveSaleItemInfo(SaleItem saleItem)
+        public static bool SaveSaleItemInfo(SKUItem saleItem)
         {
             try
             {

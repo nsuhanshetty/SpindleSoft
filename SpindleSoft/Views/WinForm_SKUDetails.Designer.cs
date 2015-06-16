@@ -59,7 +59,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtQuantity = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -172,7 +172,7 @@
             this.groupBox2.Location = new System.Drawing.Point(13, 377);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(260, 43);
-            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Price";
             // 
@@ -248,7 +248,7 @@
             this.groupBox3.Location = new System.Drawing.Point(12, 162);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(260, 100);
-            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Variations";
             // 
@@ -320,7 +320,7 @@
             this.txtDesc.Multiline = true;
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.Size = new System.Drawing.Size(155, 50);
-            this.txtDesc.TabIndex = 1;
+            this.txtDesc.TabIndex = 2;
             // 
             // label8
             // 
@@ -346,19 +346,21 @@
             this.txtCode.Location = new System.Drawing.Point(106, 83);
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(155, 20);
-            this.txtCode.TabIndex = 124;
+            this.txtCode.TabIndex = 1;
             // 
-            // textBox1
+            // txtQuantity
             // 
-            this.textBox1.Location = new System.Drawing.Point(105, 431);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(154, 20);
-            this.textBox1.TabIndex = 126;
+            this.txtQuantity.Location = new System.Drawing.Point(105, 428);
+            this.txtQuantity.MaxLength = 4;
+            this.txtQuantity.Name = "txtQuantity";
+            this.txtQuantity.Size = new System.Drawing.Size(154, 20);
+            this.txtQuantity.TabIndex = 8;
+            this.txtQuantity.Validating += new System.ComponentModel.CancelEventHandler(this.textBox2_Validating);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(13, 438);
+            this.label12.Location = new System.Drawing.Point(13, 431);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(46, 13);
             this.label12.TabIndex = 127;
@@ -369,7 +371,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 480);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtCode);
             this.Controls.Add(this.label11);
@@ -397,7 +399,7 @@
             this.Controls.SetChildIndex(this.label11, 0);
             this.Controls.SetChildIndex(this.txtCode, 0);
             this.Controls.SetChildIndex(this.label12, 0);
-            this.Controls.SetChildIndex(this.textBox1, 0);
+            this.Controls.SetChildIndex(this.txtQuantity, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -441,7 +443,7 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.TextBox txtDesc;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.Label label11;

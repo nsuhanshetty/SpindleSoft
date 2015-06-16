@@ -104,7 +104,6 @@
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 103;
             this.label3.Text = "Total Amount";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // pcbCustImage
             // 
@@ -212,7 +211,6 @@
             this.dgvOrderItems.Size = new System.Drawing.Size(560, 131);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            this.dgvOrderItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGridView1_DataError);
             this.dgvOrderItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvOrderItems_EditingControlShowing);
             // 
             // grpBoxCustomer

@@ -170,14 +170,33 @@ namespace SpindleSoft.Builders
             List<Vendors> _vend = new List<Vendors>();
             using (var session = NHibernateHelper.OpenSession())
             {
-                string query = "select v.Name,v.MobileNo,v.ID from vendors v where (v.Name like :Name)" +
-                "and (v.MobileNo like :Mobile_No) order by v.UpdatedTime desc";
+                string query = "select v.Name,v.MobileNo from vendors v where (v.Name like :Name)" +
+                "and (v.MobileNo like :MobileNo) order by v.UpdatedTime desc";
 
                 NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
                    .SetParameter("Name", name + "%")
-                   .SetParameter("Mobile_No", mobileno + "%"))
+                   .SetParameter("MobileNo", mobileno + "%"))
                    .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Vendors)));
                 return _vend = sqlQuery.List<Vendors>() as List<Vendors>;
+            }
+        }
+
+        public static Vendors GetVendorInfo(string mobileno)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    Vendors vendor = (from v in session.Query<Vendors>()
+                                      where v.MobileNo == mobileno
+                                      select v).Single();
+                    return vendor;
+                }
+            }
+            catch (Exception)
+            {
+                //todo: log4net
+                return null;
             }
         }
         #endregion Vendor

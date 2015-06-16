@@ -117,6 +117,18 @@
     <Compile Include="Views\DesignControl.Designer.cs">
       <DependentUpon>DesignControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Winform_SalesDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_SalesDetails.Designer.cs">
+      <DependentUpon>Winform_SalesDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_SalesRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_SalesRegister.Designer.cs">
+      <DependentUpon>Winform_SalesRegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Winform_SKURegister.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -295,6 +307,12 @@
     <EmbeddedResource Include="Views\DesignControl.resx">
       <DependentUpon>DesignControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_SalesDetails.resx">
+      <DependentUpon>Winform_SalesDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_SalesRegister.resx">
+      <DependentUpon>Winform_SalesRegister.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_SKURegister.resx">
       <DependentUpon>Winform_SKURegister.cs</DependentUpon>
     </EmbeddedResource>
@@ -409,13 +427,13 @@
     <None Include="Resources\measure.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Link.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Health.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shopping-bag-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Link.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

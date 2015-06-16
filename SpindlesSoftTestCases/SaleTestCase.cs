@@ -16,7 +16,7 @@ namespace SpindlesSoftTestCases
         [TestCase("prodName2", "I am too awesome", "Green", "XL", "Polyster", 100, 200, null, true)]
         public void SaveSaleItem(string name, string desc, string color, string size, string material, int CP, int SP, int VendID, bool IsSelfMade)
         {
-            SaleItem saleItem = new SaleItem();
+            SKUItem saleItem = new SKUItem();
 
             saleItem.Color = color;
             saleItem.CostPrice = CP;

@@ -41,7 +41,7 @@ namespace SpindleSoft.Views
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            DialogResult _dialogResult = MessageBox.Show("Do you want to Create Order for Customer " +
+            DialogResult _dialogResult = MessageBox.Show("Do you want to Add Customer " +
                                          Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value), 
                                          "Add Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                                          MessageBoxDefaultButton.Button2);
@@ -63,6 +63,10 @@ namespace SpindleSoft.Views
             Winform_AlterationsDetails altDetails = Application.OpenForms["Winform_AlterationsDetails"] as Winform_AlterationsDetails;
             if (altDetails != null)
                 altDetails.UpdateCustomerControl(_cust);
+
+            Winform_SalesDetails saleDetails = Application.OpenForms["Winform_SalesDetails"] as Winform_SalesDetails;
+            if (saleDetails != null)
+                saleDetails.UpdateCustomerControl(_cust);
 
             this.Close();
         }

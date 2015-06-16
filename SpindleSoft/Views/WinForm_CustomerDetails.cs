@@ -76,7 +76,7 @@ namespace SpindleSoft.Views
             this._cust.Email = txtEmailID.Text;
             this._cust.Address = txtAddress.Text;
             this._cust.Image = pcbCustImage.Image;
-            this._cust.Image = pcbCustImage.Image;
+            //this._cust.Image = pcbCustImage.Image;
             this._cust.ReferralID = refCust.ID;
 
             UpdateStatus("Saving..", 50);

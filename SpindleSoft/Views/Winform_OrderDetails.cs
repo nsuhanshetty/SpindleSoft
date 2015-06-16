@@ -20,9 +20,19 @@ namespace SpindleSoft.Views
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        public void UpdateCustomerControl(Customer customer)
         {
+            if (customer == null) return;
+
+            this._cust = customer;
+
+            txtName.Text = _cust.Name;
+            txtMobNo.Text = _cust.Mobile_No;
+            txtPhoneNo.Text = _cust.Phone_No;
+            pcbCustImage.Image = _cust.Image;
         }
+
+        #region Events
 
         private void Winform_OrderAdd_Load(object sender, EventArgs e)
         {
@@ -49,52 +59,6 @@ namespace SpindleSoft.Views
             //dgvOrderItems.DataError += new DataGridViewDataErrorEventHandler(DataGridView1_DataError);
         }
 
-
-        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs anError)
-        {
-
-            //MessageBox.Show("Error happened " + anError.Context.ToString());
-
-            //if (anError.Context == DataGridViewDataErrorContexts.Commit)
-            //{
-            //    MessageBox.Show("Commit error");
-            //}
-            //if (anError.Context == DataGridViewDataErrorContexts.CurrentCellChange)
-            //{
-            //    MessageBox.Show("Cell change");
-            //}
-            //if (anError.Context == DataGridViewDataErrorContexts.Parsing)
-            //{
-            //    MessageBox.Show("parsing error");
-            //}
-            //if (anError.Context == DataGridViewDataErrorContexts.LeaveControl)
-            //{
-            //    MessageBox.Show("leave control error");
-            //}
-
-            //if ((anError.Exception) is System.Data.ConstraintException)
-            //{
-            //    DataGridView view = (DataGridView)sender;
-            //    view.Rows[anError.RowIndex].ErrorText = "an error";
-            //    view.Rows[anError.RowIndex].Cells[anError.ColumnIndex].ErrorText = "an error";
-
-            //    anError.ThrowException = false;
-            //}
-        }
-
-
-        public void UpdateCustomerControl(Customer customer)
-        {
-            if (customer == null) return;
-
-            this._cust = customer;
-
-            txtName.Text = _cust.Name;
-            txtMobNo.Text = _cust.Mobile_No;
-            txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = _cust.Image;
-        }
-
         private void AddCustomerToolStrip_Click(object sender, EventArgs e)
         {
             new Winform_AddCustomer(this._cust).ShowDialog();
@@ -104,22 +68,6 @@ namespace SpindleSoft.Views
         {
             new Winform_OrderType().ShowDialog();
         }
-
-        #region _Validations
-        private void txtAmntPaid_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
-            string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
-            errorProvider1.SetError(txtAmntPaid, _errorMsg);
-
-            if (_errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtAmntPaid.Select(0, txtAmntPaid.TextLength);
-            }
-        }
-        #endregion _Validations
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -189,6 +137,35 @@ namespace SpindleSoft.Views
             }
         }
 
+        protected override void CancelToolStrip_Click(object sender, EventArgs e)
+        {
+            if (SpindleSoft.Utilities.Validation.controlIsInEdit(grpBoxCustomer, false))
+            {
+                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Order Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                if (_dialogResult == DialogResult.No)
+                    return;
+            };
+
+            this.Close();
+        }
+
+        #endregion Events
+
+        #region _Validations
+        private void txtAmntPaid_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
+            string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
+            errorProvider1.SetError(txtAmntPaid, _errorMsg);
+
+            if (_errorMsg != "")
+            {
+                // Cancel the event and select the text to be corrected by the user.
+                e.Cancel = true;
+                txtAmntPaid.Select(0, txtAmntPaid.TextLength);
+            }
+        }
+
         void cbo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var value = (sender as ComboBox).Text;
@@ -210,18 +187,7 @@ namespace SpindleSoft.Views
             //todo: check if orderitem has measurement
             OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
         }
-
-        protected override void CancelToolStrip_Click(object sender, EventArgs e)
-        {
-            if (SpindleSoft.Utilities.Validation.controlIsInEdit(grpBoxCustomer, false))
-            {
-                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Order Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
-                if (_dialogResult == DialogResult.No)
-                    return;
-            };
-
-            this.Close();
-        }
+        #endregion _Validations
 
     }
 }

@@ -153,7 +153,7 @@ namespace SpindleSoft
             else if (rdbAlteration.Checked)
                 new Winform_AlterationsDetails().ShowDialog();
             else if (rdbSales.Checked)
-                new WinForm_SKUDetails().ShowDialog();
+                new Winform_SalesDetails().ShowDialog();
         }
 
         private void salaryRegisterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -267,16 +267,28 @@ namespace SpindleSoft
 
         private void addCatalogueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new WinForm_SKUDetails().ShowDialog();
+            new Winform_SalesDetails().ShowDialog();
         }
 
-        private void stockCheckToolStripMenuItem_Click(object sender, EventArgs e)
+        private void stockCheckToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             new Winform_SKURegister().ShowDialog();
         }
 
+        private void addVendorToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            new Winform_VendorDetails().ShowDialog();
+        }
 
+        private void vendorRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_VendorsRegister().ShowDialog();
+        }
 
+        private void addItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_VendorDetails().ShowDialog();
+        }
     }
 
 }

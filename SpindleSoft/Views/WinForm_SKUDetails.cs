@@ -11,11 +11,50 @@ namespace SpindleSoft.Views
 {
     public partial class WinForm_SKUDetails : Winform_DetailsFormat
     {
-        SaleItem saleItem = new SaleItem();
+        SKUItem saleItem = new SKUItem();
         Vendors vendor;
+        bool editMode = false;
+
         public WinForm_SKUDetails()
         {
             InitializeComponent();
+        }
+
+        public WinForm_SKUDetails(SKUItem _saleItem)
+        {
+            InitializeComponent();
+
+            UpdateStatus("Loading Values", 25);
+            this.saleItem = _saleItem;
+            txtName.Text = this.saleItem.Name;
+            txtCode.Text = this.saleItem.ProductCode;
+            txtDesc.Text = this.saleItem.Description;
+            txtQuantity.Text = this.saleItem.Quantity.ToString();
+            txtCP.Text = this.saleItem.CostPrice.ToString();
+            txtSP.Text = this.saleItem.SellingPrice.ToString();
+
+            UpdateStatus("Loading Values", 50);
+            cmbColor.Text = this.saleItem.Color;
+            cmbMaterial.Text = this.saleItem.Material;
+            cmbSize.Text = this.saleItem.Size;
+
+            UpdateStatus("Loading Values", 75);
+            if (this.saleItem.IsSelfMade)
+            {
+                rdbSelfMade.Checked = true;
+                txtVendName.Text = "";
+                txtVendMobile.Text = "";
+            }
+            else
+            {
+                rdbVendorMade.Checked = true;
+                Vendors vendor = SaleBuilder.GetVendorsInfo(this.saleItem.VendorID);
+                txtVendMobile.Text = vendor.MobileNo;
+                txtVendName.Text = vendor.Name;
+            }
+
+            editMode = true;
+            UpdateStatus("Loading Values", 100);
         }
 
         #region Events
@@ -65,6 +104,7 @@ namespace SpindleSoft.Views
             saleItem.IsSelfMade = (rdbSelfMade.Checked) ? true : false;
             saleItem.VendorID = (rdbSelfMade.Checked) ? 0 : this.vendor.ID;
             saleItem.ProductCode = txtCode.Text;
+            saleItem.Quantity = Convert.ToInt32(txtQuantity.Text);
 
             UpdateStatus("Saving..", 75);
             bool response = SalesSaver.SaveSaleItemInfo(saleItem);
@@ -78,7 +118,12 @@ namespace SpindleSoft.Views
             {
                 UpdateStatus("Error Saving Sale", 100);
             }
+            editMode = false;
 
+
+            Winform_SKURegister addSkuReg = Application.OpenForms["Winform_SKURegister"] as Winform_SKURegister;
+            if (addSkuReg != null)
+                addSkuReg.txtName_TextChanged(this, new EventArgs());
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -123,26 +168,26 @@ namespace SpindleSoft.Views
                 return;
 
             string errorMsg;
-            if (txtbox.Text.Length > 2)
+            if (txtbox.Text.Length < 3)
             {
-                bool exists = SaleBuilder.IsExistingName(txtName.Text);
-                errorMsg = !exists ? "" : "Product Name already exists. Name needs to be unique";
-            }
-            else
                 errorMsg = "Product Name must have more than two characters.";
+                //bool exists = SaleBuilder.IsExistingName(txtName.Text);
+                //errorMsg = !exists ? "" : "Product Name already exists. Name needs to be unique";
 
-            errorProvider1.SetError(txtbox, errorMsg);
-
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtbox.Select(0, txtbox.TextLength);
+                errorProvider1.SetError(txtbox, errorMsg);
+                if (errorMsg != "")
+                {
+                    // Cancel the event and select the text to be corrected by the user.
+                    e.Cancel = true;
+                    txtbox.Select(0, txtbox.TextLength);
+                }
             }
         }
 
         private void txtName_Validated(object sender, EventArgs e)
         {
+            //todo: must have an alternate approach
+            if (editMode == true) return;
 
             if (string.IsNullOrEmpty(cmbColor.Text) || string.IsNullOrEmpty(cmbMaterial.Text)
                 || string.IsNullOrEmpty(cmbSize.Text) || string.IsNullOrEmpty(txtName.Text))
