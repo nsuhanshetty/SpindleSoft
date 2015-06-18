@@ -55,7 +55,7 @@
             this.txtName.Location = new System.Drawing.Point(112, 14);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(147, 20);
-            this.txtName.TabIndex = 1;
+            this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // groupBox1
@@ -93,7 +93,7 @@
             this.txtDesc.Location = new System.Drawing.Point(112, 69);
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.Size = new System.Drawing.Size(147, 20);
-            this.txtDesc.TabIndex = 106;
+            this.txtDesc.TabIndex = 2;
             this.txtDesc.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // cmbMaterial
@@ -105,7 +105,7 @@
             this.cmbMaterial.Location = new System.Drawing.Point(415, 69);
             this.cmbMaterial.Name = "cmbMaterial";
             this.cmbMaterial.Size = new System.Drawing.Size(121, 21);
-            this.cmbMaterial.TabIndex = 2;
+            this.cmbMaterial.TabIndex = 5;
             this.cmbMaterial.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // label4
@@ -126,7 +126,7 @@
             this.cmbSize.Location = new System.Drawing.Point(415, 43);
             this.cmbSize.Name = "cmbSize";
             this.cmbSize.Size = new System.Drawing.Size(121, 21);
-            this.cmbSize.TabIndex = 1;
+            this.cmbSize.TabIndex = 4;
             this.cmbSize.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtProCode
@@ -134,7 +134,7 @@
             this.txtProCode.Location = new System.Drawing.Point(112, 41);
             this.txtProCode.Name = "txtProCode";
             this.txtProCode.Size = new System.Drawing.Size(147, 20);
-            this.txtProCode.TabIndex = 0;
+            this.txtProCode.TabIndex = 1;
             this.txtProCode.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // cmbColor
@@ -146,7 +146,7 @@
             this.cmbColor.Location = new System.Drawing.Point(415, 17);
             this.cmbColor.Name = "cmbColor";
             this.cmbColor.Size = new System.Drawing.Size(121, 21);
-            this.cmbColor.TabIndex = 0;
+            this.cmbColor.TabIndex = 3;
             this.cmbColor.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // label1

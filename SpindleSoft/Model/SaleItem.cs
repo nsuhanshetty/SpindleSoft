@@ -26,7 +26,7 @@ namespace SpindleSoft.Model
 
         public virtual int SellingPrice { get; set; }
 
-        public virtual int VendorID { get; set; }
+        public virtual int? VendorID { get; set; }
 
         public virtual int Quantity { get; set; }
 
@@ -38,8 +38,6 @@ namespace SpindleSoft.Model
         public virtual int ID { get; set; }
 
         public virtual int CustID { get; set; }
-
-        public virtual List<SaleItem> SaleItems { get; set; }
 
         public virtual int TotalPrice { get; set; }
 
@@ -54,16 +52,21 @@ namespace SpindleSoft.Model
 
         public virtual int SKUID { get; set; }
 
+        public virtual int SaleID { get; set; }
+
         public virtual int Quantity { get; set; }
 
-        public virtual DateTime DateOfUpdate { get; set; }
+        public virtual int Price { get; set; }
+
+        //public virtual DateTime DateOfUpdate { get; set; }
 
         public SaleItem(){ }
 
-        public SaleItem(int _sKUID, int _quantity)
+        public SaleItem(int _sKUID, int _quantity, int _price)
         {
             this.SKUID = _sKUID;
             this.Quantity = _quantity;
+            this.Price = _price;
         }
     }
 }

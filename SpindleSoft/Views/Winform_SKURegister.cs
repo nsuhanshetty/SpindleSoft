@@ -28,14 +28,19 @@ namespace SpindleSoft.Views
         {
             //todo : how do we add vendors name along with salename
             //bool isSelfMade = cmbSource.Text == "Self" ? true : false;
-            dgvSearch.DataSource = SaleBuilder.GetSaleItems(txtName.Text, txtProCode.Text, txtDesc.Text, cmbColor.Text, cmbSize.Text, cmbMaterial.Text);
+            dgvSearch.DataSource = null;
+            List<SKUItem> skulist = SaleBuilder.GetSKUItems(txtName.Text, txtProCode.Text, txtDesc.Text, cmbColor.Text, cmbSize.Text, cmbMaterial.Text);
 
-            dgvSearch.Columns.Remove("ID");
-            dgvSearch.Columns.Remove("IsSelfMade");
-            dgvSearch.Columns.Remove("Description");
-            dgvSearch.Columns.Remove("VendorID");
-            dgvSearch.Columns.Remove("SellingPrice");
-            dgvSearch.Columns.Remove("CostPrice");
+            if (skulist == null || skulist.Count == 0) return;
+            dgvSearch.DataSource = (from s in skulist
+                                    select new { s.Name, s.ProductCode, s.Quantity, s.Size, s.Color, s.Material }).ToList();
+
+            //dgvSearch.Columns.Remove("ID");
+            //dgvSearch.Columns.Remove("IsSelfMade");
+            //dgvSearch.Columns.Remove("Description");
+            //dgvSearch.Columns.Remove("VendorID");
+            //dgvSearch.Columns.Remove("SellingPrice");
+            //dgvSearch.Columns.Remove("CostPrice");
 
             //List<SaleItem> listSource =
             //listSource.Select(x => new {Name= x.Name,ProductCode = x.ProductCode, Color = x.Color, Size = x.Size, Material = x.Material, Vendor = x.}
@@ -65,15 +70,15 @@ namespace SpindleSoft.Views
         private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //load if the register is selected for add sku or edit sku
-            Winform_SKURegister addSkuReg = Application.OpenForms["Winform_SKURegister"] as Winform_SKURegister;
-            if (addSkuReg != null)
-                addSkuReg.txtName_TextChanged(this, new EventArgs());
-            else
-            {
+            //Winform_SKURegister addSkuReg = Application.OpenForms["Winform_SKURegister"] as Winform_SKURegister;
+            //if (addSkuReg != null)
+            //    addSkuReg.txtName_TextChanged(this, new EventArgs());
+            //else
+            //{
                 try
                 {
                     var procode = dgvSearch.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString();
-                    SKUItem _saleItem = SaleBuilder.GetSaleItemInfo(procode);
+                    SKUItem _saleItem = SaleBuilder.GetSkuItemInfo(procode);
                     if (_saleItem != null)
                         new WinForm_SKUDetails(_saleItem).ShowDialog();
                 }
@@ -81,7 +86,7 @@ namespace SpindleSoft.Views
                 {
                     //todo: log4net/ Spundle
                 }
-            }
+            //}
 
         }
 

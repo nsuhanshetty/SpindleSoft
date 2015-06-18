@@ -190,18 +190,21 @@ namespace SpindleSoft
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            var mobileNo = dgvSearch.Rows[e.RowIndex].Cells[1].Value.ToString();
-            if (String.IsNullOrEmpty(mobileNo))
-                return;
+            if (searchState.ToString() == "Customer")
+            {
+                var mobileNo = dgvSearch.Rows[e.RowIndex].Cells[1].Value.ToString();
+                if (String.IsNullOrEmpty(mobileNo))
+                    return;
 
-            Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(mobileNo);
-            _cust.Image = PeoplePracticeBuilder.GetCustomerImage(mobileNo);
+                Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(mobileNo);
+                _cust.Image = PeoplePracticeBuilder.GetCustomerImage(mobileNo);
 
-            //shouldnt happen but for safety.
-            //todo: Let customer know that bad has happened
-            if (_cust == null && _cust.Image == null) return;
+                //shouldnt happen but for safety.
+                //todo: Let customer know that bad has happened
+                if (_cust == null && _cust.Image == null) return;
 
-            new WinForm_CustomerDetails(_cust).ShowDialog();
+                new WinForm_CustomerDetails(_cust).ShowDialog();
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -287,7 +290,12 @@ namespace SpindleSoft
 
         private void addItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Winform_VendorDetails().ShowDialog();
+            new WinForm_SKUDetails().ShowDialog();
+        }
+
+        private void SalesRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_SalesRegister().ShowDialog();
         }
     }
 

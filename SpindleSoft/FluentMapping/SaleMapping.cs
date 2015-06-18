@@ -33,7 +33,6 @@ namespace SpindleSoft.FluentMapping
         {
             Id(x => x.ID).GeneratedBy.Identity();
             Map(x => x.CustID);
-            Map(x => x.SaleItems);
             Map(x => x.TotalPrice);
             Map(x => x.AmountPaid);
             Map(x => x.DateOfSale);
@@ -46,8 +45,10 @@ namespace SpindleSoft.FluentMapping
         {
             Id(x => x.ID).GeneratedBy.Identity();
             Map(x => x.SKUID);
+            Map(x => x.SaleID);
             Map(x => x.Quantity);
-            Map(x => x.DateOfUpdate);
+            Map(x => x.Price);
+            //Map(x => x.DateOfUpdate);
         }
     }
 }

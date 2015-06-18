@@ -40,9 +40,14 @@ namespace SpindleSoft.Helpers
                         _dataTable.Columns.Remove("ReferralID");
                     }
                     break;
-                case "Order":
-                //var dataSourceList = null;
-                //break;
+                case "Sales":
+                    {
+                        List<Sale> salesList = (SaleBuilder.GetSalesList("", "", "", searchText));
+                        if (salesList != null && salesList.Count != 0)
+                            _dataTable = ToDataTable((from sale in salesList
+                                                    select new { sale.TotalPrice, sale.AmountPaid, sale.DateOfSale }).ToList());
+                    }
+                    break;
                 default:
                     //var dataSourceList = null;
                     break;

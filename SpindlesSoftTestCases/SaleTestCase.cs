@@ -28,7 +28,7 @@ namespace SpindlesSoftTestCases
             saleItem.Size = size;
             saleItem.VendorID = VendID;
 
-            bool success = SalesSaver.SaveSaleItemInfo(saleItem);
+            bool success = SalesSaver.SaveSkuItemInfo(saleItem);
             Assert.AreEqual(success, true);
         }
     }

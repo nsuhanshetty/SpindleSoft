@@ -29,27 +29,30 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.txtSaleID = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblMobile = new System.Windows.Forms.Label();
+            this.txtProCode = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
-            this.lblMobile = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dtpDeliveryDate);
+            this.groupBox1.Controls.Add(this.txtSaleID);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.lblMobile);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtProCode);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtName);
-            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.txtMobNo);
             this.groupBox1.Controls.Add(this.lblName);
             this.groupBox1.Location = new System.Drawing.Point(8, 12);
@@ -59,14 +62,56 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Enter Text to Search";
             // 
-            // label4
+            // txtSaleID
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(281, 57);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 13);
-            this.label4.TabIndex = 113;
-            this.label4.Text = "Delivery Date";
+            this.txtSaleID.Location = new System.Drawing.Point(354, 54);
+            this.txtSaleID.Name = "txtSaleID";
+            this.txtSaleID.Size = new System.Drawing.Size(135, 20);
+            this.txtSaleID.TabIndex = 137;
+            this.txtSaleID.TextChanged += new System.EventHandler(this.txtMobNo_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(306, 57);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.TabIndex = 138;
+            this.label2.Text = "Sale ID";
+            // 
+            // lblMobile
+            // 
+            this.lblMobile.AutoSize = true;
+            this.lblMobile.Location = new System.Drawing.Point(247, 24);
+            this.lblMobile.Name = "lblMobile";
+            this.lblMobile.Size = new System.Drawing.Size(105, 13);
+            this.lblMobile.TabIndex = 99;
+            this.lblMobile.Text = "Customer Mobile No.";
+            // 
+            // txtProCode
+            // 
+            this.txtProCode.Location = new System.Drawing.Point(97, 54);
+            this.txtProCode.Name = "txtProCode";
+            this.txtProCode.Size = new System.Drawing.Size(135, 20);
+            this.txtProCode.TabIndex = 102;
+            this.txtProCode.TextChanged += new System.EventHandler(this.txtMobNo_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 57);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 13);
+            this.label1.TabIndex = 136;
+            this.label1.Text = "Product Code";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(97, 24);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(135, 20);
+            this.txtName.TabIndex = 96;
+            this.txtName.TextChanged += new System.EventHandler(this.txtMobNo_TextChanged);
             // 
             // txtMobNo
             // 
@@ -75,6 +120,7 @@
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(135, 20);
             this.txtMobNo.TabIndex = 97;
+            this.txtMobNo.TextChanged += new System.EventHandler(this.txtMobNo_TextChanged);
             // 
             // lblName
             // 
@@ -88,79 +134,68 @@
             // dgvSearch
             // 
             this.dgvSearch.AllowUserToDeleteRows = false;
+            this.dgvSearch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSearch.Location = new System.Drawing.Point(8, 103);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
-            this.dgvSearch.Size = new System.Drawing.Size(496, 267);
+            this.dgvSearch.Size = new System.Drawing.Size(496, 150);
             this.dgvSearch.TabIndex = 7;
             // 
-            // textBox1
+            // dataGridView1
             // 
-            this.textBox1.Location = new System.Drawing.Point(97, 54);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(135, 20);
-            this.textBox1.TabIndex = 102;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(8, 276);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(496, 150);
+            this.dataGridView1.TabIndex = 8;
             // 
-            // label1
+            // label3
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 57);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 13);
-            this.label1.TabIndex = 136;
-            this.label1.Text = "Product Code";
-            // 
-            // dtpDeliveryDate
-            // 
-            this.dtpDeliveryDate.Location = new System.Drawing.Point(355, 54);
-            this.dtpDeliveryDate.Name = "dtpDeliveryDate";
-            this.dtpDeliveryDate.Size = new System.Drawing.Size(135, 20);
-            this.dtpDeliveryDate.TabIndex = 114;
-            // 
-            // lblMobile
-            // 
-            this.lblMobile.AutoSize = true;
-            this.lblMobile.Location = new System.Drawing.Point(247, 24);
-            this.lblMobile.Name = "lblMobile";
-            this.lblMobile.Size = new System.Drawing.Size(105, 13);
-            this.lblMobile.TabIndex = 99;
-            this.lblMobile.Text = "Customer Mobile No.";
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(97, 24);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(135, 20);
-            this.txtName.TabIndex = 96;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(5, 260);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 13);
+            this.label3.TabIndex = 99;
+            this.label3.Text = "Sale Items:";
             // 
             // Winform_SalesRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 379);
+            this.ClientSize = new System.Drawing.Size(509, 438);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.dgvSearch);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_SalesRegister";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sales Register";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        internal System.Windows.Forms.Label label4;
         internal System.Windows.Forms.TextBox txtMobNo;
         internal System.Windows.Forms.Label lblName;
         private System.Windows.Forms.DataGridView dgvSearch;
-        private System.Windows.Forms.DateTimePicker dtpDeliveryDate;
         internal System.Windows.Forms.Label lblMobile;
-        internal System.Windows.Forms.TextBox textBox1;
+        internal System.Windows.Forms.TextBox txtProCode;
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.TextBox txtName;
+        internal System.Windows.Forms.TextBox txtSaleID;
+        internal System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        internal System.Windows.Forms.Label label3;
     }
 }

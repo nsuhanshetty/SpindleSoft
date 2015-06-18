@@ -39,6 +39,9 @@
             this.addStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.staffRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salaryRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addVendorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addVendorToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendorRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,10 +53,11 @@
             this.addAlterationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchAlterationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockCheckToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.catalogueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCatalogueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SalesRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addExpensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewExpenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,10 +104,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dgvUpCominDel = new System.Windows.Forms.DataGridView();
             this.dgvCurrDel = new System.Windows.Forms.DataGridView();
-            this.addVendorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.addVendorToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.vendorRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -154,7 +154,7 @@
             this.customerRegisterToolStripMenuItem,
             this.customerMeasurementToolStripMenuItem});
             this.addCustomerToolStripMenuItem.Name = "addCustomerToolStripMenuItem";
-            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.addCustomerToolStripMenuItem.Text = "&Customer";
             // 
             // addCustomerToolStripMenuItem1
@@ -184,7 +184,7 @@
             this.staffRegisterToolStripMenuItem,
             this.salaryRegisterToolStripMenuItem});
             this.searchCustomerToolStripMenuItem.Name = "searchCustomerToolStripMenuItem";
-            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.searchCustomerToolStripMenuItem.Text = "&Staff";
             // 
             // addStaffToolStripMenuItem
@@ -208,13 +208,36 @@
             this.salaryRegisterToolStripMenuItem.Text = "Salary Register";
             this.salaryRegisterToolStripMenuItem.Click += new System.EventHandler(this.salaryRegisterToolStripMenuItem_Click);
             // 
+            // addVendorToolStripMenuItem1
+            // 
+            this.addVendorToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addVendorToolStripMenuItem2,
+            this.vendorRegisterToolStripMenuItem});
+            this.addVendorToolStripMenuItem1.Name = "addVendorToolStripMenuItem1";
+            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
+            this.addVendorToolStripMenuItem1.Text = "&Vendor";
+            // 
+            // addVendorToolStripMenuItem2
+            // 
+            this.addVendorToolStripMenuItem2.Name = "addVendorToolStripMenuItem2";
+            this.addVendorToolStripMenuItem2.Size = new System.Drawing.Size(157, 22);
+            this.addVendorToolStripMenuItem2.Text = "&Add Vendor";
+            this.addVendorToolStripMenuItem2.Click += new System.EventHandler(this.addVendorToolStripMenuItem2_Click);
+            // 
+            // vendorRegisterToolStripMenuItem
+            // 
+            this.vendorRegisterToolStripMenuItem.Name = "vendorRegisterToolStripMenuItem";
+            this.vendorRegisterToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.vendorRegisterToolStripMenuItem.Text = "&Vendor Register";
+            this.vendorRegisterToolStripMenuItem.Click += new System.EventHandler(this.vendorRegisterToolStripMenuItem_Click);
+            // 
             // groupsToolStripMenuItem
             // 
             this.groupsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addGroupsToolStripMenuItem,
             this.groupRegisterToolStripMenuItem});
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.groupsToolStripMenuItem.Text = "&Groups";
             // 
             // addGroupsToolStripMenuItem
@@ -292,6 +315,13 @@
             this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.inventoryToolStripMenuItem.Text = "&Inventory";
             // 
+            // addItemToolStripMenuItem
+            // 
+            this.addItemToolStripMenuItem.Name = "addItemToolStripMenuItem";
+            this.addItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addItemToolStripMenuItem.Text = "&Add Item";
+            this.addItemToolStripMenuItem.Click += new System.EventHandler(this.addItemToolStripMenuItem_Click);
+            // 
             // stockCheckToolStripMenuItem1
             // 
             this.stockCheckToolStripMenuItem1.Name = "stockCheckToolStripMenuItem1";
@@ -303,7 +333,7 @@
             // 
             this.catalogueToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCatalogueToolStripMenuItem,
-            this.itemMasterToolStripMenuItem});
+            this.SalesRegisterToolStripMenuItem});
             this.catalogueToolStripMenuItem.Name = "catalogueToolStripMenuItem";
             this.catalogueToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.catalogueToolStripMenuItem.Text = "&Sales";
@@ -311,15 +341,16 @@
             // addCatalogueToolStripMenuItem
             // 
             this.addCatalogueToolStripMenuItem.Name = "addCatalogueToolStripMenuItem";
-            this.addCatalogueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addCatalogueToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.addCatalogueToolStripMenuItem.Text = "&Add Sale";
             this.addCatalogueToolStripMenuItem.Click += new System.EventHandler(this.addCatalogueToolStripMenuItem_Click);
             // 
-            // itemMasterToolStripMenuItem
+            // SalesRegisterToolStripMenuItem
             // 
-            this.itemMasterToolStripMenuItem.Name = "itemMasterToolStripMenuItem";
-            this.itemMasterToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.itemMasterToolStripMenuItem.Text = "&Item Master";
+            this.SalesRegisterToolStripMenuItem.Name = "SalesRegisterToolStripMenuItem";
+            this.SalesRegisterToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.SalesRegisterToolStripMenuItem.Text = "&Sales Register";
+            this.SalesRegisterToolStripMenuItem.Click += new System.EventHandler(this.SalesRegisterToolStripMenuItem_Click);
             // 
             // expenseToolStripMenuItem
             // 
@@ -765,36 +796,6 @@
             this.dgvCurrDel.TabIndex = 2;
             this.dgvCurrDel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDeliverToday_CellContentClick);
             // 
-            // addVendorToolStripMenuItem1
-            // 
-            this.addVendorToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addVendorToolStripMenuItem2,
-            this.vendorRegisterToolStripMenuItem});
-            this.addVendorToolStripMenuItem1.Name = "addVendorToolStripMenuItem1";
-            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.addVendorToolStripMenuItem1.Text = "&Vendor";
-            // 
-            // addVendorToolStripMenuItem2
-            // 
-            this.addVendorToolStripMenuItem2.Name = "addVendorToolStripMenuItem2";
-            this.addVendorToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
-            this.addVendorToolStripMenuItem2.Text = "&Add Vendor";
-            this.addVendorToolStripMenuItem2.Click += new System.EventHandler(this.addVendorToolStripMenuItem2_Click);
-            // 
-            // vendorRegisterToolStripMenuItem
-            // 
-            this.vendorRegisterToolStripMenuItem.Name = "vendorRegisterToolStripMenuItem";
-            this.vendorRegisterToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.vendorRegisterToolStripMenuItem.Text = "&Vendor Register";
-            this.vendorRegisterToolStripMenuItem.Click += new System.EventHandler(this.vendorRegisterToolStripMenuItem_Click);
-            // 
-            // addItemToolStripMenuItem
-            // 
-            this.addItemToolStripMenuItem.Name = "addItemToolStripMenuItem";
-            this.addItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addItemToolStripMenuItem.Text = "&Add Item";
-            this.addItemToolStripMenuItem.Click += new System.EventHandler(this.addItemToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -877,7 +878,7 @@
         private System.Windows.Forms.ToolStripMenuItem updateSpindleSoftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ToolStripMenuItem itemMasterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SalesRegisterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCatalogueToolStripMenuItem1;
         private System.Windows.Forms.RadioButton rdbSales;
         private System.Windows.Forms.ToolStripMenuItem salaryDetailsToolStripMenuItem1;

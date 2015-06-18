@@ -170,7 +170,7 @@ namespace SpindleSoft.Builders
             List<Vendors> _vend = new List<Vendors>();
             using (var session = NHibernateHelper.OpenSession())
             {
-                string query = "select v.Name,v.MobileNo from vendors v where (v.Name like :Name)" +
+                string query = "select v.Name,v.MobileNo,v.ID from vendors v where (v.Name like :Name)" +
                 "and (v.MobileNo like :MobileNo) order by v.UpdatedTime desc";
 
                 NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)

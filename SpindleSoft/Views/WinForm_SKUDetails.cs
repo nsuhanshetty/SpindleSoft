@@ -48,7 +48,7 @@ namespace SpindleSoft.Views
             else
             {
                 rdbVendorMade.Checked = true;
-                Vendors vendor = SaleBuilder.GetVendorsInfo(this.saleItem.VendorID);
+                vendor = SaleBuilder.GetVendorsInfo(this.saleItem.VendorID);
                 txtVendMobile.Text = vendor.MobileNo;
                 txtVendName.Text = vendor.Name;
             }
@@ -102,16 +102,20 @@ namespace SpindleSoft.Views
             saleItem.Color = cmbColor.Text;
             saleItem.Material = cmbMaterial.Text;
             saleItem.IsSelfMade = (rdbSelfMade.Checked) ? true : false;
-            saleItem.VendorID = (rdbSelfMade.Checked) ? 0 : this.vendor.ID;
+            saleItem.VendorID = (rdbSelfMade.Checked) ? (int?)null : this.vendor.ID;
             saleItem.ProductCode = txtCode.Text;
             saleItem.Quantity = Convert.ToInt32(txtQuantity.Text);
 
             UpdateStatus("Saving..", 75);
-            bool response = SalesSaver.SaveSaleItemInfo(saleItem);
+            bool response = SalesSaver.SaveSkuItemInfo(saleItem);
 
             if (response)
             {
                 UpdateStatus("Saved", 100);
+
+                Winform_SKURegister addSkuReg = Application.OpenForms["Winform_SKURegister"] as Winform_SKURegister;
+                if (addSkuReg != null)
+                    addSkuReg.txtName_TextChanged(this, new EventArgs());
                 this.Close();
             }
             else
@@ -121,9 +125,7 @@ namespace SpindleSoft.Views
             editMode = false;
 
 
-            Winform_SKURegister addSkuReg = Application.OpenForms["Winform_SKURegister"] as Winform_SKURegister;
-            if (addSkuReg != null)
-                addSkuReg.txtName_TextChanged(this, new EventArgs());
+
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)

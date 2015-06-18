@@ -19,6 +19,7 @@ namespace SpindleSoft
             }
         }
 
+        /*Strongly typed NHibernate configuration*/
         private static void InitializeSessionFactory()
         {
             //todo: toget connection info from appsetting.
