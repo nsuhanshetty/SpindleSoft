@@ -4,21 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NHibernate.Linq;
 
 namespace SpindleSoft.Builders
 {
     public class OrderBuilder
     {
         #region OrderTypeBuilder
-        public static List<OrderItem> GetOrderTypeList()
+        public static List<string> GetOrderTypeList()
         {
-            List<OrderItem> orderTypeList = new List<OrderItem>();
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    NHibernate.IQuery sqlQuery = session.CreateSQLQuery("select * from OrderItem").SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-                    return orderTypeList = sqlQuery.List<OrderItem>() as List<OrderItem>;
+                    List<string> names = (from s in session.Query<OrderItem>()
+                                          select s.Name).Distinct().ToList();
+                    return names;
                 }
             }
             catch (Exception)
@@ -37,15 +38,19 @@ namespace SpindleSoft.Builders
         {
             OrderItem orderItem = new OrderItem();
             try
-            {                   
+            {
                 using (var session = NHibernateHelper.OpenSession())
                 {
                     //todo: convert to linq
                     //order by updated date desc
                     //singleOrDefault
-                    string query = "select * from OrderItem o inner join orders ord on ord.ID = o.OrderID where o.name = " + itemName + " and ord.CustomerID = " + custId;
-                    NHibernate.IQuery sqlQuery = session.CreateSQLQuery(query)
-                                                .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
+                    string query = (@"select * from OrderItem o inner join orders ord on ord.ID = o.OrderID where o.name =:name and ord.CustomerID = :custId");
+                    var sqlQuery = session.CreateSQLQuery(query)
+                                                .SetParameter("name", itemName)
+                                                .SetParameter("custId", custId);
+                    sqlQuery.AddEntity("o", typeof(OrderItem));
+                                                
+                                                //.SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
                     return orderItem = sqlQuery as OrderItem;
                 }
             }

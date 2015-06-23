@@ -8,7 +8,7 @@ namespace SpindleSoft.Model
 {
     public class SKUItem
     {
-        public virtual int ID { get; set; }
+        public virtual int ID { get; protected set; }
 
         public virtual string Name { get; set; }
 
@@ -35,7 +35,7 @@ namespace SpindleSoft.Model
 
     public class Sale
     {
-        public virtual int ID { get; set; }
+        public virtual int ID { get; protected set; }
 
         public virtual int CustID { get; set; }
 
@@ -48,7 +48,7 @@ namespace SpindleSoft.Model
 
     public class SaleItem
     {
-        public virtual int ID { get; set; }
+        public virtual int ID { get; protected set; }
 
         public virtual int SKUID { get; set; }
 

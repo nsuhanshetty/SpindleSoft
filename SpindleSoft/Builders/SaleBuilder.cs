@@ -106,7 +106,7 @@ namespace SpindleSoft.Builders
                     .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(SKUItem)));
                     return _skuItem = sqlQuery.List<SKUItem>() as List<SKUItem>;
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return null;
                     //log4net
@@ -245,29 +245,27 @@ namespace SpindleSoft.Builders
             }
         }
 
-        //public static List<Sale> GetSalesItemList(string saleID = "")
-        //{
-        //    try
-        //    {
-        //        using (var session = NHibernateHelper.OpenSession())
-        //        {
-        //            var query = from s in session.Query<SaleItem>()
-        //                        select new {s.Quantity,s.Price,}
+        public static List<SKUItem> GetSalesItemList(string saleID)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    var query = "select s.Name,s.ProductCode,s.Color,s.Material,s.Size from skuitem s " +
+                                "inner join saleitem i on i.SKUID = s.ID " +
+                                "where i.SaleID = :saleid";
 
-        //            NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
-        //            .SetParameter("name", name + "%")
-        //            .SetParameter("procode", procode + "%")
-        //            .SetParameter("mobNo", mobNo + "%")
-        //            .SetParameter("saleID", saleID + "%"))
-        //            .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Sale)));
-        //            return sqlQuery.List<Sale>() as List<Sale>;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        //todo: Log4net
-        //        return null;
-        //    }
+                    NHibernate.IQuery sqlQuery = session.CreateSQLQuery(query)
+                    .SetParameter("saleid", saleID )
+                    .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(SKUItem)));
+                    return sqlQuery.List<SKUItem>() as List<SKUItem>;
+                }
+            }
+            catch (Exception)
+            {
+                //todo: Log4net
+                return null;
+            }
         }
         #endregion Sale
     }

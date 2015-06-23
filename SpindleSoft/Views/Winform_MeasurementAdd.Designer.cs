@@ -66,17 +66,21 @@
             this.CancelToolStrip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.grpBoxCustMeasure = new System.Windows.Forms.GroupBox();
-            this.txtOrderNo = new System.Windows.Forms.TextBox();
+            this.txtCustName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtComment = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txtClothingType = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grpBoxCustMeasure.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -420,33 +424,33 @@
             // 
             // grpBoxCustMeasure
             // 
-            this.grpBoxCustMeasure.Controls.Add(this.txtOrderNo);
+            this.grpBoxCustMeasure.Controls.Add(this.txtCustName);
             this.grpBoxCustMeasure.Controls.Add(this.label1);
             this.grpBoxCustMeasure.Enabled = false;
             this.grpBoxCustMeasure.Location = new System.Drawing.Point(8, 55);
             this.grpBoxCustMeasure.Name = "grpBoxCustMeasure";
-            this.grpBoxCustMeasure.Size = new System.Drawing.Size(373, 48);
+            this.grpBoxCustMeasure.Size = new System.Drawing.Size(181, 48);
             this.grpBoxCustMeasure.TabIndex = 2;
             this.grpBoxCustMeasure.TabStop = false;
-            this.grpBoxCustMeasure.Text = "Order Details";
+            this.grpBoxCustMeasure.Text = "Customer Details";
             // 
-            // txtOrderNo
+            // txtCustName
             // 
-            this.txtOrderNo.Enabled = false;
-            this.txtOrderNo.Location = new System.Drawing.Point(70, 20);
-            this.txtOrderNo.MaxLength = 10;
-            this.txtOrderNo.Name = "txtOrderNo";
-            this.txtOrderNo.Size = new System.Drawing.Size(96, 20);
-            this.txtOrderNo.TabIndex = 132;
+            this.txtCustName.Enabled = false;
+            this.txtCustName.Location = new System.Drawing.Point(70, 20);
+            this.txtCustName.MaxLength = 10;
+            this.txtCustName.Name = "txtCustName";
+            this.txtCustName.Size = new System.Drawing.Size(96, 20);
+            this.txtCustName.TabIndex = 132;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 23);
+            this.label1.Location = new System.Drawing.Point(19, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 133;
-            this.label1.Text = "Order No.";
+            this.label1.Text = "Name";
             // 
             // txtComment
             // 
@@ -469,11 +473,42 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.txtClothingType);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Enabled = false;
+            this.groupBox6.Location = new System.Drawing.Point(194, 55);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(185, 48);
+            this.groupBox6.TabIndex = 134;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Product Details";
+            // 
+            // txtClothingType
+            // 
+            this.txtClothingType.Enabled = false;
+            this.txtClothingType.Location = new System.Drawing.Point(82, 20);
+            this.txtClothingType.MaxLength = 10;
+            this.txtClothingType.Name = "txtClothingType";
+            this.txtClothingType.Size = new System.Drawing.Size(96, 20);
+            this.txtClothingType.TabIndex = 132;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(7, 23);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(72, 13);
+            this.label16.TabIndex = 133;
+            this.label16.Text = "Clothing Type";
+            // 
             // Winform_MeasurementAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(390, 460);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.grpBoxCustMeasure);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtComment);
@@ -485,6 +520,7 @@
             this.Controls.SetChildIndex(this.txtComment, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.grpBoxCustMeasure, 0);
+            this.Controls.SetChildIndex(this.groupBox6, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -495,6 +531,8 @@
             this.grpBoxCustMeasure.ResumeLayout(false);
             this.grpBoxCustMeasure.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -538,10 +576,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         internal System.Windows.Forms.TextBox txtComment;
-        internal System.Windows.Forms.TextBox txtOrderNo;
+        internal System.Windows.Forms.TextBox txtCustName;
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.TextBox txtLength;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.GroupBox groupBox6;
+        internal System.Windows.Forms.TextBox txtClothingType;
+        internal System.Windows.Forms.Label label16;
     }
 }

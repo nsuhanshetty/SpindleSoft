@@ -172,12 +172,6 @@
     <Compile Include="Views\Winform_ImageCapture.Designer.cs">
       <DependentUpon>Winform_ImageCapture.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Winform_MeasurementDetails.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\Winform_MeasurementDetails.Designer.cs">
-      <DependentUpon>Winform_MeasurementDetails.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\Winform_OrderDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -334,9 +328,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_ImageCapture.resx">
       <DependentUpon>Winform_ImageCapture.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Winform_MeasurementDetails.resx">
-      <DependentUpon>Winform_MeasurementDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_OrderDetails.resx">
       <DependentUpon>Winform_OrderDetails.cs</DependentUpon>

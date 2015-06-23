@@ -71,6 +71,22 @@ namespace SpindleSoft.Views
             }
             else
                 dgvSearch.DataSource = null;
+
+            dgvSaleItemDetails.DataSource = null;
+        }
+
+        private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvSearch.Rows.Count == 0) return;
+            List<SKUItem> skuList = SaleBuilder.GetSalesItemList(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
+
+            if (skuList != null)
+            {
+                dgvSaleItemDetails.DataSource = (from s in skuList
+                                                 select new { s.Name, s.ProductCode, s.Color, s.Material, s.Size }).ToList();
+            }
+            else
+                dgvSaleItemDetails.DataSource = null;
         }
 
         //dgv datasource = product name, code, selling price, sale date, quantity

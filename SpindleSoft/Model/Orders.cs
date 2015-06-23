@@ -30,7 +30,7 @@ namespace SpindleSoft.Model
 
     public class OrderItem
     {
-        public virtual int ID { get; set; }
+        public virtual int ID { get; protected set; }
 
         public virtual int OrderID { get; set; }
 
@@ -68,16 +68,16 @@ namespace SpindleSoft.Model
 
         public virtual float SleeveLength { get; set; }
 
-        //public DateTime CreatedDate { get; set; }
+        public virtual string Comment { get; set; }
 
         public virtual DateTime DateUpdated { get; set; }
 
         public OrderItem() { }
 
-        public OrderItem(string name, string orderId)
+        public OrderItem(string itemName)
         {
-            this.Name = name;
-            this.OrderID = Convert.ToInt32(orderId);
+            this.Name = itemName;
+            //this.OrderID = Convert.ToInt32(orderId);
         }
 
         public OrderItem(int orderID, string name, int quantity, int price, float length, float waist,

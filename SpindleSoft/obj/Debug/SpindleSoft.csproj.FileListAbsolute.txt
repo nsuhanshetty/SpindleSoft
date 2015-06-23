@@ -27,7 +27,6 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_AlterationsDetails.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_CustomerRegister.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_ImageCapture.resources
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_MeasurementDetails.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_OrderDetails.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_DesignAdd.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.WinForm_CustomerDetails.resources

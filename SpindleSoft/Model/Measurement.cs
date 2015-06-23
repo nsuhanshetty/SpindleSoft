@@ -2,7 +2,11 @@
 {
     internal class Measurement
     {
+        public int ID { get; protected set; }
+
         public int customerID { get; set; }
+
+        public string Name { get; set; }
 
         public float Lenght { get; set; }
 
@@ -27,5 +31,7 @@
         public float SleeveLength { get; set; }
 
         public float SleeveLoose { get; set; }
+
+        public string Comment { get; set; }
     }
 }

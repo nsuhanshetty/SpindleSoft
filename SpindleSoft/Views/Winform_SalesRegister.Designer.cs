@@ -38,11 +38,11 @@
             this.txtMobNo = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvSaleItemDetails = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItemDetails)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -141,17 +141,18 @@
             this.dgvSearch.ReadOnly = true;
             this.dgvSearch.Size = new System.Drawing.Size(496, 150);
             this.dgvSearch.TabIndex = 7;
+            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
             // 
-            // dataGridView1
+            // dgvSaleItemDetails
             // 
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(8, 276);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(496, 150);
-            this.dataGridView1.TabIndex = 8;
+            this.dgvSaleItemDetails.AllowUserToDeleteRows = false;
+            this.dgvSaleItemDetails.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSaleItemDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSaleItemDetails.Location = new System.Drawing.Point(8, 276);
+            this.dgvSaleItemDetails.Name = "dgvSaleItemDetails";
+            this.dgvSaleItemDetails.ReadOnly = true;
+            this.dgvSaleItemDetails.Size = new System.Drawing.Size(496, 150);
+            this.dgvSaleItemDetails.TabIndex = 8;
             // 
             // label3
             // 
@@ -168,7 +169,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 438);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvSaleItemDetails);
             this.Controls.Add(this.dgvSearch);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_SalesRegister";
@@ -177,7 +178,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItemDetails)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,7 +196,7 @@
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.TextBox txtSaleID;
         internal System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvSaleItemDetails;
         internal System.Windows.Forms.Label label3;
     }
 }

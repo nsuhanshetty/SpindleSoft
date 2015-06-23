@@ -40,12 +40,6 @@
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.dgvSaleItem = new System.Windows.Forms.DataGridView();
             this.AddCustToolStrip = new System.Windows.Forms.ToolStripButton();
-            this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtTotAmnt = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtAmntPaid = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
             this.grpBxSearch = new System.Windows.Forms.GroupBox();
@@ -64,6 +58,12 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnDelete = new System.Windows.Forms.Button();
             this.grpbxPayDet = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtAmntPaid = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtTotAmnt = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
             this.grpBoxCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItem)).BeginInit();
@@ -182,60 +182,6 @@
             this.AddCustToolStrip.Text = "Add Customer";
             this.AddCustToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.AddCustToolStrip.Click += new System.EventHandler(this.AddCustToolStrip_Click);
-            // 
-            // txtBalanceAmnt
-            // 
-            this.txtBalanceAmnt.Enabled = false;
-            this.txtBalanceAmnt.Location = new System.Drawing.Point(734, 109);
-            this.txtBalanceAmnt.MaxLength = 10;
-            this.txtBalanceAmnt.Name = "txtBalanceAmnt";
-            this.txtBalanceAmnt.Size = new System.Drawing.Size(84, 20);
-            this.txtBalanceAmnt.TabIndex = 4;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(643, 112);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(85, 13);
-            this.label7.TabIndex = 135;
-            this.label7.Text = "Balance Amount";
-            // 
-            // txtTotAmnt
-            // 
-            this.txtTotAmnt.Enabled = false;
-            this.txtTotAmnt.Location = new System.Drawing.Point(734, 134);
-            this.txtTotAmnt.MaxLength = 10;
-            this.txtTotAmnt.Name = "txtTotAmnt";
-            this.txtTotAmnt.Size = new System.Drawing.Size(84, 20);
-            this.txtTotAmnt.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(658, 137);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 13);
-            this.label3.TabIndex = 134;
-            this.label3.Text = "Total Amount";
-            // 
-            // txtAmntPaid
-            // 
-            this.txtAmntPaid.Location = new System.Drawing.Point(734, 84);
-            this.txtAmntPaid.MaxLength = 10;
-            this.txtAmntPaid.Name = "txtAmntPaid";
-            this.txtAmntPaid.Size = new System.Drawing.Size(84, 20);
-            this.txtAmntPaid.TabIndex = 3;
-            this.txtAmntPaid.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtAmntPaid_KeyPress);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(661, 87);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
-            this.label2.TabIndex = 133;
-            this.label2.Text = "Paid Amount";
             // 
             // panel1
             // 
@@ -417,6 +363,60 @@
             this.grpbxPayDet.TabStop = false;
             this.grpbxPayDet.Text = "Payment Details";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(661, 87);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.TabIndex = 133;
+            this.label2.Text = "Paid Amount";
+            // 
+            // txtAmntPaid
+            // 
+            this.txtAmntPaid.Location = new System.Drawing.Point(734, 84);
+            this.txtAmntPaid.MaxLength = 10;
+            this.txtAmntPaid.Name = "txtAmntPaid";
+            this.txtAmntPaid.Size = new System.Drawing.Size(84, 20);
+            this.txtAmntPaid.TabIndex = 3;
+            this.txtAmntPaid.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtAmntPaid_KeyPress);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(658, 137);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 13);
+            this.label3.TabIndex = 134;
+            this.label3.Text = "Total Amount";
+            // 
+            // txtTotAmnt
+            // 
+            this.txtTotAmnt.Enabled = false;
+            this.txtTotAmnt.Location = new System.Drawing.Point(734, 134);
+            this.txtTotAmnt.MaxLength = 10;
+            this.txtTotAmnt.Name = "txtTotAmnt";
+            this.txtTotAmnt.Size = new System.Drawing.Size(84, 20);
+            this.txtTotAmnt.TabIndex = 5;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(643, 112);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 13);
+            this.label7.TabIndex = 135;
+            this.label7.Text = "Balance Amount";
+            // 
+            // txtBalanceAmnt
+            // 
+            this.txtBalanceAmnt.Enabled = false;
+            this.txtBalanceAmnt.Location = new System.Drawing.Point(734, 109);
+            this.txtBalanceAmnt.MaxLength = 10;
+            this.txtBalanceAmnt.Name = "txtBalanceAmnt";
+            this.txtBalanceAmnt.Size = new System.Drawing.Size(84, 20);
+            this.txtBalanceAmnt.TabIndex = 4;
+            // 
             // Winform_SalesDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -473,12 +473,6 @@
         internal System.Windows.Forms.TextBox txtPhoneNo;
         private System.Windows.Forms.DataGridView dgvSaleItem;
         private System.Windows.Forms.ToolStripButton AddCustToolStrip;
-        internal System.Windows.Forms.TextBox txtBalanceAmnt;
-        internal System.Windows.Forms.Label label7;
-        internal System.Windows.Forms.TextBox txtTotAmnt;
-        internal System.Windows.Forms.Label label3;
-        internal System.Windows.Forms.TextBox txtAmntPaid;
-        internal System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox grpBxSearch;
         private System.Windows.Forms.DataGridView dgvSearch;
@@ -497,6 +491,12 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.GroupBox grpbxPayDet;
+        internal System.Windows.Forms.TextBox txtBalanceAmnt;
+        internal System.Windows.Forms.Label label7;
+        internal System.Windows.Forms.TextBox txtTotAmnt;
+        internal System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.TextBox txtAmntPaid;
+        internal System.Windows.Forms.Label label2;
 
     }
 }

@@ -30,10 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Winform_OrderDetails));
-            this.txtAmntPaid = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtTotAmnt = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.pcbCustImage = new System.Windows.Forms.PictureBox();
             this.lblMobile = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -41,69 +37,33 @@
             this.txtMobNo = new System.Windows.Forms.TextBox();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvOrderItems = new System.Windows.Forms.DataGridView();
             this.grpBoxCustomer = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtOrderNo = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.AddCustomerToolStrip = new System.Windows.Forms.ToolStripButton();
             this.NewOrderTypeToolStrip = new System.Windows.Forms.ToolStripButton();
             this.AddReferralToolStrip = new System.Windows.Forms.ToolStripButton();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.grpbxPayDet = new System.Windows.Forms.GroupBox();
+            this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtTotAmnt = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtAmntPaid = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.OrderType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.OrderQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderMeasurement = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.OrderMeasureInherit = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).BeginInit();
             this.grpBoxCustomer.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.grpbxPayDet.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtAmntPaid
-            // 
-            this.txtAmntPaid.Location = new System.Drawing.Point(459, 367);
-            this.txtAmntPaid.MaxLength = 10;
-            this.txtAmntPaid.Name = "txtAmntPaid";
-            this.txtAmntPaid.Size = new System.Drawing.Size(115, 20);
-            this.txtAmntPaid.TabIndex = 5;
-            this.txtAmntPaid.Validating += new System.ComponentModel.CancelEventHandler(this.txtAmntPaid_Validating);
-            this.txtAmntPaid.Validated += new System.EventHandler(this.txtAmntPaid_Validated);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(380, 370);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
-            this.label2.TabIndex = 101;
-            this.label2.Text = "Paid Amount";
-            // 
-            // txtTotAmnt
-            // 
-            this.txtTotAmnt.Enabled = false;
-            this.txtTotAmnt.Location = new System.Drawing.Point(459, 422);
-            this.txtTotAmnt.MaxLength = 10;
-            this.txtTotAmnt.Name = "txtTotAmnt";
-            this.txtTotAmnt.Size = new System.Drawing.Size(115, 20);
-            this.txtTotAmnt.TabIndex = 7;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(377, 424);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 13);
-            this.label3.TabIndex = 103;
-            this.label3.Text = "Total Amount";
             // 
             // pcbCustImage
             // 
@@ -131,7 +91,7 @@
             // 
             this.txtName.Location = new System.Drawing.Point(197, 36);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(131, 20);
+            this.txtName.Size = new System.Drawing.Size(159, 20);
             this.txtName.TabIndex = 0;
             // 
             // lblName
@@ -148,7 +108,7 @@
             this.txtMobNo.Location = new System.Drawing.Point(197, 62);
             this.txtMobNo.MaxLength = 10;
             this.txtMobNo.Name = "txtMobNo";
-            this.txtMobNo.Size = new System.Drawing.Size(131, 20);
+            this.txtMobNo.Size = new System.Drawing.Size(159, 20);
             this.txtMobNo.TabIndex = 1;
             // 
             // txtPhoneNo
@@ -156,7 +116,7 @@
             this.txtPhoneNo.Location = new System.Drawing.Point(197, 88);
             this.txtPhoneNo.MaxLength = 10;
             this.txtPhoneNo.Name = "txtPhoneNo";
-            this.txtPhoneNo.Size = new System.Drawing.Size(131, 20);
+            this.txtPhoneNo.Size = new System.Drawing.Size(159, 20);
             this.txtPhoneNo.TabIndex = 2;
             // 
             // label5
@@ -168,30 +128,12 @@
             this.label5.TabIndex = 125;
             this.label5.Text = "Phone No.";
             // 
-            // txtBalanceAmnt
-            // 
-            this.txtBalanceAmnt.Enabled = false;
-            this.txtBalanceAmnt.Location = new System.Drawing.Point(459, 394);
-            this.txtBalanceAmnt.MaxLength = 10;
-            this.txtBalanceAmnt.Name = "txtBalanceAmnt";
-            this.txtBalanceAmnt.Size = new System.Drawing.Size(115, 20);
-            this.txtBalanceAmnt.TabIndex = 6;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(362, 397);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(85, 13);
-            this.label7.TabIndex = 129;
-            this.label7.Text = "Balance Amount";
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvOrderItems);
             this.groupBox2.Location = new System.Drawing.Point(8, 208);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(566, 150);
+            this.groupBox2.Size = new System.Drawing.Size(583, 150);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add Order Details";
@@ -203,12 +145,11 @@
             this.OrderType,
             this.OrderQuantity,
             this.OrderPrice,
-            this.OrderMeasurement,
-            this.OrderMeasureInherit});
+            this.OrderMeasurement});
             this.dgvOrderItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOrderItems.Location = new System.Drawing.Point(3, 16);
             this.dgvOrderItems.Name = "dgvOrderItems";
-            this.dgvOrderItems.Size = new System.Drawing.Size(560, 131);
+            this.dgvOrderItems.Size = new System.Drawing.Size(577, 131);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dgvOrderItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvOrderItems_EditingControlShowing);
@@ -225,57 +166,26 @@
             this.grpBoxCustomer.Enabled = false;
             this.grpBoxCustomer.Location = new System.Drawing.Point(8, 60);
             this.grpBoxCustomer.Name = "grpBoxCustomer";
-            this.grpBoxCustomer.Size = new System.Drawing.Size(336, 142);
+            this.grpBoxCustomer.Size = new System.Drawing.Size(370, 142);
             this.grpBoxCustomer.TabIndex = 0;
             this.grpBoxCustomer.TabStop = false;
             this.grpBoxCustomer.Text = "Customer Details";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.txtOrderNo);
-            this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.dtpDeliveryDate);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Location = new System.Drawing.Point(350, 60);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(224, 142);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Order Details";
-            // 
-            // txtOrderNo
-            // 
-            this.txtOrderNo.Enabled = false;
-            this.txtOrderNo.Location = new System.Drawing.Point(84, 62);
-            this.txtOrderNo.MaxLength = 10;
-            this.txtOrderNo.Name = "txtOrderNo";
-            this.txtOrderNo.Size = new System.Drawing.Size(133, 20);
-            this.txtOrderNo.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 131;
-            this.label1.Text = "Order No.";
-            // 
             // dtpDeliveryDate
             // 
-            this.dtpDeliveryDate.Location = new System.Drawing.Point(84, 88);
+            this.dtpDeliveryDate.Location = new System.Drawing.Point(476, 67);
             this.dtpDeliveryDate.Name = "dtpDeliveryDate";
-            this.dtpDeliveryDate.Size = new System.Drawing.Size(133, 20);
+            this.dtpDeliveryDate.Size = new System.Drawing.Size(116, 20);
             this.dtpDeliveryDate.TabIndex = 1;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 93);
+            this.label4.Location = new System.Drawing.Point(388, 71);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 13);
+            this.label4.Size = new System.Drawing.Size(82, 13);
             this.label4.TabIndex = 128;
-            this.label4.Text = "Delivery Date";
+            this.label4.Text = "DateOf Delivery";
             // 
             // AddCustomerToolStrip
             // 
@@ -297,7 +207,7 @@
             this.NewOrderTypeToolStrip.Size = new System.Drawing.Size(76, 51);
             this.NewOrderTypeToolStrip.Text = "New Order Type";
             this.NewOrderTypeToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.NewOrderTypeToolStrip.Click += new System.EventHandler(this.NewOrderTypeToolStrip_Click);
+            //this.NewOrderTypeToolStrip.Click += new System.EventHandler(this.NewOrderTypeToolStrip_Click);
             // 
             // AddReferralToolStrip
             // 
@@ -308,73 +218,126 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // grpbxPayDet
+            // 
+            this.grpbxPayDet.Controls.Add(this.txtBalanceAmnt);
+            this.grpbxPayDet.Controls.Add(this.label1);
+            this.grpbxPayDet.Controls.Add(this.txtTotAmnt);
+            this.grpbxPayDet.Controls.Add(this.label6);
+            this.grpbxPayDet.Controls.Add(this.txtAmntPaid);
+            this.grpbxPayDet.Controls.Add(this.label8);
+            this.grpbxPayDet.Location = new System.Drawing.Point(384, 96);
+            this.grpbxPayDet.Name = "grpbxPayDet";
+            this.grpbxPayDet.Size = new System.Drawing.Size(208, 106);
+            this.grpbxPayDet.TabIndex = 138;
+            this.grpbxPayDet.TabStop = false;
+            this.grpbxPayDet.Text = "Payment Details";
+            // 
+            // txtBalanceAmnt
+            // 
+            this.txtBalanceAmnt.Enabled = false;
+            this.txtBalanceAmnt.Location = new System.Drawing.Point(92, 45);
+            this.txtBalanceAmnt.MaxLength = 10;
+            this.txtBalanceAmnt.Name = "txtBalanceAmnt";
+            this.txtBalanceAmnt.Size = new System.Drawing.Size(109, 20);
+            this.txtBalanceAmnt.TabIndex = 137;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1, 48);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 13);
+            this.label1.TabIndex = 141;
+            this.label1.Text = "Balance Amount";
+            // 
+            // txtTotAmnt
+            // 
+            this.txtTotAmnt.Enabled = false;
+            this.txtTotAmnt.Location = new System.Drawing.Point(92, 70);
+            this.txtTotAmnt.MaxLength = 10;
+            this.txtTotAmnt.Name = "txtTotAmnt";
+            this.txtTotAmnt.Size = new System.Drawing.Size(109, 20);
+            this.txtTotAmnt.TabIndex = 138;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 73);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 140;
+            this.label6.Text = "Total Amount";
+            // 
+            // txtAmntPaid
+            // 
+            this.txtAmntPaid.Location = new System.Drawing.Point(92, 20);
+            this.txtAmntPaid.MaxLength = 10;
+            this.txtAmntPaid.Name = "txtAmntPaid";
+            this.txtAmntPaid.Size = new System.Drawing.Size(109, 20);
+            this.txtAmntPaid.TabIndex = 136;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(19, 23);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(67, 13);
+            this.label8.TabIndex = 139;
+            this.label8.Text = "Paid Amount";
+            // 
             // OrderType
             // 
-            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.OrderType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.OrderType.HeaderText = "Clothing Type";
             this.OrderType.Name = "OrderType";
-            this.OrderType.Width = 103;
             // 
             // OrderQuantity
             // 
+            this.OrderQuantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.OrderQuantity.HeaderText = "Quantity";
             this.OrderQuantity.Name = "OrderQuantity";
-            this.OrderQuantity.Width = 104;
             // 
             // OrderPrice
             // 
+            this.OrderPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.OrderPrice.HeaderText = "Price";
             this.OrderPrice.Name = "OrderPrice";
-            this.OrderPrice.Width = 103;
             // 
             // OrderMeasurement
             // 
-            this.OrderMeasurement.HeaderText = "Edit Measurement";
+            this.OrderMeasurement.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderMeasurement.HeaderText = "Measurement Details";
             this.OrderMeasurement.Name = "OrderMeasurement";
             this.OrderMeasurement.Text = "Edit";
-            this.OrderMeasurement.Width = 104;
-            // 
-            // OrderMeasureInherit
-            // 
-            this.OrderMeasureInherit.HeaderText = "Inherit";
-            this.OrderMeasureInherit.Name = "OrderMeasureInherit";
-            this.OrderMeasureInherit.Width = 103;
             // 
             // Winform_OrderDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 471);
-            this.Controls.Add(this.groupBox3);
+            this.ClientSize = new System.Drawing.Size(603, 384);
+            this.Controls.Add(this.grpbxPayDet);
             this.Controls.Add(this.grpBoxCustomer);
+            this.Controls.Add(this.dtpDeliveryDate);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.txtBalanceAmnt);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtTotAmnt);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtAmntPaid);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label4);
             this.Name = "Winform_OrderDetails";
             this.Text = "Order Details";
             this.Load += new System.EventHandler(this.Winform_OrderAdd_Load);
-            this.Controls.SetChildIndex(this.label2, 0);
-            this.Controls.SetChildIndex(this.txtAmntPaid, 0);
-            this.Controls.SetChildIndex(this.label3, 0);
-            this.Controls.SetChildIndex(this.txtTotAmnt, 0);
-            this.Controls.SetChildIndex(this.label7, 0);
-            this.Controls.SetChildIndex(this.txtBalanceAmnt, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
+            this.Controls.SetChildIndex(this.dtpDeliveryDate, 0);
             this.Controls.SetChildIndex(this.grpBoxCustomer, 0);
-            this.Controls.SetChildIndex(this.groupBox3, 0);
+            this.Controls.SetChildIndex(this.grpbxPayDet, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).EndInit();
             this.grpBoxCustomer.ResumeLayout(false);
             this.grpBoxCustomer.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.grpbxPayDet.ResumeLayout(false);
+            this.grpbxPayDet.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -382,10 +345,6 @@
 
         #endregion
 
-        internal System.Windows.Forms.TextBox txtAmntPaid;
-        internal System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.TextBox txtTotAmnt;
-        internal System.Windows.Forms.Label label3;
         internal System.Windows.Forms.PictureBox pcbCustImage;
         internal System.Windows.Forms.Label lblMobile;
         internal System.Windows.Forms.TextBox txtName;
@@ -393,14 +352,9 @@
         internal System.Windows.Forms.TextBox txtMobNo;
         internal System.Windows.Forms.TextBox txtPhoneNo;
         internal System.Windows.Forms.Label label5;
-        internal System.Windows.Forms.TextBox txtBalanceAmnt;
-        internal System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgvOrderItems;
         private System.Windows.Forms.GroupBox grpBoxCustomer;
-        private System.Windows.Forms.GroupBox groupBox3;
-        internal System.Windows.Forms.TextBox txtOrderNo;
-        internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dtpDeliveryDate;
         internal System.Windows.Forms.Label label4;
         private System.Windows.Forms.ErrorProvider errorProvider1;
@@ -409,10 +363,16 @@
         //Toolstrip Add
         internal System.Windows.Forms.ToolStripButton AddCustomerToolStrip;
         internal System.Windows.Forms.ToolStripButton NewOrderTypeToolStrip;
+        private System.Windows.Forms.GroupBox grpbxPayDet;
+        internal System.Windows.Forms.TextBox txtBalanceAmnt;
+        internal System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.TextBox txtTotAmnt;
+        internal System.Windows.Forms.Label label6;
+        internal System.Windows.Forms.TextBox txtAmntPaid;
+        internal System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridViewComboBoxColumn OrderType;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderPrice;
         private System.Windows.Forms.DataGridViewButtonColumn OrderMeasurement;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn OrderMeasureInherit;
     }
 }

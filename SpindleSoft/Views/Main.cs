@@ -70,6 +70,7 @@ namespace SpindleSoft
         {
             UpdateSearchText("Search Sale No.");
             this.searchState = SearchStates.Sales;
+
         }
 
         private void UpdateSearchText(string _updateText)

@@ -7,13 +7,11 @@ namespace SpindleSoft
     public class NHibernateHelper
     {
         private static ISessionFactory _sessionFactory;
-
         private static ISessionFactory SessionFactory
         {
             get
             {
                 if (_sessionFactory == null)
-
                     InitializeSessionFactory();
                 return _sessionFactory;
             }

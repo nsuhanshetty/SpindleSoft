@@ -18,6 +18,8 @@ namespace SpindleSoft.Views
         public Winform_OrderDetails()
         {
             InitializeComponent();
+            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
+            this.toolStripParent.Items.Add(this.NewOrderTypeToolStrip);
         }
 
         public void UpdateCustomerControl(Customer customer)
@@ -37,17 +39,11 @@ namespace SpindleSoft.Views
         private void Winform_OrderAdd_Load(object sender, EventArgs e)
         {
             //todo : Unique Orderno from the Db 
-            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
-            this.toolStripParent.Items.Add(this.NewOrderTypeToolStrip);
-
             try
             {
-                List<OrderItem> orderTypeList = OrderBuilder.GetOrderTypeList();
-
-                orderTypeName = orderTypeList.Select(x => x.Name).Distinct().ToArray<string>();
-                this.OrderType.Items.AddRange(orderTypeName);
-
-            }
+                List<string> orderTypeList = OrderBuilder.GetOrderTypeList();
+                this.OrderType.Items.AddRange(orderTypeList.ToArray());
+                }
             catch (Exception)
             {
                 //log4 net
@@ -64,29 +60,36 @@ namespace SpindleSoft.Views
             new Winform_AddCustomer(this._cust).ShowDialog();
         }
 
-        private void NewOrderTypeToolStrip_Click(object sender, EventArgs e)
-        {
-            new Winform_OrderType().ShowDialog();
-        }
+        //private void NewOrderTypeToolStrip_Click(object sender, EventArgs e)
+        //{
+        //    new Winform_OrderType().ShowDialog();
+        //}
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //item type - quatity - price - edit measurements - add design
             if (e.ColumnIndex == dgvOrderItems.Columns["OrderMeasurement"].Index)
             {
-                OrderItem _orderItem;
-                if (OrderItemsList.Count == 0)
+                //check if clothing name exists.
+                var orderType = dgvOrderItems.Rows[e.RowIndex].Cells["OrderType"].Value;
+                
+                if (orderType == null || String.IsNullOrEmpty(orderType.ToString()))
                 {
-                    _orderItem = new OrderItem(txtName.Text, txtOrderNo.Text);
-                    //fetch previous measurement
+                    MessageBox.Show("Add Clothing Type, as it is mandatory to edit Measurement details.", "Add Clothing Type", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else
-                {
-                    _orderItem = OrderItemsList[e.RowIndex];
-                }
-                new Winform_MeasurementAdd(_orderItem, e.RowIndex).ShowDialog();
-            }
 
+                if (this._cust.ID == 0)
+                {
+                    MessageBox.Show("Add Customer, as it is mandatory to edit Measurement details.", "Add Clothing Type", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                //1:open Blank measurements with Clothing type also with customer name - If measurements for customer doesnot exits
+                //2: open with previous measurements - If measurements for customer exits
+                OrderItem item = OrderBuilder.GetOrderItem(1, dgvOrderItems.Rows[e.RowIndex].Cells["OrderType"].Value.ToString());
+
+                new Winform_MeasurementAdd(item, e.RowIndex).ShowDialog();
+            }
         }
 
         private void updateOrderItemList(OrderItem _item, int rIndex)
@@ -107,7 +110,7 @@ namespace SpindleSoft.Views
             //customerId, 
             _order.CustomerID = this._cust.ID;
 
-            _order.ID = Convert.ToInt32(txtOrderNo.Text);
+            //_order.ID = Convert.ToInt32(txtOrderNo.Text);
             _order.PromisedDate = dtpDeliveryDate.Value;
 
             _order.TotalPrice = Convert.ToInt32(txtTotAmnt.Text);
@@ -132,7 +135,7 @@ namespace SpindleSoft.Views
                     cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
                     cb.Validating += new System.ComponentModel.CancelEventHandler(cbo_Validating);
-                    cb.Validated += new System.EventHandler(cbo_Validated);
+                    //cb.Validated += new System.EventHandler(cbo_Validated);
                 }
             }
         }
@@ -180,12 +183,15 @@ namespace SpindleSoft.Views
 
         void cbo_Validated(object sender, System.EventArgs e)
         {
-            //Based on the datagrid rowindex insert the values into the OrderItem List
-            OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
-            orderItem.OrderID = _order.ID;
+            ////Based on the datagrid rowindex insert the values into the OrderItem List
+            ////1: Append/ create a orderitem if not already present in orderItemList
+            //OrderItemsList.Add(new OrderItem());
 
-            //todo: check if orderitem has measurement
-            OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
+            //OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
+            ////orderItem.OrderID = _order.ID;
+
+            ////todo: check if orderitem has measurement
+            //OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
         }
         #endregion _Validations
 

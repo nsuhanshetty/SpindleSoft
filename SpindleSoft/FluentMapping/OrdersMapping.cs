@@ -34,6 +34,7 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.SleeveLoose);
             Map(x => x.SleeveArmHole);
             Map(x => x.SleeveLength);
+            Map(x => x.Comment);
         }
     }
 }
