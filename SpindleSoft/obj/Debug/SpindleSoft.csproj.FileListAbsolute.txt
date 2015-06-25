@@ -54,3 +54,4 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.csproj.GenerateResource.Cache
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.exe
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.pdb
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.csprojResolveAssemblyReference.cache

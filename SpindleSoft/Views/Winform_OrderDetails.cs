@@ -74,7 +74,7 @@ namespace SpindleSoft.Views
             //item type - quatity - price - edit measurements - add design
             if (e.ColumnIndex == dgvOrderItems.Columns["OrderMeasurement"].Index)
             {
-                OrderItem _orderItem = new OrderItem(dgvOrderItems.Rows["Name"].Cells[e.ColumnIndex].Value.ToString());
+                OrderItem _orderItem = new OrderItem(dgvOrderItems.Rows[e.RowIndex].Cells["Name"].Value.ToString());
                new Winform_MeasurementAdd(_orderItem, e.RowIndex).ShowDialog();
             }
 
@@ -172,11 +172,11 @@ namespace SpindleSoft.Views
         void cbo_Validated(object sender, System.EventArgs e)
         {
             //Based on the datagrid rowindex insert the values into the OrderItem List
-            OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
+            //OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
             //orderItem.OrderID = _order.ID;
 
             //todo: check if orderitem has measurement
-            OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
+            //OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
         }
         #endregion _Validations
 
