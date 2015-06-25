@@ -5,17 +5,17 @@ namespace SpindleSoft.Model
 {
     public class Orders
     {
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
 
-        public int CustomerID { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public float TotalPrice { get; set; }
+        public virtual float TotalPrice { get; set; }
 
-        public int CurrentPayment { get; set; }
+        public virtual int CurrentPayment { get; set; }
 
-        public DateTime PromisedDate { get; set; }
+        public virtual DateTime PromisedDate { get; set; }
 
-        public List<OrderItem> OrdersItems { get; set; }
+        public virtual List<OrderItem> OrdersItems { get; set; }
 
         //public int StatusID { get; set; }
 
@@ -32,7 +32,7 @@ namespace SpindleSoft.Model
     {
         public virtual int ID { get; set; }
 
-        public virtual int OrderID { get; set; }
+        public virtual Orders Order { get; set; }
 
         public virtual string Name { get; set; }
 
@@ -74,17 +74,17 @@ namespace SpindleSoft.Model
 
         public OrderItem() { }
 
-        public OrderItem(string name, string orderId)
+        public OrderItem(string name)
         {
             this.Name = name;
-            this.OrderID = Convert.ToInt32(orderId);
+            //this.OrderID = Convert.ToInt32(orderId);
         }
 
-        public OrderItem(int orderID, string name, int quantity, int price, float length, float waist,
+        public OrderItem(string name, int quantity, int price, float length, float waist,
             float shoulder, float chest, float d, float front, float back, float hip, float bothip, float botLen, float botWaist,
             float slvArmHole, float slvLen, float slvLoose)
         {
-            this.OrderID = orderID;
+            //this.OrderID = orderID;
             this.Name = name;
             this.Quantity = quantity;
             this.Price = price;
@@ -108,47 +108,47 @@ namespace SpindleSoft.Model
         }
     }
 
-    public class OrderType
-    {
-        public virtual int ID { get; set; }
-        public virtual string Name { get; set; }
-        public virtual int Price { get; set; }
-        public virtual bool IsBasicMeasurement { get; set; }
-        public virtual bool IsBottomMeasurement { get; set; }
-        public virtual bool IsSleeveMeasurement { get; set; }
+    //public class OrderType
+    //{
+    //    public virtual int ID { get; set; }
+    //    public virtual string Name { get; set; }
+    //    public virtual int Price { get; set; }
+    //    public virtual bool IsBasicMeasurement { get; set; }
+    //    public virtual bool IsBottomMeasurement { get; set; }
+    //    public virtual bool IsSleeveMeasurement { get; set; }
 
-        public OrderType()
-        {
+    //    public OrderType()
+    //    {
 
-        }
+    //    }
 
-        public OrderType(string name, string price, bool isbasicMeasure = true, bool isbottomMeasure = false, bool issleeveMeasure = false)
-        {
-            // this.ID = id;
-            this.Name = name;
-            this.Price = Convert.ToInt32(price);
-            this.IsBasicMeasurement = isbasicMeasure;
-            this.IsBottomMeasurement = isbottomMeasure;
-            this.IsSleeveMeasurement = issleeveMeasure;
-        }
-    }
+    //    public OrderType(string name, string price, bool isbasicMeasure = true, bool isbottomMeasure = false, bool issleeveMeasure = false)
+    //    {
+    //        // this.ID = id;
+    //        this.Name = name;
+    //        this.Price = Convert.ToInt32(price);
+    //        this.IsBasicMeasurement = isbasicMeasure;
+    //        this.IsBottomMeasurement = isbottomMeasure;
+    //        this.IsSleeveMeasurement = issleeveMeasure;
+    //    }
+    //}
 
-    public class Product
-    {
-        public int ProductId { get; set; }
+    //public class Product
+    //{
+    //    public int ProductId { get; set; }
 
-        public string ProductType { get; set; }
+    //    public string ProductType { get; set; }
 
-        public string ProductName { get; set; }
+    //    public string ProductName { get; set; }
 
-        public string ProductOptionID { get; set; }
+    //    public string ProductOptionID { get; set; }
 
-        public string ProductOptionName { get; set; }
+    //    public string ProductOptionName { get; set; }
 
-        /*audit*/
+    //    /*audit*/
 
-        public DateTime CreatedDate { get; set; }
+    //    public DateTime CreatedDate { get; set; }
 
-        public DateTime ModifieddDate { get; set; }
-    }
+    //    public DateTime ModifieddDate { get; set; }
+    //}
 }

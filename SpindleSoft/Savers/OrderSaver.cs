@@ -9,26 +9,26 @@ namespace SpindleSoft.Savers
 {
     class OrderSaver
     {
-        public static bool SaveOrderTypeInfo(OrderType orderType)
-        {
-            try
-            {
-                using (var session = NHibernateHelper.OpenSession())
-                {
-                    using (var transaction = session.BeginTransaction())
-                    {
-                        session.SaveOrUpdate(orderType);
-                        transaction.Commit();
-                        return true;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-                //throw;
-            }
+        //public static bool SaveOrderTypeInfo(OrderType orderType)
+        //{
+        //    try
+        //    {
+        //        using (var session = NHibernateHelper.OpenSession())
+        //        {
+        //            using (var transaction = session.BeginTransaction())
+        //            {
+        //                session.SaveOrUpdate(orderType);
+        //                transaction.Commit();
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //        //throw;
+        //    }
 
-        }
+        //}
     }
 }

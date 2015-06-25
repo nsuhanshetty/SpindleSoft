@@ -45,21 +45,19 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvOrderItems = new System.Windows.Forms.DataGridView();
+            this.OrderType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.OrderQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderMeasurement = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.OrderMeasureInherit = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.grpBoxCustomer = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtOrderNo = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.AddCustomerToolStrip = new System.Windows.Forms.ToolStripButton();
             this.NewOrderTypeToolStrip = new System.Windows.Forms.ToolStripButton();
             this.AddReferralToolStrip = new System.Windows.Forms.ToolStripButton();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.OrderType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.OrderQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderMeasurement = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.OrderMeasureInherit = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).BeginInit();
@@ -213,6 +211,39 @@
             this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dgvOrderItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvOrderItems_EditingControlShowing);
             // 
+            // OrderType
+            // 
+            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.OrderType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.OrderType.HeaderText = "Clothing Type";
+            this.OrderType.Name = "OrderType";
+            this.OrderType.Width = 103;
+            // 
+            // OrderQuantity
+            // 
+            this.OrderQuantity.HeaderText = "Quantity";
+            this.OrderQuantity.Name = "OrderQuantity";
+            this.OrderQuantity.Width = 104;
+            // 
+            // OrderPrice
+            // 
+            this.OrderPrice.HeaderText = "Price";
+            this.OrderPrice.Name = "OrderPrice";
+            this.OrderPrice.Width = 103;
+            // 
+            // OrderMeasurement
+            // 
+            this.OrderMeasurement.HeaderText = "Edit Measurement";
+            this.OrderMeasurement.Name = "OrderMeasurement";
+            this.OrderMeasurement.Text = "Edit";
+            this.OrderMeasurement.Width = 104;
+            // 
+            // OrderMeasureInherit
+            // 
+            this.OrderMeasureInherit.HeaderText = "Inherit";
+            this.OrderMeasureInherit.Name = "OrderMeasureInherit";
+            this.OrderMeasureInherit.Width = 103;
+            // 
             // grpBoxCustomer
             // 
             this.grpBoxCustomer.Controls.Add(this.pcbCustImage);
@@ -232,8 +263,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.txtOrderNo);
-            this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.dtpDeliveryDate);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Location = new System.Drawing.Point(350, 60);
@@ -243,27 +272,9 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Order Details";
             // 
-            // txtOrderNo
-            // 
-            this.txtOrderNo.Enabled = false;
-            this.txtOrderNo.Location = new System.Drawing.Point(84, 62);
-            this.txtOrderNo.MaxLength = 10;
-            this.txtOrderNo.Name = "txtOrderNo";
-            this.txtOrderNo.Size = new System.Drawing.Size(133, 20);
-            this.txtOrderNo.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 131;
-            this.label1.Text = "Order No.";
-            // 
             // dtpDeliveryDate
             // 
-            this.dtpDeliveryDate.Location = new System.Drawing.Point(84, 88);
+            this.dtpDeliveryDate.Location = new System.Drawing.Point(84, 31);
             this.dtpDeliveryDate.Name = "dtpDeliveryDate";
             this.dtpDeliveryDate.Size = new System.Drawing.Size(133, 20);
             this.dtpDeliveryDate.TabIndex = 1;
@@ -271,7 +282,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 93);
+            this.label4.Location = new System.Drawing.Point(6, 36);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(71, 13);
             this.label4.TabIndex = 128;
@@ -307,39 +318,6 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // OrderType
-            // 
-            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.OrderType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.OrderType.HeaderText = "Clothing Type";
-            this.OrderType.Name = "OrderType";
-            this.OrderType.Width = 103;
-            // 
-            // OrderQuantity
-            // 
-            this.OrderQuantity.HeaderText = "Quantity";
-            this.OrderQuantity.Name = "OrderQuantity";
-            this.OrderQuantity.Width = 104;
-            // 
-            // OrderPrice
-            // 
-            this.OrderPrice.HeaderText = "Price";
-            this.OrderPrice.Name = "OrderPrice";
-            this.OrderPrice.Width = 103;
-            // 
-            // OrderMeasurement
-            // 
-            this.OrderMeasurement.HeaderText = "Edit Measurement";
-            this.OrderMeasurement.Name = "OrderMeasurement";
-            this.OrderMeasurement.Text = "Edit";
-            this.OrderMeasurement.Width = 104;
-            // 
-            // OrderMeasureInherit
-            // 
-            this.OrderMeasureInherit.HeaderText = "Inherit";
-            this.OrderMeasureInherit.Name = "OrderMeasureInherit";
-            this.OrderMeasureInherit.Width = 103;
             // 
             // Winform_OrderDetails
             // 
@@ -399,8 +377,6 @@
         private System.Windows.Forms.DataGridView dgvOrderItems;
         private System.Windows.Forms.GroupBox grpBoxCustomer;
         private System.Windows.Forms.GroupBox groupBox3;
-        internal System.Windows.Forms.TextBox txtOrderNo;
-        internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dtpDeliveryDate;
         internal System.Windows.Forms.Label label4;
         private System.Windows.Forms.ErrorProvider errorProvider1;

@@ -74,17 +74,8 @@ namespace SpindleSoft.Views
             //item type - quatity - price - edit measurements - add design
             if (e.ColumnIndex == dgvOrderItems.Columns["OrderMeasurement"].Index)
             {
-                OrderItem _orderItem;
-                if (OrderItemsList.Count == 0)
-                {
-                    _orderItem = new OrderItem(txtName.Text, txtOrderNo.Text);
-                    //fetch previous measurement
-                }
-                else
-                {
-                    _orderItem = OrderItemsList[e.RowIndex];
-                }
-                new Winform_MeasurementAdd(_orderItem, e.RowIndex).ShowDialog();
+                OrderItem _orderItem = new OrderItem(dgvOrderItems.Rows["Name"].Cells[e.ColumnIndex].Value.ToString());
+               new Winform_MeasurementAdd(_orderItem, e.RowIndex).ShowDialog();
             }
 
         }
@@ -105,9 +96,9 @@ namespace SpindleSoft.Views
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //customerId, 
-            _order.CustomerID = this._cust.ID;
+            _order.Customer = this._cust;
 
-            _order.ID = Convert.ToInt32(txtOrderNo.Text);
+           // _order.ID = Convert.ToInt32(txtOrderNo.Text);
             _order.PromisedDate = dtpDeliveryDate.Value;
 
             _order.TotalPrice = Convert.ToInt32(txtTotAmnt.Text);
@@ -182,7 +173,7 @@ namespace SpindleSoft.Views
         {
             //Based on the datagrid rowindex insert the values into the OrderItem List
             OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
-            orderItem.OrderID = _order.ID;
+            //orderItem.OrderID = _order.ID;
 
             //todo: check if orderitem has measurement
             OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;

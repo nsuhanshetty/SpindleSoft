@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NHibernate.Linq;
+using NHibernate.Criterion;
+using log4net;
 
 namespace SpindleSoft.Builders
 {
     public class OrderBuilder
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(OrderBuilder));
         #region OrderTypeBuilder
         public static List<OrderItem> GetOrderTypeList()
         {
@@ -43,15 +47,39 @@ namespace SpindleSoft.Builders
                     //todo: convert to linq
                     //order by updated date desc
                     //singleOrDefault
-                    string query = "select * from OrderItem o inner join orders ord on ord.ID = o.OrderID where o.name = " + itemName + " and ord.CustomerID = " + custId;
-                    NHibernate.IQuery sqlQuery = session.CreateSQLQuery(query)
-                                                .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-                    return orderItem = sqlQuery as OrderItem;
+
+                    //string query = "select * from OrderItem o inner join orders ord on ord.ID = o.OrderID where o.name = " + itemName + " and ord.CustomerID = " + custId;
+
+                    //Orders orderAlias = null;
+                    //OrderItem itemAlias = null;
+
+                    //var query = session.QueryOver<OrderItem>(() => itemAlias)
+                    //     .JoinAlias(() => itemAlias.order, () => orderAlias)
+                    //    .Where(() => orderAlias.customer.ID == custId)
+                    //    .And(() => itemAlias.Name == itemName)
+                    // .TransformUsing(NHibernate.Transform.Transformers.AliasToBean<OrderItem>());
+
+                    //var query = session.CreateCriteria<OrderItem>("ord")
+                    //    .CreateAlias("Orders","o")
+                    //    .CreateAlias("ord.Name", "n")
+                    //    .Add(Restrictions.Eq("n", itemName))
+                    //    .Add(Restrictions.Eq("o.CustomerID",custId));
+                    //return orderItem = query.UniqueResult<OrderItem>();
+
+                    //NHibernate.IQuery sqlQuery = session.CreateSQLQuery(query)
+                    //                            .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
+
+                    log.Info("testing and feeling awesome");
+                    orderItem = (from i in session.Query<OrderItem>()
+                                 join o in session.Query<Orders>() on i.Order.ID equals o.ID
+                                 where (o.Customer.ID == custId && i.Name == itemName)
+                                 select i).SingleOrDefault();
+                    return orderItem;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex.Message);
                 return null;
             }
         }

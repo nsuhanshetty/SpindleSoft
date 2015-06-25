@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NHibernate.Linq;
 using System.Collections;
 using System.Data;
+using log4net;
 
 namespace SpindleSoft.Builders
 {
@@ -238,9 +239,11 @@ namespace SpindleSoft.Builders
                     return sqlQuery.List<Sale>() as List<Sale>;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //todo: Log4net
+                ILog log = LogManager.GetLogger(typeof(SaleBuilder));
+                log.Error(ex.Message);
                 return null;
             }
         }
@@ -268,7 +271,7 @@ namespace SpindleSoft.Builders
         //        //todo: Log4net
         //        return null;
         //    }
-        }
+        //}
         #endregion Sale
     }
 }

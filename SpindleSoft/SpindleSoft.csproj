@@ -73,6 +73,9 @@
     <Reference Include="WCC">
       <HintPath>..\..\..\..\..\SkyDrive\Projects\GYMMAN\GYMMAN\bin\Debug\WCC.dll</HintPath>
     </Reference>
+    <Reference Include="WhatsAppApi">
+      <HintPath>..\packages\WhatsAppAPI.15.4.29\lib\net40\WhatsAppApi.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\OrderBuilder.cs" />
@@ -395,7 +398,9 @@
     <EmbeddedResource Include="Views\Winform_VendorDetails.resx">
       <DependentUpon>Winform_VendorDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="log4net.config" />
+    <None Include="log4net.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

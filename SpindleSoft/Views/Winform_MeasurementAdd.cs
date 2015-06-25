@@ -24,7 +24,7 @@ namespace SpindleSoft.Views
             this.rindex = rindex;
 
             //loading Controls
-            txtOrderNo.Text = this._orderItem.OrderID.ToString();
+            //txtOrderType.Text = this._orderItem.OrderID.ToString();
 
             txtLength.Text = this._orderItem.Length.ToString();
             txtWaist.Text = this._orderItem.Waist.ToString();

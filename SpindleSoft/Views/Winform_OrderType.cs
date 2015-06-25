@@ -47,20 +47,20 @@ namespace SpindleSoft.Views
             }
 
 
-            OrderType ordertype = new OrderType(txtOrderTypeName.Text, txtOrderTypePrice.Text, chkbxBasicMeasure.Checked, chkbxBottomMeasure.Checked, chkbxSleeveMeasure.Checked);
+            //OrderType ordertype = new OrderType(txtOrderTypeName.Text, txtOrderTypePrice.Text, chkbxBasicMeasure.Checked, chkbxBottomMeasure.Checked, chkbxSleeveMeasure.Checked);
 
             UpdateStatus("Saving OrderTypeInfo..", 50);
-            bool response = SpindleSoft.Savers.OrderSaver.SaveOrderTypeInfo(ordertype);
+            //bool response = SpindleSoft.Savers.OrderSaver.SaveOrderTypeInfo(ordertype);
 
-            if (response)
-            {
-                UpdateStatus("Saved", 100);
-                this.Close();
-            }
-            else
-            {
-                UpdateStatus("Error in Saving OrderTypeInfo..", 100);
-            }
+            //if (response)
+            //{
+            //    UpdateStatus("Saved", 100);
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    UpdateStatus("Error in Saving OrderTypeInfo..", 100);
+            //}
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
