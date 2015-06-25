@@ -36,29 +36,29 @@ namespace SpindleSoft.Builders
         /// <returns>OrderItem</returns>
         public static OrderItem GetOrderItem(int custId, string itemName)
         {
-            OrderItem orderItem = new OrderItem();
-            try
-            {
-                using (var session = NHibernateHelper.OpenSession())
-                {
-                    //todo: convert to linq
-                    //order by updated date desc
-                    //singleOrDefault
-                    string query = (@"select * from OrderItem o inner join orders ord on ord.ID = o.OrderID where o.name =:name and ord.CustomerID = :custId");
-                    var sqlQuery = session.CreateSQLQuery(query)
-                                                .SetParameter("name", itemName)
-                                                .SetParameter("custId", custId);
-                    sqlQuery.AddEntity("o", typeof(OrderItem));
+            //OrderItem orderItem = new OrderItem();
+            //try
+            //{
+            //    using (var session = NHibernateHelper.OpenSession())
+            //    {
+            //        //todo: convert to linq
+            //        //order by updated date desc
+            //        //singleOrDefault
+            //        string query = (@"select * from OrderItem o inner join orders ord on ord.ID = o.OrderID where o.name =:name and ord.CustomerID = :custId");
+            //        var sqlQuery = session.CreateSQLQuery(query)
+            //                                    .SetParameter("name", itemName)
+            //                                    .SetParameter("custId", custId);
+            //        sqlQuery.AddEntity("o", typeof(OrderItem));
                                                 
-                                                //.SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-                    return orderItem = sqlQuery as OrderItem;
-                }
-            }
-            catch (Exception)
-            {
-                //todo: log4net
-                return null;
-            }
+            //                                    //.SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
+            //        return orderItem = sqlQuery as OrderItem;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    //todo: log4net
+            //    return null;
+            //}
         }
 
         //public static List<OrderType> GetOrderTypeList()
