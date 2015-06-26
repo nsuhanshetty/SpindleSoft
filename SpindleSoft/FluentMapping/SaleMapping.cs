@@ -22,7 +22,7 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Material);
             Map(x => x.IsSelfMade);
             Map(x => x.Size);
-            References(x => x.VendorID);
+            Map(x => x.VendorID);
             Map(x => x.Quantity);
         }
     }

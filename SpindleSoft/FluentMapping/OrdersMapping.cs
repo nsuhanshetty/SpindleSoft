@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace SpindleSoft.FluentMapping
 {
-    class OrdersMapping
+    class OrdersTypeMapping : ClassMap<OrderItem>
     {
-    }
-
-        class OrdersTypeMapping : ClassMap<OrderItem>
-        {
         public OrdersTypeMapping()
         {
             Id(x => x.ID).GeneratedBy.Identity();
             Map(x => x.Name);
-            Map(x => x.OrderID);
+            References(x => x.Order)
+                .Class<Orders>()
+                .Columns("OrderID");
             Map(x => x.Price);
             Map(x => x.Quantity);
             Map(x => x.Length);
@@ -35,6 +33,21 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.SleeveArmHole);
             Map(x => x.SleeveLength);
             Map(x => x.Comment);
+        }
+    }
+
+    class OrdersMapping : ClassMap<Orders>
+    {
+        public OrdersMapping()
+        {
+            Id(x => x.ID).GeneratedBy.Identity();
+            References(x => x.Customer)
+                .Class<Customer>()
+                .Columns("CustomerID");
+            Map(x => x.PromisedDate);
+            Map(x => x.TotalPrice);
+            Map(x => x.CurrentPayment);
+            HasMany(x => x.OrdersItems).Inverse().Cascade.All(); ;
         }
     }
 }

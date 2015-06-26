@@ -84,11 +84,12 @@ namespace SpindleSoft.Views
                     return;
                 }
 
+                //todo: 
                 //1:open Blank measurements with Clothing type also with customer name - If measurements for customer doesnot exits
                 //2: open with previous measurements - If measurements for customer exits
-                OrderItem item = OrderBuilder.GetOrderItem(1, dgvOrderItems.Rows[e.RowIndex].Cells["OrderType"].Value.ToString());
+                //OrderItem item = OrderBuilder.GetOrderItem(1, dgvOrderItems.Rows[e.RowIndex].Cells["OrderType"].Value.ToString());
 
-                new Winform_MeasurementAdd(item, e.RowIndex).ShowDialog();
+                new Winform_MeasurementAdd(orderType.ToString(),this._cust.Name).ShowDialog();
             }
         }
 
@@ -108,7 +109,7 @@ namespace SpindleSoft.Views
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //customerId, 
-            _order.CustomerID = this._cust.ID;
+            _order.Customer = this._cust;
 
             //_order.ID = Convert.ToInt32(txtOrderNo.Text);
             _order.PromisedDate = dtpDeliveryDate.Value;

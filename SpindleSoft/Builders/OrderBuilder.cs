@@ -34,8 +34,8 @@ namespace SpindleSoft.Builders
         /// <param name="custId"></param>
         /// <param name="itemName"></param>
         /// <returns>OrderItem</returns>
-        public static OrderItem GetOrderItem(int custId, string itemName)
-        {
+        //public static OrderItem GetOrderItem(int custId, string itemName)
+        //{
             //OrderItem orderItem = new OrderItem();
             //try
             //{
@@ -59,7 +59,7 @@ namespace SpindleSoft.Builders
             //    //todo: log4net
             //    return null;
             //}
-        }
+        //}
 
         //public static List<OrderType> GetOrderTypeList()
         //{

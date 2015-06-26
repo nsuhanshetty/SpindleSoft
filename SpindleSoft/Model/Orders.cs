@@ -5,17 +5,17 @@ namespace SpindleSoft.Model
 {
     public class Orders
     {
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
 
-        public int CustomerID { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public float TotalPrice { get; set; }
+        public virtual float TotalPrice { get; set; }
 
-        public int CurrentPayment { get; set; }
+        public virtual int CurrentPayment { get; set; }
 
-        public DateTime PromisedDate { get; set; }
+        public virtual DateTime PromisedDate { get; set; }
 
-        public List<OrderItem> OrdersItems { get; set; }
+        public virtual List<OrderItem> OrdersItems { get; set; }
 
         //public int StatusID { get; set; }
 
@@ -32,7 +32,7 @@ namespace SpindleSoft.Model
     {
         public virtual int ID { get; protected set; }
 
-        public virtual int OrderID { get; set; }
+        public virtual Orders Order { get; set; }
 
         public virtual string Name { get; set; }
 
@@ -40,33 +40,33 @@ namespace SpindleSoft.Model
 
         public virtual float Price { get; set; }
 
-        public virtual float Length { get; set; }
+        public virtual float? Length { get; set; }
 
-        public virtual float Waist { get; set; }
+        public virtual float? Waist { get; set; }
 
-        public virtual float Chest { get; set; }
+        public virtual float? Chest { get; set; }
 
-        public virtual float Shoulder { get; set; }
+        public virtual float? Shoulder { get; set; }
 
-        public virtual float Hip { get; set; }
+        public virtual float? Hip { get; set; }
 
-        public virtual float D { get; set; }
+        public virtual float? D { get; set; }
 
-        public virtual float Front { get; set; }
+        public virtual float? Front { get; set; }
 
-        public virtual float Back { get; set; }
+        public virtual float? Back { get; set; }
 
-        public virtual float BottomLength { get; set; }
+        public virtual float? BottomLength { get; set; }
 
-        public virtual float BottomWaist { get; set; }
+        public virtual float? BottomWaist { get; set; }
 
-        public virtual float BottomHip { get; set; }
+        public virtual float? BottomHip { get; set; }
 
-        public virtual float SleeveLoose { get; set; }
+        public virtual float? SleeveLoose { get; set; }
 
-        public virtual float SleeveArmHole { get; set; }
+        public virtual float? SleeveArmHole { get; set; }
 
-        public virtual float SleeveLength { get; set; }
+        public virtual float? SleeveLength { get; set; }
 
         public virtual string Comment { get; set; }
 
@@ -84,7 +84,7 @@ namespace SpindleSoft.Model
             float shoulder, float chest, float d, float front, float back, float hip, float bothip, float botLen, float botWaist,
             float slvArmHole, float slvLen, float slvLoose)
         {
-            this.OrderID = orderID;
+            //this.Order = orderID;
             this.Name = name;
             this.Quantity = quantity;
             this.Price = price;
