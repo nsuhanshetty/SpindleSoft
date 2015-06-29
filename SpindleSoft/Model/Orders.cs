@@ -15,7 +15,7 @@ namespace SpindleSoft.Model
 
         public virtual DateTime PromisedDate { get; set; }
 
-        public virtual List<OrderItem> OrdersItems { get; set; }
+        public virtual IList<OrderItem> OrdersItems { get; set; }
 
         //public int StatusID { get; set; }
 
@@ -26,6 +26,17 @@ namespace SpindleSoft.Model
         //public DateTime CreatedDate { get; set; }
 
         //public DateTime ModifieddDate { get; set; }
+
+        public Orders() { }
+
+        public Orders(Customer cust, DateTime promiseDate, List<OrderItem> ordersItems, int totalPrice, int currPayment)
+        {
+            this.Customer = cust;
+            this.PromisedDate = promiseDate;
+            this.OrdersItems = ordersItems;
+            this.TotalPrice = totalPrice;
+            this.CurrentPayment = currPayment;
+        }
     }
 
     public class OrderItem
@@ -74,15 +85,18 @@ namespace SpindleSoft.Model
 
         public OrderItem() { }
 
-        public OrderItem(string itemName)
+        public OrderItem(string itemName, int price, int quantity)
         {
             this.Name = itemName;
             //this.OrderID = Convert.ToInt32(orderId);
+            this.Price = price;
+            this.Quantity = quantity;
         }
 
-        public OrderItem(int orderID, string name, int quantity, int price, float length, float waist,
-            float shoulder, float chest, float d, float front, float back, float hip, float bothip, float botLen, float botWaist,
-            float slvArmHole, float slvLen, float slvLoose)
+        public OrderItem(string name, int quantity, int price, float length, float waist,
+            float shoulder, float chest, float d, float front, float back, float hip,
+            float bothip, float botLen, float botWaist,
+            float slvArmHole, float slvLen, float slvLoose, string comment)
         {
             //this.Order = orderID;
             this.Name = name;
@@ -91,20 +105,22 @@ namespace SpindleSoft.Model
 
             this.Length = length;
             this.Waist = waist;
-            this.Shoulder = shoulder;
             this.Chest = chest;
-            this.D = d;
+            this.Shoulder = shoulder;
             this.Front = front;
             this.Back = back;
+            this.D = d;
             this.Hip = hip;
 
             this.BottomHip = bothip;
-            this.BottomLength = botLen;
             this.BottomWaist = botWaist;
+            this.BottomLength = botLen;
 
             this.SleeveArmHole = slvArmHole;
             this.SleeveLength = slvLen;
             this.SleeveLoose = slvLoose;
+
+            this.Comment = comment;
         }
     }
 

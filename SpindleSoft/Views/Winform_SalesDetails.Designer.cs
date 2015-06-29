@@ -379,6 +379,7 @@
             this.txtAmntPaid.Name = "txtAmntPaid";
             this.txtAmntPaid.Size = new System.Drawing.Size(84, 20);
             this.txtAmntPaid.TabIndex = 3;
+            this.txtAmntPaid.Text = "0";
             this.txtAmntPaid.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtAmntPaid_KeyPress);
             // 
             // label3

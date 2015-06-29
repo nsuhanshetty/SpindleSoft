@@ -47,7 +47,9 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.PromisedDate);
             Map(x => x.TotalPrice);
             Map(x => x.CurrentPayment);
-            HasMany(x => x.OrdersItems).Inverse().Cascade.All(); ;
+            HasMany(x => x.OrdersItems)
+                .Inverse()
+                .Cascade.All(); ;
         }
     }
 }

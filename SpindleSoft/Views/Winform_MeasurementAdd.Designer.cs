@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Winform_MeasurementAdd));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpBxMeasurements = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtShoulder = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -74,7 +74,7 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.txtClothingType = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.grpBxMeasurements.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -83,17 +83,17 @@
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // grpBxMeasurements
             // 
-            this.groupBox1.Controls.Add(this.groupBox4);
-            this.groupBox1.Controls.Add(this.groupBox3);
-            this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Location = new System.Drawing.Point(8, 111);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(373, 240);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Measurement Details";
+            this.grpBxMeasurements.Controls.Add(this.groupBox4);
+            this.grpBxMeasurements.Controls.Add(this.groupBox3);
+            this.grpBxMeasurements.Controls.Add(this.groupBox2);
+            this.grpBxMeasurements.Location = new System.Drawing.Point(8, 111);
+            this.grpBxMeasurements.Name = "grpBxMeasurements";
+            this.grpBxMeasurements.Size = new System.Drawing.Size(373, 240);
+            this.grpBxMeasurements.TabIndex = 0;
+            this.grpBxMeasurements.TabStop = false;
+            this.grpBxMeasurements.Text = "Measurement Details";
             // 
             // groupBox4
             // 
@@ -510,7 +510,7 @@
             this.ClientSize = new System.Drawing.Size(390, 460);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.grpBoxCustMeasure);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpBxMeasurements);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.groupBox5);
             this.Name = "Winform_MeasurementAdd";
@@ -518,10 +518,10 @@
             this.Load += new System.EventHandler(this.Winform_MeasurementAdd_Load);
             this.Controls.SetChildIndex(this.groupBox5, 0);
             this.Controls.SetChildIndex(this.txtComment, 0);
-            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.grpBxMeasurements, 0);
             this.Controls.SetChildIndex(this.grpBoxCustMeasure, 0);
             this.Controls.SetChildIndex(this.groupBox6, 0);
-            this.groupBox1.ResumeLayout(false);
+            this.grpBxMeasurements.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -540,7 +540,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpBxMeasurements;
         private System.Windows.Forms.GroupBox groupBox4;
         internal System.Windows.Forms.Label label14;
         internal System.Windows.Forms.TextBox txtBack;

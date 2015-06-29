@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Linq;
+using log4net;
 
 namespace SpindleSoft.Builders
 {
     public class OrderBuilder
     {
+        static ILog log = LogManager.GetLogger(typeof(OrderBuilder));
         #region OrderTypeBuilder
         public static List<string> GetOrderTypeList()
         {
@@ -34,32 +36,31 @@ namespace SpindleSoft.Builders
         /// <param name="custId"></param>
         /// <param name="itemName"></param>
         /// <returns>OrderItem</returns>
-        //public static OrderItem GetOrderItem(int custId, string itemName)
-        //{
-            //OrderItem orderItem = new OrderItem();
-            //try
-            //{
-            //    using (var session = NHibernateHelper.OpenSession())
-            //    {
-            //        //todo: convert to linq
-            //        //order by updated date desc
-            //        //singleOrDefault
-            //        string query = (@"select * from OrderItem o inner join orders ord on ord.ID = o.OrderID where o.name =:name and ord.CustomerID = :custId");
-            //        var sqlQuery = session.CreateSQLQuery(query)
-            //                                    .SetParameter("name", itemName)
-            //                                    .SetParameter("custId", custId);
-            //        sqlQuery.AddEntity("o", typeof(OrderItem));
-                                                
-            //                                    //.SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-            //        return orderItem = sqlQuery as OrderItem;
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    //todo: log4net
-            //    return null;
-            //}
-        //}
+        public static OrderItem GetOrderItem(int custId, string itemName)
+        {
+            OrderItem orderItem = new OrderItem();
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    //todo: convert to linq
+                    //order by updated date desc
+                    //singleOrDefault
+                    string query = ("select i.* from orderitem i, orders o where o.ID = i.OrderID and i.Name = :name and o.CustomerID = :custId");
+                    var sqlQuery = session.CreateSQLQuery(query)
+                                                .SetParameter("name", itemName)
+                                                .SetParameter("custId", custId)
+                                                .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
+                    log.Info(sqlQuery as OrderItem);
+                    return orderItem = sqlQuery as OrderItem;
+                }
+            }
+            catch (Exception)
+            {
+                //todo: log4net
+                return null;
+            }
+        }
 
         //public static List<OrderType> GetOrderTypeList()
         //{

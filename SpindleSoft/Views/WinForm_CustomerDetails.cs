@@ -62,7 +62,7 @@ namespace SpindleSoft.Views
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //need to handle this situation well
-            string[] input = {"txtAddress","txtEmailID"};
+            string[] input = { "txtAddress", "txtEmailID","txtRefMob","txtRefName" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
@@ -78,7 +78,7 @@ namespace SpindleSoft.Views
             this._cust.Image = pcbCustImage.Image;
             //this._cust.Image = pcbCustImage.Image;
             this._cust.ReferralID = refCust.ID;
-
+            
             UpdateStatus("Saving..", 50);
             bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
 

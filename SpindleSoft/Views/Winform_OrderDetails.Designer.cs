@@ -39,6 +39,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvOrderItems = new System.Windows.Forms.DataGridView();
+            this.OrderType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.OrderQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderMeasurement = new System.Windows.Forms.DataGridViewButtonColumn();
             this.grpBoxCustomer = new System.Windows.Forms.GroupBox();
             this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,10 +57,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtAmntPaid = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.OrderType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.OrderQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderMeasurement = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).BeginInit();
@@ -152,7 +152,34 @@
             this.dgvOrderItems.Size = new System.Drawing.Size(577, 131);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgvOrderItems.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellEndEdit);
             this.dgvOrderItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvOrderItems_EditingControlShowing);
+            // 
+            // OrderType
+            // 
+            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.OrderType.HeaderText = "Clothing Type";
+            this.OrderType.Name = "OrderType";
+            // 
+            // OrderQuantity
+            // 
+            this.OrderQuantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderQuantity.HeaderText = "Quantity";
+            this.OrderQuantity.Name = "OrderQuantity";
+            // 
+            // OrderPrice
+            // 
+            this.OrderPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderPrice.HeaderText = "Price\\ Item";
+            this.OrderPrice.Name = "OrderPrice";
+            // 
+            // OrderMeasurement
+            // 
+            this.OrderMeasurement.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderMeasurement.HeaderText = "Measurement Details";
+            this.OrderMeasurement.Name = "OrderMeasurement";
+            this.OrderMeasurement.Text = "Edit";
             // 
             // grpBoxCustomer
             // 
@@ -207,7 +234,6 @@
             this.NewOrderTypeToolStrip.Size = new System.Drawing.Size(76, 51);
             this.NewOrderTypeToolStrip.Text = "New Order Type";
             this.NewOrderTypeToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            //this.NewOrderTypeToolStrip.Click += new System.EventHandler(this.NewOrderTypeToolStrip_Click);
             // 
             // AddReferralToolStrip
             // 
@@ -276,6 +302,7 @@
             this.txtAmntPaid.Name = "txtAmntPaid";
             this.txtAmntPaid.Size = new System.Drawing.Size(109, 20);
             this.txtAmntPaid.TabIndex = 136;
+            this.txtAmntPaid.Validating += new System.ComponentModel.CancelEventHandler(this.txtAmntPaid_Validating);
             // 
             // label8
             // 
@@ -285,32 +312,6 @@
             this.label8.Size = new System.Drawing.Size(67, 13);
             this.label8.TabIndex = 139;
             this.label8.Text = "Paid Amount";
-            // 
-            // OrderType
-            // 
-            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrderType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.OrderType.HeaderText = "Clothing Type";
-            this.OrderType.Name = "OrderType";
-            // 
-            // OrderQuantity
-            // 
-            this.OrderQuantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrderQuantity.HeaderText = "Quantity";
-            this.OrderQuantity.Name = "OrderQuantity";
-            // 
-            // OrderPrice
-            // 
-            this.OrderPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrderPrice.HeaderText = "Price";
-            this.OrderPrice.Name = "OrderPrice";
-            // 
-            // OrderMeasurement
-            // 
-            this.OrderMeasurement.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrderMeasurement.HeaderText = "Measurement Details";
-            this.OrderMeasurement.Name = "OrderMeasurement";
-            this.OrderMeasurement.Text = "Edit";
             // 
             // Winform_OrderDetails
             // 
