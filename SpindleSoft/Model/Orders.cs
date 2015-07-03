@@ -17,6 +17,8 @@ namespace SpindleSoft.Model
 
         public virtual IList<OrderItem> OrdersItems { get; set; }
 
+        public virtual IList<AlterationItem> AlterationItems { get; set; }
+
         //public int StatusID { get; set; }
 
         //public string Status { get; set; }
@@ -41,9 +43,11 @@ namespace SpindleSoft.Model
 
     public class OrderItem
     {
-        public virtual int ID { get; protected set; }
+        public virtual int ID { get; set; }
 
         public virtual Orders Order { get; set; }
+
+        //public virtual Alteration Alteration { get; set; }
 
         public virtual string Name { get; set; }
 
@@ -82,6 +86,8 @@ namespace SpindleSoft.Model
         public virtual string Comment { get; set; }
 
         public virtual DateTime DateUpdated { get; set; }
+        
+        public virtual IList<AlterationItem> AlterationItems { get; set; }
 
         public OrderItem() { }
 

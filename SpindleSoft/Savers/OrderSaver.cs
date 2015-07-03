@@ -8,57 +8,34 @@ using log4net;
 
 namespace SpindleSoft.Savers
 {
-    
+
     class OrderSaver
     {
-       static ILog log = LogManager.GetLogger(typeof(OrderSaver));
-        //public static bool SaveOrderTypeInfo(OrderType orderType)
-        //{
-        //    try
-        //    {
-        //        using (var session = NHibernateHelper.OpenSession())
-        //        {
-        //            using (var transaction = session.BeginTransaction())
-        //            {
-        //                session.SaveOrUpdate(orderType);
-        //                transaction.Commit();
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //        //throw;
-        //    }
-
-        //}
-
-
-       public static bool SaveOrder(Orders order)
+        static ILog log = LogManager.GetLogger(typeof(OrderSaver));
+        public static bool SaveOrder(Orders order)
         {
-           using (var session = NHibernateHelper.OpenSession())
-           {
-               using (var transaction = session.BeginTransaction())
-               {
-                   try
-                   {
-                       foreach (var item in order.OrdersItems)
-                       {
-                           item.Order = order;
-                       }
-                       session.SaveOrUpdate(order);
-                       transaction.Commit();
-                       return true;
-                   }
-                   catch (Exception ex)
-                   {
-                       transaction.Rollback();
-                       log.Error(ex.Message);
-                       return false;
-                   }
-               }
-           }
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var item in order.OrdersItems)
+                        {
+                            item.Order = order;
+                        }
+                        session.SaveOrUpdate(order);
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        log.Error(ex.Message);
+                        return false;
+                    }
+                }
+            }
         }
     }
 }

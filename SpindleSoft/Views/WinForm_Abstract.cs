@@ -29,7 +29,7 @@ namespace SpindleSoft.Views
         {
         }
 
-        protected virtual void UpdateStatus(string statusText, int statusValue)
+        protected virtual void UpdateStatus(string statusText, int statusValue=0)
         {
             toolStrip_Label.Text = statusText;
             toolStripProgressBar1.Value = statusValue;

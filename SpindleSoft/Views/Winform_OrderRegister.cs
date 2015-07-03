@@ -1,5 +1,9 @@
-﻿using System;
+﻿using SpindleSoft.Model;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
+using SpindleSoft.Builders;
 
 namespace SpindleSoft.Views
 {
@@ -10,12 +14,51 @@ namespace SpindleSoft.Views
             InitializeComponent();
         }
 
-        private void toolStripProgressBar1_Click(object sender, EventArgs e)
-        {
-        }
-
         private void Winform_OrderRegister_Load(object sender, EventArgs e)
         {
+            txtName_TextChanged(this, new EventArgs());
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            //todo : Check txtboxes for sql injection
+            List<Orders> OrdersList = (OrderBuilder.GetOrdersList(txtName.Text, txtMobNo.Text, txtOrderId.Text));
+            if (OrdersList != null)
+            {
+                dgvSearch.DataSource = (from order in OrdersList
+                                        select new
+                                        {
+                                            OrderID = order.ID,
+                                            order.TotalPrice,
+                                            AmountPaid = order.CurrentPayment,
+                                            PromisedDate = order.PromisedDate
+                                        }).ToList();
+            }
+            else
+                dgvSearch.DataSource = null;
+        }
+
+        private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            statusStrip1.Text = "Fetching Data..";
+            toolStripProgressBar1.Value = 25;
+
+            if (dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value == null) return;
+            int orderID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString());
+
+            statusStrip1.Text = "Fetching Data..";
+            toolStripProgressBar1.Value = 50;
+
+            Orders order = OrderBuilder.GetOrderInfo(orderID);
+            if (order == null)
+            {
+                statusStrip1.Text = "Error While Fetching Data..";
+                toolStripProgressBar1.Value = 100;
+                return;
+            }
+            statusStrip1.Text = "Setting Up Controls.";
+            toolStripProgressBar1.Value = 100;
+            new Winform_OrderDetails(order).ShowDialog();
         }
     }
 }

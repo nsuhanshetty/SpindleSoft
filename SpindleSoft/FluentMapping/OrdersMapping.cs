@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 
 namespace SpindleSoft.FluentMapping
 {
-    class OrdersTypeMapping : ClassMap<OrderItem>
+    class OrderItemMapping : ClassMap<OrderItem>
     {
-        public OrdersTypeMapping()
+        public OrderItemMapping()
         {
             Id(x => x.ID).GeneratedBy.Identity();
             Map(x => x.Name);
             References(x => x.Order)
                 .Class<Orders>()
                 .Columns("OrderID");
+            //References(x => x.Alteration)
+            //    .Class<Alteration>()
+            //    .Columns("AlterationID");
             Map(x => x.Price);
             Map(x => x.Quantity);
             Map(x => x.Length);
@@ -24,6 +27,7 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Chest);
             Map(x => x.Shoulder);
             Map(x => x.D);
+            Map(x => x.Hip);
             Map(x => x.Front);
             Map(x => x.Back);
             Map(x => x.BottomLength);
@@ -47,9 +51,48 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.PromisedDate);
             Map(x => x.TotalPrice);
             Map(x => x.CurrentPayment);
-            HasMany(x => x.OrdersItems)
+            HasMany(x => x.OrdersItems) 
+                                        .Inverse()
+                                        .Cascade.All();
+            HasMany(x => x.AlterationItems)
+                                        .Inverse()
+                                        .Cascade.All();
+        }
+    }
+
+    class AlterationsMapping : ClassMap<Alteration>
+    {
+        public AlterationsMapping()
+        {
+            Id(x => x.ID).GeneratedBy.Identity();
+            References(x => x.Customer)
+                .Class<Customer>()
+                .Columns("CustomerID");
+            Map(x => x.PromisedDate);
+            Map(x => x.TotalPrice);
+            Map(x => x.CurrentPayment);
+            HasMany(x => x.AlterationItems)
                 .Inverse()
-                .Cascade.All(); ;
+                .Cascade.All();
+        }
+    }
+
+    class AlterationsItemMapping : ClassMap<AlterationItem>
+    {
+        public AlterationsItemMapping()
+        {
+            Table("alterationitems");
+            Id(x => x.ID).GeneratedBy.Identity();
+            Map(x => x.Name);
+            Map(x => x.Quantity);
+            Map(x => x.Comment);
+            Map(x => x.Price);
+            References(x => x.Order)
+                .Class<Orders>()
+                .Columns("OrderID");
+            References(x => x.Alteration)
+                .Class<Alteration>()
+                .Columns("AlterationID");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SpindleSoft.Views
     public partial class Winform_OrderDetails : Winform_DetailsFormat
     {
         Customer _cust = new Customer();
-        Orders _order = new Orders();
+        Orders order = new Orders();
         List<OrderItem> OrderItemsList = new List<OrderItem>();
         ILog log = LogManager.GetLogger(typeof(Winform_OrderDetails));
 
@@ -21,20 +21,28 @@ namespace SpindleSoft.Views
         public Winform_OrderDetails()
         {
             InitializeComponent();
-            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
 
-            //todo: removing NewOrderTypeToolStrip in designer
-            //this.toolStripParent.Items.Add(this.NewOrderTypeToolStrip);
+        }
 
-            try
-            {
-                List<string> orderTypeList = OrderBuilder.GetOrderTypeList();
-                this.OrderType.Items.AddRange(orderTypeList.ToArray());
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-            }
+        public Winform_OrderDetails(Orders order)
+        {
+            InitializeComponent();
+
+            UpdateCustomerControl(PeoplePracticeBuilder.GetCustomer(order.Customer.ID));
+
+            this.order = OrderBuilder.GetOrderInfo(order.ID);
+            this.OrderItemsList = this.order.OrdersItems as List<OrderItem>;
+            dtpDeliveryDate.Value = order.PromisedDate;
+            txtTotAmnt.Text = order.TotalPrice.ToString();
+            txtAmntPaid.Text = order.CurrentPayment.ToString();
+
+            int amntPaid = 0;
+            int total;
+            txtTotAmnt.Text = txtTotAmnt.Text;
+
+            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            int.TryParse(txtTotAmnt.Text, out total);
+            txtBalanceAmnt.Text = (total - amntPaid).ToString();
         }
 
         public void UpdateCustomerControl(Customer customer)
@@ -61,15 +69,51 @@ namespace SpindleSoft.Views
 
         #region Events
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvOrderItems.Rows.Count < 2 || dgvOrderItems.SelectedRows.Count == 0) return;
+
+            DialogResult dr = MessageBox.Show("Continue deleting selected Order items?", "Delete Order Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.No) return;
+
+            foreach (DataGridViewRow item in dgvOrderItems.SelectedRows)
+            {
+                var index = OrderItemsList.IndexOf(OrderItemsList.Where(x => x.Name == item.Cells["OrderType"].Value.ToString()).SingleOrDefault());
+                OrderItemsList.RemoveAt(index);
+                dgvOrderItems.Rows.RemoveAt(item.Index);
+            }
+        }
+
         private void Winform_OrderAdd_Load(object sender, EventArgs e)
         {
-            //todo : Unique Orderno from the Db 
+            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
 
-            //dgvOrderItems.Columns["OrderType"].
-            //item type - quatity - price - edit 1measurements - add design.
+            //todo: removing NewOrderTypeToolStrip in designer
+            //this.toolStripParent.Items.Add(this.NewOrderTypeToolStrip);
 
-            // To avoid all the annoying error messages, handle the DataError event of the DataGridView:
-            //dgvOrderItems.DataError += new DataGridViewDataErrorEventHandler(DataGridView1_DataError);
+            if (OrderItemsList != null && OrderItemsList.Count != 0)
+            {
+                foreach (var item in OrderItemsList)
+                {
+                    int index = dgvOrderItems.NewRowIndex;
+                    dgvOrderItems.Rows[index].Cells["OrderType"].Value = item.Name;
+                    dgvOrderItems.Rows[index].Cells["OrderQuantity"].Value = item.Quantity;
+                    dgvOrderItems.Rows[index].Cells["OrderPrice"].Value = item.Price;
+                    dgvOrderItems.CurrentCell = dgvOrderItems.Rows[index].Cells["OrderPrice"];
+                    dgvOrderItems.NotifyCurrentCellDirty(true);
+                    dgvOrderItems.NotifyCurrentCellDirty(false);
+                }
+            }
+
+            try
+            {
+                List<string> orderTypeList = OrderBuilder.GetOrderTypeList();
+                this.OrderType.Items.AddRange(orderTypeList.ToArray());
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
         }
 
         private void AddCustomerToolStrip_Click(object sender, EventArgs e)
@@ -102,10 +146,10 @@ namespace SpindleSoft.Views
                     return;
                 }
 
-                OrderItem item; 
+                OrderItem item;
                 item = OrderItemsList.Where(x => (x.Name == _productName.ToString())).SingleOrDefault();
 
-                if (item == null ) item =  new OrderItem();
+                if (item == null) item = new OrderItem();
                 item.Quantity = int.Parse(curRow.Cells["OrderQuantity"].Value.ToString());
                 item.Price = int.Parse(curRow.Cells["OrderPrice"].Value.ToString());
                 new Winform_MeasurementAdd(_productName.ToString(), this._cust.Name, item).ShowDialog();
@@ -152,7 +196,11 @@ namespace SpindleSoft.Views
                 Match _match = Regex.Match(cell.Value.ToString(), "^\\d*$");
                 cell.ErrorText = (!_match.Success) ? "Invalid Amount input data type.\nExample: '10'" : "";
 
-                if (cell.ErrorText != "") return;
+                if (cell.ErrorText != "")
+                {
+                    cell.Value = null;
+                    return;
+                }
                 /*Validation - end*/
 
                 //todo : Method to handle payment amount
@@ -175,13 +223,16 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
+            UpdateStatus("Saving..");
             string errorMsg = string.Empty;
             if (this._cust.ID == 0)
                 errorMsg = "Add Customer, as it is mandatory for Order details.";
             else if (this.OrderItemsList == null || this.OrderItemsList.Count == 0)
                 errorMsg = "Select items to cart to make the Order.";
-            else if (dtpDeliveryDate.Value.Date.CompareTo(DateTime.Today.Date) > 0)
-                errorMsg = "The Promised date cannot be less than today.";
+            else if ((dtpDeliveryDate.Value.Date.CompareTo(DateTime.Today.Date)) < 0)
+                errorMsg = "The Promised date must not be less than today.";
+            else if (dgvOrderItems.Rows.Count - 1 != OrderItemsList.Count)
+                errorMsg = "Measurement details for all Product is mandatory.";
 
             if (errorMsg != string.Empty)
             {
@@ -189,18 +240,35 @@ namespace SpindleSoft.Views
                 return;
             }
 
+            UpdateStatus("Saving..", 25);
             int total, amntPaid;
             int.TryParse(txtTotAmnt.Text, out total);
             int.TryParse(txtAmntPaid.Text, out amntPaid);
 
-            _order = new Orders(this._cust, dtpDeliveryDate.Value, OrderItemsList, total, amntPaid);
-            bool success = SpindleSoft.Savers.OrderSaver.SaveOrder(_order);
+            //order = new Orders(this._cust, dtpDeliveryDate.Value, OrderItemsList, total, amntPaid);
 
+            order.Customer = this._cust;
+            order.PromisedDate = dtpDeliveryDate.Value;
+            order.OrdersItems = OrderItemsList;
+            order.TotalPrice = total;
+            order.CurrentPayment = amntPaid;
+
+            UpdateStatus("Saving..", 50);
+            bool success = SpindleSoft.Savers.OrderSaver.SaveOrder(order);
+
+            UpdateStatus("Saving..", 100);
             if (success)
             {
                 //Send msg if the balance == 0
-            }
+                if (total - amntPaid == 0)
+                {
+                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
 
+                }
+                this.Close();
+            }
+            else
+                UpdateStatus("Error in Saving Order.", 100);
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -226,14 +294,14 @@ namespace SpindleSoft.Views
 
             Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
             string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
-            _errorMsg = (_errorMsg != "" && AmntPaid > TotAmnt) ? "Amount Paid cannot be greater than Total Amount" : "";
+            _errorMsg = (_errorMsg == "" && AmntPaid > TotAmnt) ? "Amount Paid cannot be greater than Total Amount" : "";
             errorProvider1.SetError(txtAmntPaid, _errorMsg);
 
             if (_errorMsg != "")
             {
                 // Cancel the event and select the text to be corrected by the user.
                 e.Cancel = true;
-                txtAmntPaid.Select(0, txtAmntPaid.TextLength);
+                txtAmntPaid.Text = "";
             }
             else
             {

@@ -12,7 +12,7 @@ namespace SpindleSoft.Builders
     public class OrderBuilder
     {
         static ILog log = LogManager.GetLogger(typeof(OrderBuilder));
-        #region OrderTypeBuilder
+        #region OrderBuilder
         public static List<string> GetOrderTypeList()
         {
             try
@@ -55,30 +55,90 @@ namespace SpindleSoft.Builders
                     return orderItem = sqlQuery as OrderItem;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex.Message);
                 return null;
             }
         }
 
-        //public static List<OrderType> GetOrderTypeList()
-        //{
-        //    List<OrderType> orderTypeList = new List<OrderType>();
-        //    try
-        //    {
-        //        using (var session = NHibernateHelper.OpenSession())
-        //        {
-        //            NHibernate.IQuery sqlQuery = session.CreateSQLQuery("select id,name,price from ordertype ").SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderType)));
-        //            return orderTypeList = sqlQuery.List<OrderType>() as List<OrderType>;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        //todo: log4net
-        //        return null;
-        //    }
-        //}
-        #endregion OrderTypeBuilder
+        public static List<Orders> GetOrdersList(string custName = "", string custMob = "", string orderId = "")
+        {
+            List<Orders> orderList = new List<Orders>();
+            int id;
+            int.TryParse(orderId, out id);
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    NHibernate.IQuery sqlQuery = session.CreateSQLQuery("select o.ID,o.TotalPrice,o.CurrentPayment,o.PromisedDate from orders o " +
+                                                "join customer c on c.ID = o.CustomerID " +
+                                                "where c.Name like :custName and c.Mobile_No like :custMob " +
+                                                "and o.ID like :orderId")// and o.PromisedDate = :dateOfDelivery ")
+                                                //.SetParameter("dateOfDelivery", dateOfDelivery.Date.ToString("yyyy-MM-dd"))
+                                                .SetParameter("orderId", id == 0 ? "" + "%" : id.ToString() + "%")
+                                                .SetParameter("custName", custName + "%")
+                                                .SetParameter("custMob", custMob + "%")
+                                                .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Orders)));
+                    return orderList = sqlQuery.List<Orders>() as List<Orders>;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+
+        public static Orders GetOrderInfo(int orderID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    Orders _order = (from ord in session.Query<Orders>()
+                                     where ord.ID == orderID
+                                     select ord).SingleOrDefault();
+
+                    _order.OrdersItems = session.QueryOver<OrderItem>()
+                        .Where(x => x.Order.ID == orderID)
+                        .Fetch(o => o.Order).Eager
+                        .Future().ToList();
+                    //return query.ToList();
+                    //_order.OrdersItems = query.List<OrderItem>() as List<OrderItem>;
+
+
+                    return _order;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message);
+                    return null;
+                }
+            }
+        }
+
+        public static List<OrderItem> GetOrderItems(int _orderID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    var query = session.QueryOver<OrderItem>()
+                        .Where(x => x.Order.ID == _orderID)
+                        .Fetch(o => o.Order).Eager
+                        .Future();
+                    return query.ToList();
+
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message);
+                    return null;
+                }
+            }
+        }
+
+        #endregion OrderBuilder
     }
 }

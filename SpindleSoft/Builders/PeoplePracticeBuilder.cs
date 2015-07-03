@@ -8,6 +8,7 @@ using NHibernate.Linq;
 using NHibernate.Criterion;
 using System.Linq;
 using System.Threading.Tasks;
+using log4net;
 //using NHibernate;
 
 namespace SpindleSoft.Builders
@@ -19,6 +20,8 @@ namespace SpindleSoft.Builders
         //System.Windows.Forms.Application.StartupPath + "\\CustomerImages";
         static string StaffImagePath = "d:\\StaffImages";
         //System.Windows.Forms.Application.StartupPath + "\\StaffImages";
+
+        static ILog log = LogManager.GetLogger(typeof(PeoplePracticeBuilder));
 
         #region CustomerBuilder
         public static List<Customer> GetCustomersList(string name = "", string mobileno = "", string phoneno = "")
@@ -79,9 +82,25 @@ namespace SpindleSoft.Builders
                 }
                 return _cust;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+
+        public static Customer GetCustomer(int custId)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    return session.Get<Customer>(custId);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
                 return null;
             }
         }
@@ -96,9 +115,9 @@ namespace SpindleSoft.Builders
                     return bitmap;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex.Message);
                 return null;
             }
         }

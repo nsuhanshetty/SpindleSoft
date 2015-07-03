@@ -48,7 +48,6 @@
             this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addCatalogueToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.alterationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAlterationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchAlterationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -257,8 +256,7 @@
             // 
             this.ordersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addOrdersToolStripMenuItem,
-            this.searchOrderToolStripMenuItem,
-            this.addCatalogueToolStripMenuItem1});
+            this.searchOrderToolStripMenuItem});
             this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
             this.ordersToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.ordersToolStripMenuItem.Text = "&Orders";
@@ -276,12 +274,6 @@
             this.searchOrderToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.searchOrderToolStripMenuItem.Text = "Orders Register";
             this.searchOrderToolStripMenuItem.Click += new System.EventHandler(this.searchOrderToolStripMenuItem_Click);
-            // 
-            // addCatalogueToolStripMenuItem1
-            // 
-            this.addCatalogueToolStripMenuItem1.Name = "addCatalogueToolStripMenuItem1";
-            this.addCatalogueToolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
-            this.addCatalogueToolStripMenuItem1.Text = "Add Catalogue";
             // 
             // alterationsToolStripMenuItem
             // 
@@ -318,14 +310,14 @@
             // addItemToolStripMenuItem
             // 
             this.addItemToolStripMenuItem.Name = "addItemToolStripMenuItem";
-            this.addItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addItemToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.addItemToolStripMenuItem.Text = "&Add Item";
             this.addItemToolStripMenuItem.Click += new System.EventHandler(this.addItemToolStripMenuItem_Click);
             // 
             // stockCheckToolStripMenuItem1
             // 
             this.stockCheckToolStripMenuItem1.Name = "stockCheckToolStripMenuItem1";
-            this.stockCheckToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.stockCheckToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
             this.stockCheckToolStripMenuItem1.Text = "&Item Master";
             this.stockCheckToolStripMenuItem1.Click += new System.EventHandler(this.stockCheckToolStripMenuItem1_Click);
             // 
@@ -879,7 +871,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.ToolStripMenuItem SalesRegisterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addCatalogueToolStripMenuItem1;
         private System.Windows.Forms.RadioButton rdbSales;
         private System.Windows.Forms.ToolStripMenuItem salaryDetailsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem customerMeasurementToolStripMenuItem;

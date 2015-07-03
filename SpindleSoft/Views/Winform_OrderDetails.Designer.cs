@@ -57,6 +57,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtAmntPaid = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).BeginInit();
@@ -131,9 +132,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvOrderItems);
-            this.groupBox2.Location = new System.Drawing.Point(8, 208);
+            this.groupBox2.Location = new System.Drawing.Point(8, 230);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(583, 150);
+            this.groupBox2.Size = new System.Drawing.Size(592, 150);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add Order Details";
@@ -149,7 +150,7 @@
             this.dgvOrderItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOrderItems.Location = new System.Drawing.Point(3, 16);
             this.dgvOrderItems.Name = "dgvOrderItems";
-            this.dgvOrderItems.Size = new System.Drawing.Size(577, 131);
+            this.dgvOrderItems.Size = new System.Drawing.Size(586, 131);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dgvOrderItems.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellEndEdit);
@@ -200,7 +201,7 @@
             // 
             // dtpDeliveryDate
             // 
-            this.dtpDeliveryDate.Location = new System.Drawing.Point(476, 67);
+            this.dtpDeliveryDate.Location = new System.Drawing.Point(482, 67);
             this.dtpDeliveryDate.Name = "dtpDeliveryDate";
             this.dtpDeliveryDate.Size = new System.Drawing.Size(116, 20);
             this.dtpDeliveryDate.TabIndex = 1;
@@ -208,7 +209,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(388, 71);
+            this.label4.Location = new System.Drawing.Point(394, 71);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 13);
             this.label4.TabIndex = 128;
@@ -254,7 +255,7 @@
             this.grpbxPayDet.Controls.Add(this.label8);
             this.grpbxPayDet.Location = new System.Drawing.Point(384, 96);
             this.grpbxPayDet.Name = "grpbxPayDet";
-            this.grpbxPayDet.Size = new System.Drawing.Size(208, 106);
+            this.grpbxPayDet.Size = new System.Drawing.Size(216, 106);
             this.grpbxPayDet.TabIndex = 138;
             this.grpbxPayDet.TabStop = false;
             this.grpbxPayDet.Text = "Payment Details";
@@ -313,11 +314,22 @@
             this.label8.TabIndex = 139;
             this.label8.Text = "Paid Amount";
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(467, 208);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(133, 23);
+            this.btnDelete.TabIndex = 155;
+            this.btnDelete.Text = "Select Row && Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // Winform_OrderDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 384);
+            this.ClientSize = new System.Drawing.Size(607, 405);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.grpbxPayDet);
             this.Controls.Add(this.grpBoxCustomer);
             this.Controls.Add(this.dtpDeliveryDate);
@@ -331,6 +343,7 @@
             this.Controls.SetChildIndex(this.dtpDeliveryDate, 0);
             this.Controls.SetChildIndex(this.grpBoxCustomer, 0);
             this.Controls.SetChildIndex(this.grpbxPayDet, 0);
+            this.Controls.SetChildIndex(this.btnDelete, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).EndInit();
@@ -375,5 +388,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderPrice;
         private System.Windows.Forms.DataGridViewButtonColumn OrderMeasurement;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

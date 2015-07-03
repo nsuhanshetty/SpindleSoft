@@ -9,7 +9,7 @@ namespace SpindleSoft.Savers
 {
     class AlterationSaver
     {
-        public static bool SaveAlterationInfo(Alteration alt)
+        public static bool SaveAlterationInfo(Alteration _alteration)
         {
             try
             {
@@ -17,7 +17,11 @@ namespace SpindleSoft.Savers
                 {
                     using (var transaction = session.BeginTransaction())
                     {
-                        session.SaveOrUpdate(alt);
+                        foreach (var item in _alteration.AlterationItems)
+                        {
+                            item.Alteration = _alteration;
+                        }
+                        session.SaveOrUpdate(_alteration);
                         transaction.Commit();
                         return true;
                     }
