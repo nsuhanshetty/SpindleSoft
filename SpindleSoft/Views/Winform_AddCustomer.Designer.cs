@@ -70,7 +70,7 @@
             this.NewCustToolStrip.Size = new System.Drawing.Size(36, 51);
             this.NewCustToolStrip.Text = "&New";
             this.NewCustToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.NewCustToolStrip.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.NewCustToolStrip.Click += new System.EventHandler(this.AddCustomer_Click);
             // 
             // dgvSearch
             // 
@@ -83,7 +83,7 @@
             this.dgvSearch.ReadOnly = true;
             this.dgvSearch.Size = new System.Drawing.Size(508, 224);
             this.dgvSearch.TabIndex = 1;
-            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
             // 
             // statusStrip1
             // 
@@ -196,7 +196,7 @@
             this.Name = "Winform_AddCustomer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add Customer";
-            this.Load += new System.EventHandler(this.Winform_AddCustomer_Load);
+            //this.Load += new System.EventHandler(this.Winform_AddCustomer_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();

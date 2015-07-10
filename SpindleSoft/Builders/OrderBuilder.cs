@@ -46,13 +46,17 @@ namespace SpindleSoft.Builders
                     //todo: convert to linq
                     //order by updated date desc
                     //singleOrDefault
-                    string query = ("select i.* from orderitem i, orders o where o.ID = i.OrderID and i.Name = :name and o.CustomerID = :custId");
+                    string query = ("select i.* from orderitem i "+
+                                    "inner join orders o on o.ID = i.OrderID "+
+                                    "where i.Name = :name and o.CustomerID = :custId " +
+                                    "order by i.DateUpdated");
                     var sqlQuery = session.CreateSQLQuery(query)
                                                 .SetParameter("name", itemName)
                                                 .SetParameter("custId", custId)
                                                 .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-                    log.Info(sqlQuery as OrderItem);
-                    return orderItem = sqlQuery as OrderItem;
+                     log.Info(sqlQuery as OrderItem);
+                    return orderItem = sqlQuery  as OrderItem;
+
                 }
             }
             catch (Exception ex)

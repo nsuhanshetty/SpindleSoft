@@ -2,16 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NHibernate.Linq;
-using System.Collections;
-using System.Data;
+using log4net;
 
 namespace SpindleSoft.Builders
 {
     class SaleBuilder
     {
+        static ILog log = LogManager.GetLogger(typeof(SaleBuilder));
         #region SKUItems
         public static bool IsExistingName(string productName)
         {
@@ -23,9 +21,9 @@ namespace SpindleSoft.Builders
                     return exist;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return true;
             }
         }
@@ -40,9 +38,9 @@ namespace SpindleSoft.Builders
                     return exist;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return true;
             }
         }
@@ -72,9 +70,9 @@ namespace SpindleSoft.Builders
                     return variationValues;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -88,6 +86,7 @@ namespace SpindleSoft.Builders
             {
                 try
                 {
+                    //todo: Tune the Query
                     string query = "select s.Name,s.ProductCode,s.Color,s.Size,s.Material,s.Quantity from skuitem s " +
                         //"inner join vendors v on v.ID = s.VendorID " +
                                       "where (s.Name like :name) and (s.ProductCode like :procode) and (s.Description like :desc) and " +
@@ -106,13 +105,11 @@ namespace SpindleSoft.Builders
                     .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(SKUItem)));
                     return _skuItem = sqlQuery.List<SKUItem>() as List<SKUItem>;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    log.Error(ex);
                     return null;
-                    //log4net
                 }
-                //System.Collections.IList list = _saleItem.Select()  
-                //return sqlQuery;
             }
         }
 
@@ -129,9 +126,9 @@ namespace SpindleSoft.Builders
                     return _skuItem;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log4net 
+                log.Error(ex);
                 return null;
             }
         }
@@ -151,16 +148,15 @@ namespace SpindleSoft.Builders
                     return _vendor;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log4net 
+                log.Error(ex);
                 return null;
             }
         }
 
         public static List<string> GetVendorNames()
         {
-            //IList<T> variationValues;
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
@@ -170,9 +166,9 @@ namespace SpindleSoft.Builders
                     return vendorNames;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -191,9 +187,9 @@ namespace SpindleSoft.Builders
                     return sale;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: Log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -210,9 +206,9 @@ namespace SpindleSoft.Builders
                     return saleItems;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: Log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -238,9 +234,9 @@ namespace SpindleSoft.Builders
                     return sqlQuery.List<Sale>() as List<Sale>;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: Log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -256,14 +252,14 @@ namespace SpindleSoft.Builders
                                 "where i.SaleID = :saleid";
 
                     NHibernate.IQuery sqlQuery = session.CreateSQLQuery(query)
-                    .SetParameter("saleid", saleID )
+                    .SetParameter("saleid", saleID)
                     .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(SKUItem)));
                     return sqlQuery.List<SKUItem>() as List<SKUItem>;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: Log4net
+                log.Error(ex);
                 return null;
             }
         }

@@ -405,9 +405,9 @@
         private System.Windows.Forms.RadioButton rdbTemp;
         private System.Windows.Forms.RadioButton rdbPerm;
         internal System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        //private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        //private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         internal System.Windows.Forms.Label lblPhoneNo;
         internal System.Windows.Forms.TextBox txtPhoneNo;
         private System.Windows.Forms.RadioButton rdbOSrc;

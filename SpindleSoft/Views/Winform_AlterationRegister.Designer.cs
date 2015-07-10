@@ -28,37 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvSearch = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtAltNo = new System.Windows.Forms.TextBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.lblMobile = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgvSearch
             // 
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 90);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(478, 277);
-            this.dataGridView1.TabIndex = 6;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgvSearch.AllowUserToDeleteRows = false;
+            this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSearch.Location = new System.Drawing.Point(6, 90);
+            this.dgvSearch.Name = "dgvSearch";
+            this.dgvSearch.ReadOnly = true;
+            this.dgvSearch.Size = new System.Drawing.Size(478, 277);
+            this.dgvSearch.TabIndex = 6;
+            this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.dtpDeliveryDate);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtAltNo);
             this.groupBox1.Controls.Add(this.txtMobNo);
             this.groupBox1.Controls.Add(this.txtName);
             this.groupBox1.Controls.Add(this.lblName);
@@ -69,7 +65,6 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Enter Text to Search";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label1
             // 
@@ -80,28 +75,13 @@
             this.label1.TabIndex = 136;
             this.label1.Text = "Alteration No.";
             // 
-            // dtpDeliveryDate
+            // txtAltNo
             // 
-            this.dtpDeliveryDate.Location = new System.Drawing.Point(322, 49);
-            this.dtpDeliveryDate.Name = "dtpDeliveryDate";
-            this.dtpDeliveryDate.Size = new System.Drawing.Size(135, 20);
-            this.dtpDeliveryDate.TabIndex = 114;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(242, 52);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 13);
-            this.label4.TabIndex = 113;
-            this.label4.Text = "Delivery Date";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(80, 49);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(135, 20);
-            this.textBox1.TabIndex = 102;
+            this.txtAltNo.Location = new System.Drawing.Point(80, 49);
+            this.txtAltNo.Name = "txtAltNo";
+            this.txtAltNo.Size = new System.Drawing.Size(135, 20);
+            this.txtAltNo.TabIndex = 102;
+            this.txtAltNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtMobNo
             // 
@@ -110,6 +90,7 @@
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(135, 20);
             this.txtMobNo.TabIndex = 97;
+            this.txtMobNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtName
             // 
@@ -117,6 +98,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(135, 20);
             this.txtName.TabIndex = 96;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // lblName
             // 
@@ -141,12 +123,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(493, 374);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvSearch);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_AlterationRegister";
             this.Text = "Alteration Register";
-            this.Load += new System.EventHandler(this.Winform_AlterationRegister_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -155,11 +135,9 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvSearch;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DateTimePicker dtpDeliveryDate;
-        internal System.Windows.Forms.Label label4;
-        internal System.Windows.Forms.TextBox textBox1;
+        internal System.Windows.Forms.TextBox txtAltNo;
         internal System.Windows.Forms.TextBox txtMobNo;
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Label lblName;

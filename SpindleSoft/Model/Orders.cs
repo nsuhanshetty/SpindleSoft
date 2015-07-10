@@ -9,7 +9,7 @@ namespace SpindleSoft.Model
 
         public virtual Customer Customer { get; set; }
 
-        public virtual float TotalPrice { get; set; }
+        public virtual int TotalPrice { get; set; }
 
         public virtual int CurrentPayment { get; set; }
 

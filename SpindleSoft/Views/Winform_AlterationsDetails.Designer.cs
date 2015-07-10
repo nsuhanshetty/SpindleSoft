@@ -471,11 +471,11 @@
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Label lblName;
         internal System.Windows.Forms.TextBox txtMobNo;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        //private System.Windows.Forms.ToolStripButton CancelToolStrip;
         internal System.Windows.Forms.ToolStripButton AddCustomerToolStrip;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.GroupBox grpbxCustomerDetails;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgvOrderItems;
         private System.Windows.Forms.Panel panel1;

@@ -37,10 +37,10 @@ namespace SpindleSoft.Builders
                     return (_webResponse.StatusCode == HttpStatusCode.Created) ? true : false;
                 }
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 //todo: log in log4net
-                Logger.Error(ex);
+                //Logger.Error(ex);
                 return false;
             }
         }
@@ -73,7 +73,7 @@ namespace SpindleSoft.Builders
                 //todo : Based on the ack we need to return success
                 return true;
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 //todo: log in log4net
                 return false;
@@ -90,7 +90,7 @@ namespace SpindleSoft.Builders
             _request.ContentType = "application/json";
             _request.Method = "POST";
             try
-            {
+            { 
                 using (StreamWriter _swriter = new StreamWriter(_request.GetRequestStream()))
                 {
                     _swriter.WriteAsync(json);
@@ -101,10 +101,10 @@ namespace SpindleSoft.Builders
                     return (_webResponse.StatusCode == HttpStatusCode.Created) ? true : false;
                 }
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 //todo: log in log4net
-                Logger.Error(ex);
+                //Logger.Error(ex);
                 return false;
             }
         }
@@ -140,7 +140,7 @@ namespace SpindleSoft.Builders
                 //todo : Based on the ack we need to return success
                 return true;
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 //todo: log in log4net
                 return false;

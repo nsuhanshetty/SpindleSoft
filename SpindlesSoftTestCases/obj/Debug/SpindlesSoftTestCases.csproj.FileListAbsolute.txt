@@ -8,7 +8,6 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\Spindles
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\NHibernate.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\WCC.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Iesi.Collections.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\SpindleSoft.pdb
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\log4net.xml
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Newtonsoft.Json.xml
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\nunit.framework.xml
@@ -19,3 +18,4 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\Spindles
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\obj\Debug\SpindlesSoftTestCases.csprojResolveAssemblyReference.cache
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\obj\Debug\SpindlesSoftTestCases.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\obj\Debug\SpindlesSoftTestCases.pdb
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\SpindleSoft.pdb

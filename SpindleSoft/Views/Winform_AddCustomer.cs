@@ -9,40 +9,28 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NHibernate.Linq;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_AddCustomer : Form
     {
-        //public event EventHandler<DatagridViewEventArgs> CustomerSelected;
-
         Customer _cust = new Customer();
-        public Winform_AddCustomer(Customer _cust)
+        public Winform_AddCustomer(Customer _cust = null)
         {
             InitializeComponent();
             this._cust = _cust;
         }
 
-        public Winform_AddCustomer()
-        {
-            InitializeComponent();
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void AddCustomer_Click(object sender, EventArgs e)
         {
             new WinForm_CustomerDetails().ShowDialog();
         }
 
-        private void Winform_AddCustomer_Load(object sender, EventArgs e)
-        {
-            //todo: add radiobutton columns to dgv
-            //dgv.datasource = getStaffList based on last added first
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DialogResult _dialogResult = MessageBox.Show("Do you want to Add Customer " +
-                                         Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value), 
+                                         Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value),
                                          "Add Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                                          MessageBoxDefaultButton.Button2);
 
@@ -73,36 +61,8 @@ namespace SpindleSoft.Views
 
         public void LoadDgv()
         {
-            dgvSearch.DataSource = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
-            dgvSearch.Columns.RemoveAt(0);
-            dgvSearch.Columns.RemoveAt(4);
-            dgvSearch.Columns.Remove("image");
-            dgvSearch.Columns.Remove("address");
-        }
-
-        //public void OnCustomerSelected(DatagridViewEventArgs args )
-        //{
-        //    if (CustomerSelected != null)
-        //    {
-        //        CustomerSelected(this, args);
-        //    }
-        //}
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            //return the selected customers
-            if (this._cust == null)
-            {
-                MessageBox.Show("Select a Customer to be added to the Order");
-                return;
-            }
-            else
-            {
-                /*hope referenced customer has changed 
-                *some behavior in the orders page
-                 */
-                this.Close();
-            }
+            dgvSearch.DataSource = (from cust in (SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text))
+                                    select new { cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
         }
 
         private void txtMobNo_TextChanged(object sender, EventArgs e)
@@ -118,75 +78,6 @@ namespace SpindleSoft.Views
                 lblStatus.Text = dgvSearch.RowCount + " Results Found.";
             progBarStatus.Value = 100;
         }
-
-       
-
-      //  #region Validation
-      //  private void txtName_Validating(object sender, CancelEventArgs e)
-      //  {
-      //      if (String.IsNullOrEmpty(txtName.Text)) return;
-
-      //      Match _match = Regex.Match(txtName.Text, "^[a-zA-Z\\s]+$");
-      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      //"For example '9880123456'";
-      //      errorProvider1.SetError(txtName, errorMsg);
-
-      //      if (errorMsg != "")
-      //      {
-      //          // Cancel the event and select the text to be corrected by the user.
-      //          e.Cancel = true;
-      //          txtName.Select(0, txtName.TextLength);
-      //      }
-      //  }
-
-      //  private void txtMobNo_Validating(object sender, CancelEventArgs e)
-      //  {
-      //      if (String.IsNullOrEmpty(txtMobNo.Text)) return;
-
-      //      Match _match = Regex.Match(txtMobNo.Text, "\\d{10}$");
-      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      //"For example '9880123456'";
-      //      errorProvider1.SetError(txtMobNo, errorMsg);
-
-      //      if (errorMsg != "")
-      //      {
-      //          // Cancel the event and select the text to be corrected by the user.
-      //          e.Cancel = true;
-      //          txtMobNo.Select(0, txtMobNo.TextLength);
-      //      }
-      //  }
-
-      //  private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
-      //  {
-      //      if (String.IsNullOrEmpty(txtPhoneNo.Text)) return;
-
-      //      Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
-      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      //"For example '9880123456'";
-      //      errorProvider1.SetError(txtPhoneNo, errorMsg);
-
-      //      if (errorMsg != "")
-      //      {
-      //          // Cancel the event and select the text to be corrected by the user.
-      //          e.Cancel = true;
-      //          txtPhoneNo.Select(0, txtPhoneNo.TextLength);
-      //      }
-      //  }
-      //  #endregion Validation
-    }
-
-    class DatagridViewEventArgs : EventArgs
-    {
-        public string Name { get; set; }
-        public string Mobile_No { get; set; }
-        public string Phone_No { get; set; }
-
-        public DatagridViewEventArgs(string name, string mobNo, string phNo)
-        {
-            this.Name = name;
-            this.Mobile_No = mobNo;
-            this.Phone_No = phNo;
-        }
-
     }
 }
+

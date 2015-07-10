@@ -32,7 +32,7 @@ namespace SpindleSoft.Builders
                     return JsonConvert.DeserializeObject<List<Customer>>(s);
                 }
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 //add to log4net
                 return null;

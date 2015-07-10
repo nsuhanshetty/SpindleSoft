@@ -16,12 +16,57 @@ namespace SpindleSoft.Views
         List<OrderItem> OrderItemsList = new List<OrderItem>();
         ILog log = LogManager.GetLogger(typeof(Winform_OrderDetails));
 
-        //public int TotalAmount { get; set; }
+        #region Property
+        private int totalAmnt = 0;
+        public int TotalAmount
+        {
+            get
+            {
+                return totalAmnt;
+            }
+            set
+            {
+                totalAmnt = value;
+                txtTotAmnt.Text = totalAmnt.ToString();
+            }
+        }
 
+        private int amntPaid = 0;
+        public int AmountPaid
+        {
+            get
+            {
+                return amntPaid;
+            }
+            set
+            {
+                amntPaid = value;
+                txtAmntPaid.Text = amntPaid.ToString();
+                BalanceAmount = TotalAmount - AmountPaid;
+            }
+        }
+
+        private int balAmnt = 0;
+        public int BalanceAmount
+        {
+            get
+            {
+                return balAmnt;
+            }
+            set
+            {
+                balAmnt = value;
+                txtBalanceAmnt.Text = balAmnt.ToString();
+            }
+        }
+        #endregion Property
+
+        #region ctor
         public Winform_OrderDetails()
         {
             InitializeComponent();
-
+            cmbStatus.SelectedIndex = 0;
+            cmbStatus.Enabled = false;
         }
 
         public Winform_OrderDetails(Orders order)
@@ -33,17 +78,22 @@ namespace SpindleSoft.Views
             this.order = OrderBuilder.GetOrderInfo(order.ID);
             this.OrderItemsList = this.order.OrdersItems as List<OrderItem>;
             dtpDeliveryDate.Value = order.PromisedDate;
-            txtTotAmnt.Text = order.TotalPrice.ToString();
-            txtAmntPaid.Text = order.CurrentPayment.ToString();
+            //txtTotAmnt.Text = order.TotalPrice.ToString();
+            //txtAmntPaid.Text = order.CurrentPayment.ToString();
 
-            int amntPaid = 0;
-            int total;
-            txtTotAmnt.Text = txtTotAmnt.Text;
+            //int amntPaid = 0;
+            //int total;
+            //txtTotAmnt.Text = txtTotAmnt.Text;
 
-            int.TryParse(txtAmntPaid.Text, out amntPaid);
-            int.TryParse(txtTotAmnt.Text, out total);
-            txtBalanceAmnt.Text = (total - amntPaid).ToString();
+            //int.TryParse(txtAmntPaid.Text, out amntPaid);
+            //int.TryParse(txtTotAmnt.Text, out total);
+            //txtBalanceAmnt.Text = (total - amntPaid).ToString();
+
+            TotalAmount = order.TotalPrice;
+            AmountPaid = order.CurrentPayment;
+
         }
+        #endregion ctor
 
         public void UpdateCustomerControl(Customer customer)
         {
@@ -147,9 +197,16 @@ namespace SpindleSoft.Views
                 }
 
                 OrderItem item;
+                //if added during edit
                 item = OrderItemsList.Where(x => (x.Name == _productName.ToString())).SingleOrDefault();
 
-                if (item == null) item = new OrderItem();
+                if (item == null)
+                {   
+                    //fetch  previous measurement
+                    item = OrderBuilder.GetOrderItem(this._cust.ID, _productName.ToString());
+                    if (item == null) item = new OrderItem();
+                }
+
                 item.Quantity = int.Parse(curRow.Cells["OrderQuantity"].Value.ToString());
                 item.Price = int.Parse(curRow.Cells["OrderPrice"].Value.ToString());
                 new Winform_MeasurementAdd(_productName.ToString(), this._cust.Name, item).ShowDialog();
@@ -178,14 +235,7 @@ namespace SpindleSoft.Views
         {
             if (dgvOrderItems.CurrentCell == dgvOrderItems.CurrentRow.Cells["OrderType"])
             {
-                //todo: 
-                //get values from db and 
-                //load the orderList with order items
-
-                //OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
-
-                ////todo: check if orderitem has measurement
-                //OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
+                //todo: check if orderitem has measurement and load orderitemslist
             }
             else if (e.ColumnIndex == dgvOrderItems.Columns["OrderQuantity"].Index || e.ColumnIndex == dgvOrderItems.Columns["OrderPrice"].Index)
             {
@@ -203,22 +253,28 @@ namespace SpindleSoft.Views
                 }
                 /*Validation - end*/
 
-                //todo : Method to handle payment amount
-                /*Calculate Total*/
-                int total = 0;
-                foreach (DataGridViewRow dr in dgvOrderItems.Rows)
-                {
-                    if (dr.IsNewRow || dr.Cells["OrderPrice"].Value == null || dr.Cells["OrderQuantity"].Value == null) continue;
-
-                    total += (int.Parse(dr.Cells["OrderQuantity"].Value.ToString()) * int.Parse(dr.Cells["OrderPrice"].Value.ToString()));
-                }
-
-                int amntPaid = 0;
-                txtTotAmnt.Text = total.ToString();
-                int.TryParse(txtAmntPaid.Text, out amntPaid);
-                txtBalanceAmnt.Text = (total - amntPaid).ToString();
-                /*Calculate Total - end*/
+                CalculatePaymentDetails();
             }
+        }
+
+        private void CalculatePaymentDetails()
+        {
+            //todo : Method to handle payment amount
+            /*Calculate Total*/
+            int total = 0;
+            foreach (DataGridViewRow dr in dgvOrderItems.Rows)
+            {
+                if (dr.IsNewRow || dr.Cells["OrderPrice"].Value == null || dr.Cells["OrderQuantity"].Value == null) continue;
+
+                total += (int.Parse(dr.Cells["OrderQuantity"].Value.ToString()) * int.Parse(dr.Cells["OrderPrice"].Value.ToString()));
+            }
+
+            int amntPaid = 0;
+            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            AmountPaid = amntPaid;
+            TotalAmount = total;
+            BalanceAmount = TotalAmount - AmountPaid;
+            /*Calculate Total - end*/
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
@@ -241,17 +297,17 @@ namespace SpindleSoft.Views
             }
 
             UpdateStatus("Saving..", 25);
-            int total, amntPaid;
-            int.TryParse(txtTotAmnt.Text, out total);
-            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            //int total, amntPaid;
+            //int.TryParse(txtTotAmnt.Text, out total);
+            //int.TryParse(txtAmntPaid.Text, out amntPaid);
 
             //order = new Orders(this._cust, dtpDeliveryDate.Value, OrderItemsList, total, amntPaid);
 
             order.Customer = this._cust;
             order.PromisedDate = dtpDeliveryDate.Value;
             order.OrdersItems = OrderItemsList;
-            order.TotalPrice = total;
-            order.CurrentPayment = amntPaid;
+            order.TotalPrice = TotalAmount;
+            order.CurrentPayment = AmountPaid;
 
             UpdateStatus("Saving..", 50);
             bool success = SpindleSoft.Savers.OrderSaver.SaveOrder(order);
@@ -260,11 +316,11 @@ namespace SpindleSoft.Views
             if (success)
             {
                 //Send msg if the balance == 0
-                if (total - amntPaid == 0)
-                {
-                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                //if (total - amntPaid == 0)
+                //{
+                //    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
 
-                }
+                //}
                 this.Close();
             }
             else
@@ -288,13 +344,15 @@ namespace SpindleSoft.Views
         #region _Validations
         private void txtAmntPaid_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            int AmntPaid, TotAmnt;
-            int.TryParse(txtAmntPaid.Text, out AmntPaid);
-            int.TryParse(txtTotAmnt.Text, out TotAmnt);
+            int amntPaid, totAmnt;
+            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            int.TryParse(txtTotAmnt.Text, out totAmnt);
 
             Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
             string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
-            _errorMsg = (_errorMsg == "" && AmntPaid > TotAmnt) ? "Amount Paid cannot be greater than Total Amount" : "";
+            if (_errorMsg == "" && amntPaid > totAmnt)
+                _errorMsg = "Amount Paid cannot be greater than Total Amount";
+
             errorProvider1.SetError(txtAmntPaid, _errorMsg);
 
             if (_errorMsg != "")
@@ -302,10 +360,12 @@ namespace SpindleSoft.Views
                 // Cancel the event and select the text to be corrected by the user.
                 e.Cancel = true;
                 txtAmntPaid.Text = "";
+                AmountPaid = 0;
             }
             else
             {
-                txtBalanceAmnt.Text = (TotAmnt - AmntPaid).ToString();
+                //TotalAmount = totAmnt;
+                AmountPaid = amntPaid;
             }
         }
 

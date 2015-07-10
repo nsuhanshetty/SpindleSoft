@@ -572,9 +572,9 @@
         internal System.Windows.Forms.Label label6;
         internal System.Windows.Forms.TextBox txtShoulder;
         internal System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        //private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        //private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         internal System.Windows.Forms.TextBox txtComment;
         internal System.Windows.Forms.TextBox txtCustName;
         internal System.Windows.Forms.Label label1;
