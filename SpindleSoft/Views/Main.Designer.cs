@@ -76,6 +76,7 @@
             this.updateSpindleSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlSearch = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
@@ -88,32 +89,56 @@
             this.rdbOrders = new System.Windows.Forms.RadioButton();
             this.pnlDeliveryStatus = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnAltSMS = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.dgvAltSIP = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn5 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewButtonColumn6 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgvAltR2C = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn3 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgvAltR2A = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn2 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.lblAltCollectCount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.dgvUpCominAlt = new System.Windows.Forms.DataGridView();
-            this.dgvAltDel = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnDelSMS = new System.Windows.Forms.Button();
+            this.lblOrdSIPCount = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lblCurrCount = new System.Windows.Forms.Label();
+            this.dgvOrdSIP = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colShiftR2S = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewButtonColumn4 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dgvOrdR2C = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.lblOrdCollectCount = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dgvUpCominDel = new System.Windows.Forms.DataGridView();
-            this.dgvCurrDel = new System.Windows.Forms.DataGridView();
+            this.dgvOrdR2S = new System.Windows.Forms.DataGridView();
+            this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             this.pnlDeliveryStatus.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominAlt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAltDel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltSIP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltR2C)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltR2A)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominDel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCurrDel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrdSIP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrdR2C)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrdR2S)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -477,11 +502,21 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 435);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 521);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1354, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblStatus.Size = new System.Drawing.Size(39, 17);
+            this.lblStatus.Text = "Ready";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // pnlSearch
             // 
@@ -607,192 +642,387 @@
             this.pnlDeliveryStatus.Controls.Add(this.groupBox2);
             this.pnlDeliveryStatus.Location = new System.Drawing.Point(302, 28);
             this.pnlDeliveryStatus.Name = "pnlDeliveryStatus";
-            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1058, 258);
+            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1058, 490);
             this.pnlDeliveryStatus.TabIndex = 3;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnAltSMS);
-            this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.dgvAltSIP);
+            this.groupBox3.Controls.Add(this.dgvAltR2C);
+            this.groupBox3.Controls.Add(this.dgvAltR2A);
+            this.groupBox3.Controls.Add(this.lblAltCollectCount);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.dgvUpCominAlt);
-            this.groupBox3.Controls.Add(this.dgvAltDel);
-            this.groupBox3.Location = new System.Drawing.Point(535, 5);
+            this.groupBox3.Location = new System.Drawing.Point(8, 244);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(517, 233);
+            this.groupBox3.Size = new System.Drawing.Size(849, 233);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Alteration Delivery Status";
             // 
-            // btnAltSMS
-            // 
-            this.btnAltSMS.Location = new System.Drawing.Point(170, 14);
-            this.btnAltSMS.Name = "btnAltSMS";
-            this.btnAltSMS.Size = new System.Drawing.Size(80, 23);
-            this.btnAltSMS.TabIndex = 13;
-            this.btnAltSMS.Text = "Send SMS";
-            this.btnAltSMS.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.Color.MediumBlue;
-            this.label7.Location = new System.Drawing.Point(373, 24);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "4";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.MediumBlue;
-            this.label6.Location = new System.Drawing.Point(100, 24);
+            this.label6.Location = new System.Drawing.Point(265, 24);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(13, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "5";
+            this.label6.Size = new System.Drawing.Size(90, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Stitch In Progress";
+            // 
+            // dgvAltSIP
+            // 
+            this.dgvAltSIP.AllowUserToAddRows = false;
+            this.dgvAltSIP.AllowUserToDeleteRows = false;
+            this.dgvAltSIP.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvAltSIP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAltSIP.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewButtonColumn5,
+            this.dataGridViewButtonColumn6});
+            this.dgvAltSIP.Location = new System.Drawing.Point(265, 40);
+            this.dgvAltSIP.Name = "dgvAltSIP";
+            this.dgvAltSIP.ReadOnly = true;
+            this.dgvAltSIP.Size = new System.Drawing.Size(315, 187);
+            this.dgvAltSIP.TabIndex = 14;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "OrderID";
+            this.dataGridViewTextBoxColumn9.HeaderText = "OrderID";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 69;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn10.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn5
+            // 
+            this.dataGridViewButtonColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn5.HeaderText = "Shift To R2S";
+            this.dataGridViewButtonColumn5.Name = "dataGridViewButtonColumn5";
+            this.dataGridViewButtonColumn5.ReadOnly = true;
+            this.dataGridViewButtonColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewButtonColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewButtonColumn6
+            // 
+            this.dataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn6.HeaderText = "Shift to R2C";
+            this.dataGridViewButtonColumn6.Name = "dataGridViewButtonColumn6";
+            this.dataGridViewButtonColumn6.ReadOnly = true;
+            // 
+            // dgvAltR2C
+            // 
+            this.dgvAltR2C.AllowUserToAddRows = false;
+            this.dgvAltR2C.AllowUserToDeleteRows = false;
+            this.dgvAltR2C.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvAltR2C.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAltR2C.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewButtonColumn3});
+            this.dgvAltR2C.Location = new System.Drawing.Point(586, 40);
+            this.dgvAltR2C.Name = "dgvAltR2C";
+            this.dgvAltR2C.ReadOnly = true;
+            this.dgvAltR2C.Size = new System.Drawing.Size(254, 187);
+            this.dgvAltR2C.TabIndex = 14;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "OrderID";
+            this.dataGridViewTextBoxColumn5.HeaderText = "OrderID";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn6.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn3
+            // 
+            this.dataGridViewButtonColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn3.HeaderText = "Click To Shift";
+            this.dataGridViewButtonColumn3.Name = "dataGridViewButtonColumn3";
+            this.dataGridViewButtonColumn3.ReadOnly = true;
+            // 
+            // dgvAltR2A
+            // 
+            this.dgvAltR2A.AllowUserToAddRows = false;
+            this.dgvAltR2A.AllowUserToDeleteRows = false;
+            this.dgvAltR2A.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvAltR2A.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAltR2A.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewButtonColumn2});
+            this.dgvAltR2A.Location = new System.Drawing.Point(6, 40);
+            this.dgvAltR2A.Name = "dgvAltR2A";
+            this.dgvAltR2A.ReadOnly = true;
+            this.dgvAltR2A.Size = new System.Drawing.Size(254, 187);
+            this.dgvAltR2A.TabIndex = 13;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "OrderID";
+            this.dataGridViewTextBoxColumn3.HeaderText = "OrderID";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn4.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn2
+            // 
+            this.dataGridViewButtonColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn2.HeaderText = "Click To Shift";
+            this.dataGridViewButtonColumn2.Name = "dataGridViewButtonColumn2";
+            this.dataGridViewButtonColumn2.ReadOnly = true;
+            // 
+            // lblAltCollectCount
+            // 
+            this.lblAltCollectCount.AutoSize = true;
+            this.lblAltCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblAltCollectCount.Location = new System.Drawing.Point(827, 24);
+            this.lblAltCollectCount.Name = "lblAltCollectCount";
+            this.lblAltCollectCount.Size = new System.Drawing.Size(13, 13);
+            this.lblAltCollectCount.TabIndex = 12;
+            this.lblAltCollectCount.Text = "0";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(260, 24);
+            this.label3.Location = new System.Drawing.Point(582, 24);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 13);
+            this.label3.Size = new System.Drawing.Size(89, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Upcoming Deliveries  - ";
+            this.label3.Text = "Ready To Collect";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(4, 24);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(99, 13);
+            this.label4.Size = new System.Drawing.Size(78, 13);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Current Deliveries - ";
-            // 
-            // dgvUpCominAlt
-            // 
-            this.dgvUpCominAlt.AllowUserToAddRows = false;
-            this.dgvUpCominAlt.AllowUserToDeleteRows = false;
-            this.dgvUpCominAlt.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvUpCominAlt.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUpCominAlt.Location = new System.Drawing.Point(263, 40);
-            this.dgvUpCominAlt.Name = "dgvUpCominAlt";
-            this.dgvUpCominAlt.ReadOnly = true;
-            this.dgvUpCominAlt.Size = new System.Drawing.Size(249, 187);
-            this.dgvUpCominAlt.TabIndex = 3;
-            this.dgvUpCominAlt.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUpCominAlt_CellContentClick);
-            // 
-            // dgvAltDel
-            // 
-            this.dgvAltDel.AllowUserToAddRows = false;
-            this.dgvAltDel.AllowUserToDeleteRows = false;
-            this.dgvAltDel.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvAltDel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAltDel.Location = new System.Drawing.Point(6, 40);
-            this.dgvAltDel.Name = "dgvAltDel";
-            this.dgvAltDel.ReadOnly = true;
-            this.dgvAltDel.Size = new System.Drawing.Size(244, 187);
-            this.dgvAltDel.TabIndex = 2;
-            this.dgvAltDel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
+            this.label4.Text = "Ready To Alter";
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnDelSMS);
+            this.groupBox2.Controls.Add(this.lblOrdSIPCount);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.lblCurrCount);
+            this.groupBox2.Controls.Add(this.dgvOrdSIP);
+            this.groupBox2.Controls.Add(this.dgvOrdR2C);
+            this.groupBox2.Controls.Add(this.lblOrdCollectCount);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.dgvUpCominDel);
-            this.groupBox2.Controls.Add(this.dgvCurrDel);
+            this.groupBox2.Controls.Add(this.dgvOrdR2S);
             this.groupBox2.Location = new System.Drawing.Point(8, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(519, 233);
+            this.groupBox2.Size = new System.Drawing.Size(849, 233);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Order Delivery Status";
             // 
-            // btnDelSMS
+            // lblOrdSIPCount
             // 
-            this.btnDelSMS.Location = new System.Drawing.Point(173, 14);
-            this.btnDelSMS.Name = "btnDelSMS";
-            this.btnDelSMS.Size = new System.Drawing.Size(80, 23);
-            this.btnDelSMS.TabIndex = 11;
-            this.btnDelSMS.Text = "Send SMS";
-            this.btnDelSMS.UseVisualStyleBackColor = true;
+            this.lblOrdSIPCount.AutoSize = true;
+            this.lblOrdSIPCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblOrdSIPCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblOrdSIPCount.Location = new System.Drawing.Point(564, 23);
+            this.lblOrdSIPCount.Name = "lblOrdSIPCount";
+            this.lblOrdSIPCount.Size = new System.Drawing.Size(13, 13);
+            this.lblOrdSIPCount.TabIndex = 14;
+            this.lblOrdSIPCount.Text = "0";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.MediumBlue;
-            this.label5.Location = new System.Drawing.Point(375, 24);
+            this.label5.Location = new System.Drawing.Point(265, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(13, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "4";
+            this.label5.Size = new System.Drawing.Size(90, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Stitch In Progress";
             // 
-            // lblCurrCount
+            // dgvOrdSIP
             // 
-            this.lblCurrCount.AutoSize = true;
-            this.lblCurrCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblCurrCount.Location = new System.Drawing.Point(102, 24);
-            this.lblCurrCount.Name = "lblCurrCount";
-            this.lblCurrCount.Size = new System.Drawing.Size(13, 13);
-            this.lblCurrCount.TabIndex = 9;
-            this.lblCurrCount.Text = "5";
+            this.dgvOrdSIP.AllowUserToAddRows = false;
+            this.dgvOrdSIP.AllowUserToDeleteRows = false;
+            this.dgvOrdSIP.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvOrdSIP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrdSIP.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.colShiftR2S,
+            this.dataGridViewButtonColumn4});
+            this.dgvOrdSIP.Location = new System.Drawing.Point(265, 39);
+            this.dgvOrdSIP.Name = "dgvOrdSIP";
+            this.dgvOrdSIP.ReadOnly = true;
+            this.dgvOrdSIP.Size = new System.Drawing.Size(315, 187);
+            this.dgvOrdSIP.TabIndex = 12;
+            this.dgvOrdSIP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "OrderID";
+            this.dataGridViewTextBoxColumn7.HeaderText = "OrderID";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.Width = 69;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn8.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // colShiftR2S
+            // 
+            this.colShiftR2S.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colShiftR2S.HeaderText = "Shift To R2S";
+            this.colShiftR2S.Name = "colShiftR2S";
+            this.colShiftR2S.ReadOnly = true;
+            this.colShiftR2S.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colShiftR2S.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewButtonColumn4
+            // 
+            this.dataGridViewButtonColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn4.HeaderText = "Shift to R2C";
+            this.dataGridViewButtonColumn4.Name = "dataGridViewButtonColumn4";
+            this.dataGridViewButtonColumn4.ReadOnly = true;
+            // 
+            // dgvOrdR2C
+            // 
+            this.dgvOrdR2C.AllowUserToAddRows = false;
+            this.dgvOrdR2C.AllowUserToDeleteRows = false;
+            this.dgvOrdR2C.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvOrdR2C.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrdR2C.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewButtonColumn1});
+            this.dgvOrdR2C.Location = new System.Drawing.Point(586, 39);
+            this.dgvOrdR2C.Name = "dgvOrdR2C";
+            this.dgvOrdR2C.ReadOnly = true;
+            this.dgvOrdR2C.Size = new System.Drawing.Size(254, 187);
+            this.dgvOrdR2C.TabIndex = 11;
+            this.dgvOrdR2C.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "OrderID";
+            this.dataGridViewTextBoxColumn1.HeaderText = "OrderID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn1
+            // 
+            this.dataGridViewButtonColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn1.HeaderText = "Click To Shift";
+            this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
+            this.dataGridViewButtonColumn1.ReadOnly = true;
+            // 
+            // lblOrdCollectCount
+            // 
+            this.lblOrdCollectCount.AutoSize = true;
+            this.lblOrdCollectCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblOrdCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblOrdCollectCount.Location = new System.Drawing.Point(827, 23);
+            this.lblOrdCollectCount.Name = "lblOrdCollectCount";
+            this.lblOrdCollectCount.Size = new System.Drawing.Size(13, 13);
+            this.lblOrdCollectCount.TabIndex = 10;
+            this.lblOrdCollectCount.Text = "0";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(263, 24);
+            this.label2.Location = new System.Drawing.Point(583, 23);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(116, 13);
+            this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Upcoming Deliveries. - ";
+            this.label2.Text = "Ready To Collect";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 13);
+            this.label1.Size = new System.Drawing.Size(84, 13);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Current Deliveries - ";
+            this.label1.Text = "Ready To Stitch";
             // 
-            // dgvUpCominDel
+            // dgvOrdR2S
             // 
-            this.dgvUpCominDel.AllowUserToAddRows = false;
-            this.dgvUpCominDel.AllowUserToDeleteRows = false;
-            this.dgvUpCominDel.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvUpCominDel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUpCominDel.Location = new System.Drawing.Point(266, 40);
-            this.dgvUpCominDel.Name = "dgvUpCominDel";
-            this.dgvUpCominDel.ReadOnly = true;
-            this.dgvUpCominDel.Size = new System.Drawing.Size(246, 187);
-            this.dgvUpCominDel.TabIndex = 3;
-            this.dgvUpCominDel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgvOrdR2S.AllowUserToAddRows = false;
+            this.dgvOrdR2S.AllowUserToDeleteRows = false;
+            this.dgvOrdR2S.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvOrdR2S.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrdR2S.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colOrderID,
+            this.colDueDate,
+            this.colClickShift});
+            this.dgvOrdR2S.Location = new System.Drawing.Point(6, 40);
+            this.dgvOrdR2S.Name = "dgvOrdR2S";
+            this.dgvOrdR2S.ReadOnly = true;
+            this.dgvOrdR2S.Size = new System.Drawing.Size(254, 187);
+            this.dgvOrdR2S.TabIndex = 2;
+            this.dgvOrdR2S.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
             // 
-            // dgvCurrDel
+            // colOrderID
             // 
-            this.dgvCurrDel.AllowUserToAddRows = false;
-            this.dgvCurrDel.AllowUserToDeleteRows = false;
-            this.dgvCurrDel.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvCurrDel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCurrDel.Location = new System.Drawing.Point(6, 40);
-            this.dgvCurrDel.Name = "dgvCurrDel";
-            this.dgvCurrDel.ReadOnly = true;
-            this.dgvCurrDel.Size = new System.Drawing.Size(247, 187);
-            this.dgvCurrDel.TabIndex = 2;
-            this.dgvCurrDel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDeliverToday_CellContentClick);
+            this.colOrderID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colOrderID.DataPropertyName = "OrderID";
+            this.colOrderID.HeaderText = "OrderID";
+            this.colOrderID.Name = "colOrderID";
+            this.colOrderID.ReadOnly = true;
+            this.colOrderID.Width = 69;
+            // 
+            // colDueDate
+            // 
+            this.colDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDueDate.HeaderText = "DueDate";
+            this.colDueDate.Name = "colDueDate";
+            this.colDueDate.ReadOnly = true;
+            // 
+            // colClickShift
+            // 
+            this.colClickShift.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colClickShift.HeaderText = "Click To Shift";
+            this.colClickShift.Name = "colClickShift";
+            this.colClickShift.ReadOnly = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1354, 457);
+            this.ClientSize = new System.Drawing.Size(1354, 543);
             this.Controls.Add(this.pnlDeliveryStatus);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.statusStrip1);
@@ -803,9 +1033,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SpindleSoft - Boutique Management System";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Main_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.pnlSearch.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -813,12 +1044,14 @@
             this.pnlDeliveryStatus.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominAlt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAltDel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltSIP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltR2C)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAltR2A)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUpCominDel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCurrDel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrdSIP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrdR2C)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrdR2S)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -878,28 +1111,50 @@
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Panel pnlDeliveryStatus;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DataGridView dgvCurrDel;
+        private System.Windows.Forms.DataGridView dgvOrdR2S;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DataGridView dgvUpCominAlt;
-        private System.Windows.Forms.DataGridView dgvAltDel;
-        private System.Windows.Forms.DataGridView dgvUpCominDel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label lblCurrCount;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblOrdCollectCount;
+        private System.Windows.Forms.Label lblAltCollectCount;
         private System.Windows.Forms.ToolStripMenuItem groupRegisterToolStripMenuItem;
-        private System.Windows.Forms.Button btnDelSMS;
-        private System.Windows.Forms.Button btnAltSMS;
         private System.Windows.Forms.ToolStripMenuItem inventoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stockCheckToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem addVendorToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem addVendorToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem vendorRegisterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addItemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.DataGridView dgvOrdR2C;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
+        private System.Windows.Forms.DataGridView dgvAltR2A;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn2;
+        private System.Windows.Forms.DataGridView dgvAltR2C;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDueDate;
+        private System.Windows.Forms.DataGridViewButtonColumn colClickShift;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dgvOrdSIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewButtonColumn colShiftR2S;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn4;
+        private System.Windows.Forms.DataGridView dgvAltSIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn5;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn6;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblOrdSIPCount;
     }
 }
 

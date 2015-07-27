@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Functions\Alteration_TestCase.cs" />
+    <Compile Include="Functions\Main_TestCase.cs" />
     <Compile Include="Functions\OrdersTestCase.cs" />
     <Compile Include="PeoplePractice_Tests\CustomerTestCases.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

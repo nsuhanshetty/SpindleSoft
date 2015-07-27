@@ -13,7 +13,12 @@ namespace SpindleSoft.Builders
     {
         static ILog log = LogManager.GetLogger(typeof(OrderBuilder));
         #region OrderBuilder
-        public static List<string> GetOrderTypeList()
+
+        /// <summary>
+        /// Gets the Name of all the ordertype
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetListOfClothingTypes()
         {
             try
             {
@@ -24,12 +29,13 @@ namespace SpindleSoft.Builders
                     return names;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex.Message);
                 return null;
             }
         }
+
         /// <summary>
         ///  Based on the selected customer load the measurement from previous order
         /// </summary>
@@ -46,16 +52,16 @@ namespace SpindleSoft.Builders
                     //todo: convert to linq
                     //order by updated date desc
                     //singleOrDefault
-                    string query = ("select i.* from orderitem i "+
-                                    "inner join orders o on o.ID = i.OrderID "+
+                    string query = ("select i.* from orderitem i " +
+                                    "inner join orders o on o.ID = i.OrderID " +
                                     "where i.Name = :name and o.CustomerID = :custId " +
                                     "order by i.DateUpdated");
                     var sqlQuery = session.CreateSQLQuery(query)
                                                 .SetParameter("name", itemName)
                                                 .SetParameter("custId", custId)
                                                 .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-                     log.Info(sqlQuery as OrderItem);
-                    return orderItem = sqlQuery  as OrderItem;
+                    log.Info(sqlQuery as OrderItem);
+                    return orderItem = sqlQuery as OrderItem;
 
                 }
             }
@@ -75,11 +81,12 @@ namespace SpindleSoft.Builders
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
+                    //todo: Update to Linq
                     NHibernate.IQuery sqlQuery = session.CreateSQLQuery("select o.ID,o.TotalPrice,o.CurrentPayment,o.PromisedDate from orders o " +
                                                 "join customer c on c.ID = o.CustomerID " +
                                                 "where c.Name like :custName and c.Mobile_No like :custMob " +
                                                 "and o.ID like :orderId")// and o.PromisedDate = :dateOfDelivery ")
-                                                //.SetParameter("dateOfDelivery", dateOfDelivery.Date.ToString("yyyy-MM-dd"))
+                        //.SetParameter("dateOfDelivery", dateOfDelivery.Date.ToString("yyyy-MM-dd"))
                                                 .SetParameter("orderId", id == 0 ? "" + "%" : id.ToString() + "%")
                                                 .SetParameter("custName", custName + "%")
                                                 .SetParameter("custMob", custMob + "%")

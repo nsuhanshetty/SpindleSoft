@@ -62,7 +62,7 @@ namespace SpindleSoft.Views
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //need to handle this situation well
-            string[] input = { "txtAddress", "txtEmailID","txtRefMob","txtRefName" };
+            string[] input = { "txtAddress", "txtEmailID", "txtRefMob", "txtRefName", "pcbReferral","txtPhoneNo" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
@@ -144,12 +144,18 @@ namespace SpindleSoft.Views
       "For example '9880123456'";
             errorProvider1.SetError(txtMobNo, errorMsg);
 
+            //bool isUnique = PeoplePracticeBuilder.IsCustomerMobileNoUnique(txtMobNo.Text);
+            //!isUnique?"Mobile Number entered is a Duplicate. Kindly Check again";
+
             if (errorMsg != "")
             {
                 // Cancel the event and select the text to be corrected by the user.
                 e.Cancel = true;
                 txtMobNo.Select(0, txtMobNo.TextLength);
             }
+
+            //Check if mobile no is unique
+           
         }
 
         private void txtName_Validated(object sender, EventArgs e)

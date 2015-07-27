@@ -12,26 +12,15 @@ namespace SpindleSoft.Views
     public partial class Winform_OrderDetails : Winform_DetailsFormat
     {
         Customer _cust = new Customer();
+        ILog log = LogManager.GetLogger(typeof(Winform_OrderDetails));
         Orders order = new Orders();
         List<OrderItem> OrderItemsList = new List<OrderItem>();
-        ILog log = LogManager.GetLogger(typeof(Winform_OrderDetails));
-
+        private enum OrderStatus { ReadyToStitch, ReadyToCollect, Delivered };
+            
         #region Property
-        private int totalAmnt = 0;
-        public int TotalAmount
-        {
-            get
-            {
-                return totalAmnt;
-            }
-            set
-            {
-                totalAmnt = value;
-                txtTotAmnt.Text = totalAmnt.ToString();
-            }
-        }
-
         private int amntPaid = 0;
+        private int balAmnt = 0;
+        private int totalAmnt = 0;
         public int AmountPaid
         {
             get
@@ -46,7 +35,6 @@ namespace SpindleSoft.Views
             }
         }
 
-        private int balAmnt = 0;
         public int BalanceAmount
         {
             get
@@ -57,6 +45,19 @@ namespace SpindleSoft.Views
             {
                 balAmnt = value;
                 txtBalanceAmnt.Text = balAmnt.ToString();
+            }
+        }
+
+        public int TotalAmount
+        {
+            get
+            {
+                return totalAmnt;
+            }
+            set
+            {
+                totalAmnt = value;
+                txtTotAmnt.Text = totalAmnt.ToString();
             }
         }
         #endregion Property
@@ -78,6 +79,7 @@ namespace SpindleSoft.Views
             this.order = OrderBuilder.GetOrderInfo(order.ID);
             this.OrderItemsList = this.order.OrdersItems as List<OrderItem>;
             dtpDeliveryDate.Value = order.PromisedDate;
+            cmbStatus.SelectedIndex = order.Status;
             //txtTotAmnt.Text = order.TotalPrice.ToString();
             //txtAmntPaid.Text = order.CurrentPayment.ToString();
 
@@ -95,6 +97,7 @@ namespace SpindleSoft.Views
         }
         #endregion ctor
 
+        #region Custom
         public void UpdateCustomerControl(Customer customer)
         {
             if (customer == null) return;
@@ -107,7 +110,7 @@ namespace SpindleSoft.Views
             pcbCustImage.Image = _cust.Image;
         }
 
-        internal void updateOrderItemList(OrderItem _item)
+        internal void UpdateOrderItemList(OrderItem _item)
         {
             var index = OrderItemsList.IndexOf(OrderItemsList.Where(x => x.Name == _item.Name).SingleOrDefault());
 
@@ -116,170 +119,29 @@ namespace SpindleSoft.Views
             else
                 OrderItemsList[index] = _item;
         }
+        #endregion Custom
 
         #region Events
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        protected override void CancelToolStrip_Click(object sender, EventArgs e)
         {
-            if (dgvOrderItems.Rows.Count < 2 || dgvOrderItems.SelectedRows.Count == 0) return;
-
-            DialogResult dr = MessageBox.Show("Continue deleting selected Order items?", "Delete Order Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (dr == DialogResult.No) return;
-
-            foreach (DataGridViewRow item in dgvOrderItems.SelectedRows)
+            if (SpindleSoft.Utilities.Validation.controlIsInEdit(grpBoxCustomer, false))
             {
-                var index = OrderItemsList.IndexOf(OrderItemsList.Where(x => x.Name == item.Cells["OrderType"].Value.ToString()).SingleOrDefault());
-                OrderItemsList.RemoveAt(index);
-                dgvOrderItems.Rows.RemoveAt(item.Index);
-            }
-        }
-
-        private void Winform_OrderAdd_Load(object sender, EventArgs e)
-        {
-            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
-
-            //todo: removing NewOrderTypeToolStrip in designer
-            //this.toolStripParent.Items.Add(this.NewOrderTypeToolStrip);
-
-            if (OrderItemsList != null && OrderItemsList.Count != 0)
-            {
-                foreach (var item in OrderItemsList)
-                {
-                    int index = dgvOrderItems.NewRowIndex;
-                    dgvOrderItems.Rows[index].Cells["OrderType"].Value = item.Name;
-                    dgvOrderItems.Rows[index].Cells["OrderQuantity"].Value = item.Quantity;
-                    dgvOrderItems.Rows[index].Cells["OrderPrice"].Value = item.Price;
-                    dgvOrderItems.CurrentCell = dgvOrderItems.Rows[index].Cells["OrderPrice"];
-                    dgvOrderItems.NotifyCurrentCellDirty(true);
-                    dgvOrderItems.NotifyCurrentCellDirty(false);
-                }
-            }
-
-            try
-            {
-                List<string> orderTypeList = OrderBuilder.GetOrderTypeList();
-                this.OrderType.Items.AddRange(orderTypeList.ToArray());
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-            }
-        }
-
-        private void AddCustomerToolStrip_Click(object sender, EventArgs e)
-        {
-            new Winform_AddCustomer(this._cust).ShowDialog();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dgvOrderItems.Columns["OrderMeasurement"].Index)
-            {
-                var curRow = dgvOrderItems.Rows[e.RowIndex];
-
-                //check if clothing name exists.
-                var _productName = curRow.Cells["OrderType"].Value;
-
-                if (_productName == null || String.IsNullOrEmpty(_productName.ToString()))
-                {
-                    MessageBox.Show("Add Clothing Type, as it is mandatory to edit Measurement details.", "Add Clothing Type", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Order Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                if (_dialogResult == DialogResult.No)
                     return;
-                }
-                else if (this._cust.ID == 0)
-                {
-                    MessageBox.Show("Add Customer, as it is mandatory to edit Measurement details.", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else if ((curRow.Cells["OrderQuantity"].Value == null) && (curRow.Cells["OrderPrice"].Value == null))
-                {
-                    MessageBox.Show("Add Price and Quantity, as it is mandatory for Order details.", "Add Price and Quantity", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+            };
 
-                OrderItem item;
-                //if added during edit
-                item = OrderItemsList.Where(x => (x.Name == _productName.ToString())).SingleOrDefault();
-
-                if (item == null)
-                {   
-                    //fetch  previous measurement
-                    item = OrderBuilder.GetOrderItem(this._cust.ID, _productName.ToString());
-                    if (item == null) item = new OrderItem();
-                }
-
-                item.Quantity = int.Parse(curRow.Cells["OrderQuantity"].Value.ToString());
-                item.Price = int.Parse(curRow.Cells["OrderPrice"].Value.ToString());
-                new Winform_MeasurementAdd(_productName.ToString(), this._cust.Name, item).ShowDialog();
-            }
-        }
-
-        private void dgvOrderItems_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            //Order item - select/ add item if not present.
-
-            if (dgvOrderItems.CurrentCell == dgvOrderItems.CurrentRow.Cells["OrderType"])
-            {
-                ComboBox cb = e.Control as ComboBox;
-                if (cb != null)
-                {
-                    cb.DropDownStyle = ComboBoxStyle.DropDown;
-                    cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-
-                    cb.Validating += new System.ComponentModel.CancelEventHandler(cbo_Validating);
-                    //cb.Validated += new System.EventHandler(cbo_Validated);
-                }
-            }
-        }
-
-        private void dgvOrderItems_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dgvOrderItems.CurrentCell == dgvOrderItems.CurrentRow.Cells["OrderType"])
-            {
-                //todo: check if orderitem has measurement and load orderitemslist
-            }
-            else if (e.ColumnIndex == dgvOrderItems.Columns["OrderQuantity"].Index || e.ColumnIndex == dgvOrderItems.Columns["OrderPrice"].Index)
-            {
-                /*Validation*/
-                DataGridViewCell cell = (sender as DataGridView).CurrentCell;
-                if (cell.Value == null) return;
-
-                Match _match = Regex.Match(cell.Value.ToString(), "^\\d*$");
-                cell.ErrorText = (!_match.Success) ? "Invalid Amount input data type.\nExample: '10'" : "";
-
-                if (cell.ErrorText != "")
-                {
-                    cell.Value = null;
-                    return;
-                }
-                /*Validation - end*/
-
-                CalculatePaymentDetails();
-            }
-        }
-
-        private void CalculatePaymentDetails()
-        {
-            //todo : Method to handle payment amount
-            /*Calculate Total*/
-            int total = 0;
-            foreach (DataGridViewRow dr in dgvOrderItems.Rows)
-            {
-                if (dr.IsNewRow || dr.Cells["OrderPrice"].Value == null || dr.Cells["OrderQuantity"].Value == null) continue;
-
-                total += (int.Parse(dr.Cells["OrderQuantity"].Value.ToString()) * int.Parse(dr.Cells["OrderPrice"].Value.ToString()));
-            }
-
-            int amntPaid = 0;
-            int.TryParse(txtAmntPaid.Text, out amntPaid);
-            AmountPaid = amntPaid;
-            TotalAmount = total;
-            BalanceAmount = TotalAmount - AmountPaid;
-            /*Calculate Total - end*/
+            this.Close();
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             UpdateStatus("Saving..");
+
+            //todo: look if the followinf method can be avoided 
+            txtAmntPaid_Validating(txtAmntPaid, new System.ComponentModel.CancelEventArgs());
+
             string errorMsg = string.Empty;
             if (this._cust.ID == 0)
                 errorMsg = "Add Customer, as it is mandatory for Order details.";
@@ -308,6 +170,7 @@ namespace SpindleSoft.Views
             order.OrdersItems = OrderItemsList;
             order.TotalPrice = TotalAmount;
             order.CurrentPayment = AmountPaid;
+            order.Status = cmbStatus.SelectedIndex;
 
             UpdateStatus("Saving..", 50);
             bool success = SpindleSoft.Savers.OrderSaver.SaveOrder(order);
@@ -321,73 +184,199 @@ namespace SpindleSoft.Views
                 //    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
 
                 //}
+                Main _main = Application.OpenForms["Main"] as Main;
+                _main.UpdateReadyDgv();
                 this.Close();
             }
             else
                 UpdateStatus("Error in Saving Order.", 100);
         }
 
-        protected override void CancelToolStrip_Click(object sender, EventArgs e)
+        private void AddCustomerToolStrip_Click(object sender, EventArgs e)
         {
-            if (SpindleSoft.Utilities.Validation.controlIsInEdit(grpBoxCustomer, false))
-            {
-                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Order Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
-                if (_dialogResult == DialogResult.No)
-                    return;
-            };
-
-            this.Close();
+            new Winform_AddCustomer(this._cust).ShowDialog();
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvOrderItems.Rows.Count < 2 || dgvOrderItems.SelectedRows.Count == 0) return;
+
+            DialogResult dr = MessageBox.Show("Continue deleting selected Order items?", "Delete Order Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.No) return;
+
+            foreach (DataGridViewRow item in dgvOrderItems.SelectedRows)
+            {
+                var index = OrderItemsList.IndexOf(OrderItemsList.Where(x => x.Name == item.Cells["OrderType"].Value.ToString()).SingleOrDefault());
+                OrderItemsList.RemoveAt(index);
+                dgvOrderItems.Rows.RemoveAt(item.Index);
+            }
+        }
+
+        private void CalculatePaymentDetails()
+        {
+            //todo : Method to handle payment amount
+            /*Calculate Total*/
+            int total = 0;
+            foreach (DataGridViewRow dr in dgvOrderItems.Rows)
+            {
+                if (dr.IsNewRow || dr.Cells["OrderPrice"].Value == null || dr.Cells["OrderQuantity"].Value == null) continue;
+
+                total += (int.Parse(dr.Cells["OrderQuantity"].Value.ToString()) * int.Parse(dr.Cells["OrderPrice"].Value.ToString()));
+            }
+
+            int amntPaid = 0;
+            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            AmountPaid = amntPaid;
+            TotalAmount = total;
+            BalanceAmount = TotalAmount - AmountPaid;
+            /*Calculate Total - end*/
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvOrderItems.Columns["OrderMeasurement"].Index)
+            {
+                var curRow = dgvOrderItems.Rows[e.RowIndex];
+
+                //check if clothing name exists.
+                var _productName = Utilities.Validation.ToTitleCase(curRow.Cells["OrderType"].Value.ToString());
+
+                if (_productName == null || String.IsNullOrEmpty(_productName.ToString()))
+                {
+                    MessageBox.Show("Add Clothing Type, as it is mandatory to edit Measurement details.", "Add Clothing Type", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else if (this._cust.ID == 0)
+                {
+                    MessageBox.Show("Add Customer, as it is mandatory to edit Measurement details.", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else if ((curRow.Cells["OrderQuantity"].Value == null) && (curRow.Cells["OrderPrice"].Value == null))
+                {
+                    MessageBox.Show("Add Price and Quantity, as it is mandatory for Order details.", "Add Price and Quantity", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                OrderItem item;
+                //if added during edit
+                item = OrderItemsList.Where(x => (x.Name == _productName.ToString())).SingleOrDefault();
+
+                if (item == null)
+                {
+                    //fetch  previous measurement
+                    item = OrderBuilder.GetOrderItem(this._cust.ID, _productName.ToString());
+                    if (item == null) item = new OrderItem();
+                }
+
+                item.Quantity = int.Parse(curRow.Cells["OrderQuantity"].Value.ToString());
+                item.Price = int.Parse(curRow.Cells["OrderPrice"].Value.ToString());
+                new Winform_MeasurementAdd(_productName.ToString(), this._cust.Name, item).ShowDialog();
+            }
+        }
+
+        private void dgvOrderItems_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvOrderItems.CurrentCell == dgvOrderItems.CurrentRow.Cells["OrderType"])
+            {
+                //todo: check if orderitem has measurement and load orderitemslist
+
+                //dgvOrderItems.CurrentCell.Value = Utilities.Validation.ToTitleCase(dgvOrderItems.CurrentCell.Value.ToString());
+            }
+            else if (e.ColumnIndex == dgvOrderItems.Columns["OrderQuantity"].Index || e.ColumnIndex == dgvOrderItems.Columns["OrderPrice"].Index)
+            {
+                /*Validation*/
+                DataGridViewCell cell = (sender as DataGridView).CurrentCell;
+                if (cell.Value == null) return;
+
+                Match _match = Regex.Match(cell.Value.ToString(), "^\\d*$");
+                cell.ErrorText = (!_match.Success) ? "Invalid Amount input data type.\nExample: '10'" : "";
+
+                if (cell.ErrorText != "")
+                {
+                    cell.Value = null;
+                    return;
+                }
+                /*Validation - end*/
+
+                CalculatePaymentDetails();
+            }
+        }
+
+        private void dgvOrderItems_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            //Order item - select/ add item if not present.
+
+            if (dgvOrderItems.CurrentCell == dgvOrderItems.CurrentRow.Cells["OrderType"])
+            {
+                ComboBox cb = e.Control as ComboBox;
+                if (cb != null)
+                {
+                    cb.DropDownStyle = ComboBoxStyle.DropDown;
+                    cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+                    cb.Validating += new System.ComponentModel.CancelEventHandler(cbo_Validating);
+                    //cb.Validated += new System.EventHandler(cbo_Validated);
+                }
+            }
+        }
+
+        private void Winform_OrderDetails_Load(object sender, EventArgs e)
+        {
+            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
+
+            //todo: removing NewOrderTypeToolStrip in designer
+            //this.toolStripParent.Items.Add(this.NewOrderTypeToolStrip);
+
+            if (OrderItemsList != null && OrderItemsList.Count != 0)
+            {
+                foreach (var item in OrderItemsList)
+                {
+                    int index = dgvOrderItems.NewRowIndex;
+                    dgvOrderItems.Rows[index].Cells["OrderType"].Value = item.Name;
+                    dgvOrderItems.Rows[index].Cells["OrderQuantity"].Value = item.Quantity;
+                    dgvOrderItems.Rows[index].Cells["OrderPrice"].Value = item.Price;
+                    dgvOrderItems.CurrentCell = dgvOrderItems.Rows[index].Cells["OrderPrice"];
+                    dgvOrderItems.NotifyCurrentCellDirty(true);
+                    dgvOrderItems.NotifyCurrentCellDirty(false);
+                }
+            }
+
+            try
+            {
+                List<string> orderTypeList = OrderBuilder.GetListOfClothingTypes();
+                this.OrderType.Items.AddRange(orderTypeList.ToArray());
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+        }
         #endregion Events
 
         #region _Validations
-        private void txtAmntPaid_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        void cbo_Validated(object sender, System.EventArgs e)
         {
-            int amntPaid, totAmnt;
-            int.TryParse(txtAmntPaid.Text, out amntPaid);
-            int.TryParse(txtTotAmnt.Text, out totAmnt);
+            //remove the selected item name from the to item list 
+            //to restrict the selection of the item again
 
-            Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
-            string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
-            if (_errorMsg == "" && amntPaid > totAmnt)
-                _errorMsg = "Amount Paid cannot be greater than Total Amount";
+            //if (dgvOrderItems.CurrentCell.Value == null) return;
 
-            errorProvider1.SetError(txtAmntPaid, _errorMsg);
+            //var value = dgvOrderItems.CurrentCell.Value.ToString();
+            //if (this.OrderType.Items.IndexOf(value) != -1)
+            //    this.OrderType.Items.Remove(value);
 
-            if (_errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtAmntPaid.Text = "";
-                AmountPaid = 0;
-            }
-            else
-            {
-                //TotalAmount = totAmnt;
-                AmountPaid = amntPaid;
-            }
+            ////Based on the datagrid rowindex insert the values into the OrderItem List
+            ////1: Append/ create a orderitem if not already present in orderItemList
+            //OrderItemsList.Add(new OrderItem());
+
+            //OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
+            ////orderItem.OrderID = _order.ID;
+
+            ////todo: check if orderitem has measurement
+            //OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
+
+
         }
-
-        //private void txtAmntPaid_Validated(object sender, EventArgs e)
-        //{
-        //    int AmntPaid, TotAmnt;
-        //    int.TryParse(txtAmntPaid.Text, out AmntPaid);
-        //    int.TryParse(txtTotAmnt.Text, out TotAmnt);
-
-        //    if (AmntPaid > TotAmnt)
-        //    {
-        //        // Cancel the event and select the text to be corrected by the user.
-        //        e. = true;
-        //        txtAmntPaid.Select(0, txtAmntPaid.TextLength);
-        //        errorProvider1.SetError(txtAmntPaid, "Amount Paid cannot be greater than Total Amount");
-        //    }
-        //    else
-        //    {
-        //        txtBalanceAmnt.Text = (TotAmnt - AmntPaid).ToString();
-        //    }
-        //    txtBalanceAmnt.Text = (Convert.ToInt32(txtTotAmnt.Text) - Convert.ToInt32(txtAmntPaid.Text)).ToString();
-        //}
 
         void cbo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -419,31 +408,34 @@ namespace SpindleSoft.Views
             }
         }
 
-        void cbo_Validated(object sender, System.EventArgs e)
+        private void txtAmntPaid_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //remove the selected item name from the to item list 
-            //to restrict the selection of the item again
+            int amntPaid, totAmnt;
+            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            int.TryParse(txtTotAmnt.Text, out totAmnt);
 
-            //if (dgvOrderItems.CurrentCell.Value == null) return;
+            Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
+            string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
+            if (_errorMsg == "" && amntPaid > totAmnt)
+                _errorMsg = "Amount Paid cannot be greater than Total Amount";
 
-            //var value = dgvOrderItems.CurrentCell.Value.ToString();
-            //if (this.OrderType.Items.IndexOf(value) != -1)
-            //    this.OrderType.Items.Remove(value);
+            errorProvider1.SetError(txtAmntPaid, _errorMsg);
 
-            ////Based on the datagrid rowindex insert the values into the OrderItem List
-            ////1: Append/ create a orderitem if not already present in orderItemList
-            //OrderItemsList.Add(new OrderItem());
-
-            //OrderItem orderItem = OrderBuilder.GetOrderItem(_cust.ID, dgvOrderItems.CurrentCell.Value.ToString());
-            ////orderItem.OrderID = _order.ID;
-
-            ////todo: check if orderitem has measurement
-            //OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
-
-
+            if (_errorMsg != "")
+            {
+                // Cancel the event and select the text to be corrected by the user.
+                e.Cancel = true;
+                txtAmntPaid.Text = "";
+                AmountPaid = 0;
+                return;
+            }
+            else if (!string.IsNullOrEmpty(txtAmntPaid.Text))
+            {
+                //TotalAmount = totAmnt;
+                AmountPaid = int.Parse(txtAmntPaid.Text);
+            }
         }
         #endregion _Validations
-
-
+              
     }
 }

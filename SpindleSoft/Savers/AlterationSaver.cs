@@ -1,4 +1,5 @@
-﻿using SpindleSoft.Model;
+﻿using log4net;
+using SpindleSoft.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace SpindleSoft.Savers
 {
-    class AlterationSaver
+    public class AlterationSaver
     {
+        static ILog log = LogManager.GetLogger(typeof(AlterationSaver));
+
         public static bool SaveAlterationInfo(Alteration _alteration)
         {
             try
@@ -33,6 +36,30 @@ namespace SpindleSoft.Savers
                 //throw;
             }
 
+        }
+
+        public static bool DeleteAlterationItems(int _id)
+        {
+            bool success = false;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    try
+                    {
+                        var item = session.Get<AlterationItem>(_id);
+                        session.Delete(item);
+                        trans.Commit();
+                        success = true;
+                    }
+                    catch (Exception ex)
+                    {
+
+                        log.Error(ex);
+                    }
+                }
+            }
+            return success;
         }
     }
 }

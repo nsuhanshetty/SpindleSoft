@@ -26,22 +26,23 @@ namespace SpindleSoft.Views
             txtClothingType.Text = _productName;
 
             //if (orderItem == null) return;
-            txtLength.Text = this.orderItem.Length.ToString();
-            txtWaist.Text = this.orderItem.Waist.ToString();
-            txtChest.Text = this.orderItem.Chest.ToString();
-            txtShoulder.Text = this.orderItem.Shoulder.ToString();
-            txtFront.Text = this.orderItem.Front.ToString();
-            txtBack.Text = this.orderItem.Back.ToString();
-            txtD.Text = this.orderItem.D.ToString();
-            txtHip.Text = this.orderItem.Hip.ToString();
+            txtLength.Text = this.orderItem.Length;
+            txtWaist.Text = this.orderItem.Waist;
+            txtChest.Text = this.orderItem.Chest;
+            txtShoulder.Text = this.orderItem.Shoulder;
+            txtFront.Text = this.orderItem.Front;
+            txtBack.Text = this.orderItem.Back;
+            txtD.Text = this.orderItem.D;
+            txtHip.Text = this.orderItem.Hip;
 
-            txtBotHip.Text = this.orderItem.BottomHip.ToString();
-            txtBotWaist.Text = this.orderItem.BottomWaist.ToString();
-            txtBotLength.Text = this.orderItem.BottomLength.ToString();
+            txtBotHip.Text = this.orderItem.BottomHip;
+            txtBotWaist.Text = this.orderItem.BottomWaist;
+            txtBotLength.Text = this.orderItem.BottomLength;
+            txtBotLoose.Text = this.orderItem.BottomLoose;
 
-            txtSlvAHole.Text = this.orderItem.SleeveArmHole.ToString();
-            txtSlvLength.Text = this.orderItem.SleeveLength.ToString();
-            txtSlvLoose.Text = this.orderItem.SleeveLoose.ToString();
+            txtSlvAHole.Text = this.orderItem.SleeveArmHole;
+            txtSlvLength.Text = this.orderItem.SleeveLength;
+            txtSlvLoose.Text = this.orderItem.SleeveLoose;
             txtComment.Text = this.orderItem.Comment;
         }
 
@@ -89,28 +90,29 @@ namespace SpindleSoft.Views
             _item.Price = this.orderItem.Price;
             _item.Quantity = this.orderItem.Quantity;
 
-            _item.Length = txtLength.Text == null ? (float?)null : float.Parse(txtLength.Text);
-            _item.Waist = String.IsNullOrEmpty(txtWaist.Text) ? (float?)null : float.Parse(txtWaist.Text);
-            _item.Chest = String.IsNullOrEmpty(txtChest.Text) ? (float?)null : float.Parse(txtChest.Text);
-            _item.Shoulder = String.IsNullOrEmpty(txtShoulder.Text) ? (float?)null : float.Parse(txtShoulder.Text);
-            _item.Front = String.IsNullOrEmpty(txtFront.Text) ? (float?)null : float.Parse(txtFront.Text);
-            _item.Back = String.IsNullOrEmpty(txtBack.Text) ? (float?)null : float.Parse(txtBack.Text);
-            _item.D = String.IsNullOrEmpty(txtD.Text) ? (float?)null : float.Parse(txtD.Text);
-            _item.Hip = String.IsNullOrEmpty(txtHip.Text) ? (float?)null : float.Parse(txtHip.Text);
+            _item.Length = txtLength.Text;
+            _item.Waist = txtWaist.Text;
+            _item.Chest = txtChest.Text;
+            _item.Shoulder = txtShoulder.Text;
+            _item.Front = txtFront.Text;
+            _item.Back = txtBack.Text;
+            _item.D = txtD.Text;
+            _item.Hip = txtHip.Text;
 
-            _item.BottomHip = String.IsNullOrEmpty(txtBotHip.Text) ? (float?)null : float.Parse(txtBotHip.Text);
-            _item.BottomWaist = String.IsNullOrEmpty(txtBotWaist.Text) ? (float?)null : float.Parse(txtBotWaist.Text);
-            _item.BottomWaist = String.IsNullOrEmpty(txtBotWaist.Text) ? (float?)null : float.Parse(txtBotWaist.Text);
-            _item.BottomLength = String.IsNullOrEmpty(txtBotLength.Text) ? (float?)null : float.Parse(txtBotLength.Text);
+            _item.BottomHip = txtBotHip.Text;
+            _item.BottomWaist = txtBotWaist.Text;
+            _item.BottomWaist = txtBotWaist.Text;
+            _item.BottomLength = txtBotLength.Text;
+            _item.BottomLoose = txtBotLoose.Text;
 
-            _item.SleeveArmHole = String.IsNullOrEmpty(txtSlvAHole.Text) ? (float?)null : float.Parse(txtSlvAHole.Text);
-            _item.SleeveLength = String.IsNullOrEmpty(txtSlvLength.Text) ? (float?)null : float.Parse(txtSlvLength.Text);
-            _item.SleeveLoose = String.IsNullOrEmpty(txtSlvLoose.Text) ? (float?)null : float.Parse(txtSlvLoose.Text);
+            _item.SleeveArmHole = txtSlvAHole.Text;
+            _item.SleeveLength = txtSlvLength.Text;
+            _item.SleeveLoose = txtSlvLoose.Text;
             _item.Comment = txtComment.Text;
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
-                orderDetails.updateOrderItemList(_item);
+                orderDetails.UpdateOrderItemList(_item);
             //else
             //    MessageBox.Show("Unable to Update the Order Cart as List not found.","Order Details not found",MessageBoxButtons.OK,MessageBoxIcon.Error);
 

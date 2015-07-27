@@ -30,6 +30,8 @@ namespace SpindleSoft.Views
         public Winform_VendorDetails()
         {
             InitializeComponent();
+
+            //todo: Load bank names from db
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
@@ -42,6 +44,7 @@ namespace SpindleSoft.Views
             UpdateStatus("fetching vendor data..", 33);
 
             _vendor.BankUserName = txtBankUserName.Text;
+            //todo : Capitalize each word
             _vendor.BankName = cmbBankName.Text;
             _vendor.IFSCCode = txtIfscCode.Text;
             _vendor.AccNo = txtAccNo.Text;

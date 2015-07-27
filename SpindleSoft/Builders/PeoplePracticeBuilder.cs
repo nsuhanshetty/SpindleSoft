@@ -122,6 +122,24 @@ namespace SpindleSoft.Builders
             }
         }
 
+        public static bool IsCustomerMobileNoUnique(string mobNo)
+        {
+             bool _exists;
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    _exists = session.Query<Customer>().Any(x => x.Mobile_No == mobNo);
+                    return _exists;         
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);   
+                return true;
+            }
+        }
+
         #endregion CustomerBuilder
 
         #region Staff

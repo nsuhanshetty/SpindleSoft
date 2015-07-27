@@ -10,60 +10,43 @@ using System.Windows.Forms;
 
 namespace SpindleSoft
 {
+    using log4net;
     using SpindleSoft.Builders;
     using SpindleSoft.Helpers;
     using SpindleSoft.Model;
     using SpindleSoft.Savers;
     using SpindleSoft.Views;
+    using System.Collections;
 
     public partial class Main : Form
     {
+        ILog log = LogManager.GetLogger(typeof(Main));
         private enum SearchStates { Order, Customer, Alteration, Sales }
-
         private SearchStates searchState { get; set; }
 
-        public Main()
-        {
-            InitializeComponent();
-        }
-
-        private void bulkSMSToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addOrdersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Winform_OrderDetails().ShowDialog();
-        }
-
-        private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Winform_SMSSend().ShowDialog();
-        }
-
-        private void searchOrderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Winform_OrderRegister().ShowDialog();
-        }
-
         #region SearchTxt
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSearchText("Search Customer Mobile No.");
-            this.searchState = SearchStates.Customer;
-        }
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSearchText("Search Order No.");
             this.searchState = SearchStates.Order;
+
+            RefreshDgvSearch();
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSearchText("Search Customer Mobile No.");
+            this.searchState = SearchStates.Customer;
+
+            RefreshDgvSearch();
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSearchText("Search Alteration No.");
             this.searchState = SearchStates.Alteration;
+
+            RefreshDgvSearch();
         }
 
         private void rdbSales_CheckedChanged(object sender, EventArgs e)
@@ -71,8 +54,14 @@ namespace SpindleSoft
             UpdateSearchText("Search Sale No.");
             this.searchState = SearchStates.Sales;
 
+            RefreshDgvSearch();
         }
 
+        private void RefreshDgvSearch()
+        {
+            dgvSearch.DataSource = "";
+            txtSearch.Text = string.Empty;
+        }
         private void UpdateSearchText(string _updateText)
         {
             lblSearchText.Text = _updateText;
@@ -80,16 +69,69 @@ namespace SpindleSoft
         }
         #endregion SearchTxt
 
-        private void Main_Load(object sender, EventArgs e)
+        #region ctor
+        public Main()
         {
-            /*load delivery dgv*/
-            /*load alteration dgv*/
+            InitializeComponent();
+            UpdateReadyDgv();
+        }
+        #endregion ctor
+
+        #region Toolstrip_Click
+
+        private void addAlterationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_AlterationsDetails().ShowDialog();
         }
 
-        #region toolstrip
+        private void addCatalogueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_SalesDetails().ShowDialog();
+        }
+
         private void addCustomerToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             new WinForm_CustomerDetails().ShowDialog();
+        }
+
+        private void addExpensesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_ExpenseDetails().ShowDialog();
+        }
+
+        private void addGroupsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_GroupAdd().ShowDialog();
+        }
+
+        private void addItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new WinForm_SKUDetails().ShowDialog();
+        }
+
+        private void addOrdersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_OrderDetails().ShowDialog();
+        }
+
+        private void addStaffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_StaffDetails().ShowDialog();
+        }
+
+        private void addVendorToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            new Winform_VendorDetails().ShowDialog();
+        }
+
+        private void bulkSMSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void catalogueRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void customerRegisterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,9 +139,40 @@ namespace SpindleSoft
             new Winform_CustomerRegister().ShowDialog();
         }
 
-        private void addStaffToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Winform_StaffDetails().ShowDialog();
+            this.Close();
+        }
+
+        private void importCustomersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //export excel Sheet/ google spreadsheet
+            //
+        }
+
+        private void salaryRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //link salary to expense
+        }
+
+        private void SalesRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_SalesRegister().ShowDialog();
+        }
+
+        private void searchAlterationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_AlterationRegister().ShowDialog();
+        }
+
+        private void searchOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_OrderRegister().ShowDialog();
+        }
+
+        private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_SMSSend().ShowDialog();
         }
 
         private void staffRegisterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -109,109 +182,23 @@ namespace SpindleSoft
             //todo:  salary register must showen based on time interval (week, month, year)
         }
 
-        private void addGroupsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void stockCheckToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            new Winform_GroupAdd().ShowDialog();
+            new Winform_SKURegister().ShowDialog();
         }
-
-        private void addAlterationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void vendorRegisterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Winform_AlterationsDetails().ShowDialog();
+            new Winform_VendorsRegister().ShowDialog();
         }
-
-        private void searchAlterationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Winform_AlterationRegister().ShowDialog();
-        }
-
         private void viewExpenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Winform_ExpenseRegister().ShowDialog();
         }
-
-        private void addExpensesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Winform_ExpenseDetails().ShowDialog();
-        }
-
         private void viewSMSRegistryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Winform_SMSRegister().ShowDialog();
         }
-
-        private void catalogueRegisterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-        #endregion toolstrip
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            if (rdbOrders.Checked)
-                new Winform_OrderDetails().ShowDialog();
-            else if (rdbCustomer.Checked)
-                new WinForm_CustomerDetails().ShowDialog();
-            else if (rdbAlteration.Checked)
-                new Winform_AlterationsDetails().ShowDialog();
-            else if (rdbSales.Checked)
-                new Winform_SalesDetails().ShowDialog();
-        }
-
-        private void salaryRegisterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //link salary to expense
-        }
-
-        private void importCustomersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //export excel Sheet/ google spreadsheet
-            //
-        }
-
-        private void cmbSearch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if (String.IsNullOrEmpty(cmbSearch.Text))
-            //    return;
-
-            //Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(cmbSearch.Text);
-            //_cust.Image = PeoplePracticeBuilder.GetCustomerImage(cmbSearch.Text);
-
-            ////shouldnt happen but for safety.
-            ////todo: Let customer know that bad has happened
-            //if (_cust == null && _cust.Image == null) return;
-
-            //new WinForm_CustomerDetails(_cust).ShowDialog();
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtSearch.Text)) return;
-            dgvSearch.DataSource = Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);
-        }
-
-        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (searchState.ToString() == "Customer")
-            {
-                var mobileNo = dgvSearch.Rows[e.RowIndex].Cells[1].Value.ToString();
-                if (String.IsNullOrEmpty(mobileNo))
-                    return;
-
-                Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(mobileNo);
-                _cust.Image = PeoplePracticeBuilder.GetCustomerImage(mobileNo);
-
-                //shouldnt happen but for safety.
-                //todo: Let customer know that bad has happened
-                if (_cust == null && _cust.Image == null) return;
-
-                new WinForm_CustomerDetails(_cust).ShowDialog();
-            }
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        #endregion Toolstrip_Click
 
         #region Alteration
         private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -242,19 +229,6 @@ namespace SpindleSoft
         #endregion Alteration
 
         #region Order
-        private void dgvDeliverToday_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            /*
-             *Date
-             *Customer Name
-             *MobileNo
-             *send sms
-             //*postpone - 2mrw 
-             */
-
-            /*get pending and today's orders*/
-        }
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             /*
@@ -267,37 +241,167 @@ namespace SpindleSoft
 
             /*get upcoming's orders*/
         }
+
+        private void dgvOrdR2S_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridView dgv = ((DataGridView)sender);
+                int _orderID = int.Parse(dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
+                string message = string.Empty;
+                int status = -1;
+
+                if (e.ColumnIndex == dgv.Columns[2].Index ||
+                    (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index))
+                {
+                    switch (dgv.Name)
+                    {
+                        case "dgvOrdR2S":
+                            message = "Shift selected Order to Stitch In Progress";
+                            status = 1;
+                            break;
+                        case "dgvOrdSIP":
+                            message = "Shift selected Order to Ready To Stitch";
+                            status = 0;
+                            break;
+                        case "dgvOrdR2C":
+                            message = "Shift selected Order to Stitch In Progress";
+                            status = 1;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                    {
+                        message = "Shift selected Order to Ready To Collect";
+                        status = 2;
+                    }
+                    if (string.IsNullOrEmpty(message) || status == -1) return;
+
+                    DialogResult dr = MessageBox.Show(message, "Shift Order", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.No) return;
+
+                    //update ord status in db
+
+                    MainSaver.UpdateOrderStatus(_orderID, status);
+                    UpdateReadyDgv();
+                }
+                else
+                {
+                    new Winform_OrderDetails(OrderBuilder.GetOrderInfo(_orderID)).ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
         #endregion Order
 
-        private void addCatalogueToolStripMenuItem_Click(object sender, EventArgs e)
+        #region Event
+        private void btnAdd_Click(object sender, EventArgs e)
         {
-            new Winform_SalesDetails().ShowDialog();
+            //todo: Update Status based from the Child Controls load method
+            if (rdbOrders.Checked)
+            {
+                new Winform_OrderDetails().ShowDialog();
+            }
+            else if (rdbCustomer.Checked)
+            {
+                new WinForm_CustomerDetails().ShowDialog();
+            }
+            else if (rdbAlteration.Checked)
+            {
+                new Winform_AlterationsDetails().ShowDialog();
+            }
+            else if (rdbSales.Checked)
+            {
+                new Winform_SalesDetails().ShowDialog();
+            }
         }
 
-        private void stockCheckToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void cmbSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            new Winform_SKURegister().ShowDialog();
+            //if (String.IsNullOrEmpty(cmbSearch.Text))
+            //    return;
+
+            //Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(cmbSearch.Text);
+            //_cust.Image = PeoplePracticeBuilder.GetCustomerImage(cmbSearch.Text);
+
+            ////shouldnt happen but for safety.
+            ////todo: Let customer know that bad has happened
+            //if (_cust == null && _cust.Image == null) return;
+
+            //new WinForm_CustomerDetails(_cust).ShowDialog();
         }
 
-        private void addVendorToolStripMenuItem2_Click(object sender, EventArgs e)
+        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            new Winform_VendorDetails().ShowDialog();
+            try
+            {
+                switch (searchState.ToString())
+                {
+                    case "Customer":
+                        var mobileNo = dgvSearch.Rows[e.RowIndex].Cells[1].Value.ToString();
+
+                        if (String.IsNullOrEmpty(mobileNo)) return;
+
+                        Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(mobileNo);
+                        _cust.Image = PeoplePracticeBuilder.GetCustomerImage(mobileNo);
+
+                        if (_cust == null && _cust.Image == null) return;
+
+                        new WinForm_CustomerDetails(_cust).ShowDialog();
+                        break;
+                    case "Order":
+                        var orderID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString();
+                        if (String.IsNullOrEmpty(orderID)) return;
+
+                        Orders order = OrderBuilder.GetOrderInfo(int.Parse(orderID));
+                        if (order == null) return;
+                        new Winform_OrderDetails(order).ShowDialog();
+                        break;
+
+                    default:
+                        MessageBox.Show("Invalid Search State.Try again");
+                        break;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                MessageBox.Show("Something Nasty happened.Try again");
+            }
         }
 
-        private void vendorRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            new Winform_VendorsRegister().ShowDialog();
+            if (String.IsNullOrEmpty(txtSearch.Text)) return;
+            dgvSearch.DataSource = Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);
         }
+        #endregion Event
 
-        private void addItemToolStripMenuItem_Click(object sender, EventArgs e)
+        #region Custom
+        public void UpdateReadyDgv()
         {
-            new WinForm_SKUDetails().ShowDialog();
-        }
+            IList OrderItemsList;
 
-        private void SalesRegisterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new Winform_SalesRegister().ShowDialog();
+            OrderItemsList = MainBuilder.GetOrdersList_BasedOnStatus(0);
+            Main_Helper.FillDatagrid(OrderItemsList, dgvOrdR2S);
+
+            OrderItemsList = MainBuilder.GetOrdersList_BasedOnStatus(1);
+            lblOrdSIPCount.Text = Main_Helper.FillDatagrid(OrderItemsList, dgvOrdSIP).ToString();
+
+            OrderItemsList = MainBuilder.GetOrdersList_BasedOnStatus(2);
+            lblOrdCollectCount.Text = Main_Helper.FillDatagrid(OrderItemsList, dgvOrdR2C).ToString();
         }
+        private void UpdateStatus(string _status = "Ready")
+        {
+            lblStatus.Text = _status;
+        }
+        #endregion Custom
     }
 
 }

@@ -31,6 +31,7 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Front);
             Map(x => x.Back);
             Map(x => x.BottomLength);
+            Map(x => x.BottomLoose);
             Map(x => x.BottomWaist);
             Map(x => x.BottomHip);
             Map(x => x.SleeveLoose);
@@ -51,6 +52,7 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.PromisedDate);
             Map(x => x.TotalPrice);
             Map(x => x.CurrentPayment);
+            Map(x => x.Status);
             HasMany(x => x.OrdersItems) 
                                         .Inverse()
                                         .Cascade.All();
@@ -73,6 +75,7 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.CurrentPayment);
             HasMany(x => x.AlterationItems)
                 .Inverse()
+                .LazyLoad()
                 .Cascade.All();
         }
     }
@@ -87,12 +90,12 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Quantity);
             Map(x => x.Comment);
             Map(x => x.Price);
-            References(x => x.Order)
-                .Class<Orders>()
-                .Columns("OrderID");
+            //References(x => x.Order)
+            //    .Class<Orders>()
+            //    .Columns("OrderID");
             References(x => x.Alteration)
                 .Class<Alteration>()
-                .Columns("AlterationID");
+                .Columns("Alteration_ID");
         }
     }
 }

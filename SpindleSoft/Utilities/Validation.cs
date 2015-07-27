@@ -13,9 +13,9 @@ namespace SpindleSoft.Utilities
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string FirstCharToUpper(string input)
+        public static string ToTitleCase(string input)
         {
-            if (String.IsNullOrEmpty(input))
+            if (!String.IsNullOrEmpty(input))
                 return System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(input.ToLower());
             else
                 return "";

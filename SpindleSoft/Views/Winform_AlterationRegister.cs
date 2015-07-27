@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
+using SpindleSoft.Views;
 
 namespace SpindleSoft
 {
@@ -12,11 +13,6 @@ namespace SpindleSoft
         public Winform_AlterationRegister()
         {
             InitializeComponent();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
@@ -36,6 +32,25 @@ namespace SpindleSoft
             }
             else
                 dgvSearch.DataSource = null;
+        }
+
+        private void Winform_AlterationRegister_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvSearch.Rows[e.RowIndex].Cells["OrderID"] == null) return;
+
+             DialogResult _dialogResult = MessageBox.Show("Do you want to Modify the details of Alteration " +
+                                         Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString()),
+                                         "Modify Alteration Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                                         MessageBoxDefaultButton.Button2);
+            if (_dialogResult == DialogResult.No) return;
+
+            Alteration alt = AlterationBuilder.GetAlteration(int.Parse(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString()));
+            new Winform_AlterationsDetails(alt).ShowDialog();
         }
     }
 }

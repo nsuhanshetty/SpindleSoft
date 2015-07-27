@@ -11,7 +11,7 @@ namespace SpindleSoft.Model
 
         public virtual DateTime PromisedDate { get; set; }
 
-        public virtual float TotalPrice { get; set; }
+        public virtual int TotalPrice { get; set; }
 
         public virtual int CurrentPayment { get; set; }
 
@@ -19,11 +19,11 @@ namespace SpindleSoft.Model
 
         public Alteration() { }
 
-        public Alteration(Customer cust, DateTime promiseDate, List<AlterationItem> alteration, int totalPrice, int currPayment)
+        public Alteration(Customer cust, DateTime promiseDate, List<AlterationItem> alterationItems, int totalPrice, int currPayment)
         {
             this.Customer = cust;
             this.PromisedDate = promiseDate;
-            this.AlterationItems = alteration;
+            this.AlterationItems = alterationItems;
             this.TotalPrice = totalPrice;
             this.CurrentPayment = currPayment;
         }
@@ -39,7 +39,7 @@ namespace SpindleSoft.Model
 
         public virtual Alteration Alteration { get; set; } //to which it belongs
 
-        public virtual Orders Order { get; set; } //from where its derived
+        //public virtual Orders Order { get; set; } //from where its derived
 
         public virtual int Price { get; set; }
 
@@ -47,11 +47,12 @@ namespace SpindleSoft.Model
 
         public AlterationItem() { }
 
-        public AlterationItem(string name,int quantity, Orders order)
+        public AlterationItem(string name, int quantity, int price, string comment)
         {
             this.Name = name;
             this.Quantity = quantity;
-            this.Order = order;
+            this.Price = price;
+            this.Comment = comment;
         }
     }
 }

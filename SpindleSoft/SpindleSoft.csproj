@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\AlterationBuilder.cs" />
+    <Compile Include="Builders\MainBuilder.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilderRestApi.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="FluentMapping\SaleMapping.cs" />
     <Compile Include="Model\SaleItem.cs" />
     <Compile Include="Savers\AlterationSaver.cs" />
+    <Compile Include="Savers\MainSaver.cs" />
     <Compile Include="Savers\OrderSaver.cs" />
     <Compile Include="Savers\PeoplePracticeSaverRestApi.cs" />
     <Compile Include="FluentMapping\PeoplePracticeMapping.cs" />

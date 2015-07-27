@@ -43,13 +43,14 @@
             // dgvSearch
             // 
             this.dgvSearch.AllowUserToDeleteRows = false;
+            this.dgvSearch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSearch.Location = new System.Drawing.Point(6, 90);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
             this.dgvSearch.Size = new System.Drawing.Size(478, 277);
             this.dgvSearch.TabIndex = 6;
-            this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
             // 
             // groupBox1
             // 
@@ -126,7 +127,10 @@
             this.Controls.Add(this.dgvSearch);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_AlterationRegister";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Alteration Register";
+            this.Load += new System.EventHandler(this.Winform_AlterationRegister_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SpindleSoft.Helpers
 {
@@ -23,9 +24,9 @@ namespace SpindleSoft.Helpers
         {
             //todo: need to send only two properties and only top 10
             DataTable _dataTable = null;
-            //Dictionary<string,string> dataSourceList = null;
             switch (searchState)
             {
+                //todo : remove the datatable _dataTable
                 case "Customer":
                     List<Customer> _custList = PeoplePracticeBuilder.GetCustomersList("", searchText, "");
                     if (_custList != null && _custList.Count != 0)
@@ -45,9 +46,32 @@ namespace SpindleSoft.Helpers
                         List<Sale> salesList = (SaleBuilder.GetSalesList("", "", "", searchText));
                         if (salesList != null && salesList.Count != 0)
                             _dataTable = ToDataTable((from sale in salesList
-                                                    select new { sale.TotalPrice, sale.AmountPaid, sale.DateOfSale }).ToList());
+                                                      select new { sale.TotalPrice, sale.AmountPaid, sale.DateOfSale }).ToList());
                     }
                     break;
+                case "Order":
+                    {
+                        List<Orders> ordersList = (OrderBuilder.GetOrdersList("", "", searchText));
+                        if (ordersList != null && ordersList.Count != 0)
+                            _dataTable = ToDataTable((from order in ordersList
+                                                      select new
+                                                      {
+                                                          order.ID,
+                                                          Total = order.TotalPrice,
+                                                          Paid = order.CurrentPayment,
+                                                          DueDate = order.PromisedDate.ToString("dd-MM-yy")
+                                                      }).ToList());
+                    }
+                    break;
+                case "Alteration":
+                    {
+                        List<Alteration> altList = (AlterationBuilder.GetAlterationList("", "", searchText));
+                        if (altList != null && altList.Count != 0)
+                            _dataTable = ToDataTable((from alt in altList
+                                                      select new { alt.TotalPrice, Paid = alt.CurrentPayment, DueDate = alt.PromisedDate }).ToList());
+                    }
+                    break;
+
                 default:
                     //var dataSourceList = null;
                     break;
@@ -78,6 +102,22 @@ namespace SpindleSoft.Helpers
             }
             //put a breakpoint here and check datatable
             return dataTable;
+        }
+
+        public static int FillDatagrid(IList datalist, DataGridView dgv)
+        {
+            if (datalist != null)
+            {
+                dgv.DataSource = null;
+                dgv.Rows.Clear();
+                foreach (var item in datalist)
+                {
+                    int index = dgv.Rows.Add();
+                    dgv.Rows[index].Cells[0].Value = item.GetType().GetProperty("ID").GetValue(item, null);
+                    dgv.Rows[index].Cells[1].Value = ((DateTime)item.GetType().GetProperty("DueDate").GetValue(item, null)).ToString("dd/MMMM/yy");
+                }
+            }
+            return datalist == null ? 0 : datalist.Count;
         }
     }
 }

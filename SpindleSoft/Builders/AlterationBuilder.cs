@@ -14,7 +14,81 @@ namespace SpindleSoft.Builders
     public class AlterationBuilder
     {
         static ILog log = LogManager.GetLogger(typeof(AlterationBuilder));
-        public static List<OrderItem> GetOrderItems(int _orderID, int custID = 0)
+
+        /// <summary>
+        /// Get Alteration Based on ID
+        /// </summary>
+        /// <param name="altId"></param>
+        /// <returns></returns>
+        public static Alteration GetAlteration(int altId)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                Alteration alt = session.CreateCriteria<Alteration>()
+                    .Add(Restrictions.IdEq(altId))
+                    .SetFetchMode("AlterationItems", FetchMode.Eager)
+                    .UniqueResult<Alteration>();
+                return alt;
+            }
+        }
+
+        /// <summary>
+        ///  Get AlterationList for Register's
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="mobNo"></param>
+        /// <param name="altId"></param>
+        /// <returns></returns>
+        public static List<Alteration> GetAlterationList(string name = "", string mobNo = "", string altId = "")
+        {
+            List<Alteration> altList = new List<Alteration>();
+            int id;
+            int.TryParse(altId, out id);
+
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                //todo : convert to Linq
+                var sqlQuery = session.CreateSQLQuery("select a.ID,a.TotalPrice,a.CurrentPayment,a.PromisedDate from alteration a " +
+                             "join customer c on c.ID = a.CustomerID " +
+                             "where c.Name like :custname  and c.Mobile_No like :custMobNo and a.ID like :altID")
+                             .SetParameter("custname", name + '%')
+                             .SetParameter("custMobNo", mobNo + '%')
+                             .SetParameter("altID", altId + '%')
+                             .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Alteration)));
+                return altList = sqlQuery.List<Alteration>() as List<Alteration>;
+            }
+        }
+
+        /// <summary>
+        /// Get List Of Order ID's for particular Customer
+        /// </summary>
+        /// <param name="_custID">Customer ID</param>
+        /// <returns></returns>
+        public static List<string> GetOrderIDs(int _custID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                Orders orderAlias = null;
+                Customer custAlias = null;
+
+                //todo: select the order id in the inner query using select
+                List<string> namesOfCustomer = (from ord in
+                                                    (session.QueryOver<Orders>(() => orderAlias)
+                                                     .JoinAlias(() => orderAlias.Customer, () => custAlias)
+                                                     .Where(() => custAlias.ID == _custID)
+                                                     .List())
+                                                select ord.ID.ToString()).ToList();
+                return namesOfCustomer;
+            }
+        }
+
+        /// <summary>
+        /// Get OrderItems
+        /// </summary>
+        /// <param name="_orderID"></param>
+        /// <param name="custID"></param>
+        /// <returns></returns>
+        public static List<OrderItem> GetOrderItems(int _orderID = 0, int custID = 0)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -34,7 +108,8 @@ namespace SpindleSoft.Builders
                     var query = session.QueryOver<OrderItem>()
                         .Where(x => x.Order.ID == _orderID)
                         .Fetch(o => o.Order).Eager
-                        .Future();
+                        .Future()
+                        .OrderBy(o => o.DateUpdated);
                     return query.ToList();
 
                 }
@@ -43,26 +118,6 @@ namespace SpindleSoft.Builders
                     log.Error(ex.Message);
                     return null;
                 }
-            }
-        }
-
-        public static List<Alteration> GetAlterationList(string name = "", string mobNo = "", string altId = "")
-        {
-            List<Alteration> altList = new List<Alteration>();
-            int id;
-            int.TryParse(altId, out id);
-
-            using (var session = NHibernateHelper.OpenSession())
-            {
-                //todo : convert to Linq
-                var sqlQuery = session.CreateSQLQuery("select a.ID,a.TotalPrice,a.CurrentPayment,a.PromisedDate from alteration a " +
-                             "join customer c on c.ID = a.CustomerID " +
-                             "where c.Name like :custname  and c.Mobile_No like :custMobNo and a.ID like :altID")
-                             .SetParameter("custname",name + '%')
-                             .SetParameter("custMobNo", mobNo + '%')
-                             .SetParameter("altID", altId + '%')
-                             .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Alteration)));
-                return altList = sqlQuery.List<Alteration>() as List<Alteration>;            
             }
         }
     }
