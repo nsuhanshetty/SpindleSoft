@@ -14,12 +14,9 @@ namespace SpindleSoft.FluentMapping
         {
             Id(x => x.ID).GeneratedBy.Identity();
             Map(x => x.Name);
-            References(x => x.Order)
-                .Class<Orders>()
-                .Columns("OrderID");
-            //References(x => x.Alteration)
-            //    .Class<Alteration>()
-            //    .Columns("AlterationID");
+            References(x => x.Order).Class<Orders>()
+                                    .Columns("OrderID")
+                                    .Cascade.None();
             Map(x => x.Price);
             Map(x => x.Quantity);
             Map(x => x.Length);
@@ -53,12 +50,12 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.TotalPrice);
             Map(x => x.CurrentPayment);
             Map(x => x.Status);
-            HasMany(x => x.OrdersItems) 
+            HasMany(x => x.OrdersItems).KeyColumn("OrderID")
                                         .Inverse()
                                         .Cascade.All();
-            HasMany(x => x.AlterationItems)
-                                        .Inverse()
-                                        .Cascade.All();
+            //HasMany(x => x.AlterationItems)
+            //                            .Inverse()
+            //                            .Cascade.All();
         }
     }
 
@@ -67,16 +64,14 @@ namespace SpindleSoft.FluentMapping
         public AlterationsMapping()
         {
             Id(x => x.ID).GeneratedBy.Identity();
-            References(x => x.Customer)
-                .Class<Customer>()
-                .Columns("CustomerID");
+            References(x => x.Customer).Class<Customer>()
+                                       .Columns("CustomerID");
             Map(x => x.PromisedDate);
             Map(x => x.TotalPrice);
             Map(x => x.CurrentPayment);
-            HasMany(x => x.AlterationItems)
-                .Inverse()
-                .LazyLoad()
-                .Cascade.All();
+            HasMany(x => x.AlterationItems).Inverse()
+                                           .LazyLoad()
+                                           .Cascade.All();
         }
     }
 
@@ -90,12 +85,9 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Quantity);
             Map(x => x.Comment);
             Map(x => x.Price);
-            //References(x => x.Order)
-            //    .Class<Orders>()
-            //    .Columns("OrderID");
-            References(x => x.Alteration)
-                .Class<Alteration>()
-                .Columns("Alteration_ID");
+            References(x => x.Alteration).Class<Alteration>()
+                                         .Columns("Alteration_ID")
+                                         .Cascade.None();
         }
     }
 }

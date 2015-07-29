@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
 using SpindleSoft.Builders;
+using SpindleSoft.Savers;
 
 namespace SpindleSoft.Views
 {
@@ -33,6 +34,7 @@ namespace SpindleSoft.Views
                                             AmountPaid = order.CurrentPayment,
                                             PromisedDate = order.PromisedDate
                                         }).ToList();
+                dgvSearch.Columns["colDelete"].DisplayIndex = dgvSearch.Columns.Count - 1;
             }
             else
                 dgvSearch.DataSource = null;
@@ -40,13 +42,14 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            statusStrip1.Text = "Fetching Data..";
-            toolStripProgressBar1.Value = 25;
+            if (e.ColumnIndex == dgvSearch.Columns["colDelete"].Index) return;
 
+            statusStrip1.Text = "Gathering Data..";
+            toolStripProgressBar1.Value = 25;
             if (dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value == null) return;
             int orderID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString());
 
-            statusStrip1.Text = "Fetching Data..";
+            statusStrip1.Text = "Gathering Data..";
             toolStripProgressBar1.Value = 50;
 
             Orders order = OrderBuilder.GetOrderInfo(orderID);
@@ -59,6 +62,26 @@ namespace SpindleSoft.Views
             statusStrip1.Text = "Setting Up Controls.";
             toolStripProgressBar1.Value = 100;
             new Winform_OrderDetails(order).ShowDialog();
+        }
+
+        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value == null) return;
+            int orderID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString());
+
+            if (e.ColumnIndex == dgvSearch.Columns["colDelete"].Index)
+            {
+                DialogResult dr = MessageBox.Show("Do you want to Delete Order " + orderID, "Delete Order", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.No) return;
+
+                bool success = OrderSaver.DeleteOrder(orderID);
+                if (success == true)
+                {
+                    Winform_OrderRegister_Load(this, new EventArgs());
+                    statusStrip1.Text = "Order Deleted.";
+                }
+                return;
+            }
         }
     }
 }

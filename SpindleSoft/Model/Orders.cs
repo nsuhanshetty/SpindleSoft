@@ -19,7 +19,7 @@ namespace SpindleSoft.Model
 
         public virtual IList<OrderItem> OrdersItems { get; set; }
 
-        public virtual IList<AlterationItem> AlterationItems { get; set; }
+        //public virtual IList<AlterationItem> AlterationItems { get; set; }
 
         public Orders() { }
 

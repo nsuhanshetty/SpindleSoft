@@ -96,9 +96,6 @@
             this.dataGridViewButtonColumn5 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dataGridViewButtonColumn6 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgvAltR2C = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewButtonColumn3 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgvAltR2A = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -115,9 +112,6 @@
             this.colShiftR2S = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dataGridViewButtonColumn4 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgvOrdR2C = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.lblOrdCollectCount = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -125,6 +119,15 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.lblAltSIPCount = new System.Windows.Forms.Label();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colSendSMS = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn3 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colAltSendSMS = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
@@ -526,7 +529,7 @@
             this.pnlSearch.Controls.Add(this.groupBox1);
             this.pnlSearch.Location = new System.Drawing.Point(2, 27);
             this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(295, 650);
+            this.pnlSearch.Size = new System.Drawing.Size(283, 650);
             this.pnlSearch.TabIndex = 0;
             // 
             // groupBox1
@@ -541,7 +544,7 @@
             this.groupBox1.Controls.Add(this.rdbOrders);
             this.groupBox1.Location = new System.Drawing.Point(3, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(281, 399);
+            this.groupBox1.Size = new System.Drawing.Size(275, 358);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select Category";
@@ -640,13 +643,14 @@
             // 
             this.pnlDeliveryStatus.Controls.Add(this.groupBox3);
             this.pnlDeliveryStatus.Controls.Add(this.groupBox2);
-            this.pnlDeliveryStatus.Location = new System.Drawing.Point(302, 28);
+            this.pnlDeliveryStatus.Location = new System.Drawing.Point(287, 28);
             this.pnlDeliveryStatus.Name = "pnlDeliveryStatus";
-            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1058, 490);
+            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1077, 490);
             this.pnlDeliveryStatus.TabIndex = 3;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lblAltSIPCount);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.dgvAltSIP);
             this.groupBox3.Controls.Add(this.dgvAltR2C);
@@ -656,7 +660,7 @@
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Location = new System.Drawing.Point(8, 244);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(849, 233);
+            this.groupBox3.Size = new System.Drawing.Size(911, 233);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Alteration Delivery Status";
@@ -728,34 +732,13 @@
             this.dgvAltR2C.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
-            this.dataGridViewButtonColumn3});
+            this.dataGridViewButtonColumn3,
+            this.colAltSendSMS});
             this.dgvAltR2C.Location = new System.Drawing.Point(586, 40);
             this.dgvAltR2C.Name = "dgvAltR2C";
             this.dgvAltR2C.ReadOnly = true;
-            this.dgvAltR2C.Size = new System.Drawing.Size(254, 187);
+            this.dgvAltR2C.Size = new System.Drawing.Size(315, 187);
             this.dgvAltR2C.TabIndex = 14;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "OrderID";
-            this.dataGridViewTextBoxColumn5.HeaderText = "OrderID";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn6.HeaderText = "DueDate";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // dataGridViewButtonColumn3
-            // 
-            this.dataGridViewButtonColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewButtonColumn3.HeaderText = "Click To Shift";
-            this.dataGridViewButtonColumn3.Name = "dataGridViewButtonColumn3";
-            this.dataGridViewButtonColumn3.ReadOnly = true;
             // 
             // dgvAltR2A
             // 
@@ -799,7 +782,7 @@
             // 
             this.lblAltCollectCount.AutoSize = true;
             this.lblAltCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblAltCollectCount.Location = new System.Drawing.Point(827, 24);
+            this.lblAltCollectCount.Location = new System.Drawing.Point(888, 24);
             this.lblAltCollectCount.Name = "lblAltCollectCount";
             this.lblAltCollectCount.Size = new System.Drawing.Size(13, 13);
             this.lblAltCollectCount.TabIndex = 12;
@@ -835,7 +818,7 @@
             this.groupBox2.Controls.Add(this.dgvOrdR2S);
             this.groupBox2.Location = new System.Drawing.Point(8, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(849, 233);
+            this.groupBox2.Size = new System.Drawing.Size(911, 233);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Order Delivery Status";
@@ -919,42 +902,21 @@
             this.dgvOrdR2C.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
-            this.dataGridViewButtonColumn1});
+            this.dataGridViewButtonColumn1,
+            this.colSendSMS});
             this.dgvOrdR2C.Location = new System.Drawing.Point(586, 39);
             this.dgvOrdR2C.Name = "dgvOrdR2C";
             this.dgvOrdR2C.ReadOnly = true;
-            this.dgvOrdR2C.Size = new System.Drawing.Size(254, 187);
+            this.dgvOrdR2C.Size = new System.Drawing.Size(315, 187);
             this.dgvOrdR2C.TabIndex = 11;
             this.dgvOrdR2C.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "OrderID";
-            this.dataGridViewTextBoxColumn1.HeaderText = "OrderID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.HeaderText = "DueDate";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewButtonColumn1
-            // 
-            this.dataGridViewButtonColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewButtonColumn1.HeaderText = "Click To Shift";
-            this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
-            this.dataGridViewButtonColumn1.ReadOnly = true;
             // 
             // lblOrdCollectCount
             // 
             this.lblOrdCollectCount.AutoSize = true;
             this.lblOrdCollectCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblOrdCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblOrdCollectCount.Location = new System.Drawing.Point(827, 23);
+            this.lblOrdCollectCount.Location = new System.Drawing.Point(888, 23);
             this.lblOrdCollectCount.Name = "lblOrdCollectCount";
             this.lblOrdCollectCount.Size = new System.Drawing.Size(13, 13);
             this.lblOrdCollectCount.TabIndex = 10;
@@ -1017,6 +979,77 @@
             this.colClickShift.HeaderText = "Click To Shift";
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
+            // 
+            // lblAltSIPCount
+            // 
+            this.lblAltSIPCount.AutoSize = true;
+            this.lblAltSIPCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblAltSIPCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblAltSIPCount.Location = new System.Drawing.Point(564, 24);
+            this.lblAltSIPCount.Name = "lblAltSIPCount";
+            this.lblAltSIPCount.Size = new System.Drawing.Size(13, 13);
+            this.lblAltSIPCount.TabIndex = 15;
+            this.lblAltSIPCount.Text = "0";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "OrderID";
+            this.dataGridViewTextBoxColumn1.HeaderText = "OrderID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn1
+            // 
+            this.dataGridViewButtonColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn1.HeaderText = "Click To Shift";
+            this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
+            this.dataGridViewButtonColumn1.ReadOnly = true;
+            // 
+            // colSendSMS
+            // 
+            this.colSendSMS.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colSendSMS.HeaderText = "Send SMS";
+            this.colSendSMS.Name = "colSendSMS";
+            this.colSendSMS.ReadOnly = true;
+            this.colSendSMS.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSendSMS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "OrderID";
+            this.dataGridViewTextBoxColumn5.HeaderText = "OrderID";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn6.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn3
+            // 
+            this.dataGridViewButtonColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn3.HeaderText = "Click To Shift";
+            this.dataGridViewButtonColumn3.Name = "dataGridViewButtonColumn3";
+            this.dataGridViewButtonColumn3.ReadOnly = true;
+            // 
+            // colAltSendSMS
+            // 
+            this.colAltSendSMS.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAltSendSMS.HeaderText = "Send SMS";
+            this.colAltSendSMS.Name = "colAltSendSMS";
+            this.colAltSendSMS.ReadOnly = true;
             // 
             // Main
             // 
@@ -1128,17 +1161,11 @@
         private System.Windows.Forms.ToolStripMenuItem addItemToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.DataGridView dgvOrdR2C;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
         private System.Windows.Forms.DataGridView dgvAltR2A;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn2;
         private System.Windows.Forms.DataGridView dgvAltR2C;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDueDate;
         private System.Windows.Forms.DataGridViewButtonColumn colClickShift;
@@ -1155,6 +1182,15 @@
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn6;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblOrdSIPCount;
+        private System.Windows.Forms.Label lblAltSIPCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
+        private System.Windows.Forms.DataGridViewButtonColumn colSendSMS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn3;
+        private System.Windows.Forms.DataGridViewButtonColumn colAltSendSMS;
     }
 }
 
