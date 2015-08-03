@@ -165,13 +165,13 @@ namespace SpindleSoft.Views
                 return;
             }
 
-            //show error if quantity within limit
-            for (int i = 0; i < dgvSaleItem.Rows.Count; i++)
+            //show error if quantity not within limit
+            foreach (DataGridViewRow row in dgvSaleItem.Rows)
             {
-                if (dgvSaleItem.Rows[i].Cells["Quantity"].ErrorText != "")
+                if (row.Cells["Quantity"].ErrorText != "")
                 {
-                    MessageBox.Show("Quantity limit exceed for product " + dgvSaleItem.Rows[i].Cells["Name"].Value);
-                    dgvSaleItem.Rows[i].Cells["Quantity"].Selected = true;
+                    MessageBox.Show("Quantity limit exceed for product " + row.Cells["Name"].Value);
+                    row.Cells["Quantity"].Selected = true;
                     return;
                 }
             }

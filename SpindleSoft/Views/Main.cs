@@ -73,7 +73,8 @@ namespace SpindleSoft
         public Main()
         {
             InitializeComponent();
-            UpdateReadyDgv();
+            UpdateOrderReadyDgv();
+            UpdateAlterationReadyDgv();
         }
         #endregion ctor
 
@@ -112,6 +113,7 @@ namespace SpindleSoft
         private void addOrdersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Winform_OrderDetails().ShowDialog();
+            UpdateOrderReadyDgv();
         }
 
         private void addStaffToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,11 +165,13 @@ namespace SpindleSoft
         private void searchAlterationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Winform_AlterationRegister().ShowDialog();
+            UpdateAlterationReadyDgv();
         }
 
         private void searchOrderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Winform_OrderRegister().ShowDialog();
+            UpdateOrderReadyDgv();
         }
 
         private void sendSMSToolStripMenuItem_Click(object sender, EventArgs e)
@@ -201,47 +205,6 @@ namespace SpindleSoft
         #endregion Toolstrip_Click
 
         #region Alteration
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            /*
-            *Date
-            *Customer Name
-            *MobileNo
-            *send sms
-            //*postpone - 2mrw 
-            */
-
-            /*get pending and today's Alterations*/
-        }
-
-        private void dgvUpCominAlt_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            /*
-            *Date
-            *Customer Name
-            *MobileNo
-            *send sms
-            *pick Order
-            */
-
-            /*get upcoming's Alteration*/
-        }
-        #endregion Alteration
-
-        #region Order
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            /*
-             *Date
-             *Customer Name
-             *MobileNo
-             *send sms
-             *pick Order
-             */
-
-            /*get upcoming's orders*/
-        }
-
         private void dgvOrdR2S_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -285,11 +248,68 @@ namespace SpindleSoft
                     //update ord status in db
 
                     MainSaver.UpdateOrderStatus(_orderID, status);
-                    UpdateReadyDgv();
+                    UpdateOrderReadyDgv();
                 }
                 else
                 {
                     new Winform_OrderDetails(OrderBuilder.GetOrderInfo(_orderID)).ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        private void dgvAltR2A_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridView dgv = ((DataGridView)sender);
+                int _altID = int.Parse(dgv.Rows[e.RowIndex].Cells[0].Value.ToString());
+                string message = string.Empty;
+                int status = -1;
+
+                if (e.ColumnIndex == dgv.Columns[2].Index ||
+                    (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index))
+                {
+                    switch (dgv.Name)
+                    {
+                        case "dgvAltR2A":
+                            message = "Shift selected Order to Alteration In Progress";
+                            status = 1;
+                            break;
+                        case "dgvAltSIP":
+                            message = "Shift selected Alteration to Ready To Alter";
+                            status = 0;
+                            break;
+                        case "dgvAltR2C":
+                            message = "Shift selected Alteration to Alteration In Progress";
+                            status = 1;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                    {
+                        message = "Shift selected Alteration to Ready To Collect";
+                        status = 2;
+                    }
+                    if (string.IsNullOrEmpty(message) || status == -1) return;
+
+                    DialogResult dr = MessageBox.Show(message, "Shift Alteration", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.No) return;
+
+                    //update ord status in db
+
+                    MainSaver.UpdateAlterStatus(_altID, status);
+                    UpdateAlterationReadyDgv();
+                }
+                else
+                {
+                    new Winform_AlterationsDetails(AlterationBuilder.GetAlteration(_altID)).ShowDialog();
+                    UpdateAlterationReadyDgv();
                 }
             }
             catch (Exception ex)
@@ -306,6 +326,7 @@ namespace SpindleSoft
             if (rdbOrders.Checked)
             {
                 new Winform_OrderDetails().ShowDialog();
+                UpdateOrderReadyDgv();
             }
             else if (rdbCustomer.Checked)
             {
@@ -314,6 +335,7 @@ namespace SpindleSoft
             else if (rdbAlteration.Checked)
             {
                 new Winform_AlterationsDetails().ShowDialog();
+                UpdateAlterationReadyDgv();
             }
             else if (rdbSales.Checked)
             {
@@ -384,7 +406,7 @@ namespace SpindleSoft
         #endregion Event
 
         #region Custom
-        public void UpdateReadyDgv()
+        public void UpdateOrderReadyDgv()
         {
             IList OrderItemsList;
 
@@ -397,11 +419,26 @@ namespace SpindleSoft
             OrderItemsList = MainBuilder.GetOrdersList_BasedOnStatus(2);
             lblOrdCollectCount.Text = Main_Helper.FillDatagrid(OrderItemsList, dgvOrdR2C).ToString();
         }
+
+        public void UpdateAlterationReadyDgv()
+        {
+            IList AlterationItemsList;
+
+            AlterationItemsList = MainBuilder.GetAlterList_BasedOnStatus(0);
+            Main_Helper.FillDatagrid(AlterationItemsList, dgvAltR2A);
+
+            AlterationItemsList = MainBuilder.GetAlterList_BasedOnStatus(1);
+            lblAltSIPCount.Text = Main_Helper.FillDatagrid(AlterationItemsList, dgvAltSIP).ToString();
+
+            AlterationItemsList = MainBuilder.GetAlterList_BasedOnStatus(2);
+            lblAltCollectCount.Text = Main_Helper.FillDatagrid(AlterationItemsList, dgvAltR2C).ToString();
+        }
         private void UpdateStatus(string _status = "Ready")
         {
             lblStatus.Text = _status;
         }
         #endregion Custom
+
     }
 
 }

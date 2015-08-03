@@ -44,6 +44,8 @@ namespace SpindleSoft.Builders
             List<Alteration> altList = new List<Alteration>();
             int id;
             int.TryParse(altId, out id);
+            //Alteration altAlias = null;
+            //Customer custAlias = null;
 
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -55,6 +57,10 @@ namespace SpindleSoft.Builders
                              .SetParameter("custMobNo", mobNo + '%')
                              .SetParameter("altID", altId + '%')
                              .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Alteration)));
+                //var query = session.QueryOver<Alteration>(() => altAlias)
+                //    .JoinAlias(() => altAlias.Customer,() => custAlias)
+                //    .Where(() => custAlias.Name )
+
                 return altList = sqlQuery.List<Alteration>() as List<Alteration>;
             }
         }

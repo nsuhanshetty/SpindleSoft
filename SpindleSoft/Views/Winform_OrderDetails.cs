@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Linq;
 using log4net;
+using SpindleSoft.Savers;
 
 namespace SpindleSoft.Views
 {
@@ -16,7 +17,7 @@ namespace SpindleSoft.Views
         Orders order = new Orders();
         List<OrderItem> OrderItemsList = new List<OrderItem>();
         private enum OrderStatus { ReadyToStitch, ReadyToCollect, Delivered };
-            
+
         #region Property
         private int amntPaid = 0;
         private int balAmnt = 0;
@@ -68,6 +69,7 @@ namespace SpindleSoft.Views
             InitializeComponent();
             cmbStatus.SelectedIndex = 0;
             cmbStatus.Enabled = false;
+            this.dtpDeliveryDate.MinDate = System.DateTime.Today;
         }
 
         public Winform_OrderDetails(Orders order)
@@ -80,16 +82,6 @@ namespace SpindleSoft.Views
             this.OrderItemsList = this.order.OrdersItems as List<OrderItem>;
             dtpDeliveryDate.Value = order.PromisedDate;
             cmbStatus.SelectedIndex = order.Status;
-            //txtTotAmnt.Text = order.TotalPrice.ToString();
-            //txtAmntPaid.Text = order.CurrentPayment.ToString();
-
-            //int amntPaid = 0;
-            //int total;
-            //txtTotAmnt.Text = txtTotAmnt.Text;
-
-            //int.TryParse(txtAmntPaid.Text, out amntPaid);
-            //int.TryParse(txtTotAmnt.Text, out total);
-            //txtBalanceAmnt.Text = (total - amntPaid).ToString();
 
             TotalAmount = order.TotalPrice;
             AmountPaid = order.CurrentPayment;
@@ -98,6 +90,7 @@ namespace SpindleSoft.Views
         #endregion ctor
 
         #region Custom
+        //todo: Add it in the generic 
         public void UpdateCustomerControl(Customer customer)
         {
             if (customer == null) return;
@@ -107,7 +100,7 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = _cust.Image;
+            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.Mobile_No);
         }
 
         internal void UpdateOrderItemList(OrderItem _item)
@@ -148,9 +141,18 @@ namespace SpindleSoft.Views
             else if (this.OrderItemsList == null || this.OrderItemsList.Count == 0)
                 errorMsg = "Select items to cart to make the Order.";
             else if ((dtpDeliveryDate.Value.Date.CompareTo(DateTime.Today.Date)) < 0)
-                errorMsg = "The Promised date must not be less than today.";
+                errorMsg = "The Promised date must not be earlier than today.";
             else if (dgvOrderItems.Rows.Count - 1 != OrderItemsList.Count)
                 errorMsg = "Measurement details for all Product is mandatory.";
+
+            foreach (DataGridViewRow row in dgvOrderItems.Rows)
+            {
+                if (row.Cells["OrderQuantity"].ErrorText != "" || row.Cells["OrderPrice"].ErrorText != "")
+                {
+                    MessageBox.Show("Error Exists in Order Item Cart.");
+                    return;
+                }
+            }
 
             if (errorMsg != string.Empty)
             {
@@ -173,19 +175,17 @@ namespace SpindleSoft.Views
             order.Status = cmbStatus.SelectedIndex;
 
             UpdateStatus("Saving..", 50);
-            bool success = SpindleSoft.Savers.OrderSaver.SaveOrder(order);
+            bool success = OrderSaver.SaveOrder(order);
 
             UpdateStatus("Saving..", 100);
             if (success)
             {
-                //Send msg if the balance == 0
-                //if (total - amntPaid == 0)
-                //{
-                //    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                DialogResult dr = MessageBox.Show("Send SMS to Customer Regarding the Order to Customer", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                }
 
-                //}
-                Main _main = Application.OpenForms["Main"] as Main;
-                _main.UpdateReadyDgv();
                 this.Close();
             }
             else
@@ -238,10 +238,10 @@ namespace SpindleSoft.Views
             {
                 var curRow = dgvOrderItems.Rows[e.RowIndex];
 
-                //check if clothing name exists.
-                var _productName = Utilities.Validation.ToTitleCase(curRow.Cells["OrderType"].Value.ToString());
+                string _productName;
 
-                if (_productName == null || String.IsNullOrEmpty(_productName.ToString()))
+                //check if clothing name exists.
+                if (IsNullOrEmpty(curRow.Cells["OrderType"].Value))
                 {
                     MessageBox.Show("Add Clothing Type, as it is mandatory to edit Measurement details.", "Add Clothing Type", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -257,6 +257,7 @@ namespace SpindleSoft.Views
                     return;
                 }
 
+                _productName = Utilities.Validation.ToTitleCase(curRow.Cells["OrderType"].Value.ToString());
                 OrderItem item;
                 //if added during edit
                 item = OrderItemsList.Where(x => (x.Name == _productName.ToString())).SingleOrDefault();
@@ -265,12 +266,40 @@ namespace SpindleSoft.Views
                 {
                     //fetch  previous measurement
                     item = OrderBuilder.GetOrderItem(this._cust.ID, _productName.ToString());
-                    if (item == null) item = new OrderItem();
+                    if (item == null)
+                        item = new OrderItem();
+                    else
+                        item.ID = 0;
                 }
 
                 item.Quantity = int.Parse(curRow.Cells["OrderQuantity"].Value.ToString());
                 item.Price = int.Parse(curRow.Cells["OrderPrice"].Value.ToString());
                 new Winform_MeasurementAdd(_productName.ToString(), this._cust.Name, item).ShowDialog();
+            }
+            else if (e.ColumnIndex == dgvOrderItems.Columns["OrderDelete"].Index && dgvOrderItems.Rows[e.RowIndex].IsNewRow != true)
+            {
+                DialogResult dr = MessageBox.Show("Continue deleting selected Order items?", "Delete Order Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.No) return;
+
+                bool success = false;
+
+                if (OrderItemsList.Count != 0 && e.RowIndex + 1 <= OrderItemsList.Count)
+                {
+                    if (OrderItemsList[e.RowIndex].ID != 0)
+                        success = OrderSaver.DeleteOrderItems(OrderItemsList[e.RowIndex].ID);
+
+                    if (success || OrderItemsList[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
+                    {
+                        OrderItemsList.RemoveAt(e.RowIndex);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
+                        return;
+                    }
+                }
+                dgvOrderItems.Rows.RemoveAt(e.RowIndex);
+                CalculatePaymentDetails();
             }
         }
 
@@ -436,6 +465,11 @@ namespace SpindleSoft.Views
             }
         }
         #endregion _Validations
-              
+
+        private void dgvOrderItems_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            log.Error(e.Context);
+        }
+
     }
 }

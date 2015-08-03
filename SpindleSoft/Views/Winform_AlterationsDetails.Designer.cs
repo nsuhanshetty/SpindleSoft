@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Winform_AlterationsDetails));
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.pcbMemImage = new System.Windows.Forms.PictureBox();
+            this.pcbCustImage = new System.Windows.Forms.PictureBox();
             this.lblMobile = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
@@ -48,23 +48,26 @@
             this.AltPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AltQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AltComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.grpBxSearch = new System.Windows.Forms.GroupBox();
-            this.txtOrderID = new System.Windows.Forms.TextBox();
+            this.cmbOrder = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
             this.grpbxPayDet = new System.Windows.Forms.GroupBox();
+            this.cmbStatus = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
+            this.dtpDueDate = new System.Windows.Forms.DateTimePicker();
+            this.label9 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtTotAmnt = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtAmntPaid = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.dtpDueDate = new System.Windows.Forms.DateTimePicker();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnDelete = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbMemImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.grpbxCustomerDetails.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlterationItems)).BeginInit();
             this.panel1.SuspendLayout();
@@ -75,7 +78,8 @@
             // 
             // txtPhoneNo
             // 
-            this.txtPhoneNo.Location = new System.Drawing.Point(628, 137);
+            this.txtPhoneNo.Enabled = false;
+            this.txtPhoneNo.Location = new System.Drawing.Point(628, 150);
             this.txtPhoneNo.MaxLength = 10;
             this.txtPhoneNo.Name = "txtPhoneNo";
             this.txtPhoneNo.Size = new System.Drawing.Size(131, 20);
@@ -84,29 +88,29 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(563, 140);
+            this.label5.Location = new System.Drawing.Point(563, 153);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(58, 13);
             this.label5.TabIndex = 142;
             this.label5.Text = "Phone No.";
             // 
-            // pcbMemImage
+            // pcbCustImage
             // 
-            this.pcbMemImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pcbMemImage.BackgroundImage")));
-            this.pcbMemImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pcbMemImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pcbMemImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pcbMemImage.InitialImage")));
-            this.pcbMemImage.Location = new System.Drawing.Point(437, 72);
-            this.pcbMemImage.Name = "pcbMemImage";
-            this.pcbMemImage.Size = new System.Drawing.Size(115, 108);
-            this.pcbMemImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pcbMemImage.TabIndex = 140;
-            this.pcbMemImage.TabStop = false;
+            this.pcbCustImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pcbCustImage.BackgroundImage")));
+            this.pcbCustImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pcbCustImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pcbCustImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pcbCustImage.InitialImage")));
+            this.pcbCustImage.Location = new System.Drawing.Point(7, 24);
+            this.pcbCustImage.Name = "pcbCustImage";
+            this.pcbCustImage.Size = new System.Drawing.Size(120, 112);
+            this.pcbCustImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pcbCustImage.TabIndex = 140;
+            this.pcbCustImage.TabStop = false;
             // 
             // lblMobile
             // 
             this.lblMobile.AutoSize = true;
-            this.lblMobile.Location = new System.Drawing.Point(563, 114);
+            this.lblMobile.Location = new System.Drawing.Point(563, 127);
             this.lblMobile.Name = "lblMobile";
             this.lblMobile.Size = new System.Drawing.Size(58, 13);
             this.lblMobile.TabIndex = 139;
@@ -114,7 +118,8 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(628, 85);
+            this.txtName.Enabled = false;
+            this.txtName.Location = new System.Drawing.Point(628, 98);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(131, 20);
             this.txtName.TabIndex = 136;
@@ -122,7 +127,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(563, 90);
+            this.lblName.Location = new System.Drawing.Point(563, 103);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(38, 13);
             this.lblName.TabIndex = 138;
@@ -130,7 +135,8 @@
             // 
             // txtMobNo
             // 
-            this.txtMobNo.Location = new System.Drawing.Point(628, 111);
+            this.txtMobNo.Enabled = false;
+            this.txtMobNo.Location = new System.Drawing.Point(628, 124);
             this.txtMobNo.MaxLength = 10;
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(131, 20);
@@ -157,9 +163,10 @@
             // 
             // grpbxCustomerDetails
             // 
+            this.grpbxCustomerDetails.Controls.Add(this.pcbCustImage);
             this.grpbxCustomerDetails.Location = new System.Drawing.Point(430, 57);
             this.grpbxCustomerDetails.Name = "grpbxCustomerDetails";
-            this.grpbxCustomerDetails.Size = new System.Drawing.Size(336, 136);
+            this.grpbxCustomerDetails.Size = new System.Drawing.Size(336, 147);
             this.grpbxCustomerDetails.TabIndex = 145;
             this.grpbxCustomerDetails.TabStop = false;
             this.grpbxCustomerDetails.Text = "CustomerDetails";
@@ -171,17 +178,17 @@
             this.AddCustomerToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.AddCustomerToolStrip.Name = "AddCustomerToolStrip";
             this.AddCustomerToolStrip.Size = new System.Drawing.Size(76, 51);
-            this.AddCustomerToolStrip.Text = "Add Customer";
+            this.AddCustomerToolStrip.Text = "&Add Customer";
             this.AddCustomerToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.AddCustomerToolStrip.Click += new System.EventHandler(this.AddCustomerToolStrip_Click);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvAlterationItems);
-            this.groupBox2.Location = new System.Drawing.Point(430, 220);
+            this.groupBox2.Location = new System.Drawing.Point(430, 210);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(570, 188);
-            this.groupBox2.TabIndex = 153;
+            this.groupBox2.Size = new System.Drawing.Size(570, 195);
+            this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add Alteration Item Details";
             // 
@@ -194,14 +201,18 @@
             this.AltType,
             this.AltPrice,
             this.AltQuantity,
-            this.AltComment});
+            this.AltComment,
+            this.colDelete});
             this.dgvAlterationItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAlterationItems.Location = new System.Drawing.Point(3, 16);
             this.dgvAlterationItems.Name = "dgvAlterationItems";
-            this.dgvAlterationItems.Size = new System.Drawing.Size(564, 169);
+            this.dgvAlterationItems.Size = new System.Drawing.Size(564, 176);
             this.dgvAlterationItems.TabIndex = 0;
+            this.dgvAlterationItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_CellContentClick);
             this.dgvAlterationItems.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellEndEdit);
+            this.dgvAlterationItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAlterationItems_DataError);
             this.dgvAlterationItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvAlterationItems_EditingControlShowing);
+            this.dgvAlterationItems.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_RowLeave);
             this.dgvAlterationItems.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_RowLeave);
             // 
             // AltType
@@ -238,6 +249,13 @@
             this.AltComment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.AltComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // colDelete
+            // 
+            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colDelete.HeaderText = "Click to Delete";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.Width = 82;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.grpBxSearch);
@@ -245,11 +263,11 @@
             this.panel1.Location = new System.Drawing.Point(12, 57);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(412, 348);
-            this.panel1.TabIndex = 2;
+            this.panel1.TabIndex = 0;
             // 
             // grpBxSearch
             // 
-            this.grpBxSearch.Controls.Add(this.txtOrderID);
+            this.grpBxSearch.Controls.Add(this.cmbOrder);
             this.grpBxSearch.Controls.Add(this.label2);
             this.grpBxSearch.Location = new System.Drawing.Point(4, 7);
             this.grpBxSearch.Name = "grpBxSearch";
@@ -258,14 +276,15 @@
             this.grpBxSearch.TabStop = false;
             this.grpBxSearch.Text = "Search Details";
             // 
-            // txtOrderID
+            // cmbOrder
             // 
-            this.txtOrderID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtOrderID.Location = new System.Drawing.Point(65, 21);
-            this.txtOrderID.Name = "txtOrderID";
-            this.txtOrderID.Size = new System.Drawing.Size(118, 20);
-            this.txtOrderID.TabIndex = 140;
-            this.txtOrderID.Validated += new System.EventHandler(this.txtOrderID_Validated);
+            this.cmbOrder.FormattingEnabled = true;
+            this.cmbOrder.Location = new System.Drawing.Point(65, 21);
+            this.cmbOrder.Name = "cmbOrder";
+            this.cmbOrder.Size = new System.Drawing.Size(121, 21);
+            this.cmbOrder.TabIndex = 0;
+            this.cmbOrder.Validating += new System.ComponentModel.CancelEventHandler(this.txtOrderID_Validating);
+            this.cmbOrder.Validated += new System.EventHandler(this.txtOrderID_Validated);
             // 
             // label2
             // 
@@ -285,37 +304,80 @@
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
             this.dgvSearch.Size = new System.Drawing.Size(406, 280);
-            this.dgvSearch.TabIndex = 1;
+            this.dgvSearch.TabIndex = 0;
             this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
             // 
             // grpbxPayDet
             // 
+            this.grpbxPayDet.Controls.Add(this.cmbStatus);
+            this.grpbxPayDet.Controls.Add(this.label7);
             this.grpbxPayDet.Controls.Add(this.txtBalanceAmnt);
+            this.grpbxPayDet.Controls.Add(this.dtpDueDate);
+            this.grpbxPayDet.Controls.Add(this.label9);
             this.grpbxPayDet.Controls.Add(this.label1);
             this.grpbxPayDet.Controls.Add(this.txtTotAmnt);
             this.grpbxPayDet.Controls.Add(this.label3);
             this.grpbxPayDet.Controls.Add(this.txtAmntPaid);
             this.grpbxPayDet.Controls.Add(this.label4);
-            this.grpbxPayDet.Location = new System.Drawing.Point(772, 89);
+            this.grpbxPayDet.Location = new System.Drawing.Point(772, 57);
             this.grpbxPayDet.Name = "grpbxPayDet";
-            this.grpbxPayDet.Size = new System.Drawing.Size(228, 106);
-            this.grpbxPayDet.TabIndex = 141;
+            this.grpbxPayDet.Size = new System.Drawing.Size(228, 147);
+            this.grpbxPayDet.TabIndex = 3;
             this.grpbxPayDet.TabStop = false;
-            this.grpbxPayDet.Text = "Payment Details";
+            this.grpbxPayDet.Text = "Payment Status Details";
+            // 
+            // cmbStatus
+            // 
+            this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStatus.FormattingEnabled = true;
+            this.cmbStatus.Items.AddRange(new object[] {
+            "Ready To Alter",
+            "Alter In Progress",
+            "Ready To Collect",
+            "Delivered"});
+            this.cmbStatus.Location = new System.Drawing.Point(102, 117);
+            this.cmbStatus.Name = "cmbStatus";
+            this.cmbStatus.Size = new System.Drawing.Size(113, 21);
+            this.cmbStatus.TabIndex = 143;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(11, 123);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(84, 13);
+            this.label7.TabIndex = 142;
+            this.label7.Text = "Alteration Status";
             // 
             // txtBalanceAmnt
             // 
             this.txtBalanceAmnt.Enabled = false;
-            this.txtBalanceAmnt.Location = new System.Drawing.Point(92, 45);
+            this.txtBalanceAmnt.Location = new System.Drawing.Point(102, 67);
             this.txtBalanceAmnt.MaxLength = 10;
             this.txtBalanceAmnt.Name = "txtBalanceAmnt";
-            this.txtBalanceAmnt.Size = new System.Drawing.Size(109, 20);
+            this.txtBalanceAmnt.Size = new System.Drawing.Size(113, 20);
             this.txtBalanceAmnt.TabIndex = 137;
+            // 
+            // dtpDueDate
+            // 
+            this.dtpDueDate.Location = new System.Drawing.Point(102, 17);
+            this.dtpDueDate.Name = "dtpDueDate";
+            this.dtpDueDate.Size = new System.Drawing.Size(113, 20);
+            this.dtpDueDate.TabIndex = 2;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(39, 21);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(56, 13);
+            this.label9.TabIndex = 140;
+            this.label9.Text = "Due Date ";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1, 47);
+            this.label1.Location = new System.Drawing.Point(10, 71);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 141;
@@ -324,16 +386,16 @@
             // txtTotAmnt
             // 
             this.txtTotAmnt.Enabled = false;
-            this.txtTotAmnt.Location = new System.Drawing.Point(92, 70);
+            this.txtTotAmnt.Location = new System.Drawing.Point(102, 42);
             this.txtTotAmnt.MaxLength = 10;
             this.txtTotAmnt.Name = "txtTotAmnt";
-            this.txtTotAmnt.Size = new System.Drawing.Size(109, 20);
+            this.txtTotAmnt.Size = new System.Drawing.Size(113, 20);
             this.txtTotAmnt.TabIndex = 138;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 72);
+            this.label3.Location = new System.Drawing.Point(25, 45);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 140;
@@ -341,62 +403,32 @@
             // 
             // txtAmntPaid
             // 
-            this.txtAmntPaid.Location = new System.Drawing.Point(92, 20);
+            this.txtAmntPaid.Location = new System.Drawing.Point(102, 92);
             this.txtAmntPaid.MaxLength = 10;
             this.txtAmntPaid.Name = "txtAmntPaid";
-            this.txtAmntPaid.Size = new System.Drawing.Size(109, 20);
-            this.txtAmntPaid.TabIndex = 136;
+            this.txtAmntPaid.Size = new System.Drawing.Size(113, 20);
+            this.txtAmntPaid.TabIndex = 0;
             this.txtAmntPaid.Validating += new System.ComponentModel.CancelEventHandler(this.txtAmntPaid_Validating);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 22);
+            this.label4.Location = new System.Drawing.Point(28, 97);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 139;
             this.label4.Text = "Paid Amount";
             // 
-            // dtpDueDate
-            // 
-            this.dtpDueDate.Location = new System.Drawing.Point(876, 62);
-            this.dtpDueDate.Name = "dtpDueDate";
-            this.dtpDueDate.Size = new System.Drawing.Size(116, 20);
-            this.dtpDueDate.TabIndex = 139;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(814, 66);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(56, 13);
-            this.label9.TabIndex = 140;
-            this.label9.Text = "Due Date ";
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(867, 201);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(133, 23);
-            this.btnDelete.TabIndex = 154;
-            this.btnDelete.Text = "Select Row && Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
             // Winform_AlterationsDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 433);
-            this.Controls.Add(this.btnDelete);
+            this.ClientSize = new System.Drawing.Size(1010, 433);
             this.Controls.Add(this.grpbxPayDet);
-            this.Controls.Add(this.dtpDueDate);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.txtPhoneNo);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.pcbMemImage);
             this.Controls.Add(this.lblMobile);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
@@ -410,17 +442,14 @@
             this.Controls.SetChildIndex(this.lblName, 0);
             this.Controls.SetChildIndex(this.txtName, 0);
             this.Controls.SetChildIndex(this.lblMobile, 0);
-            this.Controls.SetChildIndex(this.pcbMemImage, 0);
             this.Controls.SetChildIndex(this.label5, 0);
             this.Controls.SetChildIndex(this.txtPhoneNo, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
-            this.Controls.SetChildIndex(this.label9, 0);
-            this.Controls.SetChildIndex(this.dtpDueDate, 0);
             this.Controls.SetChildIndex(this.grpbxPayDet, 0);
-            this.Controls.SetChildIndex(this.btnDelete, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.pcbMemImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.grpbxCustomerDetails.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlterationItems)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -438,7 +467,7 @@
 
         internal System.Windows.Forms.TextBox txtPhoneNo;
         internal System.Windows.Forms.Label label5;
-        internal System.Windows.Forms.PictureBox pcbMemImage;
+        internal System.Windows.Forms.PictureBox pcbCustImage;
         internal System.Windows.Forms.Label lblMobile;
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Label lblName;
@@ -463,13 +492,15 @@
         internal System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtpDueDate;
         internal System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ToolStripButton CancelToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        internal System.Windows.Forms.TextBox txtOrderID;
         private System.Windows.Forms.DataGridViewComboBoxColumn AltType;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltComment;
+        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.ComboBox cmbOrder;
+        private System.Windows.Forms.ComboBox cmbStatus;
+        internal System.Windows.Forms.Label label7;
     }
 }

@@ -15,40 +15,27 @@ namespace SpindleSoft.Builders
     {
         static ILog log = LogManager.GetLogger(typeof(MainBuilder));
 
-        //public static IList GetReadyToStitchOrdersList()
-        //{
-        //    using (var session = NHibernateHelper.OpenSession())
-        //    {
-        //        var listOrders = from ord in ((session.QueryOver<Orders>()
-        //                                     .Where(x => x.Status == 0)
-        //                                     .OrderBy(x => x.PromisedDate).Asc
-        //                                     .List()))
-        //                         select new { ord.ID, DueDate = ord.PromisedDate };
-
-        //        return listOrders.ToList();
-        //    }
-        //}
-
-        //public static IList GetStitchInProgresstOrdersList()
-        //{
-        //    using (var session = NHibernateHelper.OpenSession())
-        //    {
-        //        var listOrders = from ord in ((session.QueryOver<Orders>()
-        //                                      .Where(x => x.Status == 1)
-        //                                      .OrderBy(x => x.PromisedDate).Asc
-        //                                      .List()))
-        //                         select new { ord.ID, DueDate = ord.PromisedDate };
-
-        //        return listOrders.ToList();
-        //    }
-        //}
-
         public static IList GetOrdersList_BasedOnStatus(int _status)
         {
             if (_status > 2) return null;
             using (var session = NHibernateHelper.OpenSession())
             {
                 var listOrders = from ord in ((session.QueryOver<Orders>()
+                                              .Where(x => x.Status == _status)
+                                              .OrderBy(x => x.PromisedDate).Asc
+                                              .List()))
+                                 select new { ord.ID, DueDate = ord.PromisedDate };
+
+                return listOrders.ToList();
+            }
+        }
+
+        public static IList GetAlterList_BasedOnStatus(int _status)
+        {
+            if (_status > 2) return null;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                var listOrders = from ord in ((session.QueryOver<Alteration>()
                                               .Where(x => x.Status == _status)
                                               .OrderBy(x => x.PromisedDate).Asc
                                               .List()))

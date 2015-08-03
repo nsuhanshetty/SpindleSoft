@@ -12,9 +12,17 @@ namespace SpindleSoft
         [STAThread]
         private static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            log4net.ILog log = LogManager.GetLogger(typeof(Main));
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Main());
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex);
+            }
         }
     }
 }

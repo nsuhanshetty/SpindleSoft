@@ -16,7 +16,7 @@ namespace SpindlesSoftTestCases.Functions
         [Test]
         public static void GetR2SCount_BuilderTestCase()
         {
-            IList ordersList = MainBuilder.GetOrdersList_BasedOnStatus(0);
+            IList ordersList = MainBuilder.GetAlterList_BasedOnStatus(0);
             Assert.IsNotEmpty(ordersList);
         }
 

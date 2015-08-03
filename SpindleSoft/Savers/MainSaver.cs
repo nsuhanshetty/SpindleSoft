@@ -35,5 +35,29 @@ namespace SpindleSoft.Savers
             }
 
         }
+
+        public static bool UpdateAlterStatus(int _id, int _status)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                       Alteration alt = session.Get<Alteration>(_id);
+                        alt.Status = _status;
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tx.Rollback();
+                        log.Error(ex);
+                        return true;
+                    }
+                }
+            }
+
+        }
     }
 }

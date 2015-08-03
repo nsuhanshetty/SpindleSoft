@@ -15,6 +15,8 @@ namespace SpindleSoft.Model
 
         public virtual int CurrentPayment { get; set; }
 
+        public virtual int Status { get; set; }
+
         public virtual IList<AlterationItem> AlterationItems { get; set; }
 
         public Alteration() { }

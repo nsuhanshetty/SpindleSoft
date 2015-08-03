@@ -17,7 +17,7 @@ namespace SpindleSoft.Views
         //todo: Centralize log functionality
         ILog log = LogManager.GetLogger(typeof(Winform_AlterationsDetails));
 
-        Alteration _alteration;
+        Alteration _alteration = new Alteration();
         Customer _cust = new Customer();
         List<OrderItem> orderItemList = new List<OrderItem>();
         List<AlterationItem> _altItemList = new List<AlterationItem>();
@@ -71,6 +71,10 @@ namespace SpindleSoft.Views
         public Winform_AlterationsDetails()
         {
             InitializeComponent();
+
+            cmbStatus.SelectedIndex = 0;
+            cmbStatus.Enabled = false;
+            this.dtpDueDate.MinDate = System.DateTime.Today;
         }
 
         public Winform_AlterationsDetails(Alteration alt)
@@ -79,75 +83,25 @@ namespace SpindleSoft.Views
 
             _alteration = alt;
             _altItemList = alt.AlterationItems.ToList<AlterationItem>();
+
+            if (_altItemList != null && _altItemList.Count != 0)
+            {
+                foreach (var item in _altItemList)
+                {
+                    int index = dgvAlterationItems.NewRowIndex;
+                    dgvAlterationItems.Rows[index].Cells["AltType"].Value = item.Name;
+                    dgvAlterationItems.Rows[index].Cells["AltQuantity"].Value = item.Quantity;
+                    dgvAlterationItems.Rows[index].Cells["AltPrice"].Value = item.Price;
+                    dgvAlterationItems.Rows[index].Cells["AltComment"].Value = item.Comment;
+                    dgvAlterationItems.CurrentCell = dgvAlterationItems.Rows[index].Cells["AltComment"];
+                    dgvAlterationItems.NotifyCurrentCellDirty(true);
+                    dgvAlterationItems.NotifyCurrentCellDirty(false);
+                }
+            }
         }
         #endregion ctor
 
         #region Validation
-        private void dgvOrderItems_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            DataGridViewRow row = dgvAlterationItems.Rows[e.RowIndex];
-
-            if (row.Cells["AltType"].Value == null &&
-                (row.Cells["AltPrice"].Value != null || row.Cells["AltQuantity"].Value != null || row.Cells["AltComment"].Value != null))
-            {
-                dgvAlterationItems.Rows.RemoveAt(e.RowIndex);
-                return;
-            }
-
-            else if (e.ColumnIndex == dgvAlterationItems.Columns["AltPrice"].Index ||
-                     e.ColumnIndex == dgvAlterationItems.Columns["AltQuantity"].Index)
-            {
-                /*price and Quantity must have a default value even if the user fails to add one
-                 * And it also must be a number*/
-
-                /*Validation*/
-                DataGridViewCell cell = (sender as DataGridView).CurrentCell;
-                if (cell.Value == null) return;
-
-                Match _match = Regex.Match(cell.Value.ToString(), "^\\d*$");
-                cell.ErrorText = (!_match.Success) ? "Invalid Amount input data type.\nExample: '10'" : "";
-
-                if (cell.ErrorText != "")
-                {
-                    cell.Value = null;
-                    return;
-                }
-                /*Validation - end*/
-
-                UpdateAlterationPrice();
-            }
-
-            //todo : Remove if the dgvValidation of row leave works fine.
-            //else if (e.ColumnIndex == dgvAlterationItems.Columns["AltComment"].Index)
-            //{
-            //    //Check if unique for the product name i.e comment exists for the sam item name in different row
-            //    DataGridViewCell cell = (sender as DataGridView).CurrentCell;
-            //    bool itemAlreadyexists = IsAlterationItemUnique(dgvAlterationItems.Rows[e.RowIndex].Cells["AltType"].Value.ToString(), cell, e.RowIndex);
-
-            //    if (itemAlreadyexists)
-            //    {
-            //        cell.ErrorText = "Duplicate Item Found!. No two product can have the same Comment";
-            //        cell.Value = null;
-            //        return;
-            //    }
-            //}
-        }
-
-        //private bool IsAlterationItemUnique(string itemName, string itemComment, int rowIndex)
-        //{
-        //    bool itemAlreadyexists = false;
-
-        //    if (_altItemList.Count != 0)
-        //    {
-        //        var _altitem = _altItemList.Where(x => (x.Comment == itemComment && x.Name == itemName)).SingleOrDefault();
-        //        if (_altitem != null && this.AltType.Items.IndexOf(_altitem) != rowIndex)
-        //        {
-        //            //if item exists and if its not the current row
-        //            itemAlreadyexists = true;
-        //        }
-        //    }
-        //    return itemAlreadyexists;
-        //}
 
         private void txtAmntPaid_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -157,36 +111,42 @@ namespace SpindleSoft.Views
 
             Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
             string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
-            _errorMsg = (_errorMsg == "" && AmntPaid > TotAmnt) ? "Amount Paid cannot be greater than Total Amount" : "";
-            errorProvider1.SetError(txtAmntPaid, _errorMsg);
+            if (_errorMsg == "" && 0 > AmntPaid && AmntPaid > TotAmnt)
+            {
+                _errorMsg = "Amount Paid cannot be greater than Total Amount and not less than 0";
+            }
+            //errorProvider1.SetError(txtAmntPaid, _errorMsg);
 
             if (_errorMsg != "")
             {
                 // Cancel the event and select the text to be corrected by the user.
+                errorProvider1.SetError(txtAmntPaid, _errorMsg);
                 e.Cancel = true;
                 txtAmntPaid.Text = "";
             }
             else
             {
                 txtBalanceAmnt.Text = (TotAmnt - AmntPaid).ToString();
+                errorProvider1.SetError(txtAmntPaid, _errorMsg);
             }
         }
 
-        private void txtSrcName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        private void txtOrderID_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (txtOrderID.Text == String.Empty)
+            var txtBox = (ComboBox)sender;
+            if (txtBox.Text == String.Empty)
                 return;
 
-            Match _match = Regex.Match(txtOrderID.Text, "\\d$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Order ID\n" +
-  " For example '10'";
-            errorProvider1.SetError(txtOrderID, errorMsg);
+            Match _match = Regex.Match(txtBox.Text, "\\d$");
+            string errorMsg = _match.Success ? "" : "Invalid Input for Order ID" + Environment.NewLine +
+                                                    " For example '10'";
+            errorProvider1.SetError(txtBox, errorMsg);
 
             if (errorMsg != "")
             {
                 // Cancel the event and select the text to be corrected by the user.
                 e.Cancel = true;
-                txtOrderID.Select(0, txtOrderID.TextLength);
+                txtBox.Select(0, txtBox.Text.Length);
             }
         }
 
@@ -198,7 +158,8 @@ namespace SpindleSoft.Views
         private void txtOrderID_Validated(object sender, EventArgs e)
         {
             int _orderID;
-            int.TryParse(txtOrderID.Text, out _orderID);
+            var txtBox = (ComboBox)sender;
+            int.TryParse(txtBox.Text, out _orderID);
             UpdateStatus("Fetching Order Items..");
 
             orderItemList = AlterationBuilder.GetOrderItems(_orderID, this._cust.ID);
@@ -218,40 +179,6 @@ namespace SpindleSoft.Views
             }
             UpdateStatus();
         }
-
-        private void UpdateAlterationPrice()
-        {
-            int total = 0, quantity, price;
-
-            foreach (DataGridViewRow dr in dgvAlterationItems.Rows)
-            {
-                if (dr.IsNewRow) continue;
-                quantity = 1;
-                price = 0;
-
-                if (dr.Cells["AltPrice"].Value == null)
-                    dr.Cells["AltPrice"].Value = 0;
-                else
-                    int.TryParse(dr.Cells["AltPrice"].Value.ToString(), out price);
-
-                if (dr.Cells["AltQuantity"].Value == null)
-                    dr.Cells["AltQuantity"].Value = 1;
-                else
-                    int.TryParse(dr.Cells["AltQuantity"].Value.ToString(), out quantity);
-
-                total += quantity * price;
-            }
-
-            int amntPaid = 0;
-            int.TryParse(txtAmntPaid.Text, out amntPaid);
-
-            TotalAmount = total;
-            AmountPaid = amntPaid;
-
-            //txtTotAmnt.Text = total.ToString();
-            //txtBalanceAmnt.Text = (total - amntPaid).ToString();
-        }
-
         #endregion Validation
 
         #region Events
@@ -277,6 +204,20 @@ namespace SpindleSoft.Views
             else if (dtpDueDate.Value.Date.CompareTo(DateTime.Today.Date) < 0)
                 errorMsg = "The Promised date must not be less than today.";
 
+            foreach (DataGridViewRow row in dgvAlterationItems.Rows)
+            {
+                if (row.IsNewRow) continue;
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.ErrorText != "")
+                    {
+                        MessageBox.Show("Error found in the Alteration Items cart.", "Alteration Details - Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        cell.Selected = true;
+                        return;
+                    }
+                }
+            }
+
             if (errorMsg != string.Empty)
             {
                 MessageBox.Show(errorMsg, "Mandatory Info Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -286,7 +227,6 @@ namespace SpindleSoft.Views
             //add alt items to list
             string comment;
             int price, quant;
-
 
             foreach (DataGridViewRow row in dgvAlterationItems.Rows)
             {
@@ -302,7 +242,18 @@ namespace SpindleSoft.Views
                 comment = string.Empty;
                 comment = row.Cells["AltComment"].Value == null ? "" : row.Cells["AltComment"].Value.ToString();
 
-                //altItemList.Add(new AlterationItem(row.Cells["AltType"].Value.ToString(), quant, price, comment));
+                if (row.Index > _altItemList.Count)
+                    _altItemList.Add(new AlterationItem(row.Cells["AltType"].Value.ToString(), quant, price, comment));
+                else
+                {
+                    //update 
+                    AlterationItem _altitem;
+                    _altitem = _altItemList[row.Index];
+                    _altitem.Name = row.Cells["AltType"].Value.ToString();
+                    _altitem.Price = price;
+                    _altitem.Quantity = quant;
+                    _altitem.Comment = comment;
+                }
             }
 
             int total, amntPaid;
@@ -314,17 +265,18 @@ namespace SpindleSoft.Views
             _alteration.AlterationItems = _altItemList;
             _alteration.CurrentPayment = amntPaid;
             _alteration.TotalPrice = total;
+            _alteration.Status = cmbStatus.SelectedIndex;
 
             bool success = AlterationSaver.SaveAlterationInfo(_alteration);
 
             if (success)
             {
-                //Send msg if the balance == 0
-                //if (total - amntPaid == 0)
-                //{
-                //    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
-                //}
-
+                DialogResult dr = MessageBox.Show("Do you want Send SMS to notify the Cusotmer.","Send SMS",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    //todo: Replace with SMS funtion.
+                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                }
                 this.Close();
             }
         }
@@ -337,32 +289,7 @@ namespace SpindleSoft.Views
         private void btnDelete_Click(object sender, EventArgs e)
         {
             //todo: Test
-            if (dgvAlterationItems.Rows.Count < 2 || dgvAlterationItems.SelectedRows.Count == 0) return;
 
-            DialogResult dr = MessageBox.Show("Continue deleting selected Alteration items?", "Delete Alteration Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (dr == DialogResult.No) return;
-
-            bool success = false;
-            foreach (DataGridViewRow item in dgvAlterationItems.SelectedRows)
-            {
-                if (_altItemList.Count != 0 && item.Index+1 <= _altItemList.Count )
-                {
-                    if ( _altItemList[item.Index].ID != 0)
-                    success = AlterationSaver.DeleteAlterationItems(_altItemList[item.Index].ID);
-
-                    if (success)
-                    {
-                        _altItemList.RemoveAt(item.Index);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
-                        return;
-                    }
-                }
-                dgvAlterationItems.Rows.RemoveAt(item.Index);
-            }
-            UpdateAlterationPrice();
         }
 
         private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -399,7 +326,7 @@ namespace SpindleSoft.Views
             dgvAlterationItems.NotifyCurrentCellDirty(true);
             dgvAlterationItems.NotifyCurrentCellDirty(false);
 
-            UpdateAlterationPrice();
+            CalculatePaymentDetails();
         }
 
         private void dgvAlterationItems_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -439,33 +366,7 @@ namespace SpindleSoft.Views
                 TotalAmount = _alteration.TotalPrice;
                 AmountPaid = _alteration.CurrentPayment;
                 dtpDueDate.Value = _alteration.PromisedDate;
-
-                if (_altItemList != null && _altItemList.Count != 0)
-                {
-                    foreach (var item in _altItemList)
-                    {
-                        int index = dgvAlterationItems.NewRowIndex;
-                        dgvAlterationItems.Rows[index].Cells["AltType"].Value = item.Name;
-                        dgvAlterationItems.Rows[index].Cells["AltQuantity"].Value = item.Quantity;
-                        dgvAlterationItems.Rows[index].Cells["AltPrice"].Value = item.Price;
-                        dgvAlterationItems.Rows[index].Cells["AltComment"].Value = item.Comment;
-                        dgvAlterationItems.CurrentCell = dgvAlterationItems.Rows[index].Cells["AltComment"];
-                        dgvAlterationItems.NotifyCurrentCellDirty(true);
-                        dgvAlterationItems.NotifyCurrentCellDirty(false);
-                    }
-                }
-
-                //DataTable _dataTable = null;
-                //dgvAlterationItems.AutoGenerateColumns = false;
-                //_dataTable = ToDataTable((from al in _altItemList
-                //                          select new { Name = al.Name, Comment = al.Comment, Price = al.Price, Quantity = al.Quantity })
-                //                                .ToList());
-                //foreach (DataColumn col in _dataTable.Columns)
-                //{
-                //    col.ReadOnly = false;
-                //}
-
-                //dgvAlterationItems.DataSource = _dataTable;
+                cmbStatus.SelectedIndex = _alteration.Status;
             }
             catch (Exception ex)
             {
@@ -475,7 +376,16 @@ namespace SpindleSoft.Views
 
         void cbo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            var value = (sender as ComboBox).Text;
+            if (string.IsNullOrEmpty(value)) return;
 
+            if (this.AltType.Items.IndexOf(value) == -1)
+            {
+                DataGridViewComboBoxCell cboCell = (DataGridViewComboBoxCell)dgvAlterationItems.CurrentCell;
+
+                this.AltType.Items.Add(value);
+                cboCell.Value = value;
+            }
         }
         #endregion Events
 
@@ -488,11 +398,10 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbMemImage.Image = _cust.Image;
+            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.Mobile_No);
 
-            //todo: add this as event listner onCustomerControlUpdation
-            txtOrderID.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            txtOrderID.AutoCompleteCustomSource.AddRange(AlterationBuilder.GetOrderIDs(_cust.ID).ToArray());
+            ////todo: add this as event listner onCustomerControlUpdation
+            cmbOrder.DataSource = AlterationBuilder.GetOrderIDs(_cust.ID).ToArray();
         }
 
         public static DataTable ToDataTable<T>(List<T> items)
@@ -520,6 +429,74 @@ namespace SpindleSoft.Views
             return dataTable;
         }
 
+        private void dgvOrderItems_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row = dgvAlterationItems.Rows[e.RowIndex];
+            string errorMsg;
+
+            if (row.IsNewRow) return;
+
+            if (e.ColumnIndex == dgvAlterationItems.Columns["AltPrice"].Index ||
+                     e.ColumnIndex == dgvAlterationItems.Columns["AltQuantity"].Index)
+            {
+                /*price and Quantity must have a default value even if the user fails to add one
+                 * And it also must be a number*/
+
+                DataGridViewCell cell = (sender as DataGridView).CurrentCell;
+                cell.ErrorText = "";
+
+                if (cell.Value == null) return;
+
+                Match _match = Regex.Match(cell.Value.ToString(), "^\\d*$");
+                errorMsg = (!_match.Success) ? "Invalid Amount input data type.\nExample: '10'" : "";
+
+                if (cell.ErrorText != "")
+                {
+                    cell.ErrorText = errorMsg;
+                    cell.Selected = true;
+                    return;
+                }
+            }
+            if (e.ColumnIndex == dgvAlterationItems.Columns["AltType"].Index || e.ColumnIndex == dgvAlterationItems.Columns["AltComment"].Index)
+            {
+                if (e.ColumnIndex == dgvAlterationItems.Columns["AltType"].Index)
+                {
+                    row.Cells["AltType"].ErrorText = errorMsg = "";
+                    errorMsg = IsNullOrEmpty(row.Cells["AltType"].Value) ? "Clothing Type is Mandatory and Cannot be Empty" : "";
+                    row.Cells["AltType"].ErrorText = errorMsg;
+                    if (errorMsg != "") return;
+                }
+                else if (e.ColumnIndex == dgvAlterationItems.Columns["AltComment"].Index)
+                {
+                    row.Cells["AltComment"].ErrorText = errorMsg = "";
+                    errorMsg = (row.Cells["AltComment"].Value == null || row.Cells["AltComment"].Value.ToString() == "") ?
+                                "Comment is Mandatory and Cannot be Empty" : "";
+                    row.Cells["AltComment"].ErrorText = errorMsg;
+                    if (errorMsg != "") return;
+                }
+                errorMsg = IsItemDuplicate(e, row) ? "Duplicate Item Found!." + Environment.NewLine +
+                    " Two products of the same Clothing Type cannot have the same Comment." : "";
+
+                if (errorMsg != "")
+                    row.Cells[e.ColumnIndex].ErrorText = row.Cells["AltType"].ErrorText = errorMsg;
+
+                if (errorMsg != "") return;
+            }
+            CalculatePaymentDetails();
+        }
+
+        private bool IsItemDuplicate(DataGridViewCellEventArgs e, DataGridViewRow row)
+        {
+            if (_altItemList.Count == 0) return false;
+
+            string itemName = row.Cells["AltType"].Value != null ? row.Cells["AltType"].Value.ToString() : "";
+            string comment = row.Cells["AltComment"].Value != null ? row.Cells["AltComment"].Value.ToString() : "";
+
+            bool exists = _altItemList.Exists(item => (item.Comment == comment && item.Name == itemName &&
+                                                       _altItemList.IndexOf(item) != -1 && _altItemList.IndexOf(item) != e.RowIndex));
+            return exists;
+        }
+
         /// <summary>
         /// create/update/report list once the row has changed based on the uniqueness of the row
         /// </summary>
@@ -527,26 +504,28 @@ namespace SpindleSoft.Views
         /// <param name="e"></param>
         private void dgvAlterationItems_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
-
             if (dgvAlterationItems.Rows[e.RowIndex].IsNewRow) return;
+            foreach (DataGridViewCell cell in dgvAlterationItems.Rows[e.RowIndex].Cells)
+            {
+                if (dgvAlterationItems.Rows[e.RowIndex].IsNewRow) return;
+                if (IsNullOrEmpty(cell.Value) && cell.ColumnIndex != 4)
+                {
+                    dgvOrderItems_CellEndEdit(dgvAlterationItems, new DataGridViewCellEventArgs(cell.ColumnIndex, cell.RowIndex));
+                }
+            }
+            foreach (DataGridViewCell cell in dgvAlterationItems.Rows[e.RowIndex].Cells)
+            {
+                if (cell.ErrorText != "")
+                    return;
+            }
 
             /*Rule1: Comment is Mandatory*/
             DataGridViewRow dgvRow = (sender as DataGridView).Rows[e.RowIndex];
-            DataGridViewCell cellComment = dgvRow.Cells["AltComment"];
-            cellComment.ErrorText = "";
-            if (cellComment.Value == null)
-            {
-                cellComment.ErrorText = "Comment is Mandatory and Cannot be Empty";
-                return;
-            }
 
-            /*Rule2: Every row must be unique whenitem name and comment is combined*/
             string itemName = dgvRow.Cells["AltType"].Value.ToString();
             AlterationItem _altitem;
 
-
-
-            /*Rule3: Update if item already exists else create*/
+            //*Rule3: Update if item already exists else create*/
             if (e.RowIndex + 1 <= _altItemList.Count)
             {
                 //update item and itemlist by reference
@@ -554,30 +533,75 @@ namespace SpindleSoft.Views
                 _altitem.Name = itemName;
                 _altitem.Price = int.Parse(dgvRow.Cells["AltPrice"].Value.ToString());
                 _altitem.Quantity = int.Parse(dgvRow.Cells["AltQuantity"].Value.ToString());
-                _altitem.Comment = cellComment.Value.ToString();
+                _altitem.Comment = dgvRow.Cells["AltComment"].Value.ToString();
             }
             else
             {
-                if (_altItemList.Count != 0)
-                {
-                    //if another item of the name already exist => report
-                    _altitem = _altItemList.Where(x => (x.Comment == cellComment.Value.ToString() &&
-                                                            x.Name == itemName)).SingleOrDefault();
+                _altItemList.Add(new AlterationItem(itemName, int.Parse(dgvRow.Cells["AltQuantity"].Value.ToString()),
+                                                              int.Parse(dgvRow.Cells["AltPrice"].Value.ToString()),
+                                                              dgvRow.Cells["AltComment"].Value.ToString()));
+            }
+            CalculatePaymentDetails();
+        }
 
-                    if (_altitem != null && this.AltType.Items.IndexOf(_altitem) != e.RowIndex) //if item exists
+        private void CalculatePaymentDetails()
+        {
+            //todo : Method to handle payment amount
+            /*Calculate Total*/
+            int total = 0;
+            foreach (DataGridViewRow dr in dgvAlterationItems.Rows)
+            {
+                if (dr.IsNewRow) continue;
+
+                if (dr.Cells["AltPrice"].Value == null) dr.Cells["AltPrice"].Value = 0;
+                if (dr.Cells["AltQuantity"].Value == null) dr.Cells["AltQuantity"].Value = 1;
+
+                total += (int.Parse(dr.Cells["AltQuantity"].Value.ToString()) * int.Parse(dr.Cells["AltPrice"].Value.ToString()));
+            }
+
+            int amntPaid = 0;
+            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            AmountPaid = amntPaid;
+            TotalAmount = total;
+            BalanceAmount = TotalAmount - AmountPaid;
+            /*Calculate Total - end*/
+        }
+
+        private void dgvAlterationItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvAlterationItems.Rows[e.RowIndex].IsNewRow == true) return;
+
+            if (dgvAlterationItems.Columns["colDelete"].Index == e.ColumnIndex)
+            {
+                DialogResult dr = MessageBox.Show("Continue deleting selected Alteration items?", "Delete Alteration Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.No) return;
+
+                bool success = false;
+
+                if (_altItemList.Count != 0 && e.RowIndex + 1 <= _altItemList.Count)
+                {
+                    if (_altItemList[e.RowIndex].ID != 0)
+                        success = AlterationSaver.DeleteAlterationItems(_altItemList[e.RowIndex].ID);
+
+                    if (success || _altItemList[e.RowIndex].ID == 0)
                     {
-                        //And if its not the current row
-                        cellComment.ErrorText = "Duplicate Item Found!." + Environment.NewLine +
-                                         " Two products of the same Name cannot have the same Comment.";
-                        cellComment.Value = null;
+                        _altItemList.RemoveAt(e.RowIndex);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
                         return;
                     }
                 }
-
-                //create
-                _altItemList.Add(new AlterationItem(itemName, int.Parse(dgvRow.Cells["AltQuantity"].Value.ToString()),
-                                                    int.Parse(dgvRow.Cells["AltPrice"].Value.ToString()), cellComment.Value.ToString()));
+                dgvAlterationItems.Rows.RemoveAt(e.RowIndex);
+                CalculatePaymentDetails();
             }
+        }
+
+        private void dgvAlterationItems_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            log.Error(e.Exception);
+            var test = dgvAlterationItems.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
         }
 
     }

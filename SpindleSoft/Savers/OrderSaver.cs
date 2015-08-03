@@ -60,5 +60,29 @@ namespace SpindleSoft.Savers
                 }
             }
         }
+
+        public static bool DeleteOrderItems(int _id)
+        {
+            bool success = false;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    try
+                    {
+                        var item = session.Get<OrderItem>(_id);
+                        session.Delete(item);
+                        trans.Commit();
+                        success = true;
+                    }
+                    catch (Exception ex)
+                    {
+
+                        log.Error(ex);
+                    }
+                }
+            }
+            return success;
+        }
     }
 }

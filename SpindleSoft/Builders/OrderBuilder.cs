@@ -24,7 +24,7 @@ namespace SpindleSoft.Builders
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    List<string> names = (from s in session.Query<OrderItem>()
+                    List<string> names = (from s in session.Query<AlterationItem>()
                                           select s.Name).Distinct().ToList();
                     return names;
                 }
@@ -42,33 +42,76 @@ namespace SpindleSoft.Builders
         /// <param name="custId"></param>
         /// <param name="itemName"></param>
         /// <returns>OrderItem</returns>
-        public static OrderItem GetOrderItem(int custId, string itemName)
-        {
-            OrderItem orderItem = new OrderItem();
-            try
-            {
-                using (var session = NHibernateHelper.OpenSession())
-                {
-                    //todo: convert to linq
-                    //order by updated date desc
-                    //singleOrDefault
-                    string query = ("select i.* from orderitem i " +
-                                    "inner join orders o on o.ID = i.OrderID " +
-                                    "where i.Name = :name and o.CustomerID = :custId " +
-                                    "order by i.DateUpdated");
-                    var sqlQuery = session.CreateSQLQuery(query)
-                                                .SetParameter("name", itemName)
-                                                .SetParameter("custId", custId)
-                                                .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-                    log.Info(sqlQuery as OrderItem);
-                    return orderItem = sqlQuery as OrderItem;
+        //public static OrderItem GetOrderItem(int custId, string itemName)
+        //{
+        //    OrderItem orderItem = new OrderItem();
+        //    try
+        //    {
+        //        using (var session = NHibernateHelper.OpenSession())
+        //        {
+        //            //todo: convert to linq
+        //            //order by updated date desc
+        //            //singleOrDefault
+        //            string query = ("select i.* from orderitem i " +
+        //                            "inner join orders o on o.ID = i.OrderID " +
+        //                            "where i.Name = :name and o.CustomerID = :custId " +
+        //                            "order by i.DateUpdated");
+        //            OrderItem ordItem = null;
+        //            Orders ord = null;
 
-                }
-            }
-            catch (Exception ex)
+        //            var sqlQuery = session.CreateSQLQuery(query)
+        //                                        .SetParameter("name", itemName)
+        //                                        .SetParameter("custId", custId)
+        //                                        .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
+        //            log.Info(sqlQuery as OrderItem);
+        //            return orderItem = sqlQuery as OrderItem;
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex.Message);
+        //        return null;
+        //    }
+        //}
+
+        public static OrderItem GetOrderItem(int custID, string productName)
+        {
+            using (var session = NHibernateHelper.OpenSession())
             {
-                log.Error(ex.Message);
-                return null;
+                try
+                {
+                    //get order items belonging to that customer
+                    bool OrderExists = false;
+                    if (custID != 0)
+                    {
+                        OrderExists = session.Query<Orders>()
+                            .Any(x => (x.Customer.ID == custID));
+                    }
+
+                    if (custID != 0 && !OrderExists)
+                        return null;
+
+                    //todo : Remove
+                    //var query = session.QueryOver<OrderItem>()
+                    //    .Where(x => x.Name == productName)
+                    //    .Fetch(o => o.Order).Eager
+                    //    .Future()
+                    //    .OrderBy(x => x.DateUpdated);
+
+                    OrderItem item;
+                    var list= (session.QueryOver<OrderItem>()
+                                .Where(x => x.Name == productName)
+                                .OrderBy(x => x.ID).Desc
+                                .List<OrderItem>());
+                    item = list.FirstOrDefault();
+                    return item;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message);
+                    return null;
+                }
             }
         }
 
@@ -150,7 +193,7 @@ namespace SpindleSoft.Builders
             }
         }
 
-        
+
 
         #endregion OrderBuilder
     }

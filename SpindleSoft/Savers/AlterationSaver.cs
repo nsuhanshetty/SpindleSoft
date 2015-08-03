@@ -61,5 +61,28 @@ namespace SpindleSoft.Savers
             }
             return success;
         }
+
+        public static bool DeleteAlteration(int _altID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        var alt = session.Get<Alteration>(_altID);
+                        session.Delete(alt);
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tx.Rollback();
+                        log.Error(ex);
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

@@ -34,5 +34,10 @@ namespace SpindleSoft.Views
             toolStrip_Label.Text = statusText;
             toolStripProgressBar1.Value = statusValue;
         }
+
+        protected virtual bool IsNullOrEmpty(object obj)
+        {
+            return (obj == null || obj.ToString() == "");
+        }
     }
 }
