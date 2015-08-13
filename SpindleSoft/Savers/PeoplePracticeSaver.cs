@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using log4net;
+using Newtonsoft.Json;
 using SpindleSoft.Model;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,14 @@ namespace SpindleSoft.Savers
 {
     public class PeoplePracticeSaver
     {
-        //private static Uri BaseUri = new Uri("http://192.168.0.106:14041");
-        //private static Uri BaseUri = new Uri(System.Configuration.ConfigurationManager.AppSettings.Get("BaseUri"));
+        static ILog log = LogManager.GetLogger(typeof(PeoplePracticeSaver));
 
         static string CustomerImagePath = "d:\\CustomerImages";
-        //System.Windows.Forms.Application.StartupPath + "\\CustomerImages";
         static string StaffImagePath = "d:\\StaffImages";
-        //System.Windows.Forms.Application.StartupPath + "\\StaffImages";
+        static string DocumentImagePath = "d:\\DocumentImages";
 
         #region Customer
-        public static bool SaveCustomerInfo(Customer _customer)
+        public static int SaveCustomerInfo(Customer _customer)
         {
             try
             {
@@ -31,21 +30,22 @@ namespace SpindleSoft.Savers
                     {
                         session.SaveOrUpdate(_customer);
                         transaction.Commit();
-                        return true;
+                        return _customer.ID;
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                log.Error(ex);
+                return 0;
                 //throw;
             }
 
         }
 
-        public static bool SaveCustomerImage(Image image, string mobNo)
+        public static bool SaveCustomerImage(Image image, int custID)
         {
-            string filePath = string.Format("{0}\\{1}.png", CustomerImagePath, mobNo);
+            string filePath = string.Format("{0}\\{1}.png", CustomerImagePath, custID);
             try
             {
                 if (!System.IO.Directory.Exists(CustomerImagePath))
@@ -56,16 +56,16 @@ namespace SpindleSoft.Savers
                 image.Save(filePath);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4.net
+                log.Error(ex);
                 return false;
             }
         }
         #endregion Customer
 
         #region Staff
-        public static bool SaveStaffInfo(Staff staff)
+        public static int SaveStaffInfo(Staff staff)
         {
             try
             {
@@ -73,23 +73,27 @@ namespace SpindleSoft.Savers
                 {
                     using (var transaction = session.BeginTransaction())
                     {
+                        foreach (Document doc in staff.SecurityDocuments)
+                        {
+                            doc.Staff = staff;
+                        }
                         session.SaveOrUpdate(staff);
                         transaction.Commit();
-                        return true;
+                        return staff.ID;
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
-                return false;
+                log.Error(ex);
+                return 0;
             }
 
         }
 
-        public static bool SaveStaffImage(Image image, string mobNo)
+        public static bool SaveStaffImage(Image image, int _ID)
         {
-            string filePath = string.Format("{0}\\{1}.png", StaffImagePath, mobNo);
+            string filePath = string.Format("{0}\\{1}.png", StaffImagePath, _ID);
             try
             {
                 if (!System.IO.Directory.Exists(StaffImagePath))
@@ -100,12 +104,59 @@ namespace SpindleSoft.Savers
                 image.Save(filePath, ImageFormat.Png);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4.net
+                log.Error(ex);
                 return false;
             }
         }
+
+        public static bool SaveStaffDocument(List<Document> docList, int _staffID)
+        {
+            foreach (Document doc in docList)
+            {
+                string filePath = string.Format("{0}\\{2}_{1}.png", DocumentImagePath, doc.Type, _staffID);
+                try
+                {
+                    if (!System.IO.Directory.Exists(DocumentImagePath))
+                        System.IO.Directory.CreateDirectory(DocumentImagePath);
+                    else if (System.IO.File.Exists(filePath))
+                        System.IO.File.Delete(filePath);
+
+                    doc.Image.Save(filePath, ImageFormat.Png);                   
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool DeleteStaffDocument(int _ID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        Document doc = session.Get<Document>(_ID);
+                        session.Delete(doc);
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tx.Rollback();
+                        log.Error(ex);
+                        return false;
+                    }
+                }
+            }
+        }
+
         #endregion Staff
 
         #region Vendor
@@ -124,9 +175,9 @@ namespace SpindleSoft.Savers
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                //log4net 
+                log.Error(ex);
                 return false;
             }
         }

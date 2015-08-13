@@ -242,7 +242,7 @@ namespace SpindleSoft.Views
                 comment = string.Empty;
                 comment = row.Cells["AltComment"].Value == null ? "" : row.Cells["AltComment"].Value.ToString();
 
-                if (row.Index > _altItemList.Count)
+                if (_altItemList.Count == 0 || row.Index+1 > _altItemList.Count )
                     _altItemList.Add(new AlterationItem(row.Cells["AltType"].Value.ToString(), quant, price, comment));
                 else
                 {
@@ -271,7 +271,7 @@ namespace SpindleSoft.Views
 
             if (success)
             {
-                DialogResult dr = MessageBox.Show("Do you want Send SMS to notify the Cusotmer.","Send SMS",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Do you want Send SMS to notify the Cusotmer.", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
                     //todo: Replace with SMS funtion.
@@ -398,7 +398,7 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.Mobile_No);
+            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
 
             ////todo: add this as event listner onCustomerControlUpdation
             cmbOrder.DataSource = AlterationBuilder.GetOrderIDs(_cust.ID).ToArray();
@@ -478,7 +478,7 @@ namespace SpindleSoft.Views
                     " Two products of the same Clothing Type cannot have the same Comment." : "";
 
                 if (errorMsg != "")
-                    row.Cells[e.ColumnIndex].ErrorText = row.Cells["AltType"].ErrorText = errorMsg;
+                    row.Cells["AltComment"].ErrorText = errorMsg;
 
                 if (errorMsg != "") return;
             }

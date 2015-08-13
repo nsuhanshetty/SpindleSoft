@@ -1,36 +1,43 @@
-﻿
+﻿using log4net;
 using System;
 
 namespace SpindleSoft
 {
     //todo : add to utility namespace
-    public static class Logger
+    
+    public class Logger
     {
-        private static log4net.ILog Log { get; set; }
+        private readonly ILog log = null;
 
-        static Logger()
+        public Logger()
         {
-            Log = log4net.LogManager.GetLogger(typeof(Logger));
+            log4net.Config.XmlConfigurator.Configure();
+            log = LogManager.GetLogger(typeof(Logger));
         }
 
-        public static void Error(object msg)
+        public Logger(Type type)
         {
-            Log.Error(msg);
+            log = LogManager.GetLogger(type);
         }
 
-        public static void Error(object msg, Exception ex)
-        {
-            Log.Error(msg, ex);
-        }
+        //public static void Error(object msg)
+        //{
+        //    log.Error(msg);
+        //}
 
-        public static void Error(Exception ex)
-        {
-            Log.Error(ex.Message, ex);
-        }
+        //public static void Error(object msg, Exception ex)
+        //{
+        //    log.Error(msg, ex);
+        //}
 
-        public static void Info(object msg)
-        {
-            Log.Info(msg);
-        }
+        //public static void Error(Exception ex)
+        //{
+        //    log.Error(ex.Message, ex);
+        //}
+
+        //public void Info(object msg)
+        //{
+        //    log.Info(msg);
+        //}
     }
 }

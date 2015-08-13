@@ -31,12 +31,19 @@ namespace SpindleSoft.FluentMapping
     {
         public StaffMapping()
         {
-            Id(x => x.ID);
+            Id(x => x.ID).GeneratedBy.Identity();
             Map(x => x.Name);
             Map(x => x.Mobile_No);
             Map(x => x.Phone_No);
             Map(x => x.Address);
             Map(x => x.IsTemporary);
+            Map(x => x.BankName);
+            Map(x => x.BankUserName);
+            Map(x => x.AccNo);
+            Map(x => x.IfscCode);
+            HasMany(x => x.SecurityDocuments).KeyColumn("StaffID")
+                                                        .Inverse()
+                                                        .Cascade.All();
         }
     }
 

@@ -370,7 +370,7 @@ namespace SpindleSoft
                         if (String.IsNullOrEmpty(mobileNo)) return;
 
                         Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(mobileNo);
-                        _cust.Image = PeoplePracticeBuilder.GetCustomerImage(mobileNo);
+                        _cust.Image = PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
 
                         if (_cust == null && _cust.Image == null) return;
 

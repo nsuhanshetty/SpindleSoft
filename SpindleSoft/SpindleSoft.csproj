@@ -11,6 +11,29 @@
     <AssemblyName>SpindleSoft</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>ftp://buyhoney.in/spindlesoft/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://buyhoney.in/SpindleSoft/SpindleSoft/</InstallUrl>
+    <ProductName>SpindleSoft</ProductName>
+    <PublisherName>SpindleSoft</PublisherName>
+    <SuiteName>SpindleSoft</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +55,27 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>D8E3BC88E864A000D18C1DC876032B4E5D7E3BFC</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>SpindleSoft_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>SpindleSoft_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentNHibernate">
       <HintPath>..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
@@ -42,6 +86,11 @@
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\Connector NET 6.8.3\Assemblies\v4.5\MySql.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,6 +111,7 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,10 +132,11 @@
     <Compile Include="Builders\MainBuilder.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
-    <Compile Include="Builders\PeoplePracticeBuilderRestApi.cs" />
     <Compile Include="Builders\SaleBuilder.cs" />
+    <Compile Include="FluentMapping\DocumentMapping.cs" />
     <Compile Include="FluentMapping\OrdersMapping.cs" />
     <Compile Include="FluentMapping\SaleMapping.cs" />
+    <Compile Include="Model\Document.cs" />
     <Compile Include="Model\SaleItem.cs" />
     <Compile Include="Savers\AlterationSaver.cs" />
     <Compile Include="Savers\MainSaver.cs" />
@@ -104,11 +155,6 @@
     <Compile Include="Savers\FormUpload.cs" />
     <Compile Include="Savers\PeoplePracticeSaver.cs" />
     <Compile Include="Savers\SalesSaver.cs" />
-    <Compile Include="SpindleSoftDbDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SpindleSoftDbDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Utilities\Validation.cs" />
     <Compile Include="Views\Main.cs">
       <SubType>Form</SubType>
@@ -123,6 +169,12 @@
     </Compile>
     <Compile Include="Views\DesignControl.Designer.cs">
       <DependentUpon>DesignControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_PictureBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_PictureBox.Designer.cs">
+      <DependentUpon>Winform_PictureBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_Queue.cs">
       <SubType>Form</SubType>
@@ -314,6 +366,9 @@
     <EmbeddedResource Include="Views\DesignControl.resx">
       <DependentUpon>DesignControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_PictureBox.resx">
+      <DependentUpon>Winform_PictureBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_Queue.resx">
       <DependentUpon>Winform_Queue.cs</DependentUpon>
     </EmbeddedResource>
@@ -414,20 +469,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SpindleSoftDbDataSet.xsc">
-      <DependentUpon>SpindleSoftDbDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="SpindleSoftDbDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SpindleSoftDbDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SpindleSoftDbDataSet.xss">
-      <DependentUpon>SpindleSoftDbDataSet.xsd</DependentUpon>
-    </None>
+    <None Include="SpindleSoft_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AddReferral.png" />
@@ -443,6 +490,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

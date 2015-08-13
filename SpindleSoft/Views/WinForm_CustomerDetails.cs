@@ -44,7 +44,7 @@ namespace SpindleSoft.Views
 
             txtRefMob.Text = refCust.Mobile_No;
             txtRefName.Text = refCust.Name;
-            pcbReferral.Image = PeoplePracticeBuilder.GetCustomerImage(refCust.Mobile_No);
+            pcbReferral.Image = PeoplePracticeBuilder.GetCustomerImage(refCust.ID);
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -80,10 +80,10 @@ namespace SpindleSoft.Views
             this._cust.ReferralID = refCust.ID;
             
             UpdateStatus("Saving..", 50);
-            bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
+            int _id = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
 
             UpdateStatus("Saving..", 75);
-            response = PeoplePracticeSaver.SaveCustomerImage(this._cust.Image,this._cust.Mobile_No);
+            bool response = _id!=0 ? PeoplePracticeSaver.SaveCustomerImage(this._cust.Image, this._cust.ID) : false;
 
             if (response)
             {

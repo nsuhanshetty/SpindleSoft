@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Linq;
+using SpindleSoft.Builders;
 
 namespace SpindleSoft.Views
 {
@@ -30,39 +32,39 @@ namespace SpindleSoft.Views
             }
         }
 
-        private void txtMobNo_Validating(object sender, CancelEventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtMobNo.Text)) return;
+      //  private void txtMobNo_Validating(object sender, CancelEventArgs e)
+      //  {
+      //      if (String.IsNullOrEmpty(txtMobNo.Text)) return;
 
-            Match _match = Regex.Match(txtMobNo.Text, "\\d{10}$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      "For example '9880123456'";
-            errorProvider1.SetError(txtMobNo, errorMsg);
+      //      Match _match = Regex.Match(txtMobNo.Text, "\\d{10}$");
+      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
+      //"For example '9880123456'";
+      //      errorProvider1.SetError(txtMobNo, errorMsg);
 
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtMobNo.Select(0, txtMobNo.TextLength);
-            }
-        }
+      //      if (errorMsg != "")
+      //      {
+      //          // Cancel the event and select the text to be corrected by the user.
+      //          e.Cancel = true;
+      //          txtMobNo.Select(0, txtMobNo.TextLength);
+      //      }
+      //  }
 
-        private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtPhoneNo.Text)) return;
+      //  private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
+      //  {
+      //      if (String.IsNullOrEmpty(txtPhoneNo.Text)) return;
 
-            Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      "For example '9880123456'";
-            errorProvider1.SetError(txtPhoneNo, errorMsg);
+      //      Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
+      //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
+      //"For example '9880123456'";
+      //      errorProvider1.SetError(txtPhoneNo, errorMsg);
 
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtPhoneNo.Select(0, txtPhoneNo.TextLength);
-            }
-        }
+      //      if (errorMsg != "")
+      //      {
+      //          // Cancel the event and select the text to be corrected by the user.
+      //          e.Cancel = true;
+      //          txtPhoneNo.Select(0, txtPhoneNo.TextLength);
+      //      }
+      //  }
         #endregion Validation
 
         #region Events
@@ -75,9 +77,10 @@ namespace SpindleSoft.Views
 
             if (_dialogResult == DialogResult.No) return;
 
-            var mobNo = dgvStaffRregister.Rows[e.RowIndex].Cells[2].Value.ToString();
-            SpindleSoft.Model.Staff _staff = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffInfo(mobNo);
-            _staff.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffImage(mobNo);
+            int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
+            SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
+            _staff.Image = PeoplePracticeBuilder.GetStaffImage(_staff.ID);
+            _staff.SecurityDocuments = PeoplePracticeBuilder.GetDocumentList(_staff.SecurityDocuments);
 
             new Winform_StaffDetails(_staff).ShowDialog();
         }
@@ -85,7 +88,9 @@ namespace SpindleSoft.Views
         {
             lblStatus.Text = "Searching..";
             progBarStatus.Value = 50;
-            dgvStaffRregister.DataSource = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
+            dgvStaffRregister.DataSource =
+                (from _staff in (SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text))
+                select new { _staff.ID,_staff.Name,_staff.Mobile_No,_staff.Phone_No}).ToList();
 
             if (dgvStaffRregister.RowCount == 0)
                 lblStatus.Text = "No Results found.";

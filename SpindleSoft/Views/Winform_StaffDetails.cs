@@ -3,14 +3,18 @@ using SpindleSoft.Savers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Linq;
+using SpindleSoft.Builders;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_StaffDetails : Winform_DetailsFormat
     {
         Staff _staff = new Staff();
+        List<Document> docList = new List<Document>();
 
         #region Ctor
         public Winform_StaffDetails()
@@ -30,6 +34,27 @@ namespace SpindleSoft.Views
             txtName.Text = _staff.Name;
             txtPhoneNo.Text = _staff.Phone_No;
             pcbStaffImage.Image = _staff.Image;
+
+            txtBankName.Text = _staff.BankName;
+            txtUserBankName.Text = _staff.BankUserName;
+            txtAccNo.Text = _staff.AccNo;
+            txtIFSCNo.Text = _staff.IfscCode;
+
+            if (_staff.SecurityDocuments!= null && _staff.SecurityDocuments.Count != 0)
+            {
+                foreach (DataGridViewRow dr in dgvSecurityDoc.Rows)
+                {
+                    int index = dgvSecurityDoc.NewRowIndex;
+                    dr.Cells[0].Value = _staff.SecurityDocuments[index].Type;
+                    dr.Cells[1].Value = _staff.SecurityDocuments[index].Path;
+
+                    dgvSecurityDoc.NotifyCurrentCellDirty(true);
+                    dgvSecurityDoc.EndEdit();
+                    dgvSecurityDoc.NotifyCurrentCellDirty(false);
+
+                    docList.Add(_staff.SecurityDocuments[index]);
+                }
+            }
 
             if (_staff.IsTemporary)
             {
@@ -149,12 +174,20 @@ namespace SpindleSoft.Views
             this._staff.Phone_No = txtPhoneNo.Text;
             this._staff.Image = pcbStaffImage.Image;
             this._staff.IsTemporary = rdbPerm.Checked == true ? false : true;
+            this._staff.BankName = txtBankName.Text;
+            this._staff.BankUserName = txtUserBankName.Text;
+            this._staff.AccNo = txtAccNo.Text;
+            this._staff.IfscCode = txtIFSCNo.Text;
+
+            this._staff.SecurityDocuments = docList;
 
             UpdateStatus("Saving Staff Info..", 50);
-            bool response = PeoplePracticeSaver.SaveStaffInfo(this._staff);
+            int _ID = PeoplePracticeSaver.SaveStaffInfo(this._staff);
 
             UpdateStatus("Saving Staff Image..", 75);
-            response = PeoplePracticeSaver.SaveStaffImage(this._staff.Image, this._staff.Mobile_No);
+            bool response = _ID != 0 ? PeoplePracticeSaver.SaveStaffImage(this._staff.Image, _ID) : false;
+
+            response = response ? PeoplePracticeSaver.SaveStaffDocument(docList, _ID) : false;
 
             if (response)
             {
@@ -168,5 +201,146 @@ namespace SpindleSoft.Views
         }
         #endregion events
 
+        private void dgvSecurityDoc_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (IsNullOrEmpty(dgvSecurityDoc.Rows[e.RowIndex].Cells[0].Value))
+            {
+                MessageBox.Show("Document Type is Mandatory", "Enter Document Type", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Document doc = new Document();
+            switch (e.ColumnIndex)
+            {
+                //dgvSecurityDoc.Columns["colDocAdd"].Index
+                case 2:
+                    DialogResult dr = openFileDialog1.ShowDialog();
+                    if (dr == DialogResult.Cancel) return;
+
+                    Document _doc = new Document();
+                    _doc.Type = dgvSecurityDoc.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    _doc.Image = new System.Drawing.Bitmap(openFileDialog1.FileName);
+                    UpdateDocumentList(_doc);
+
+                    dgvSecurityDoc.Rows[e.RowIndex].Cells[1].Value = openFileDialog1.FileName;
+                    dgvSecurityDoc.CurrentCell = dgvSecurityDoc.Rows[e.RowIndex].Cells[1];
+                    dgvSecurityDoc.NotifyCurrentCellDirty(true);
+                    dgvSecurityDoc.NotifyCurrentCellDirty(false);
+                    break;
+
+                //dgvSecurityDoc.Columns["colDocView"].Index
+                case 3:
+                    if (IsNullOrEmpty(dgvSecurityDoc.Rows[e.RowIndex].Cells[1].Value) ||
+                        IsNullOrEmpty(dgvSecurityDoc.Rows[e.RowIndex].Cells[0].Value))
+                        return;
+
+                    new Winform_PictureBox(dgvSecurityDoc.Rows[e.RowIndex].Cells[0].Value.ToString(), dgvSecurityDoc.Rows[e.RowIndex].Cells[1].Value.ToString()).ShowDialog();
+                    break;
+
+                //dgvSecurityDoc.Columns["colDocDelete"].Index
+                case 4:
+                    if (IsNullOrEmpty(dgvSecurityDoc.Rows[e.RowIndex].Cells[1].Value) ||
+                        IsNullOrEmpty(dgvSecurityDoc.Rows[e.RowIndex].Cells[0].Value))
+                        return;
+                    if (dgvSecurityDoc.Columns["colDelete"].Index == e.ColumnIndex)
+                    {
+                        DialogResult dres = MessageBox.Show("Continue deleting selected Document?", "Delete Document", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (dres == DialogResult.No) return;
+
+                        bool success = false;
+
+                        if (docList.Count != 0 && e.RowIndex + 1 <= docList.Count)
+                        {
+                            if (docList[e.RowIndex].ID != 0)
+                                success = PeoplePracticeSaver.DeleteStaffDocument(docList[e.RowIndex].ID);
+
+                            if (success || docList[e.RowIndex].ID == 0)
+                            {
+                                docList.RemoveAt(e.RowIndex);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
+                                return;
+                            }
+                        }
+                        dgvSecurityDoc.Rows.RemoveAt(e.RowIndex);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        internal void UpdateDocumentList(Document _doc)
+        {
+            var index = docList.IndexOf(docList.Where(x => x.Type == _doc.Type).SingleOrDefault());
+
+            if (docList.Count == 0 || index == -1)
+                docList.Add(_doc);
+            else
+                docList[index] = _doc;
+        }
+
+        void cbo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //var currCell = (DataGridViewComboBoxCell)dgvOrderItems.CurrentCell;
+
+            var value = (sender as ComboBox).Text;
+            if (string.IsNullOrEmpty(value)) return;
+
+            //if Product already selected inform to update.
+            foreach (DataGridViewRow rows in dgvSecurityDoc.Rows)
+            {
+                if (rows != dgvSecurityDoc.CurrentRow && !rows.IsNewRow
+                    && rows.Cells["colDocType"].Value.ToString() == value)
+                {
+                    MessageBox.Show("Document Selected Already exists in the Cart!", "Duplicate Document", MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    (sender as ComboBox).Text = String.Empty;
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            if (this.colDocType.Items.IndexOf(value) == -1)
+            {
+                DataGridViewComboBoxCell cboCell = (DataGridViewComboBoxCell)dgvSecurityDoc.CurrentCell;
+
+                this.colDocType.Items.Add(Utilities.Validation.ToTitleCase(value));
+                cboCell.Value = value;
+            }
+        }
+
+        private void dgvSecDocumet_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            //Order item - select/ add item if not present.
+
+            if (dgvSecurityDoc.CurrentCell == dgvSecurityDoc.CurrentRow.Cells["colDocType"])
+            {
+                ComboBox cb = e.Control as ComboBox;
+                if (cb != null)
+                {
+                    cb.DropDownStyle = ComboBoxStyle.DropDown;
+                    cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+                    cb.Validating += new System.ComponentModel.CancelEventHandler(cbo_Validating);
+                    //cb.Validated += new System.EventHandler(cbo_Validated);
+                }
+            }
+        }
+
+        private void Winform_StaffDetails_Load(object sender, EventArgs e)
+        {
+            List<string> docTypeList = PeoplePracticeBuilder.GetDocumentTypeList();
+            if (docTypeList != null && docTypeList.Count != 0)
+                this.colDocType.Items.AddRange(docTypeList.ToArray());
+        }
+
+        private void dgvSecurityDoc_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            log4net.ILog log = log4net.LogManager.GetLogger(typeof(Winform_StaffDetails));
+            log.Error(e.Context);
+        }
     }
 }

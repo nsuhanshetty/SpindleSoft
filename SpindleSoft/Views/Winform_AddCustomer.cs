@@ -36,9 +36,9 @@ namespace SpindleSoft.Views
 
             if (_dialogResult == DialogResult.No) return;
 
-            var mobNo = dgvSearch.Rows[e.RowIndex].Cells["Mobile_No"].Value;
-            this._cust = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerInfo(mobNo.ToString());
-            this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(mobNo.ToString());
+            var ID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value;
+            this._cust = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerInfo(int.Parse(ID.ToString()));
+            this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(this._cust.ID);
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
@@ -62,7 +62,7 @@ namespace SpindleSoft.Views
         public void LoadDgv()
         {
             dgvSearch.DataSource = (from cust in (SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text))
-                                    select new { cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+                                    select new {cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
         }
 
         private void txtMobNo_TextChanged(object sender, EventArgs e)

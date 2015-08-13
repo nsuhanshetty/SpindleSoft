@@ -17,34 +17,24 @@ namespace SpindleSoft.Builders
     {
         //todo: appsettings not working for path
         static string customerPicPath = "d:\\CustomerImages";
-        //System.Windows.Forms.Application.StartupPath + "\\CustomerImages";
         static string StaffImagePath = "d:\\StaffImages";
-        //System.Windows.Forms.Application.StartupPath + "\\StaffImages";
+        static string DocumentImagePath = "d:\\DocumentImages";
 
         static ILog log = LogManager.GetLogger(typeof(PeoplePracticeBuilder));
 
         #region CustomerBuilder
         public static List<Customer> GetCustomersList(string name = "", string mobileno = "", string phoneno = "")
         {
-            List<Customer> _cust = new List<Customer>();
             using (var session = NHibernateHelper.OpenSession())
             {
-                string query = "select c.Name,c.Mobile_No,c.Phone_No from customer c where (c.Name like :Name)" +
-                "and (c.Mobile_No like :Mobile_No) and (c.Phone_No like :Phone_No) order by c.UpdatedTime desc";
+                Customer cust = null;
+                List<Customer> custList = session.QueryOver<Customer>(() => cust)
+                     .Where(NHibernate.Criterion.Restrictions.On(() => cust.Name).IsLike(name + "%"))
+                     .Where(NHibernate.Criterion.Restrictions.On(() => cust.Mobile_No).IsLike(mobileno + "%"))
+                     .Where(NHibernate.Criterion.Restrictions.On(() => cust.Phone_No).IsLike(phoneno + "%"))
+                     .List() as List<Customer>;
 
-                NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
-                   .SetParameter("Name", name + "%")
-                   .SetParameter("Mobile_No", mobileno + "%")
-                   .SetParameter("Phone_No", phoneno + "%"))
-                   .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Customer)));
-                return _cust = sqlQuery.List<Customer>() as List<Customer>;
-
-                //var _custs = session.QueryOver<Customer>()
-                //      .WhereRestrictionOn(c => c.Mobile_No).IsLike(mobileno + '%')
-                //      .And(Restrictions.On<Customer>(c => c.Name).IsLike(name + '%'))
-                //      .And(Restrictions.On<Customer>(c => c.Phone_No).IsLike(phoneno + '%'))
-                //     .List() as List<Customer>;
-                // return _custs;
+                return custList;
             }
 
         }
@@ -105,11 +95,11 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static Image GetCustomerImage(string mobNo)
+        public static Image GetCustomerImage(int _custID)
         {
             try
             {
-                using (Image image = Image.FromFile(customerPicPath + "\\" + mobNo + ".png"))
+                using (Image image = Image.FromFile(customerPicPath + "\\" + _custID + ".png"))
                 {
                     Bitmap bitmap = new Bitmap(image);
                     return bitmap;
@@ -124,18 +114,18 @@ namespace SpindleSoft.Builders
 
         public static bool IsCustomerMobileNoUnique(string mobNo)
         {
-             bool _exists;
+            bool _exists;
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
                     _exists = session.Query<Customer>().Any(x => x.Mobile_No == mobNo);
-                    return _exists;         
+                    return _exists;
                 }
             }
             catch (Exception ex)
             {
-                log.Error(ex);   
+                log.Error(ex);
                 return true;
             }
         }
@@ -164,15 +154,19 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static Staff GetStaffInfo(string mobNo)
+        public static Staff GetStaffInfo(int _ID)
         {
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
                     var staff = (from _staff in session.Query<Staff>()
-                                 where _staff.Mobile_No == mobNo
-                                 select _staff).Single();
+                                 where _staff.ID == _ID
+                                 select _staff).SingleOrDefault();
+                    staff.SecurityDocuments = session.QueryOver<Document>()
+                        .Where(x => (x.Staff.ID == _ID))
+                        .Fetch(o => o.Staff).Eager
+                        .Future().ToList();
                     return staff;
                 }
             }
@@ -183,11 +177,11 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static Image GetStaffImage(string mobileNo)
+        public static Image GetStaffImage(int _ID)
         {
             try
             {
-                using (Image image = Image.FromFile(StaffImagePath + "\\" + mobileNo + ".png"))
+                using (Image image = Image.FromFile(StaffImagePath + "\\" + _ID + ".png"))
                 {
                     Bitmap bitmap = new Bitmap(image);
                     return bitmap;
@@ -199,6 +193,47 @@ namespace SpindleSoft.Builders
                 return null;
             }
         }
+
+        public static List<string> GetDocumentTypeList()
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    List<string> _docList = (from s in session.Query<Document>()
+                                             select s.Type).Distinct().ToList();
+                    return _docList;
+                }
+
+            }
+            catch (Exception)
+            {
+                //todo: log4net
+                return null;
+            }
+        }
+
+        public static IList<Document> GetDocumentList(IList<Document> docList)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    foreach (Document doc in docList)
+                    {
+                        doc.Path = string.Format("{0}\\{2}_{1}.png", DocumentImagePath, doc.Type, doc.Staff.ID);
+                        doc.Image = Image.FromFile(doc.Path);
+                    }
+                    return docList;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
+            }
+        }
+
         #endregion Staff
 
         #region Vendor

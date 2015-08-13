@@ -70,7 +70,6 @@
             this.txtPhoneNo.Size = new System.Drawing.Size(115, 20);
             this.txtPhoneNo.TabIndex = 100;
             this.txtPhoneNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-            this.txtPhoneNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNo_Validating);
             // 
             // txtMobNo
             // 
@@ -80,7 +79,6 @@
             this.txtMobNo.Size = new System.Drawing.Size(115, 20);
             this.txtMobNo.TabIndex = 97;
             this.txtMobNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-            this.txtMobNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtMobNo_Validating);
             // 
             // label1
             // 
@@ -121,6 +119,7 @@
             // dgvStaffRregister
             // 
             this.dgvStaffRregister.AllowUserToDeleteRows = false;
+            this.dgvStaffRregister.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvStaffRregister.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStaffRregister.Location = new System.Drawing.Point(2, 72);
             this.dgvStaffRregister.Name = "dgvStaffRregister";

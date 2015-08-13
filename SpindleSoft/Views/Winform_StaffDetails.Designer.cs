@@ -52,20 +52,30 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtUserBankName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtIFSCNo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtAccNo = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtBankName = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dgvSecurityDoc = new System.Windows.Forms.DataGridView();
+            this.colDocType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colDocPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDocAdd = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colDocView = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.grbMemNo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbStaffImage)).BeginInit();
             this.grbMemPersonDetail.SuspendLayout();
             this.grpBoxStaffType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSecurityDoc)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip_Label
@@ -125,7 +135,7 @@
             this.grbMemPersonDetail.Controls.Add(this.txtMobNo);
             this.grbMemPersonDetail.Location = new System.Drawing.Point(159, 62);
             this.grbMemPersonDetail.Name = "grbMemPersonDetail";
-            this.grbMemPersonDetail.Size = new System.Drawing.Size(354, 192);
+            this.grbMemPersonDetail.Size = new System.Drawing.Size(364, 192);
             this.grbMemPersonDetail.TabIndex = 0;
             this.grbMemPersonDetail.TabStop = false;
             this.grbMemPersonDetail.Text = "Personal Details";
@@ -276,20 +286,27 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox4);
+            this.groupBox1.Controls.Add(this.txtUserBankName);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.txtIFSCNo);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.txtAccNo);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(159, 260);
+            this.groupBox1.Controls.Add(this.txtBankName);
+            this.groupBox1.Location = new System.Drawing.Point(159, 259);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(354, 119);
-            this.groupBox1.TabIndex = 123;
+            this.groupBox1.Size = new System.Drawing.Size(364, 119);
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bank Details";
+            // 
+            // txtUserBankName
+            // 
+            this.txtUserBankName.Location = new System.Drawing.Point(98, 17);
+            this.txtUserBankName.Name = "txtUserBankName";
+            this.txtUserBankName.Size = new System.Drawing.Size(243, 20);
+            this.txtUserBankName.TabIndex = 0;
             // 
             // label4
             // 
@@ -300,54 +317,13 @@
             this.label4.TabIndex = 125;
             this.label4.Text = "IFSC Code";
             // 
-            // textBox3
+            // txtIFSCNo
             // 
-            this.textBox3.Location = new System.Drawing.Point(98, 89);
-            this.textBox3.MaxLength = 10;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(243, 20);
-            this.textBox3.TabIndex = 124;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 67);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 13);
-            this.label3.TabIndex = 88;
-            this.label3.Text = "Acc. No";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(98, 64);
-            this.textBox2.MaxLength = 10;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(243, 20);
-            this.textBox2.TabIndex = 87;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 44);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
-            this.label2.TabIndex = 86;
-            this.label2.Text = "Bank Name";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(98, 41);
-            this.textBox1.MaxLength = 10;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(243, 20);
-            this.textBox1.TabIndex = 85;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(98, 17);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(243, 20);
-            this.textBox4.TabIndex = 97;
+            this.txtIFSCNo.Location = new System.Drawing.Point(98, 89);
+            this.txtIFSCNo.MaxLength = 20;
+            this.txtIFSCNo.Name = "txtIFSCNo";
+            this.txtIFSCNo.Size = new System.Drawing.Size(243, 20);
+            this.txtIFSCNo.TabIndex = 3;
             // 
             // label5
             // 
@@ -358,19 +334,121 @@
             this.label5.TabIndex = 98;
             this.label5.Text = "Name ";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 67);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 13);
+            this.label3.TabIndex = 88;
+            this.label3.Text = "Acc. No";
+            // 
+            // txtAccNo
+            // 
+            this.txtAccNo.Location = new System.Drawing.Point(98, 64);
+            this.txtAccNo.MaxLength = 20;
+            this.txtAccNo.Name = "txtAccNo";
+            this.txtAccNo.Size = new System.Drawing.Size(243, 20);
+            this.txtAccNo.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.TabIndex = 86;
+            this.label2.Text = "Bank Name";
+            // 
+            // txtBankName
+            // 
+            this.txtBankName.Location = new System.Drawing.Point(98, 41);
+            this.txtBankName.MaxLength = 10;
+            this.txtBankName.Name = "txtBankName";
+            this.txtBankName.Size = new System.Drawing.Size(243, 20);
+            this.txtBankName.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.dgvSecurityDoc);
+            this.groupBox2.Location = new System.Drawing.Point(159, 385);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(418, 119);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Security Documents";
+            // 
+            // dgvSecurityDoc
+            // 
+            this.dgvSecurityDoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSecurityDoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDocType,
+            this.colDocPath,
+            this.colDocAdd,
+            this.colDocView,
+            this.ColDelete});
+            this.dgvSecurityDoc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvSecurityDoc.Location = new System.Drawing.Point(3, 16);
+            this.dgvSecurityDoc.Name = "dgvSecurityDoc";
+            this.dgvSecurityDoc.Size = new System.Drawing.Size(412, 100);
+            this.dgvSecurityDoc.TabIndex = 0;
+            this.dgvSecurityDoc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSecurityDoc_CellContentClick);
+            this.dgvSecurityDoc.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSecurityDoc_DataError);
+            this.dgvSecurityDoc.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvSecDocumet_EditingControlShowing);
+            // 
+            // colDocType
+            // 
+            this.colDocType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colDocType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.colDocType.HeaderText = "Document Type";
+            this.colDocType.Name = "colDocType";
+            this.colDocType.Width = 80;
+            // 
+            // colDocPath
+            // 
+            this.colDocPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDocPath.HeaderText = "Document Path";
+            this.colDocPath.Name = "colDocPath";
+            this.colDocPath.ReadOnly = true;
+            // 
+            // colDocAdd
+            // 
+            this.colDocAdd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDocAdd.HeaderText = "Click To Add";
+            this.colDocAdd.Name = "colDocAdd";
+            // 
+            // colDocView
+            // 
+            this.colDocView.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDocView.HeaderText = "Click To View";
+            this.colDocView.Name = "colDocView";
+            // 
+            // ColDelete
+            // 
+            this.ColDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColDelete.HeaderText = "Click To Delete";
+            this.ColDelete.Name = "ColDelete";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "Images|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff";
+            // 
             // Winform_StaffDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(517, 406);
+            this.ClientSize = new System.Drawing.Size(589, 532);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbMemNo);
             this.Controls.Add(this.grbMemPersonDetail);
             this.Name = "Winform_StaffDetails";
             this.Text = "Staff Details";
+            this.Load += new System.EventHandler(this.Winform_StaffDetails_Load);
             this.Controls.SetChildIndex(this.grbMemPersonDetail, 0);
             this.Controls.SetChildIndex(this.grbMemNo, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.groupBox2, 0);
             this.grbMemNo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pcbStaffImage)).EndInit();
             this.grbMemPersonDetail.ResumeLayout(false);
@@ -380,6 +458,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSecurityDoc)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -413,12 +493,23 @@
         private System.Windows.Forms.RadioButton rdbOSrc;
         private System.Windows.Forms.GroupBox groupBox1;
         internal System.Windows.Forms.Label label3;
-        internal System.Windows.Forms.TextBox textBox2;
+        internal System.Windows.Forms.TextBox txtAccNo;
         internal System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.TextBox textBox1;
+        internal System.Windows.Forms.TextBox txtBankName;
         internal System.Windows.Forms.Label label4;
-        internal System.Windows.Forms.TextBox textBox3;
-        internal System.Windows.Forms.TextBox textBox4;
+        internal System.Windows.Forms.TextBox txtIFSCNo;
+        internal System.Windows.Forms.TextBox txtUserBankName;
         internal System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridView dgvSecurityDoc;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colDocType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocPath;
+        private System.Windows.Forms.DataGridViewButtonColumn colDocAdd;
+        private System.Windows.Forms.DataGridViewButtonColumn colDocView;
+        private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

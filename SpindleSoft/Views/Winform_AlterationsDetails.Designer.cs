@@ -492,8 +492,6 @@
         internal System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtpDueDate;
         internal System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.DataGridViewComboBoxColumn AltType;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltQuantity;

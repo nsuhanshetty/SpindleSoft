@@ -204,7 +204,7 @@
             this.AddReferralToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.AddReferralToolStrip.Name = "AddReferralToolStrip";
             this.AddReferralToolStrip.Size = new System.Drawing.Size(76, 51);
-            this.AddReferralToolStrip.Text = "Add Referral";
+            this.AddReferralToolStrip.Text = "&Add Referral";
             this.AddReferralToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.AddReferralToolStrip.Click += new System.EventHandler(this.AddReferralToolStrip_Click);
             // 

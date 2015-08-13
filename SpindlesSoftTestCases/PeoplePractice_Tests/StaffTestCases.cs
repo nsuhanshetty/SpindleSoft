@@ -17,11 +17,11 @@ namespace SpindlesSoftTestCases
         #region getStaff
         //getstaffinfo
         [Test]
-        [TestCase("1111111114", true)]
-        [TestCase("1111111116", false)]
-         public void GetStaffInfo_Test(string mobileno,bool success)
+        [TestCase(1, true)]
+        [TestCase(2, false)]
+         public void GetStaffInfo_Test(int _ID,bool success)
         {
-            Staff staff = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffInfo(mobileno);
+            Staff staff = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffInfo(_ID);
             Assert.AreEqual(staff != null, success);
         }
         
@@ -42,11 +42,11 @@ namespace SpindlesSoftTestCases
 
         //getstaffimage
         [Test]
-        [TestCase("1111111114", true)]
-        [TestCase("1111111116", false)]
-        public void GetStaffImage_Test(string mobileNo, bool success)
+        [TestCase(2, true)]
+        [TestCase(3, false)]
+        public void GetStaffImage_Test(int _ID, bool success)
         {
-            Image image = PeoplePracticeBuilder.GetStaffImage(mobileNo);
+            Image image = PeoplePracticeBuilder.GetStaffImage(_ID);
             Assert.AreEqual(image != null, success);
 
             if (image != null)
@@ -62,19 +62,19 @@ namespace SpindlesSoftTestCases
         public void SaveStaffInfo_Test(string name, string mobNo, string phoneNo, string address = "", bool IsTemporary = true)
         {
             Staff staff = new Staff(name, mobNo, phoneNo, address, IsTemporary);
-            bool success = PeoplePracticeSaver.SaveStaffInfo(staff);
-            Assert.AreEqual(success, true);
+            int _ID = PeoplePracticeSaver.SaveStaffInfo(staff);
+            Assert.AreEqual(_ID!=0, true);
         }
 
         [Test]
-        [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\AddReferral.png", "1111111114")]
-        [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\User.png", "1111111114")]
-        public void SaveStaffImage_Test(string path, string mobNo)
+        [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\AddReferral.png",2)]
+        [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\User.png", 3)]
+        public void SaveStaffImage_Test(string path, int _ID)
         {
             byte[] bytes = System.IO.File.ReadAllBytes(path);
             System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
             Image image = Image.FromStream(ms);
-            bool success = PeoplePracticeSaver.SaveStaffImage(image, mobNo);
+            bool success = PeoplePracticeSaver.SaveStaffImage(image, _ID);
             Assert.AreEqual(success, true);
         }
         #endregion Create

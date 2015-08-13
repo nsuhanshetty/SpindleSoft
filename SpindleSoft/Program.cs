@@ -12,6 +12,7 @@ namespace SpindleSoft
         [STAThread]
         private static void Main()
         {
+            log4net.Config.XmlConfigurator.Configure();
             log4net.ILog log = LogManager.GetLogger(typeof(Main));
             try
             {
@@ -21,6 +22,7 @@ namespace SpindleSoft
             }
             catch(Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 log.Error(ex);
             }
         }

@@ -32,6 +32,7 @@ namespace SpindleSoft.Savers
                     {
                         transaction.Rollback();
                         log.Error(ex.Message);
+                        System.Windows.Forms.MessageBox.Show("Message:" + ex.Message + Environment.NewLine + "InnerException:" + ex.InnerException + "Source:" + ex.Source);
                         return false;
                     }
                 }

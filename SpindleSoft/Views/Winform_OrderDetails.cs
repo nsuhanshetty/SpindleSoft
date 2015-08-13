@@ -100,7 +100,7 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.Mobile_No);
+            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
         }
 
         internal void UpdateOrderItemList(OrderItem _item)
@@ -373,7 +373,8 @@ namespace SpindleSoft.Views
             try
             {
                 List<string> orderTypeList = OrderBuilder.GetListOfClothingTypes();
-                this.OrderType.Items.AddRange(orderTypeList.ToArray());
+                if (OrderType != null)
+                    this.OrderType.Items.AddRange(orderTypeList.ToArray());
             }
             catch (Exception ex)
             {

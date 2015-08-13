@@ -79,6 +79,16 @@ namespace SpindleSoft.Model
 
         public virtual bool IsTemporary { get; set; }
 
+        public virtual string BankName { get; set; }
+
+        public virtual string BankUserName { get; set; }
+
+        public virtual string AccNo { get; set; }
+
+        public virtual string IfscCode { get; set; }
+
+        public virtual IList<Document> SecurityDocuments { get; set; }
+
         public Staff() { }
 
         public Staff(string name, string mobNo, string phNo, string address="", bool isTempo=true)
