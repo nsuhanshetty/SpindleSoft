@@ -61,8 +61,8 @@ namespace SpindlesSoftTestCases.PeoplePractice_Tests
         public void SaveCustomerInfo_Test(string name, string mobNo, string phoneNo, string address = "", string email = "")
         {
             Customer cust = new Customer(name, mobNo, phoneNo, address, email);
-            int _ID = PeoplePracticeSaver.SaveCustomerInfo(cust);
-            Assert.AreEqual(_ID!=0, true);
+            bool response = PeoplePracticeSaver.SaveCustomerInfo(cust);
+            Assert.AreEqual(response, true);
         }
 
         [Test]

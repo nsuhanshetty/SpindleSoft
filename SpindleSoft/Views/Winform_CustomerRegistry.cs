@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SpindleSoft.Builders;
 using SpindleSoft.Model;
 using System.Text.RegularExpressions;
+using Equin.ApplicationFramework;
 
 namespace SpindleSoft.Views
 {
@@ -29,6 +30,8 @@ namespace SpindleSoft.Views
         #region Events
         private void dgvCustomerRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
+
             DialogResult _dialogResult = MessageBox.Show("Do you want to Modify the details of Customer " +
                                          Convert.ToString(dgvCustomerRegister.Rows[e.RowIndex].Cells[1].Value),
                                          "Modify Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
@@ -49,19 +52,18 @@ namespace SpindleSoft.Views
             lblStatus.Text = "Searching...";
             progBarStatus.Value = 50;
 
-            dgvCustomerRegister.DataSource = (from cust in (PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text))
-                                              select new { cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+            List<Customer> custList = new List<Customer>();
+            custList = PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
 
-            ////dgvCustomerRegister.Columns.RemoveAt(0);
-            //dgvCustomerRegister.Columns.RemoveAt(4);
-            //dgvCustomerRegister.Columns.Remove("image");
-            //dgvCustomerRegister.Columns.Remove("address");
-            //dgvCustomerRegister.Columns.Remove("ReferralID");
-
-            if (dgvCustomerRegister.RowCount == 0)
-                lblStatus.Text = "No Results Found";
+            if (custList != null && custList.Count != 0)
+            {
+                dgvCustomerRegister.DataSource = (from cust in custList
+                                                  select new { cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+            }
             else
-                lblStatus.Text = dgvCustomerRegister.RowCount + " Results Found";
+                dgvCustomerRegister.DataSource = null;
+
+            lblStatus.Text = (dgvCustomerRegister.RowCount == 0) ? "No Results Found" : dgvCustomerRegister.RowCount + " Results Found";
             progBarStatus.Value = 100;
         }
         #endregion Events

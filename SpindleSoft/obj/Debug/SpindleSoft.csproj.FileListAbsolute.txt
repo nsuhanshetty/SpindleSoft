@@ -61,3 +61,5 @@ C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.pdb
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\MySql.Data.dll
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.csprojResolveAssemblyReference.cache
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Equin.ApplicationFramework.BindingListView.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\log4net-loggly.dll

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="SpindleSoft.exe" version="1.0.0.16" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="SpindleSoft.exe" version="1.0.0.18" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:publisher="SpindleSoft" co.v1:suiteName="SpindleSoft" asmv2:product="SpindleSoft" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -44,6 +44,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Equin.ApplicationFramework.BindingListView.dll" size="53248">
+      <assemblyIdentity name="Equin.ApplicationFramework.BindingListView" version="1.3.4920.18721" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>kXxzKcqLtXVLmZmfF6075XemAoEulNuYrOCOouADJek=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FluentNHibernate.dll" size="521216">
       <assemblyIdentity name="FluentNHibernate" version="2.0.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -76,6 +88,18 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>zm7k/ceDpb+QXyQBeKyW6ut+3iL/4GoGuhec0aBEK9M=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="log4net-loggly.dll" size="18944">
+      <assemblyIdentity name="log4net-loggly" version="7.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>0Wh++Hk67uE+f8SeJ13EI0qInE4cA+YV23DfcY+8MvE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -116,14 +140,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpindleSoft.exe" size="461832">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpindleSoft.exe" size="463368">
       <assemblyIdentity name="SpindleSoft" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8hAtSossdolGepuEXcvmQiNNelbEcOKryzzQctou5Ek=</dsig:DigestValue>
+        <dsig:DigestValue>EnKwJ1sDAhn1ch+T1N4b4zp+z+0uD3wCNLRHT4ChJgg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -175,13 +199,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="SpindleSoft.exe.config" size="3375">
+  <file name="SpindleSoft.exe.config" size="3873">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>CuFgCg/tY/Z45hz1GqMxiEDom+rpsO2c/wnh5FL53DM=</dsig:DigestValue>
+      <dsig:DigestValue>PlyZWagZtSb70k2Y/VTl5VFGa47MYUGQKGalSkNm+QI=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

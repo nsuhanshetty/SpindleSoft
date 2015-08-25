@@ -154,6 +154,7 @@
             // 
             // dgvCustomerRegister
             // 
+            this.dgvCustomerRegister.AllowUserToAddRows = false;
             this.dgvCustomerRegister.AllowUserToDeleteRows = false;
             this.dgvCustomerRegister.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -185,6 +186,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvCustomerRegister.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCustomerRegister.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvCustomerRegister.Size = new System.Drawing.Size(563, 286);
             this.dgvCustomerRegister.TabIndex = 0;
             this.dgvCustomerRegister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellContentClick);
@@ -229,8 +231,8 @@
         internal System.Windows.Forms.TextBox txtPhoneNo;
         internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridView dgvCustomerRegister;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ToolStripProgressBar progBarStatus;
+        private System.Windows.Forms.DataGridView dgvCustomerRegister;
     }
 }

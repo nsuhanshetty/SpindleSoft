@@ -20,31 +20,33 @@ namespace SpindleSoft.Savers
         static string DocumentImagePath = "d:\\DocumentImages";
 
         #region Customer
-        public static int SaveCustomerInfo(Customer _customer)
+        public static bool SaveCustomerInfo(Customer _customer)
         {
-            try
+            using (var session = NHibernateHelper.OpenSession())
             {
-                using (var session = NHibernateHelper.OpenSession())
+                using (var tx = session.BeginTransaction())
                 {
-                    using (var transaction = session.BeginTransaction())
+                    try
                     {
                         session.SaveOrUpdate(_customer);
-                        transaction.Commit();
-                        return _customer.ID;
+                       
+                        bool response = _customer.ID != 0 ? PeoplePracticeSaver.SaveCustomerImage(_customer.Image, _customer.ID) : false;
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        tx.Rollback();
+                        return false;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                return 0;
-                //throw;
-            }
-
         }
 
         public static bool SaveCustomerImage(Image image, int custID)
         {
+            if (image == null) return true;
             string filePath = string.Format("{0}\\{1}.png", CustomerImagePath, custID);
             try
             {
@@ -123,7 +125,7 @@ namespace SpindleSoft.Savers
                     else if (System.IO.File.Exists(filePath))
                         System.IO.File.Delete(filePath);
 
-                    doc.Image.Save(filePath, ImageFormat.Png);                   
+                    doc.Image.Save(filePath, ImageFormat.Png);
                 }
                 catch (Exception ex)
                 {

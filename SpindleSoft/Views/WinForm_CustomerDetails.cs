@@ -27,7 +27,7 @@ namespace SpindleSoft.Views
         public WinForm_CustomerDetails(Customer _cust)
         {
             InitializeComponent();
-            
+
             this._cust = _cust;
 
             /*Load Controls*/
@@ -62,7 +62,7 @@ namespace SpindleSoft.Views
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //need to handle this situation well
-            string[] input = { "txtAddress", "txtEmailID", "txtRefMob", "txtRefName", "pcbReferral","txtPhoneNo" };
+            string[] input = { "txtAddress", "txtEmailID", "txtRefMob", "txtRefName", "pcbReferral", "txtPhoneNo", "pcbCustImage" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
@@ -77,13 +77,14 @@ namespace SpindleSoft.Views
             this._cust.Address = txtAddress.Text;
             this._cust.Image = pcbCustImage.Image;
             //this._cust.Image = pcbCustImage.Image;
-            this._cust.ReferralID = refCust.ID;
-            
+            if (refCust != null)
+                this._cust.ReferralID = refCust.ID;
+
             UpdateStatus("Saving..", 50);
-            int _id = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
+            bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
 
             UpdateStatus("Saving..", 75);
-            bool response = _id!=0 ? PeoplePracticeSaver.SaveCustomerImage(this._cust.Image, this._cust.ID) : false;
+            //bool response = _id!=0 ? PeoplePracticeSaver.SaveCustomerImage(this._cust.Image, this._cust.ID) : false;
 
             if (response)
             {
@@ -103,7 +104,7 @@ namespace SpindleSoft.Views
         //todo: Remove AddReferralToolStrip_Click
         private void AddReferralToolStrip_Click(object sender, EventArgs e)
         {
-            new Winform_AddCustomer().ShowDialog();            
+            new Winform_AddCustomer().ShowDialog();
         }
 
         //todo: Remove MeasurementDetailsToolStrip_Click
@@ -155,7 +156,7 @@ namespace SpindleSoft.Views
             }
 
             //Check if mobile no is unique
-           
+
         }
 
         private void txtName_Validated(object sender, EventArgs e)

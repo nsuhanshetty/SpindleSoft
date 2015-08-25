@@ -25,6 +25,8 @@ namespace SpindleSoft.Builders
         #region CustomerBuilder
         public static List<Customer> GetCustomersList(string name = "", string mobileno = "", string phoneno = "")
         {
+            if (name == "" && mobileno == "" && phoneno == "") return null;
+
             using (var session = NHibernateHelper.OpenSession())
             {
                 Customer cust = null;
@@ -32,6 +34,7 @@ namespace SpindleSoft.Builders
                      .Where(NHibernate.Criterion.Restrictions.On(() => cust.Name).IsLike(name + "%"))
                      .Where(NHibernate.Criterion.Restrictions.On(() => cust.Mobile_No).IsLike(mobileno + "%"))
                      .Where(NHibernate.Criterion.Restrictions.On(() => cust.Phone_No).IsLike(phoneno + "%"))
+                     .Take(15)
                      .List() as List<Customer>;
 
                 return custList;

@@ -61,6 +61,7 @@ namespace SpindleSoft
         {
             dgvSearch.DataSource = "";
             txtSearch.Text = string.Empty;
+            lblSearchCount.Text = "0";
         }
         private void UpdateSearchText(string _updateText)
         {
@@ -360,16 +361,17 @@ namespace SpindleSoft
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
             try
             {
                 switch (searchState.ToString())
                 {
                     case "Customer":
-                        var mobileNo = dgvSearch.Rows[e.RowIndex].Cells[1].Value.ToString();
+                        var _ID = dgvSearch.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                        if (String.IsNullOrEmpty(mobileNo)) return;
+                        if (String.IsNullOrEmpty(_ID)) return;
 
-                        Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(mobileNo);
+                        Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(int.Parse(_ID));
                         _cust.Image = PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
 
                         if (_cust == null && _cust.Image == null) return;
@@ -400,8 +402,11 @@ namespace SpindleSoft
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(txtSearch.Text)) return;
+            //if (String.IsNullOrEmpty(txtSearch.Text)) return;
+
             dgvSearch.DataSource = Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);
+            lblSearchCount.Text = dgvSearch.Rows.Count.ToString();
+
         }
         #endregion Event
 

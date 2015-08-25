@@ -29,6 +29,8 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
+
             DialogResult _dialogResult = MessageBox.Show("Do you want to Add Customer " +
                                          Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value),
                                          "Add Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
@@ -61,8 +63,18 @@ namespace SpindleSoft.Views
 
         public void LoadDgv()
         {
-            dgvSearch.DataSource = (from cust in (SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text))
-                                    select new {cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+            var custList = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
+
+            if (custList != null && custList.Count != 0)
+            {
+                dgvSearch.DataSource = (from cust in custList
+                                        select new { cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+            }
+            else
+                dgvSearch.DataSource = null;
+
+            lblStatus.Text = (dgvSearch.RowCount == 0) ? "No Results Found" : dgvSearch.RowCount + " Results Found";
+            progBarStatus.Value = 100;
         }
 
         private void txtMobNo_TextChanged(object sender, EventArgs e)

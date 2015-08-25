@@ -470,6 +470,21 @@
   <metadata name="OrderDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="OrderType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="OrderQuantity.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="OrderPrice.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="OrderMeasurement.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="OrderDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="AddCustomerToolStrip.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -502,22 +517,22 @@
   <data name="NewOrderTypeToolStrip.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         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
-        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
+        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
         AAAAAElFTkSuQmCC
 </value>
   </data>
@@ -526,20 +541,5 @@
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
-  </metadata>
-  <metadata name="OrderType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="OrderQuantity.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="OrderPrice.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="OrderMeasurement.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="OrderDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
   </metadata>
 </root>

@@ -31,7 +31,7 @@ namespace SpindleSoft
                                 .Server("localhost")
                                 .Database("SpindleSoftDb")
                                 .Username("sa")
-                                .Password("sshetty")).ShowSql())
+                                .Password("sshetty")))
                     //(c => c.FromAppSetting("ConnectionString")) // Modify your ConnectionString
                     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>())
                     //.ExposeConfiguration(cfg => new NHibernate.Tool.hbm2ddl.SchemaExport(cfg).Create(true, true))
