@@ -109,6 +109,7 @@ namespace SpindleSoft.Views
             _item.SleeveLength = txtSlvLength.Text;
             _item.SleeveLoose = txtSlvLoose.Text;
             _item.Comment = txtComment.Text;
+            _item.DateUpdated = DateTime.Now;
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)

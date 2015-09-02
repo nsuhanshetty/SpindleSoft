@@ -173,7 +173,7 @@ namespace SpindleSoft.Views
             order.TotalPrice = TotalAmount;
             order.CurrentPayment = AmountPaid;
             order.Status = cmbStatus.SelectedIndex;
-
+            
             UpdateStatus("Saving..", 50);
             bool success = OrderSaver.SaveOrder(order);
 
@@ -416,18 +416,18 @@ namespace SpindleSoft.Views
             if (string.IsNullOrEmpty(value)) return;
 
             //if Product already selected inform to update.
-            foreach (DataGridViewRow rows in dgvOrderItems.Rows)
-            {
-                if (rows != dgvOrderItems.CurrentRow && !rows.IsNewRow
-                    && rows.Cells["OrderType"].Value.ToString() == value)
-                {
-                    MessageBox.Show("Product Selected Already exists in the Cart!", "Duplicate Product", MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-                    (sender as ComboBox).Text = String.Empty;
-                    e.Cancel = true;
-                    return;
-                }
-            }
+            //foreach (DataGridViewRow rows in dgvOrderItems.Rows)
+            //{
+            //    if (rows != dgvOrderItems.CurrentRow && !rows.IsNewRow
+            //        && rows.Cells["OrderType"].Value.ToString() == value)
+            //    {
+            //        MessageBox.Show("Product Selected Already exists in the Cart!", "Duplicate Product", MessageBoxButtons.OK,
+            //            MessageBoxIcon.Warning);
+            //        (sender as ComboBox).Text = String.Empty;
+            //        e.Cancel = true;
+            //        return;
+            //    }
+            //}
 
             if (this.OrderType.Items.IndexOf(value) == -1)
             {
@@ -470,6 +470,31 @@ namespace SpindleSoft.Views
         private void dgvOrderItems_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             log.Error(e.Context);
+        }
+
+        private void dgvOrderItems_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (IsNullOrEmpty(dgvOrderItems.Rows[e.RowIndex].Cells[""].Value) && IsNullOrEmpty(dgvOrderItems.Rows[e.RowIndex].Cells[""].Value) &&
+                IsNullOrEmpty(dgvOrderItems.Rows[e.RowIndex].Cells[""].Value) && itemli)
+        }
+
+        protected override bool ProcessKeyMessage(ref Message message)
+        {
+            if (message.Msg == 0x100)
+            {
+                Keys keyCode = (Keys)message.WParam & Keys.KeyCode;
+
+                switch (keyCode)
+                {
+                    //case Keys.F1:
+                    //    this.toolStripButton1_Click(this, EventArgs.Empty);
+                    //    break;
+                    case Keys.F2:
+                        this.toolStripButton2_Click(this, EventArgs.Empty);
+                        break;
+                }
+            }
+            return base.ProcessKeyMessage(ref message);
         }
 
     }

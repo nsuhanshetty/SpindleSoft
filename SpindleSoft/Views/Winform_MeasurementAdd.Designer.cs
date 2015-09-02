@@ -90,6 +90,7 @@
             // 
             // grpBxMeasurements
             // 
+            this.grpBxMeasurements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.grpBxMeasurements.Controls.Add(this.groupBox2);
             this.grpBxMeasurements.Controls.Add(this.groupBox4);
             this.grpBxMeasurements.Controls.Add(this.groupBox1);

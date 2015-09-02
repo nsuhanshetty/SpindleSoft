@@ -42,7 +42,7 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dgvSearch.Columns["colDelete"].Index) return;
+            if (e.RowIndex == -1 || e.ColumnIndex == dgvSearch.Columns["colDelete"].Index) return;
 
             statusStrip1.Text = "Gathering Data..";
             toolStripProgressBar1.Value = 25;
@@ -66,7 +66,7 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value == null) return;
+            if (e.RowIndex == -1 || dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value == null) return;
             int orderID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString());
 
             if (e.ColumnIndex == dgvSearch.Columns["colDelete"].Index)

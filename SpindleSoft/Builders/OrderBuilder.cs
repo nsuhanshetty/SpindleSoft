@@ -117,6 +117,8 @@ namespace SpindleSoft.Builders
 
         public static List<Orders> GetOrdersList(string custName = "", string custMob = "", string orderId = "")
         {
+            if (custMob == "" && custName == "" && orderId == "") return null;
+
             List<Orders> orderList = new List<Orders>();
             int id;
             int.TryParse(orderId, out id);

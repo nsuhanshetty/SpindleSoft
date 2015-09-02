@@ -55,12 +55,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtTotAmnt = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).BeginInit();
@@ -92,9 +92,10 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvOrderItems);
-            this.groupBox2.Location = new System.Drawing.Point(8, 239);
+            this.groupBox2.Controls.Add(this.btnDelete);
+            this.groupBox2.Location = new System.Drawing.Point(8, 211);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(592, 166);
+            this.groupBox2.Size = new System.Drawing.Size(592, 213);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add Order Details";
@@ -108,15 +109,15 @@
             this.OrderPrice,
             this.OrderMeasurement,
             this.OrderDelete});
-            this.dgvOrderItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvOrderItems.Location = new System.Drawing.Point(3, 16);
+            this.dgvOrderItems.Location = new System.Drawing.Point(3, 51);
             this.dgvOrderItems.Name = "dgvOrderItems";
-            this.dgvOrderItems.Size = new System.Drawing.Size(586, 147);
+            this.dgvOrderItems.Size = new System.Drawing.Size(586, 156);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dgvOrderItems.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellEndEdit);
             this.dgvOrderItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvOrderItems_DataError);
             this.dgvOrderItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvOrderItems_EditingControlShowing);
+            this.dgvOrderItems.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_RowLeave);
             // 
             // OrderType
             // 
@@ -297,15 +298,6 @@
             this.label6.TabIndex = 140;
             this.label6.Text = "Total Amount";
             // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(464, 214);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(133, 23);
-            this.btnDelete.TabIndex = 155;
-            this.btnDelete.Text = "Select Row to Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            // 
             // dtpDeliveryDate
             // 
             this.dtpDeliveryDate.CustomFormat = "dd-MM-yyyy";
@@ -366,13 +358,23 @@
             this.label7.TabIndex = 140;
             this.label7.Text = "Order Status";
             // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.Location = new System.Drawing.Point(547, 10);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(39, 35);
+            this.btnDelete.TabIndex = 155;
+            this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnDelete.UseVisualStyleBackColor = false;
+            // 
             // Winform_OrderDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 430);
+            this.ClientSize = new System.Drawing.Size(604, 450);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.grpBoxCustomer);
             this.Controls.Add(this.groupBox2);
             this.Name = "Winform_OrderDetails";
@@ -380,7 +382,6 @@
             this.Load += new System.EventHandler(this.Winform_OrderDetails_Load);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.grpBoxCustomer, 0);
-            this.Controls.SetChildIndex(this.btnDelete, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -411,7 +412,6 @@
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.TextBox txtTotAmnt;
         internal System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnDelete;
         internal System.Windows.Forms.TextBox txtAmntPaid;
         internal System.Windows.Forms.Label label8;
         internal System.Windows.Forms.TextBox txtBalanceAmnt;
@@ -430,5 +430,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderPrice;
         private System.Windows.Forms.DataGridViewButtonColumn OrderMeasurement;
         private System.Windows.Forms.DataGridViewButtonColumn OrderDelete;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
