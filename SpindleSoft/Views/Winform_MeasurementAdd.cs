@@ -58,7 +58,7 @@ namespace SpindleSoft.Views
             txtSlvLoose.Text = this.orderItem.SleeveLoose;
             txtComment.Text = this.orderItem.Comment;
 
-            UpdateCmbType(this.orderItem.Name);
+            UpdateCmbType(this.orderItem.Name ?? cmbType.Text);
             nudQuantity.Value = this.orderItem.Quantity == 0 ? 1 : this.orderItem.Quantity;
             txtPrice.Text = this.orderItem.Price.ToString();
         }

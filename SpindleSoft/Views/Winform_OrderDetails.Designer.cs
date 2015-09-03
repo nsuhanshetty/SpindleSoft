@@ -114,8 +114,6 @@
             this.dgvOrderItems.Size = new System.Drawing.Size(586, 156);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellClick);
-            //this.dgvOrderItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            //this.dgvOrderItems.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellEndEdit);
             this.dgvOrderItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvOrderItems_DataError);
             // 
             // OrderType
@@ -337,9 +335,9 @@
             this.groupBox1.Controls.Add(this.dtpDeliveryDate);
             this.groupBox1.Controls.Add(this.txtTotAmnt);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Location = new System.Drawing.Point(364, 60);
+            this.groupBox1.Location = new System.Drawing.Point(350, 60);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(233, 145);
+            this.groupBox1.Size = new System.Drawing.Size(247, 145);
             this.groupBox1.TabIndex = 156;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Payment Status Details";

@@ -141,7 +141,7 @@ namespace SpindleSoft.Views
         {
             UpdateStatus("Saving..");
 
-            //todo: look if the followinf method can be avoided 
+            //todo: look if the following method can be avoided 
             //txtAmntPaid_Validating(txtAmntPaid, new System.ComponentModel.CancelEventArgs());
 
             string errorMsg = string.Empty;
