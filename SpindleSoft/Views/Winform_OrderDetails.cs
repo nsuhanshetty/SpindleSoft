@@ -103,14 +103,23 @@ namespace SpindleSoft.Views
             pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
         }
 
-        internal void UpdateOrderItemList(OrderItem _item)
+        internal void UpdateOrderItemList(OrderItem _item, int _index)
         {
-            var index = OrderItemsList.IndexOf(OrderItemsList.Where(x => x.Name == _item.Name).SingleOrDefault());
+            //var index = OrderItemsList.IndexOf(OrderItemsList.Where(x => x.Name == _item.Name).SingleOrDefault());
 
-            if (OrderItemsList.Count == 0 || index == -1)
+            if (OrderItemsList.Count == 0 || OrderItemsList.Count < _index + 1)
+            {
                 OrderItemsList.Add(_item);
+                dgvOrderItems.Rows.Add();
+            }
             else
-                OrderItemsList[index] = _item;
+                OrderItemsList[_index] = _item;
+
+            dgvOrderItems.Rows[_index].Cells["OrderType"].Value = _item.Name;
+            dgvOrderItems.Rows[_index].Cells["OrderPrice"].Value = _item.Price;
+            dgvOrderItems.Rows[_index].Cells["OrderQuantity"].Value = _item.Quantity;
+
+            CalculatePaymentDetails();
         }
         #endregion Custom
 
@@ -133,7 +142,7 @@ namespace SpindleSoft.Views
             UpdateStatus("Saving..");
 
             //todo: look if the followinf method can be avoided 
-            txtAmntPaid_Validating(txtAmntPaid, new System.ComponentModel.CancelEventArgs());
+            //txtAmntPaid_Validating(txtAmntPaid, new System.ComponentModel.CancelEventArgs());
 
             string errorMsg = string.Empty;
             if (this._cust.ID == 0)
@@ -142,17 +151,17 @@ namespace SpindleSoft.Views
                 errorMsg = "Select items to cart to make the Order.";
             else if ((dtpDeliveryDate.Value.Date.CompareTo(DateTime.Today.Date)) < 0)
                 errorMsg = "The Promised date must not be earlier than today.";
-            else if (dgvOrderItems.Rows.Count - 1 != OrderItemsList.Count)
-                errorMsg = "Measurement details for all Product is mandatory.";
+            //else if (dgvOrderItems.Rows.Count - 1 != OrderItemsList.Count)
+            //    errorMsg = "Measurement details for all Product is mandatory.";
 
-            foreach (DataGridViewRow row in dgvOrderItems.Rows)
-            {
-                if (row.Cells["OrderQuantity"].ErrorText != "" || row.Cells["OrderPrice"].ErrorText != "")
-                {
-                    MessageBox.Show("Error Exists in Order Item Cart.");
-                    return;
-                }
-            }
+            //foreach (DataGridViewRow row in dgvOrderItems.Rows)
+            //{
+            //    if (row.Cells["OrderQuantity"].ErrorText != "" || row.Cells["OrderPrice"].ErrorText != "")
+            //    {
+            //        MessageBox.Show("Error Exists in Order Item Cart.");
+            //        return;
+            //    }
+            //}
 
             if (errorMsg != string.Empty)
             {
@@ -173,7 +182,7 @@ namespace SpindleSoft.Views
             order.TotalPrice = TotalAmount;
             order.CurrentPayment = AmountPaid;
             order.Status = cmbStatus.SelectedIndex;
-            
+
             UpdateStatus("Saving..", 50);
             bool success = OrderSaver.SaveOrder(order);
 
@@ -232,135 +241,91 @@ namespace SpindleSoft.Views
             /*Calculate Total - end*/
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dgvOrderItems.Columns["OrderMeasurement"].Index)
-            {
-                var curRow = dgvOrderItems.Rows[e.RowIndex];
+        //private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.RowIndex == -1) return;
 
-                string _productName;
+        //    //if (e.ColumnIndex == dgvOrderItems.Columns["OrderMeasurement"].Index)
+        //    //{
+        //    //    var curRow = dgvOrderItems.Rows[e.RowIndex];
 
-                //check if clothing name exists.
-                if (IsNullOrEmpty(curRow.Cells["OrderType"].Value))
-                {
-                    MessageBox.Show("Add Clothing Type, as it is mandatory to edit Measurement details.", "Add Clothing Type", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else if (this._cust.ID == 0)
-                {
-                    MessageBox.Show("Add Customer, as it is mandatory to edit Measurement details.", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else if ((curRow.Cells["OrderQuantity"].Value == null) && (curRow.Cells["OrderPrice"].Value == null))
-                {
-                    MessageBox.Show("Add Price and Quantity, as it is mandatory for Order details.", "Add Price and Quantity", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+        //    //string _productName;
 
-                _productName = Utilities.Validation.ToTitleCase(curRow.Cells["OrderType"].Value.ToString());
-                OrderItem item;
-                //if added during edit
-                item = OrderItemsList.Where(x => (x.Name == _productName.ToString())).SingleOrDefault();
+        //    ////check if clothing name exists.
+        //    //if (IsNullOrEmpty(curRow.Cells["OrderType"].Value))
+        //    //{
+        //    //    MessageBox.Show("Add Clothing Type, as it is mandatory to edit Measurement details.", "Add Clothing Type", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    //    return;
+        //    //}
+        //    //else
+        //    if (this._cust.ID == 0)
+        //    {
+        //        MessageBox.Show("Add Customer, as it is mandatory to edit Measurement details.", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
+        //    //else if ((curRow.Cells["OrderQuantity"].Value == null) && (curRow.Cells["OrderPrice"].Value == null))
+        //    //{
+        //    //    MessageBox.Show("Add Price and Quantity, as it is mandatory for Order details.", "Add Price and Quantity", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    //    return;
+        //    //}
 
-                if (item == null)
-                {
-                    //fetch  previous measurement
-                    item = OrderBuilder.GetOrderItem(this._cust.ID, _productName.ToString());
-                    if (item == null)
-                        item = new OrderItem();
-                    else
-                        item.ID = 0;
-                }
+        //    //_productName = Utilities.Validation.ToTitleCase(curRow.Cells["OrderType"].Value.ToString());
+        //    OrderItem item = null;
+        //    //if added during edit
+        //    //item = OrderItemsList.Where(x => (x.Name == _productName.ToString())).SingleOrDefault();
 
-                item.Quantity = int.Parse(curRow.Cells["OrderQuantity"].Value.ToString());
-                item.Price = int.Parse(curRow.Cells["OrderPrice"].Value.ToString());
-                new Winform_MeasurementAdd(_productName.ToString(), this._cust.Name, item).ShowDialog();
-            }
-            else if (e.ColumnIndex == dgvOrderItems.Columns["OrderDelete"].Index && dgvOrderItems.Rows[e.RowIndex].IsNewRow != true)
-            {
-                DialogResult dr = MessageBox.Show("Continue deleting selected Order items?", "Delete Order Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dr == DialogResult.No) return;
+        //    //if (item == null)
+        //    //{
+        //    //    //fetch  previous measurement
+        //    //    item = OrderBuilder.GetOrderItem(this._cust.ID, _productName.ToString());
+        //    //    if (item == null)
+        //    //        item = new OrderItem();
+        //    //    else
+        //    //        item.ID = 0;
+        //    //}
 
-                bool success = false;
+        //    //item.Quantity = int.Parse(curRow.Cells["OrderQuantity"].Value.ToString());
+        //    //item.Price = int.Parse(curRow.Cells["OrderPrice"].Value.ToString());
+        //    //new Winform_MeasurementAdd(_productName.ToString(), this._cust.Name, item).ShowDialog();
+        //    new Winform_MeasurementAdd(e.RowIndex, this._cust.Name, item).ShowDialog();
+        //    //}
+        //    if (e.ColumnIndex == dgvOrderItems.Columns["OrderDelete"].Index && dgvOrderItems.Rows[e.RowIndex].IsNewRow != true)
+        //    {
+        //        DialogResult dr = MessageBox.Show("Continue deleting selected Order items?", "Delete Order Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        //        if (dr == DialogResult.No) return;
 
-                if (OrderItemsList.Count != 0 && e.RowIndex + 1 <= OrderItemsList.Count)
-                {
-                    if (OrderItemsList[e.RowIndex].ID != 0)
-                        success = OrderSaver.DeleteOrderItems(OrderItemsList[e.RowIndex].ID);
+        //        bool success = false;
 
-                    if (success || OrderItemsList[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
-                    {
-                        OrderItemsList.RemoveAt(e.RowIndex);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
-                        return;
-                    }
-                }
-                dgvOrderItems.Rows.RemoveAt(e.RowIndex);
-                CalculatePaymentDetails();
-            }
-        }
+        //        if (OrderItemsList.Count != 0 && e.RowIndex + 1 <= OrderItemsList.Count)
+        //        {
+        //            if (OrderItemsList[e.RowIndex].ID != 0)
+        //                success = OrderSaver.DeleteOrderItems(OrderItemsList[e.RowIndex].ID);
 
-        private void dgvOrderItems_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dgvOrderItems.CurrentCell == dgvOrderItems.CurrentRow.Cells["OrderType"])
-            {
-                //todo: check if orderitem has measurement and load orderitemslist
-
-                //dgvOrderItems.CurrentCell.Value = Utilities.Validation.ToTitleCase(dgvOrderItems.CurrentCell.Value.ToString());
-            }
-            else if (e.ColumnIndex == dgvOrderItems.Columns["OrderQuantity"].Index || e.ColumnIndex == dgvOrderItems.Columns["OrderPrice"].Index)
-            {
-                /*Validation*/
-                DataGridViewCell cell = (sender as DataGridView).CurrentCell;
-                if (cell.Value == null) return;
-
-                Match _match = Regex.Match(cell.Value.ToString(), "^\\d*$");
-                cell.ErrorText = (!_match.Success) ? "Invalid Amount input data type.\nExample: '10'" : "";
-
-                if (cell.ErrorText != "")
-                {
-                    cell.Value = null;
-                    return;
-                }
-                /*Validation - end*/
-
-                CalculatePaymentDetails();
-            }
-        }
-
-        private void dgvOrderItems_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            //Order item - select/ add item if not present.
-
-            if (dgvOrderItems.CurrentCell == dgvOrderItems.CurrentRow.Cells["OrderType"])
-            {
-                ComboBox cb = e.Control as ComboBox;
-                if (cb != null)
-                {
-                    cb.DropDownStyle = ComboBoxStyle.DropDown;
-                    cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-
-                    cb.Validating += new System.ComponentModel.CancelEventHandler(cbo_Validating);
-                    //cb.Validated += new System.EventHandler(cbo_Validated);
-                }
-            }
-        }
+        //            if (success || OrderItemsList[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
+        //            {
+        //                OrderItemsList.RemoveAt(e.RowIndex);
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
+        //                return;
+        //            }
+        //        }
+        //        dgvOrderItems.Rows.RemoveAt(e.RowIndex);
+        //        CalculatePaymentDetails();
+        //    }
+        //}
 
         private void Winform_OrderDetails_Load(object sender, EventArgs e)
         {
             this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
 
-            //todo: removing NewOrderTypeToolStrip in designer
-            //this.toolStripParent.Items.Add(this.NewOrderTypeToolStrip);
-
             if (OrderItemsList != null && OrderItemsList.Count != 0)
             {
                 foreach (var item in OrderItemsList)
                 {
-                    int index = dgvOrderItems.NewRowIndex;
+                    dgvOrderItems.Rows.Add();
+                    int index = dgvOrderItems.Rows.Count-1;
                     dgvOrderItems.Rows[index].Cells["OrderType"].Value = item.Name;
                     dgvOrderItems.Rows[index].Cells["OrderQuantity"].Value = item.Quantity;
                     dgvOrderItems.Rows[index].Cells["OrderPrice"].Value = item.Price;
@@ -368,17 +333,6 @@ namespace SpindleSoft.Views
                     dgvOrderItems.NotifyCurrentCellDirty(true);
                     dgvOrderItems.NotifyCurrentCellDirty(false);
                 }
-            }
-
-            try
-            {
-                List<string> orderTypeList = OrderBuilder.GetListOfClothingTypes();
-                if (OrderType != null)
-                    this.OrderType.Items.AddRange(orderTypeList.ToArray());
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
             }
         }
         #endregion Events
@@ -406,36 +360,6 @@ namespace SpindleSoft.Views
             //OrderItemsList[dgvOrderItems.CurrentCell.RowIndex] = orderItem;
 
 
-        }
-
-        void cbo_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //var currCell = (DataGridViewComboBoxCell)dgvOrderItems.CurrentCell;
-
-            var value = (sender as ComboBox).Text;
-            if (string.IsNullOrEmpty(value)) return;
-
-            //if Product already selected inform to update.
-            //foreach (DataGridViewRow rows in dgvOrderItems.Rows)
-            //{
-            //    if (rows != dgvOrderItems.CurrentRow && !rows.IsNewRow
-            //        && rows.Cells["OrderType"].Value.ToString() == value)
-            //    {
-            //        MessageBox.Show("Product Selected Already exists in the Cart!", "Duplicate Product", MessageBoxButtons.OK,
-            //            MessageBoxIcon.Warning);
-            //        (sender as ComboBox).Text = String.Empty;
-            //        e.Cancel = true;
-            //        return;
-            //    }
-            //}
-
-            if (this.OrderType.Items.IndexOf(value) == -1)
-            {
-                DataGridViewComboBoxCell cboCell = (DataGridViewComboBoxCell)dgvOrderItems.CurrentCell;
-
-                this.OrderType.Items.Add(value);
-                cboCell.Value = value;
-            }
         }
 
         private void txtAmntPaid_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -472,30 +396,72 @@ namespace SpindleSoft.Views
             log.Error(e.Context);
         }
 
-        private void dgvOrderItems_RowLeave(object sender, DataGridViewCellEventArgs e)
+        private void dgvOrderItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (IsNullOrEmpty(dgvOrderItems.Rows[e.RowIndex].Cells[""].Value) && IsNullOrEmpty(dgvOrderItems.Rows[e.RowIndex].Cells[""].Value) &&
-                IsNullOrEmpty(dgvOrderItems.Rows[e.RowIndex].Cells[""].Value) && itemli)
-        }
+            if (e.RowIndex == -1) return;
 
-        protected override bool ProcessKeyMessage(ref Message message)
-        {
-            if (message.Msg == 0x100)
+            if (e.ColumnIndex == dgvOrderItems.Columns["OrderDelete"].Index && dgvOrderItems.Rows[e.RowIndex].IsNewRow != true)
             {
-                Keys keyCode = (Keys)message.WParam & Keys.KeyCode;
+                DialogResult dr = MessageBox.Show("Continue deleting selected Order items?", "Delete Order Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.No) return;
 
-                switch (keyCode)
+                bool success = false;
+
+                if (OrderItemsList.Count != 0 && e.RowIndex + 1 <= OrderItemsList.Count)
                 {
-                    //case Keys.F1:
-                    //    this.toolStripButton1_Click(this, EventArgs.Empty);
-                    //    break;
-                    case Keys.F2:
-                        this.toolStripButton2_Click(this, EventArgs.Empty);
-                        break;
+                    if (OrderItemsList[e.RowIndex].ID != 0)
+                        success = OrderSaver.DeleteOrderItems(OrderItemsList[e.RowIndex].ID);
+
+                    if (success || OrderItemsList[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
+                    {
+                        OrderItemsList.RemoveAt(e.RowIndex);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
+                        return;
+                    }
                 }
+
+                dgvOrderItems.Rows.RemoveAt(e.RowIndex);
+                CalculatePaymentDetails();
             }
-            return base.ProcessKeyMessage(ref message);
+
+            else
+            {
+                OrderItem _item = OrderItemsList[e.RowIndex];
+                new Winform_MeasurementAdd(e.RowIndex, this._cust, _item).ShowDialog();
+            }
         }
+
+        private void btnAddItem_Click(object sender, EventArgs e)
+        {
+            if (this._cust.ID == 0)
+            {
+                MessageBox.Show("Add Customer, as it is mandatory to edit Measurement details.", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            new Winform_MeasurementAdd(dgvOrderItems.Rows.Count, this._cust, null).ShowDialog();
+        }
+
+        //protected override bool ProcessKeyMessage(ref Message message)
+        //{
+        //    if (message.Msg == 0x100)
+        //    {
+        //        Keys keyCode = (Keys)message.WParam & Keys.KeyCode;
+
+        //        switch (keyCode)
+        //        {
+        //            //case Keys.F1:
+        //            //    this.toolStripButton1_Click(this, EventArgs.Empty);
+        //            //    break;
+        //            case Keys.F2:
+        //                this.toolStripButton2_Click(this, EventArgs.Empty);
+        //                break;
+        //        }
+        //    }
+        //    return base.ProcessKeyMessage(ref message);
+        //}
 
     }
 }

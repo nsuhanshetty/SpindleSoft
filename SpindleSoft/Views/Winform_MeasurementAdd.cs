@@ -1,5 +1,7 @@
-﻿using SpindleSoft.Model;
+﻿using SpindleSoft.Builders;
+using SpindleSoft.Model;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -9,21 +11,32 @@ namespace SpindleSoft.Views
     public partial class Winform_MeasurementAdd : Winform_DetailsFormat
     {
         OrderItem orderItem = new OrderItem();
+        int index = 0;
+        Customer cust;
+        List<string> orderTypeList;
 
         public Winform_MeasurementAdd()
         {
             InitializeComponent();
         }
 
-        public Winform_MeasurementAdd(string _productName, string custName, OrderItem orderItem = null)
+        public Winform_MeasurementAdd(int _index, Customer cust, OrderItem orderItem)
         {
             InitializeComponent();
+            this.index = _index;
+            this.cust = cust;
 
-            this.orderItem = orderItem;
+            orderTypeList = OrderBuilder.GetListOfClothingTypes();
+            cmbType.DataSource = orderTypeList;
 
-            //loading Controls
+            UpdateControls(cust.Name, orderItem);
+        }
+
+        private void UpdateControls(string custName, OrderItem orderItem)
+        {
+            this.orderItem = orderItem != null ? orderItem : new OrderItem();
+
             txtCustName.Text = custName;
-            txtClothingType.Text = _productName;
 
             //if (orderItem == null) return;
             txtLength.Text = this.orderItem.Length;
@@ -44,41 +57,20 @@ namespace SpindleSoft.Views
             txtSlvLength.Text = this.orderItem.SleeveLength;
             txtSlvLoose.Text = this.orderItem.SleeveLoose;
             txtComment.Text = this.orderItem.Comment;
-        }
 
-        private void Winform_MeasurementAdd_Load(object sender, System.EventArgs e)
-        {
-            // txtOrderNo.Text = _orderItem.OrderID.ToString();
-        }
-
-        private void textBox3_Validating(object sender, CancelEventArgs e)
-        {
-            var txtbox = (sender as TextBox);
-            if (txtbox.Text == String.Empty)
-                return;
-
-            //allow only signed int/ float
-            Match _match = Regex.Match(txtbox.Text, "^[0-9]+(\\.[0-9]+)?$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for fields\n" +
-                                                    " For example '34.2'";
-            errorProvider1.SetError(txtbox, errorMsg);
-
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtbox.Select(0, txtbox.TextLength);
-            }
+            UpdateCmbType(this.orderItem.Name);
+            nudQuantity.Value = this.orderItem.Quantity == 0 ? 1 : this.orderItem.Quantity;
+            txtPrice.Text = this.orderItem.Price.ToString();
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //todo: check if is in edit
-            bool hasValue = SpindleSoft.Utilities.Validation.controlIsInEdit(grpBxMeasurements, true);
+            bool hasValue = SpindleSoft.Utilities.Validation.controlIsInEdit(grbxProdDetails, true);
 
             if (hasValue != true)
             {
-                MessageBox.Show("No values found in Measurement Details, Add values and Save", "No alues Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No values found in Product Details, Add values and Save", "No Values Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -86,9 +78,9 @@ namespace SpindleSoft.Views
 
             OrderItem _item = orderItem;
 
-            _item.Name = txtClothingType.Text;
-            _item.Price = this.orderItem.Price;
-            _item.Quantity = this.orderItem.Quantity;
+            _item.Name = cmbType.Text;
+            _item.Price = float.Parse(txtPrice.Text);
+            _item.Quantity = int.Parse(nudQuantity.Value.ToString());
 
             _item.Length = txtLength.Text;
             _item.Waist = txtWaist.Text;
@@ -113,7 +105,7 @@ namespace SpindleSoft.Views
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
-                orderDetails.UpdateOrderItemList(_item);
+                orderDetails.UpdateOrderItemList(_item, index);
             //else
             //    MessageBox.Show("Unable to Update the Order Cart as List not found.","Order Details not found",MessageBoxButtons.OK,MessageBoxIcon.Error);
 
@@ -136,6 +128,63 @@ namespace SpindleSoft.Views
             };
 
             this.Close();
+        }
+
+        private void txtPrice_Validating(object sender, CancelEventArgs e)
+        {
+            var txtbox = (sender as TextBox);
+            if (txtbox.Text == String.Empty)
+                return;
+
+            //allow only signed int/ float
+            Match _match = Regex.Match(txtbox.Text, "^[0-9]+(\\.[0-9]+)?$");
+            string errorMsg = _match.Success ? "" : "Invalid Input for fields\n" +
+                                                    " For example '34.2'";
+            errorProvider1.SetError(txtbox, errorMsg);
+
+            if (errorMsg != "")
+            {
+                // Cancel the event and select the text to be corrected by the user.
+                e.Cancel = true;
+                txtbox.Select(0, txtbox.TextLength);
+            }
+        }
+
+        private void cmbType_Validating(object sender, CancelEventArgs e)
+        {
+            var value = (sender as ComboBox).Text;
+            if (string.IsNullOrEmpty(value)) return;
+
+            UpdateCmbType(value);
+        }
+
+        private void UpdateCmbType(string value)
+        {
+            if (this.orderTypeList.IndexOf(value) == -1)
+            {
+                this.orderTypeList.Add(value);
+                cmbType.DataSource = null;
+                cmbType.DataSource = orderTypeList;
+            }
+            cmbType.SelectedItem = value;
+            //else
+            //{
+            //    if (orderItem != new OrderItem()) return;
+            //    orderItem = OrderBuilder.GetOrderItem(this.cust.ID, cmbType.Text);
+            //    UpdateControls(this.cust.Name, orderItem);
+            //}
+        }
+
+        private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(cmbType.Text) && (orderItem == new OrderItem() || cmbType.Text != orderItem.Name))
+            {
+                //fetch  previous measurement
+                orderItem = OrderBuilder.GetOrderItem(this.cust.ID, cmbType.Text);
+                if (orderItem != null) orderItem.ID = 0;
+
+                UpdateControls(this.cust.Name, orderItem);
+            }
         }
     }
 }

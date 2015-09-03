@@ -74,9 +74,13 @@
             this.txtCustName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.txtClothingType = new System.Windows.Forms.TextBox();
+            this.grbxProdDetails = new System.Windows.Forms.GroupBox();
+            this.nudQuantity = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cmbType = new System.Windows.Forms.ComboBox();
+            this.txtPrice = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.grpBxMeasurements.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -85,7 +89,8 @@
             this.groupBox5.SuspendLayout();
             this.grpBoxCustMeasure.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            this.groupBox6.SuspendLayout();
+            this.grbxProdDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudQuantity)).BeginInit();
             this.SuspendLayout();
             // 
             // grpBxMeasurements
@@ -96,10 +101,10 @@
             this.grpBxMeasurements.Controls.Add(this.groupBox1);
             this.grpBxMeasurements.Controls.Add(this.groupBox3);
             this.grpBxMeasurements.Controls.Add(this.groupBox5);
-            this.grpBxMeasurements.Location = new System.Drawing.Point(8, 111);
+            this.grpBxMeasurements.Location = new System.Drawing.Point(8, 188);
             this.grpBxMeasurements.Name = "grpBxMeasurements";
             this.grpBxMeasurements.Size = new System.Drawing.Size(373, 367);
-            this.grpBxMeasurements.TabIndex = 0;
+            this.grpBxMeasurements.TabIndex = 2;
             this.grpBxMeasurements.TabStop = false;
             this.grpBxMeasurements.Text = "Measurement Details";
             // 
@@ -116,7 +121,7 @@
             this.groupBox2.Location = new System.Drawing.Point(6, 213);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(360, 73);
-            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bottom Measurement";
             // 
@@ -317,7 +322,7 @@
             this.groupBox1.Location = new System.Drawing.Point(6, 156);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(360, 52);
-            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Shoulder Measurement";
             // 
@@ -366,7 +371,7 @@
             this.groupBox3.Location = new System.Drawing.Point(6, 99);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(360, 52);
-            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Sleeve Measurement";
             // 
@@ -465,10 +470,9 @@
             // 
             this.grpBoxCustMeasure.Controls.Add(this.txtCustName);
             this.grpBoxCustMeasure.Controls.Add(this.label1);
-            this.grpBoxCustMeasure.Enabled = false;
             this.grpBoxCustMeasure.Location = new System.Drawing.Point(8, 55);
             this.grpBoxCustMeasure.Name = "grpBoxCustMeasure";
-            this.grpBoxCustMeasure.Size = new System.Drawing.Size(181, 48);
+            this.grpBoxCustMeasure.Size = new System.Drawing.Size(373, 48);
             this.grpBoxCustMeasure.TabIndex = 0;
             this.grpBoxCustMeasure.TabStop = false;
             this.grpBoxCustMeasure.Text = "Customer Details";
@@ -495,50 +499,97 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // groupBox6
+            // grbxProdDetails
             // 
-            this.groupBox6.Controls.Add(this.txtClothingType);
-            this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Enabled = false;
-            this.groupBox6.Location = new System.Drawing.Point(194, 55);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(185, 48);
-            this.groupBox6.TabIndex = 1;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Product Details";
+            this.grbxProdDetails.Controls.Add(this.nudQuantity);
+            this.grbxProdDetails.Controls.Add(this.label18);
+            this.grbxProdDetails.Controls.Add(this.cmbType);
+            this.grbxProdDetails.Controls.Add(this.txtPrice);
+            this.grbxProdDetails.Controls.Add(this.label16);
+            this.grbxProdDetails.Controls.Add(this.label19);
+            this.grbxProdDetails.Location = new System.Drawing.Point(8, 109);
+            this.grbxProdDetails.Name = "grbxProdDetails";
+            this.grbxProdDetails.Size = new System.Drawing.Size(373, 73);
+            this.grbxProdDetails.TabIndex = 1;
+            this.grbxProdDetails.TabStop = false;
+            this.grbxProdDetails.Text = "Product Details";
             // 
-            // txtClothingType
+            // nudQuantity
             // 
-            this.txtClothingType.Enabled = false;
-            this.txtClothingType.Location = new System.Drawing.Point(82, 20);
-            this.txtClothingType.MaxLength = 10;
-            this.txtClothingType.Name = "txtClothingType";
-            this.txtClothingType.Size = new System.Drawing.Size(96, 20);
-            this.txtClothingType.TabIndex = 0;
+            this.nudQuantity.Location = new System.Drawing.Point(70, 48);
+            this.nudQuantity.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudQuantity.Name = "nudQuantity";
+            this.nudQuantity.Size = new System.Drawing.Size(63, 20);
+            this.nudQuantity.TabIndex = 1;
+            this.nudQuantity.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(14, 50);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(46, 13);
+            this.label18.TabIndex = 104;
+            this.label18.Text = "Quantity";
+            // 
+            // cmbType
+            // 
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Location = new System.Drawing.Point(70, 15);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(174, 21);
+            this.cmbType.TabIndex = 0;
+            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
+            this.cmbType.Validating += new System.ComponentModel.CancelEventHandler(this.cmbType_Validating);
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(181, 47);
+            this.txtPrice.MaxLength = 10;
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(63, 20);
+            this.txtPrice.TabIndex = 2;
+            this.txtPrice.Validating += new System.ComponentModel.CancelEventHandler(this.txtPrice_Validating);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(7, 23);
+            this.label16.Location = new System.Drawing.Point(29, 23);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(72, 13);
+            this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 133;
-            this.label16.Text = "Clothing Type";
+            this.label16.Text = "Type";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(147, 50);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(31, 13);
+            this.label19.TabIndex = 105;
+            this.label19.Text = "Price";
             // 
             // Winform_MeasurementAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 503);
-            this.Controls.Add(this.groupBox6);
+            this.ClientSize = new System.Drawing.Size(387, 580);
+            this.Controls.Add(this.grbxProdDetails);
             this.Controls.Add(this.grpBoxCustMeasure);
             this.Controls.Add(this.grpBxMeasurements);
             this.Name = "Winform_MeasurementAdd";
             this.Text = "Measurement Details";
-            this.Load += new System.EventHandler(this.Winform_MeasurementAdd_Load);
             this.Controls.SetChildIndex(this.grpBxMeasurements, 0);
             this.Controls.SetChildIndex(this.grpBoxCustMeasure, 0);
-            this.Controls.SetChildIndex(this.groupBox6, 0);
+            this.Controls.SetChildIndex(this.grbxProdDetails, 0);
             this.grpBxMeasurements.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -553,8 +604,9 @@
             this.grpBoxCustMeasure.ResumeLayout(false);
             this.grpBoxCustMeasure.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
+            this.grbxProdDetails.ResumeLayout(false);
+            this.grbxProdDetails.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudQuantity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -603,8 +655,7 @@
         internal System.Windows.Forms.TextBox txtLength;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.GroupBox groupBox6;
-        internal System.Windows.Forms.TextBox txtClothingType;
+        private System.Windows.Forms.GroupBox grbxProdDetails;
         internal System.Windows.Forms.Label label16;
         private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         private System.Windows.Forms.ToolStripButton CancelToolStrip;
@@ -612,5 +663,10 @@
         private System.Windows.Forms.GroupBox groupBox1;
         internal System.Windows.Forms.TextBox txtBotLoose;
         internal System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox cmbType;
+        internal System.Windows.Forms.Label label18;
+        internal System.Windows.Forms.TextBox txtPrice;
+        internal System.Windows.Forms.Label label19;
+        private System.Windows.Forms.NumericUpDown nudQuantity;
     }
 }

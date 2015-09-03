@@ -24,8 +24,9 @@ namespace SpindleSoft.Builders
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    List<string> names = (from s in session.Query<AlterationItem>()
-                                          select s.Name).Distinct().ToList();
+                    List<string> names = new List<string>() { "" };
+                    names.AddRange((from s in session.Query<AlterationItem>()
+                                    select s.Name).Distinct().ToList());
                     return names;
                 }
             }
@@ -100,7 +101,7 @@ namespace SpindleSoft.Builders
                     //    .OrderBy(x => x.DateUpdated);
 
                     OrderItem item;
-                    var list= (session.QueryOver<OrderItem>()
+                    var list = (session.QueryOver<OrderItem>()
                                 .Where(x => x.Name == productName)
                                 .OrderBy(x => x.ID).Desc
                                 .List<OrderItem>());
