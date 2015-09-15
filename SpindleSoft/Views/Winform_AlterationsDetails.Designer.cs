@@ -44,7 +44,7 @@
             this.AddCustomerToolStrip = new System.Windows.Forms.ToolStripButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvAlterationItems = new System.Windows.Forms.DataGridView();
-            this.AltType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.AltType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AltPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AltQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AltComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,6 +65,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtAmntPaid = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnAddItem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.grpbxCustomerDetails.SuspendLayout();
@@ -185,15 +186,16 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvAlterationItems);
-            this.groupBox2.Location = new System.Drawing.Point(430, 210);
+            this.groupBox2.Location = new System.Drawing.Point(430, 241);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(570, 195);
+            this.groupBox2.Size = new System.Drawing.Size(576, 165);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add Alteration Item Details";
             // 
             // dgvAlterationItems
             // 
+            this.dgvAlterationItems.AllowUserToAddRows = false;
             this.dgvAlterationItems.AllowUserToDeleteRows = false;
             this.dgvAlterationItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvAlterationItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -206,23 +208,22 @@
             this.dgvAlterationItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAlterationItems.Location = new System.Drawing.Point(3, 16);
             this.dgvAlterationItems.Name = "dgvAlterationItems";
-            this.dgvAlterationItems.Size = new System.Drawing.Size(564, 176);
+            this.dgvAlterationItems.ReadOnly = true;
+            this.dgvAlterationItems.Size = new System.Drawing.Size(570, 146);
             this.dgvAlterationItems.TabIndex = 0;
-            this.dgvAlterationItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_CellContentClick);
-            this.dgvAlterationItems.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellEndEdit);
+            this.dgvAlterationItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_CellContentClick);
             this.dgvAlterationItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAlterationItems_DataError);
             this.dgvAlterationItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvAlterationItems_EditingControlShowing);
-            this.dgvAlterationItems.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_RowLeave);
-            this.dgvAlterationItems.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_RowLeave);
             // 
             // AltType
             // 
             this.AltType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.AltType.DataPropertyName = "Name";
-            this.AltType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.AltType.HeaderText = "Clothing Type";
             this.AltType.Name = "AltType";
+            this.AltType.ReadOnly = true;
             this.AltType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.AltType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // AltPrice
             // 
@@ -230,6 +231,7 @@
             this.AltPrice.DataPropertyName = "Price";
             this.AltPrice.HeaderText = "Price \\ Item";
             this.AltPrice.Name = "AltPrice";
+            this.AltPrice.ReadOnly = true;
             this.AltPrice.Width = 87;
             // 
             // AltQuantity
@@ -238,6 +240,7 @@
             this.AltQuantity.DataPropertyName = "Quantity";
             this.AltQuantity.HeaderText = "Quantity";
             this.AltQuantity.Name = "AltQuantity";
+            this.AltQuantity.ReadOnly = true;
             this.AltQuantity.Width = 71;
             // 
             // AltComment
@@ -246,6 +249,7 @@
             this.AltComment.DataPropertyName = "Comment";
             this.AltComment.HeaderText = "Comment";
             this.AltComment.Name = "AltComment";
+            this.AltComment.ReadOnly = true;
             this.AltComment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.AltComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
@@ -254,6 +258,7 @@
             this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.colDelete.HeaderText = "Click to Delete";
             this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
             this.colDelete.Width = 82;
             // 
             // panel1
@@ -283,6 +288,7 @@
             this.cmbOrder.Name = "cmbOrder";
             this.cmbOrder.Size = new System.Drawing.Size(121, 21);
             this.cmbOrder.TabIndex = 0;
+            this.cmbOrder.TextChanged += new System.EventHandler(this.cmbOrder_TextChanged);
             this.cmbOrder.Validating += new System.ComponentModel.CancelEventHandler(this.txtOrderID_Validating);
             this.cmbOrder.Validated += new System.EventHandler(this.txtOrderID_Validated);
             // 
@@ -321,7 +327,7 @@
             this.grpbxPayDet.Controls.Add(this.label4);
             this.grpbxPayDet.Location = new System.Drawing.Point(772, 57);
             this.grpbxPayDet.Name = "grpbxPayDet";
-            this.grpbxPayDet.Size = new System.Drawing.Size(228, 147);
+            this.grpbxPayDet.Size = new System.Drawing.Size(234, 147);
             this.grpbxPayDet.TabIndex = 3;
             this.grpbxPayDet.TabStop = false;
             this.grpbxPayDet.Text = "Payment Status Details";
@@ -360,6 +366,8 @@
             // 
             // dtpDueDate
             // 
+            this.dtpDueDate.CustomFormat = "dd-MM-yyyy";
+            this.dtpDueDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpDueDate.Location = new System.Drawing.Point(102, 17);
             this.dtpDueDate.Name = "dtpDueDate";
             this.dtpDueDate.Size = new System.Drawing.Size(113, 20);
@@ -408,6 +416,7 @@
             this.txtAmntPaid.Name = "txtAmntPaid";
             this.txtAmntPaid.Size = new System.Drawing.Size(113, 20);
             this.txtAmntPaid.TabIndex = 0;
+            this.txtAmntPaid.TextChanged += new System.EventHandler(this.txtAmntPaid_TextChanged);
             this.txtAmntPaid.Validating += new System.ComponentModel.CancelEventHandler(this.txtAmntPaid_Validating);
             // 
             // label4
@@ -419,11 +428,25 @@
             this.label4.TabIndex = 139;
             this.label4.Text = "Paid Amount";
             // 
+            // btnAddItem
+            // 
+            this.btnAddItem.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddItem.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
+            this.btnAddItem.Location = new System.Drawing.Point(967, 210);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(39, 35);
+            this.btnAddItem.TabIndex = 156;
+            this.btnAddItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAddItem.UseVisualStyleBackColor = false;
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
+            // 
             // Winform_AlterationsDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1010, 433);
+            this.ClientSize = new System.Drawing.Size(1018, 433);
+            this.Controls.Add(this.btnAddItem);
             this.Controls.Add(this.grpbxPayDet);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
@@ -436,6 +459,7 @@
             this.Controls.Add(this.grpbxCustomerDetails);
             this.Name = "Winform_AlterationsDetails";
             this.Text = "Alterations Details";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Winform_AlterationsDetails_FormClosing);
             this.Load += new System.EventHandler(this.Winform_AlterationsDetails_Load);
             this.Controls.SetChildIndex(this.grpbxCustomerDetails, 0);
             this.Controls.SetChildIndex(this.txtMobNo, 0);
@@ -447,6 +471,7 @@
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
             this.Controls.SetChildIndex(this.grpbxPayDet, 0);
+            this.Controls.SetChildIndex(this.btnAddItem, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.grpbxCustomerDetails.ResumeLayout(false);
@@ -492,13 +517,16 @@
         internal System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtpDueDate;
         internal System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DataGridViewComboBoxColumn AltType;
+        private System.Windows.Forms.ComboBox cmbOrder;
+        private System.Windows.Forms.ComboBox cmbStatus;
+        internal System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Button btnAddItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AltType;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltComment;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
-        private System.Windows.Forms.ComboBox cmbOrder;
-        private System.Windows.Forms.ComboBox cmbStatus;
-        internal System.Windows.Forms.Label label7;
     }
 }

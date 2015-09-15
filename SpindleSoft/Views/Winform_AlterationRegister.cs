@@ -33,7 +33,14 @@ namespace SpindleSoft
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            //todo : Check txtboxes for sql injection
+            var delCol = dgvSearch.Columns["colDelete"];
+            if (string.IsNullOrEmpty(txtAltNo.Text) && string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text))
+            {
+                dgvSearch.DataSource = null;
+                delCol.Visible = false;
+                return;
+            }
+
             List<Alteration> altList = (AlterationBuilder.GetAlterationList(txtName.Text, txtMobNo.Text, txtAltNo.Text));
             if (altList != null)
             {
@@ -45,10 +52,14 @@ namespace SpindleSoft
                                             AmountPaid = alt.CurrentPayment,
                                             PromisedDate = alt.PromisedDate
                                         }).ToList();
-                dgvSearch.Columns["colDelete"].DisplayIndex = dgvSearch.Columns.Count - 1;
+                delCol.DisplayIndex = dgvSearch.Columns.Count - 1;
+                delCol.Visible = true;
             }
             else
+            {
                 dgvSearch.DataSource = null;
+                delCol.Visible = false;
+            }
         }
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -69,11 +80,6 @@ namespace SpindleSoft
                 }
                 return;
             }
-        }
-
-        private void Winform_AlterationRegister_Load(object sender, EventArgs e)
-        {
-            txtName_TextChanged(this, new EventArgs());
         }
     }
 }

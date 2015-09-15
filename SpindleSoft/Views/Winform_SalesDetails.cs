@@ -23,6 +23,51 @@ namespace SpindleSoft.Views
         List<SaleItem> saleItems = new List<SaleItem>();
         DataTable dt = new DataTable();
 
+        #region Property
+        private int amntPaid = 0;
+        private int balAmnt = 0;
+        private int totalAmnt = 0;
+        public int AmountPaid
+        {
+            get
+            {
+                return amntPaid;
+            }
+            set
+            {
+                amntPaid = value;
+                txtAmntPaid.Text = amntPaid.ToString() == "0" ? "" : amntPaid.ToString();
+                BalanceAmount = TotalAmount - AmountPaid;
+            }
+        }
+
+        public int BalanceAmount
+        {
+            get
+            {
+                return balAmnt;
+            }
+            set
+            {
+                balAmnt = value;
+                txtBalanceAmnt.Text = balAmnt.ToString();
+            }
+        }
+
+        public int TotalAmount
+        {
+            get
+            {
+                return totalAmnt;
+            }
+            set
+            {
+                totalAmnt = value;
+                txtTotAmnt.Text = totalAmnt.ToString();
+            }
+        }
+        #endregion Property
+
         public Winform_SalesDetails()
         {
             InitializeComponent();
@@ -54,22 +99,29 @@ namespace SpindleSoft.Views
 
         private void txtSrcName_TextChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtSrcName.Text) && string.IsNullOrEmpty(txtSrcProCode.Text) && string.IsNullOrEmpty(txtDesc.Text))
+            {
+                dgvSearch.DataSource = null;
+                return;
+            }
+
             dgvSearch.DataSource = (from sku in SaleBuilder.GetSKUItems(txtSrcName.Text, txtSrcProCode.Text, txtDesc.Text, cmbColor.Text, cmbSize.Text, cmbMaterial.Text)
                                     select new { sku.Name, sku.ProductCode, sku.Quantity }).ToList();
+
+            UpdateStatus(dgvSearch.Rows.Count == 0 ? "No" : dgvSearch.Rows.Count.ToString() + " Results Found", 100);
         }
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             string _proname = dgvSearch.Rows[e.RowIndex].Cells["Name"].Value.ToString();
-            DialogResult dr = MessageBox.Show("Do you want to add Product " + _proname + " to Sales cart?", "Sale Cart", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == DialogResult.No) return;
 
-            //Add SKUitem to Cart
+            //Add SaleItem to Cart
             string _proCode = dgvSearch.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString();
-            var a = SaleBuilder.GetSkuItemInfo(_proCode);
-            if (a != null && ((from s in sKUItems where s.ProductCode == a.ProductCode select s).Count() == 0))
+            var skuItem = SaleBuilder.GetSkuItemInfo(_proCode);
+            if (skuItem != null && ((from s in sKUItems where s.ProductCode == skuItem.ProductCode select s).Count() == 0))
             {
-                sKUItems.Add(a);
+                SaleItem _saleItem = new SaleItem(skuItem, 1, skuItem.SellingPrice);
+                saleItems.Add(_saleItem);
             }
 
             LoadDGVSale();
@@ -99,115 +151,154 @@ namespace SpindleSoft.Views
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        //private void btnDelete_Click(object sender, EventArgs e)
+        //{
+        //    if (dgvSaleItem.Rows.Count < 1) return;
+
+        //    DialogResult dr = MessageBox.Show("Continue deleting selected Sale items", "Delete Sale Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        //    if (dr == DialogResult.No) return;
+
+        //    foreach (DataGridViewRow item in dgvSaleItem.SelectedRows)
+        //    {
+        //        sKUItems.RemoveAt(item.Index);
+        //    }
+        //    LoadDGVSale();
+        //}
+
+        //private void dgvSaleItem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    //if (dgvSaleItem.Columns[e.ColumnIndex].HeaderText == ("Quantity") || dgvSaleItem.Columns[e.ColumnIndex].HeaderText == ("Price"))
+        //    //{
+        //    //    var quantityCell = dgvSaleItem.Rows[e.RowIndex].Cells["Quantity"];
+        //    //    int price;
+        //    //    int.TryParse(dgvSaleItem.Rows[e.RowIndex].Cells["Price"].Value.ToString(), out price);
+
+        //    //    //check if quantity within the limits
+        //    //    int quantity;
+        //    //    int.TryParse(quantityCell.Value.ToString(), out quantity);
+        //    //    var limit = (from s in sKUItems
+        //    //                 where s.ProductCode == dgvSaleItem.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString()
+        //    //                 select s.Quantity).Single();
+
+        //    //    quantityCell.ErrorText = (limit < quantity) || quantity == 0 ? "Quantity cannot exceed Limit OR Zero" : "";
+
+        //    //    //Update the total Amount as per quantity if quantity within limits
+        //    //    if (quantityCell.ErrorText == "")
+        //    //    {
+        //    //        //todo : Method to handle payment amount
+        //    //        int total = 0;
+        //    //        foreach (DataGridViewRow dr in dgvSaleItem.Rows)
+        //    //        {
+        //    //            int quant;
+        //    //            int.TryParse(dr.Cells["Quantity"].Value.ToString(), out quant);
+        //    //            total += (quant * int.Parse(dr.Cells["Price"].Value.ToString()));
+        //    //        }
+
+        //    //        txtTotAmnt.Text = total.ToString();
+        //    //        txtBalanceAmnt.Text = (total - int.Parse(txtAmntPaid.Text)).ToString();
+        //    //    }
+        //    //}
+
+        //    //if (dgvSaleItem.Columns["colDelete"].Index == e.ColumnIndex)
+        //    //{
+        //    //    if (e.ColumnIndex == dgvSaleItem.Columns["colDelete"].Index && dgvSaleItem.Rows[e.RowIndex].IsNewRow != true)
+        //    //    {
+        //    //        DialogResult dr = MessageBox.Show("Continue deleting selected Sale items?", "Delete Sale Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        //    //        if (dr == DialogResult.No) return;
+
+        //    //        bool success = false;
+
+        //    //        if (sKUItems.Count != 0 && e.RowIndex + 1 <= sKUItems.Count)
+        //    //        {
+        //    //            if (sKUItems[e.RowIndex].ID != 0)
+        //    //                success = SalesSaver.DeleteSaleItems(sKUItems[e.RowIndex].ID);
+
+        //    //            if (success || sKUItems[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
+        //    //            {
+        //    //                sKUItems.RemoveAt(e.RowIndex);
+        //    //            }
+        //    //            else
+        //    //            {
+        //    //                MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
+        //    //                return;
+        //    //            }
+        //    //        }
+
+        //    //        dgvSaleItem.Rows.RemoveAt(e.RowIndex);
+        //    //        CalculatePaymentDetails();
+        //    //    }
+        //    //}
+        //}
+
+        private void CalculatePaymentDetails()
         {
-            if (dgvSaleItem.Rows.Count < 1) return;
-
-            DialogResult dr = MessageBox.Show("Continue deleting selected Sale items", "Delete Sale Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (dr == DialogResult.No) return;
-
-            foreach (DataGridViewRow item in dgvSaleItem.SelectedRows)
+            //todo : Method to handle payment amount
+            /*Calculate Total*/
+            int total = 0;
+            foreach (DataGridViewRow dr in dgvSaleItem.Rows)
             {
-                sKUItems.RemoveAt(item.Index);
+                if (dr.IsNewRow || dr.Cells["colPrice"].Value == null || dr.Cells["colQuantity"].Value == null) continue;
+
+                total += (int.Parse(dr.Cells["colQuantity"].Value.ToString()) * int.Parse(dr.Cells["colPrice"].Value.ToString()));
             }
-            LoadDGVSale();
-        }
 
-        private void dgvSaleItem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dgvSaleItem.Columns[e.ColumnIndex].HeaderText == ("Quantity") || dgvSaleItem.Columns[e.ColumnIndex].HeaderText == ("Price"))
-            {
-                var quantityCell = dgvSaleItem.Rows[e.RowIndex].Cells["Quantity"];
-                int price;
-                int.TryParse(dgvSaleItem.Rows[e.RowIndex].Cells["Price"].Value.ToString(), out price);
-
-                //check if quantity within the limits
-                int quantity;
-                int.TryParse(quantityCell.Value.ToString(), out quantity);
-                var limit = (from s in sKUItems
-                             where s.ProductCode == dgvSaleItem.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString()
-                             select s.Quantity).Single();
-
-                quantityCell.ErrorText = (limit < quantity) || quantity == 0 ? "Quantity cannot exceed Limit OR Zero" : "";
-
-                //Update the total Amount as per quantity if quantity within limits
-                if (quantityCell.ErrorText == "")
-                {
-                    //todo : Method to handle payment amount
-                    int total = 0;
-                    foreach (DataGridViewRow dr in dgvSaleItem.Rows)
-                    {
-                        int quant;
-                        int.TryParse(dr.Cells["Quantity"].Value.ToString(), out quant);
-                        total += (quant * int.Parse(dr.Cells["Price"].Value.ToString()));
-                    }
-
-                    txtTotAmnt.Text = total.ToString();
-                    txtBalanceAmnt.Text = (total - int.Parse(txtAmntPaid.Text)).ToString();
-                }
-            }
+            int amntPaid = 0;
+            int.TryParse(txtAmntPaid.Text, out amntPaid);
+            AmountPaid = amntPaid;
+            TotalAmount = total;
+            BalanceAmount = TotalAmount - AmountPaid;
+            /*Calculate Total - end*/
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             UpdateStatus("Validating..", 0);
 
-            bool exists = SpindleSoft.Utilities.Validation.IsNullOrEmpty(this, true, "grpBxSearch");
+            List<string> exceptionlist = new List<string>() { "grpBxSearch", "pcbCustImage" };
+            bool exists = SpindleSoft.Utilities.Validation.IsNullOrEmpty(this, true, exceptionlist);
             if (exists) return;
             if (dgvSaleItem.Rows.Count == 0)
             {
                 MessageBox.Show("Products Must be selected to make a Sale. Do Add Products to Cart grid");
                 return;
             }
-            if (txtAmntPaid.Text == "0")
+            else if (txtAmntPaid.Text == "0" || errorProvider1.GetError(txtAmntPaid) != "")
             {
                 MessageBox.Show("Amount not Paid. Save on Amount Paid", "Amount Not Paid", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            //show error if quantity not within limit
-            foreach (DataGridViewRow row in dgvSaleItem.Rows)
+            else if (saleItems.Count == 0)
             {
-                if (row.Cells["Quantity"].ErrorText != "")
-                {
-                    MessageBox.Show("Quantity limit exceed for product " + row.Cells["Name"].Value);
-                    row.Cells["Quantity"].Selected = true;
-                    return;
-                }
+                MessageBox.Show("Sale Cart cannot be Empty.", "Empty Sale Cart", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            //todo : Implement rollback for db
             UpdateStatus("Saving Sale..", 25);
-            sale.CustID = this._cust.ID;
+            sale.Customer = this._cust;
+
             int AmntPaid;
             int.TryParse(txtAmntPaid.Text, out AmntPaid);
             sale.AmountPaid = AmntPaid;
             sale.TotalPrice = int.Parse(txtTotAmnt.Text);
             sale.DateOfSale = DateTime.Now;
-            List<SaleItem> SaleItems = new List<SaleItem>();
-            foreach (DataGridViewRow row in dgvSaleItem.Rows)
-            {
-                SaleItem saleItem = new SaleItem(int.Parse(row.Cells["ID"].Value.ToString()),
-                    int.Parse(row.Cells["Quantity"].Value.ToString()),
-                    int.Parse(row.Cells["Price"].Value.ToString()));
-                SaleItems.Add(saleItem);
-            }
 
             UpdateStatus("Saving Sale..", 50);
-            //save saleitem
-            bool success = SalesSaver.SaveSaleItemInfo(sale, SaleItems);
+            sale.SaleItems = saleItems;
+            bool success = SalesSaver.SaveSaleItemInfo(sale);
 
-            //UpdateStatus("Saving Sale..", 75);
-            ////update SKU stock
-            //success = SalesSaver.UpdateSKUList(SaleItems);
             UpdateStatus("Saving Sale..", 100);
 
-            //todo: sendSMS            
-            if (success && (txtTotAmnt.Text == txtAmntPaid.Text))
+            if (success)
             {
-                MessageBox.Show("SMS Sent to " + this._cust.Name);
+                DialogResult dr = MessageBox.Show("Send SMS to Customer Regarding the Sale to Customer", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                }
                 this.Close();
             }
+            else
+                UpdateStatus("Error in Saving Order.", 100);
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -223,54 +314,13 @@ namespace SpindleSoft.Views
         }
         #endregion Events
 
-        #region validation
-        private void dgvSaleItem_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            DataGridViewCell cell;
-            if (dgvSaleItem.Columns[e.ColumnIndex].HeaderText == "Quantity")
-                cell = dgvSaleItem.Rows[e.RowIndex].Cells["Quantity"];
-            else if (dgvSaleItem.Columns[e.ColumnIndex].HeaderText == "Price")
-                cell = dgvSaleItem.Rows[e.RowIndex].Cells["Price"];
-            else
-                return;
-
-            //check for valid input (int's only)
-            Match _match = Regex.Match(cell.Value.ToString(), "^\\d*$");
-            string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
-            if (!String.IsNullOrEmpty(_errorMsg))
-            {
-                cell.ErrorText = _errorMsg;
-                return;
-            }
-
-        }
-        #endregion validation
-
         private void LoadDGVSale()
         {
-
-            dt = ToDataTable((from sku in sKUItems
-                              select new { sku.Name, sku.ProductCode,/* sku.Quantity,*/ Price = sku.SellingPrice, sku.ID }).ToList());
-            dt.Columns.Add("Quantity");
-
-            //make quantity columns readable
-            foreach (var col in dt.Columns)
-            {
-                ((DataColumn)col).ReadOnly = true;
-            }
-            dt.Columns["Quantity"].ReadOnly = false;
-            dt.Columns["Price"].ReadOnly = false;
-
-            dgvSaleItem.DataSource = dt;
+            dgvSaleItem.DataSource = ToDataTable((from saleItem in saleItems
+                                                  select new { saleItem.SKUItem.Name, saleItem.SKUItem.ProductCode, saleItem.Quantity, Price = saleItem.Price, saleItem.ID }).ToList());
             dgvSaleItem.Columns["ID"].Visible = false;
 
-            //update amount paid.
-            if (dgvSaleItem.Rows.Count != 0)
-            {
-                txtTotAmnt.Text = sKUItems.Select(x => (x.SellingPrice * x.Quantity)).Sum().ToString();
-                txtAmntPaid.Text = "0";
-                txtBalanceAmnt.Text = txtTotAmnt.Text;
-            }
+            CalculatePaymentDetails();
         }
 
         public void UpdateCustomerControl(Customer customer)
@@ -282,6 +332,19 @@ namespace SpindleSoft.Views
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
             pcbCustImage.Image = _cust.Image;
+        }
+
+        public void UpdateSaleListControl(SaleItem _saleitem, int _index)
+        {
+            if (saleItems.Count == 0 || saleItems.Count < _index + 1)
+                saleItems.Add(_saleitem);
+            else
+                saleItems[_index] = _saleitem;
+
+            dgvSaleItem.Rows[_index].Cells["colPrice"].Value = _saleitem.Price;
+            dgvSaleItem.Rows[_index].Cells["colQuantity"].Value = _saleitem.Quantity;
+
+            CalculatePaymentDetails();
         }
 
         public static DataTable ToDataTable<T>(List<T> items)
@@ -307,6 +370,48 @@ namespace SpindleSoft.Views
             }
             //put a breakpoint here and check datatable
             return dataTable;
+        }
+
+        private void dgvSaleItem_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            if (dgvSaleItem.Columns["colDelete"].Index == e.ColumnIndex)
+            {
+                if (e.ColumnIndex == dgvSaleItem.Columns["colDelete"].Index && dgvSaleItem.Rows[e.RowIndex].IsNewRow != true)
+                {
+                    DialogResult dr = MessageBox.Show("Continue deleting selected Sale items?", "Delete Sale Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dr == DialogResult.No) return;
+
+                    bool success = false;
+
+                    if (sKUItems.Count != 0 && e.RowIndex + 1 <= sKUItems.Count)
+                    {
+                        if (sKUItems[e.RowIndex].ID != 0)
+                            success = SalesSaver.DeleteSaleItems(sKUItems[e.RowIndex].ID);
+
+                        if (success || sKUItems[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
+                        {
+                            sKUItems.RemoveAt(e.RowIndex);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
+                            return;
+                        }
+                    }
+
+                    dgvSaleItem.Rows.RemoveAt(e.RowIndex);
+                    CalculatePaymentDetails();
+                }
+            }
+        }
+
+        private void dgvSaleItem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            new Winform_SaleItemDetails(dgvSaleItem.Rows.Count, saleItems[e.RowIndex]).ShowDialog();
         }
     }
 }

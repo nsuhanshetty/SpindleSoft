@@ -66,6 +66,7 @@
             this.CancelToolStrip.Size = new System.Drawing.Size(47, 51);
             this.CancelToolStrip.Text = "&Cancel";
             this.CancelToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.CancelToolStrip.ToolTipText = "Click to Cancel";
             this.CancelToolStrip.Click += new System.EventHandler(this.CancelToolStrip_Click);
             // 
             // SaveToolStrip
@@ -78,7 +79,7 @@
             this.SaveToolStrip.Size = new System.Drawing.Size(36, 51);
             this.SaveToolStrip.Text = "&Save";
             this.SaveToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.SaveToolStrip.ToolTipText = "Click to Save Customers";
+            this.SaveToolStrip.ToolTipText = "Click to Save ";
             this.SaveToolStrip.Click += new System.EventHandler(this.SaveToolStrip_Click);
             // 
             // toolStripSeparator1
@@ -100,7 +101,7 @@
             // toolStrip_Label
             // 
             this.toolStrip_Label.Name = "toolStrip_Label";
-            this.toolStrip_Label.Size = new System.Drawing.Size(442, 17);
+            this.toolStrip_Label.Size = new System.Drawing.Size(473, 17);
             this.toolStrip_Label.Spring = true;
             this.toolStrip_Label.Text = "Enter Details and Click Save.";
             this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

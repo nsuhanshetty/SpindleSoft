@@ -13,11 +13,6 @@ namespace SpindleSoft.Builders
     {
         static ILog log = LogManager.GetLogger(typeof(OrderBuilder));
         #region OrderBuilder
-
-        /// <summary>
-        /// Gets the Name of all the ordertype
-        /// </summary>
-        /// <returns></returns>
         public static List<string> GetListOfClothingTypes()
         {
             try
@@ -25,7 +20,7 @@ namespace SpindleSoft.Builders
                 using (var session = NHibernateHelper.OpenSession())
                 {
                     List<string> names = new List<string>() { "" };
-                    names.AddRange((from s in session.Query<AlterationItem>()
+                    names.AddRange((from s in session.Query<OrderItem>()
                                     select s.Name).Distinct().ToList());
                     return names;
                 }
@@ -36,6 +31,7 @@ namespace SpindleSoft.Builders
                 return null;
             }
         }
+
 
         /// <summary>
         ///  Based on the selected customer load the measurement from previous order

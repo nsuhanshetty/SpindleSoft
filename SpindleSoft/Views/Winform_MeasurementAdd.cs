@@ -167,12 +167,6 @@ namespace SpindleSoft.Views
                 cmbType.DataSource = orderTypeList;
             }
             cmbType.SelectedItem = value;
-            //else
-            //{
-            //    if (orderItem != new OrderItem()) return;
-            //    orderItem = OrderBuilder.GetOrderItem(this.cust.ID, cmbType.Text);
-            //    UpdateControls(this.cust.Name, orderItem);
-            //}
         }
 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Linq;
 using log4net;
+using NHibernate.Criterion;
 
 namespace SpindleSoft.Builders
 {
@@ -132,6 +133,22 @@ namespace SpindleSoft.Builders
                 return null;
             }
         }
+
+        public static int GetSkuStock(int _ID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    return session.Get<SKUItem>(_ID).Quantity;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return 0;
+                }
+            }
+        }
         #endregion SKUItems
 
         #region Vendors
@@ -219,19 +236,36 @@ namespace SpindleSoft.Builders
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    var query = "select distinct s.ID,s.TotalPrice,s.AmountPaid,s.DateOfSale from sale s " + /*c.Name,c.Mobile_No,*/
-                                "inner join customer c on c.ID = s.CustID " +
-                                "inner join saleitem i on i.SaleID  = s.ID " +
-                                "inner join skuitem k on k.ID = i.SKUID " +
-                                "where c.Name like :name and c.Mobile_No like :mobNo and s.ID like :saleID and k.ProductCode like :procode";
+                    //var query = "select distinct s.ID,s.TotalPrice,s.AmountPaid,s.DateOfSale from sale s " + /*c.Name,c.Mobile_No,*/
+                    //            "inner join customer c on c.ID = s.CustID " +
+                    //            "inner join saleitem i on i.SaleID  = s.ID " +
+                    //            "inner join skuitem k on k.ID = i.SKUID " +
+                    //            "where c.Name like :name and c.Mobile_No like :mobNo and s.ID like :saleID and k.ProductCode like :procode";
 
-                    NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
-                    .SetParameter("name", name + "%")
-                    .SetParameter("procode", procode + "%")
-                    .SetParameter("mobNo", mobNo + "%")
-                    .SetParameter("saleID", saleID + "%"))
-                    .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Sale)));
-                    return sqlQuery.List<Sale>() as List<Sale>;
+                    //NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
+                    //.SetParameter("name", name + "%")
+                    //.SetParameter("procode", procode + "%")
+                    //.SetParameter("mobNo", mobNo + "%")
+                    //.SetParameter("saleID", saleID + "%"))
+                    //.SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Sale)));
+                    //return sqlQuery.List<Sale>() as List<Sale>;
+
+                    Sale saleAlias = null;
+                    SaleItem saleItemAlias = null;
+                    SKUItem skuItemAlias = null;
+                    Customer custAlias = null;
+
+                    List<Sale> query = session.QueryOver<Sale>(() => saleAlias)
+                        .JoinAlias(() => saleAlias.SaleItems, ()=> saleItemAlias)
+                        .JoinAlias(() => saleItemAlias.SKUItem, ()=> skuItemAlias)
+                        .JoinAlias(() => saleAlias.Customer,()=> custAlias)
+                         .Where(Restrictions.On(() => custAlias.Name).IsLike(name + "%")) 
+                         .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(procode + "%")) 
+                         .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(mobNo + "%")) 
+                         //.Where(() => saleAlias.ID == int.Parse(saleID))
+                         .List().ToList<Sale>();
+
+                    return query;
                 }
             }
             catch (Exception ex)

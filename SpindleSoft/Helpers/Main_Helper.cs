@@ -27,7 +27,7 @@ namespace SpindleSoft.Helpers
             {
                 case "Customer":
                     List<Customer> _custList = PeoplePracticeBuilder.GetCustomersList("", searchText, "");
-                   if (_custList != null && _custList.Count != 0)
+                    if (_custList != null && _custList.Count != 0)
                     {
                         searchList = (from cust in _custList
                                       select new { cust.ID, cust.Name, cust.Mobile_No }).ToList();
@@ -60,7 +60,11 @@ namespace SpindleSoft.Helpers
                         List<Alteration> altList = (AlterationBuilder.GetAlterationList("", "", searchText));
                         if (altList != null && altList.Count != 0)
                             searchList = (from alt in altList
-                                          select new { alt.TotalPrice, Paid = alt.CurrentPayment, DueDate = alt.PromisedDate }).ToList();
+                                          select new { alt.ID,
+                                                       Total = alt.TotalPrice, 
+                                                       Paid = alt.CurrentPayment, 
+                                                       DueDate = alt.PromisedDate
+                                                    }).ToList();
                     }
                     break;
 

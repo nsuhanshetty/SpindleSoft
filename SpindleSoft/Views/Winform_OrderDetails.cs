@@ -31,7 +31,7 @@ namespace SpindleSoft.Views
             set
             {
                 amntPaid = value;
-                txtAmntPaid.Text = amntPaid.ToString();
+                txtAmntPaid.Text = amntPaid.ToString() == "0" ? "" : amntPaid.ToString();
                 BalanceAmount = TotalAmount - AmountPaid;
             }
         }
@@ -325,7 +325,7 @@ namespace SpindleSoft.Views
                 foreach (var item in OrderItemsList)
                 {
                     dgvOrderItems.Rows.Add();
-                    int index = dgvOrderItems.Rows.Count-1;
+                    int index = dgvOrderItems.Rows.Count - 1;
                     dgvOrderItems.Rows[index].Cells["OrderType"].Value = item.Name;
                     dgvOrderItems.Rows[index].Cells["OrderQuantity"].Value = item.Quantity;
                     dgvOrderItems.Rows[index].Cells["OrderPrice"].Value = item.Price;
@@ -370,8 +370,8 @@ namespace SpindleSoft.Views
 
             Match _match = Regex.Match(txtAmntPaid.Text, "^\\d*$");
             string _errorMsg = !_match.Success ? "Invalid Amount input data type.\nExample: '1100'" : "";
-            if (_errorMsg == "" && amntPaid > totAmnt)
-                _errorMsg = "Amount Paid cannot be greater than Total Amount";
+            if (_errorMsg == "" && 0 < amntPaid && amntPaid > totAmnt)
+                _errorMsg = "Amount Paid cannot be greater than Total Amount Or less than zero";
 
             errorProvider1.SetError(txtAmntPaid, _errorMsg);
 
@@ -383,10 +383,9 @@ namespace SpindleSoft.Views
                 AmountPaid = 0;
                 return;
             }
-            else if (!string.IsNullOrEmpty(txtAmntPaid.Text))
+            else
             {
-                //TotalAmount = totAmnt;
-                AmountPaid = int.Parse(txtAmntPaid.Text);
+                AmountPaid = !string.IsNullOrEmpty(txtAmntPaid.Text) ? int.Parse(txtAmntPaid.Text) : 0;
             }
         }
         #endregion _Validations
@@ -442,6 +441,18 @@ namespace SpindleSoft.Views
                 return;
             }
             new Winform_MeasurementAdd(dgvOrderItems.Rows.Count, this._cust, null).ShowDialog();
+        }
+
+        private void txtAmntPaid_TextChanged(object sender, EventArgs e)
+        {
+            txtAmntPaid_Validating(txtAmntPaid, new System.ComponentModel.CancelEventArgs());
+        }
+
+        private void Winform_OrderDetails_FormClosing(object sender, FormClosingEventArgs e)
+        {
+             Main main = Application.OpenForms["Main"] as Main;
+             if (main != null)
+                 main.UpdateOrderReadyDgv();
         }
 
         //protected override bool ProcessKeyMessage(ref Message message)

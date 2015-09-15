@@ -500,9 +500,9 @@
         internal System.Windows.Forms.TextBox txtIFSCNo;
         internal System.Windows.Forms.TextBox txtUserBankName;
         internal System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        //private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        //private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgvSecurityDoc;
         private System.Windows.Forms.DataGridViewComboBoxColumn colDocType;

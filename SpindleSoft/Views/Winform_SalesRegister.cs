@@ -62,15 +62,17 @@ namespace SpindleSoft.Views
 
         private void txtMobNo_TextChanged(object sender, EventArgs e)
         {
-            //todo : Check txtboxes for sql injection
-            List<Sale> salesList = (SaleBuilder.GetSalesList(txtName.Text, txtProCode.Text, txtMobNo.Text, txtSaleID.Text));
+            dgvSearch.DataSource = null;
+            if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text) && string.IsNullOrEmpty(txtProCode.Text))
+                return;
+
+            List<Sale> salesList = (SaleBuilder.GetSalesList(txtName.Text, txtProCode.Text, txtMobNo.Text));
             if (salesList != null)
             {
                 dgvSearch.DataSource = (from sale in salesList
-                                        select new { SaleID = sale.ID, sale.TotalPrice, sale.AmountPaid, sale.DateOfSale }).ToList();
+                                        select new {sale.Customer.Name, SaleID = sale.ID, sale.TotalPrice, sale.AmountPaid,
+                                            sale.DateOfSale }).ToList();
             }
-            else
-                dgvSearch.DataSource = null;
 
             dgvSaleItemDetails.DataSource = null;
         }

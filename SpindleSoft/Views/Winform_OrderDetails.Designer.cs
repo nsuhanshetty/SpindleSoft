@@ -152,6 +152,7 @@
             // btnAddItem
             // 
             this.btnAddItem.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddItem.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
             this.btnAddItem.Location = new System.Drawing.Point(547, 10);
             this.btnAddItem.Name = "btnAddItem";
@@ -258,6 +259,7 @@
             this.txtAmntPaid.Name = "txtAmntPaid";
             this.txtAmntPaid.Size = new System.Drawing.Size(113, 20);
             this.txtAmntPaid.TabIndex = 156;
+            this.txtAmntPaid.TextChanged += new System.EventHandler(this.txtAmntPaid_TextChanged);
             this.txtAmntPaid.Validating += new System.ComponentModel.CancelEventHandler(this.txtAmntPaid_Validating);
             // 
             // label8
@@ -375,6 +377,7 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "Winform_OrderDetails";
             this.Text = "Order Details";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Winform_OrderDetails_FormClosing);
             this.Load += new System.EventHandler(this.Winform_OrderDetails_Load);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.grpBoxCustomer, 0);

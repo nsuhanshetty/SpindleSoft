@@ -32,10 +32,14 @@ namespace SpindleSoft.FluentMapping
         public SaleMapping()
         {
             Id(x => x.ID).GeneratedBy.Identity();
-            Map(x => x.CustID);
+            References(x => x.Customer).Class<Customer>()
+                                       .Columns("CustomerID"); ;
             Map(x => x.TotalPrice);
             Map(x => x.AmountPaid);
             Map(x => x.DateOfSale);
+            HasMany(x => x.SaleItems).KeyColumn("SaleID")
+                                        .Inverse()
+                                        .Cascade.All();
         }
     }
 
@@ -44,8 +48,12 @@ namespace SpindleSoft.FluentMapping
         public SaleItemMapping()
         {
             Id(x => x.ID).GeneratedBy.Identity();
-            Map(x => x.SKUID);
-            Map(x => x.SaleID);
+            References(x => x.SKUItem).Class<SKUItem>()
+                                   .Columns("SkuID")
+                                   .Cascade.None(); ;
+            References(x => x.Sale).Class<Sale>()
+                                   .Columns("SaleID")
+                                   .Cascade.None();
             Map(x => x.Quantity);
             Map(x => x.Price);
             //Map(x => x.DateOfUpdate);

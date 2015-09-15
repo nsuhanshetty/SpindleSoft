@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtSaleID = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.lblMobile = new System.Windows.Forms.Label();
             this.txtProCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,8 +45,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtSaleID);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.lblMobile);
             this.groupBox1.Controls.Add(this.txtProCode);
             this.groupBox1.Controls.Add(this.label1);
@@ -61,23 +57,6 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Enter Text to Search";
-            // 
-            // txtSaleID
-            // 
-            this.txtSaleID.Location = new System.Drawing.Point(354, 54);
-            this.txtSaleID.Name = "txtSaleID";
-            this.txtSaleID.Size = new System.Drawing.Size(135, 20);
-            this.txtSaleID.TabIndex = 137;
-            this.txtSaleID.TextChanged += new System.EventHandler(this.txtMobNo_TextChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(306, 57);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 13);
-            this.label2.TabIndex = 138;
-            this.label2.Text = "Sale ID";
             // 
             // lblMobile
             // 
@@ -194,8 +173,6 @@
         internal System.Windows.Forms.TextBox txtProCode;
         internal System.Windows.Forms.Label label1;
         internal System.Windows.Forms.TextBox txtName;
-        internal System.Windows.Forms.TextBox txtSaleID;
-        internal System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dgvSaleItemDetails;
         internal System.Windows.Forms.Label label3;
     }

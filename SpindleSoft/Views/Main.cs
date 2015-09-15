@@ -327,7 +327,6 @@ namespace SpindleSoft
             if (rdbOrders.Checked)
             {
                 new Winform_OrderDetails().ShowDialog();
-                UpdateOrderReadyDgv();
             }
             else if (rdbCustomer.Checked)
             {
@@ -402,11 +401,8 @@ namespace SpindleSoft
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            //if (String.IsNullOrEmpty(txtSearch.Text)) return;
-
-            dgvSearch.DataSource = Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);
+            dgvSearch.DataSource = String.IsNullOrEmpty(txtSearch.Text) ? null : Main_Helper.GetDataSource(this.searchState.ToString(), txtSearch.Text);
             lblSearchCount.Text = dgvSearch.Rows.Count.ToString();
-
         }
         #endregion Event
 
@@ -416,7 +412,7 @@ namespace SpindleSoft
             IList OrderItemsList;
 
             OrderItemsList = MainBuilder.GetOrdersList_BasedOnStatus(0);
-            Main_Helper.FillDatagrid(OrderItemsList, dgvOrdR2S);
+            lblOrdR2SCount.Text = Main_Helper.FillDatagrid(OrderItemsList, dgvOrdR2S).ToString();
 
             OrderItemsList = MainBuilder.GetOrdersList_BasedOnStatus(1);
             lblOrdSIPCount.Text = Main_Helper.FillDatagrid(OrderItemsList, dgvOrdSIP).ToString();
@@ -430,10 +426,10 @@ namespace SpindleSoft
             IList AlterationItemsList;
 
             AlterationItemsList = MainBuilder.GetAlterList_BasedOnStatus(0);
-            Main_Helper.FillDatagrid(AlterationItemsList, dgvAltR2A);
+            lblAltR2ACount.Text = Main_Helper.FillDatagrid(AlterationItemsList, dgvAltR2A).ToString();
 
             AlterationItemsList = MainBuilder.GetAlterList_BasedOnStatus(1);
-            lblAltSIPCount.Text = Main_Helper.FillDatagrid(AlterationItemsList, dgvAltSIP).ToString();
+            lblAltAIPCount.Text = Main_Helper.FillDatagrid(AlterationItemsList, dgvAltSIP).ToString();
 
             AlterationItemsList = MainBuilder.GetAlterList_BasedOnStatus(2);
             lblAltCollectCount.Text = Main_Helper.FillDatagrid(AlterationItemsList, dgvAltR2C).ToString();

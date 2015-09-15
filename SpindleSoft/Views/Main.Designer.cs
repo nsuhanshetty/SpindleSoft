@@ -78,6 +78,7 @@
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlSearch = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblSearchCount = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
             this.rdbSales = new System.Windows.Forms.RadioButton();
@@ -88,13 +89,9 @@
             this.rdbOrders = new System.Windows.Forms.RadioButton();
             this.pnlDeliveryStatus = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lblAltSIPCount = new System.Windows.Forms.Label();
+            this.lblAltAIPCount = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvAltSIP = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewButtonColumn5 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dataGridViewButtonColumn6 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgvAltR2C = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -127,7 +124,12 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.lblSearchCount = new System.Windows.Forms.Label();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn5 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewButtonColumn6 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.lblAltR2ACount = new System.Windows.Forms.Label();
+            this.lblOrdR2SCount = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
@@ -543,6 +545,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select Category";
             // 
+            // lblSearchCount
+            // 
+            this.lblSearchCount.AutoSize = true;
+            this.lblSearchCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblSearchCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblSearchCount.Location = new System.Drawing.Point(251, 92);
+            this.lblSearchCount.Name = "lblSearchCount";
+            this.lblSearchCount.Size = new System.Drawing.Size(13, 13);
+            this.lblSearchCount.TabIndex = 15;
+            this.lblSearchCount.Text = "0";
+            // 
             // txtSearch
             // 
             this.txtSearch.Location = new System.Drawing.Point(9, 114);
@@ -644,7 +657,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.lblAltSIPCount);
+            this.groupBox3.Controls.Add(this.lblAltR2ACount);
+            this.groupBox3.Controls.Add(this.lblAltAIPCount);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.dgvAltSIP);
             this.groupBox3.Controls.Add(this.dgvAltR2C);
@@ -654,30 +668,30 @@
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Location = new System.Drawing.Point(8, 244);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(911, 233);
+            this.groupBox3.Size = new System.Drawing.Size(1035, 233);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Alteration Delivery Status";
             // 
-            // lblAltSIPCount
+            // lblAltAIPCount
             // 
-            this.lblAltSIPCount.AutoSize = true;
-            this.lblAltSIPCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblAltSIPCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblAltSIPCount.Location = new System.Drawing.Point(564, 24);
-            this.lblAltSIPCount.Name = "lblAltSIPCount";
-            this.lblAltSIPCount.Size = new System.Drawing.Size(13, 13);
-            this.lblAltSIPCount.TabIndex = 15;
-            this.lblAltSIPCount.Text = "0";
+            this.lblAltAIPCount.AutoSize = true;
+            this.lblAltAIPCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblAltAIPCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblAltAIPCount.Location = new System.Drawing.Point(663, 24);
+            this.lblAltAIPCount.Name = "lblAltAIPCount";
+            this.lblAltAIPCount.Size = new System.Drawing.Size(13, 13);
+            this.lblAltAIPCount.TabIndex = 15;
+            this.lblAltAIPCount.Text = "0";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(265, 24);
+            this.label6.Location = new System.Drawing.Point(351, 24);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(90, 13);
+            this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 14;
-            this.label6.Text = "Stitch In Progress";
+            this.label6.Text = "Alteration In Progress";
             // 
             // dgvAltSIP
             // 
@@ -690,44 +704,12 @@
             this.dataGridViewTextBoxColumn10,
             this.dataGridViewButtonColumn5,
             this.dataGridViewButtonColumn6});
-            this.dgvAltSIP.Location = new System.Drawing.Point(265, 40);
+            this.dgvAltSIP.Location = new System.Drawing.Point(354, 40);
             this.dgvAltSIP.Name = "dgvAltSIP";
             this.dgvAltSIP.ReadOnly = true;
-            this.dgvAltSIP.Size = new System.Drawing.Size(315, 187);
+            this.dgvAltSIP.Size = new System.Drawing.Size(326, 187);
             this.dgvAltSIP.TabIndex = 14;
-            this.dgvAltSIP.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "AlterationID";
-            this.dataGridViewTextBoxColumn9.HeaderText = "AlterationID";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            this.dataGridViewTextBoxColumn9.Width = 87;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn10.HeaderText = "DueDate";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            // 
-            // dataGridViewButtonColumn5
-            // 
-            this.dataGridViewButtonColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewButtonColumn5.HeaderText = "Shift To R2S";
-            this.dataGridViewButtonColumn5.Name = "dataGridViewButtonColumn5";
-            this.dataGridViewButtonColumn5.ReadOnly = true;
-            this.dataGridViewButtonColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewButtonColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // dataGridViewButtonColumn6
-            // 
-            this.dataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewButtonColumn6.HeaderText = "Shift to R2C";
-            this.dataGridViewButtonColumn6.Name = "dataGridViewButtonColumn6";
-            this.dataGridViewButtonColumn6.ReadOnly = true;
+            this.dgvAltSIP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
             // 
             // dgvAltR2C
             // 
@@ -740,12 +722,12 @@
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewButtonColumn3,
             this.colAltSendSMS});
-            this.dgvAltR2C.Location = new System.Drawing.Point(586, 40);
+            this.dgvAltR2C.Location = new System.Drawing.Point(702, 40);
             this.dgvAltR2C.Name = "dgvAltR2C";
             this.dgvAltR2C.ReadOnly = true;
-            this.dgvAltR2C.Size = new System.Drawing.Size(315, 187);
+            this.dgvAltR2C.Size = new System.Drawing.Size(326, 187);
             this.dgvAltR2C.TabIndex = 14;
-            this.dgvAltR2C.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
+            this.dgvAltR2C.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -789,9 +771,9 @@
             this.dgvAltR2A.Location = new System.Drawing.Point(6, 40);
             this.dgvAltR2A.Name = "dgvAltR2A";
             this.dgvAltR2A.ReadOnly = true;
-            this.dgvAltR2A.Size = new System.Drawing.Size(254, 187);
+            this.dgvAltR2A.Size = new System.Drawing.Size(326, 187);
             this.dgvAltR2A.TabIndex = 13;
-            this.dgvAltR2A.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
+            this.dgvAltR2A.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -819,7 +801,7 @@
             // 
             this.lblAltCollectCount.AutoSize = true;
             this.lblAltCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblAltCollectCount.Location = new System.Drawing.Point(888, 24);
+            this.lblAltCollectCount.Location = new System.Drawing.Point(1011, 24);
             this.lblAltCollectCount.Name = "lblAltCollectCount";
             this.lblAltCollectCount.Size = new System.Drawing.Size(13, 13);
             this.lblAltCollectCount.TabIndex = 12;
@@ -828,7 +810,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(582, 24);
+            this.label3.Location = new System.Drawing.Point(699, 24);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 13);
             this.label3.TabIndex = 10;
@@ -845,6 +827,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblOrdR2SCount);
             this.groupBox2.Controls.Add(this.lblOrdSIPCount);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.dgvOrdSIP);
@@ -855,7 +838,7 @@
             this.groupBox2.Controls.Add(this.dgvOrdR2S);
             this.groupBox2.Location = new System.Drawing.Point(8, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(911, 233);
+            this.groupBox2.Size = new System.Drawing.Size(1035, 233);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Order Delivery Status";
@@ -865,7 +848,7 @@
             this.lblOrdSIPCount.AutoSize = true;
             this.lblOrdSIPCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblOrdSIPCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblOrdSIPCount.Location = new System.Drawing.Point(564, 23);
+            this.lblOrdSIPCount.Location = new System.Drawing.Point(663, 24);
             this.lblOrdSIPCount.Name = "lblOrdSIPCount";
             this.lblOrdSIPCount.Size = new System.Drawing.Size(13, 13);
             this.lblOrdSIPCount.TabIndex = 14;
@@ -874,7 +857,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(265, 23);
+            this.label5.Location = new System.Drawing.Point(351, 24);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 13);
             this.label5.TabIndex = 13;
@@ -891,10 +874,10 @@
             this.dataGridViewTextBoxColumn8,
             this.colShiftR2S,
             this.dataGridViewButtonColumn4});
-            this.dgvOrdSIP.Location = new System.Drawing.Point(265, 39);
+            this.dgvOrdSIP.Location = new System.Drawing.Point(354, 39);
             this.dgvOrdSIP.Name = "dgvOrdSIP";
             this.dgvOrdSIP.ReadOnly = true;
-            this.dgvOrdSIP.Size = new System.Drawing.Size(315, 187);
+            this.dgvOrdSIP.Size = new System.Drawing.Size(326, 187);
             this.dgvOrdSIP.TabIndex = 12;
             this.dgvOrdSIP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
             // 
@@ -941,10 +924,10 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewButtonColumn1,
             this.colSendSMS});
-            this.dgvOrdR2C.Location = new System.Drawing.Point(586, 39);
+            this.dgvOrdR2C.Location = new System.Drawing.Point(702, 39);
             this.dgvOrdR2C.Name = "dgvOrdR2C";
             this.dgvOrdR2C.ReadOnly = true;
-            this.dgvOrdR2C.Size = new System.Drawing.Size(315, 187);
+            this.dgvOrdR2C.Size = new System.Drawing.Size(326, 187);
             this.dgvOrdR2C.TabIndex = 11;
             this.dgvOrdR2C.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
             // 
@@ -984,7 +967,7 @@
             this.lblOrdCollectCount.AutoSize = true;
             this.lblOrdCollectCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblOrdCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblOrdCollectCount.Location = new System.Drawing.Point(888, 23);
+            this.lblOrdCollectCount.Location = new System.Drawing.Point(1011, 24);
             this.lblOrdCollectCount.Name = "lblOrdCollectCount";
             this.lblOrdCollectCount.Size = new System.Drawing.Size(13, 13);
             this.lblOrdCollectCount.TabIndex = 10;
@@ -993,7 +976,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(583, 23);
+            this.label2.Location = new System.Drawing.Point(699, 24);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 8;
@@ -1021,7 +1004,7 @@
             this.dgvOrdR2S.Location = new System.Drawing.Point(6, 40);
             this.dgvOrdR2S.Name = "dgvOrdR2S";
             this.dgvOrdR2S.ReadOnly = true;
-            this.dgvOrdR2S.Size = new System.Drawing.Size(254, 187);
+            this.dgvOrdR2S.Size = new System.Drawing.Size(326, 187);
             this.dgvOrdR2S.TabIndex = 2;
             this.dgvOrdR2S.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
             // 
@@ -1048,16 +1031,59 @@
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
             // 
-            // lblSearchCount
+            // dataGridViewTextBoxColumn9
             // 
-            this.lblSearchCount.AutoSize = true;
-            this.lblSearchCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblSearchCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblSearchCount.Location = new System.Drawing.Point(251, 92);
-            this.lblSearchCount.Name = "lblSearchCount";
-            this.lblSearchCount.Size = new System.Drawing.Size(13, 13);
-            this.lblSearchCount.TabIndex = 15;
-            this.lblSearchCount.Text = "0";
+            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "AlterationID";
+            this.dataGridViewTextBoxColumn9.HeaderText = "AlterationID";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 87;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn10.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn5
+            // 
+            this.dataGridViewButtonColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn5.HeaderText = "Shift To R2A";
+            this.dataGridViewButtonColumn5.Name = "dataGridViewButtonColumn5";
+            this.dataGridViewButtonColumn5.ReadOnly = true;
+            this.dataGridViewButtonColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewButtonColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewButtonColumn6
+            // 
+            this.dataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn6.HeaderText = "Shift to R2C";
+            this.dataGridViewButtonColumn6.Name = "dataGridViewButtonColumn6";
+            this.dataGridViewButtonColumn6.ReadOnly = true;
+            // 
+            // lblAltR2ACount
+            // 
+            this.lblAltR2ACount.AutoSize = true;
+            this.lblAltR2ACount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblAltR2ACount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblAltR2ACount.Location = new System.Drawing.Point(316, 24);
+            this.lblAltR2ACount.Name = "lblAltR2ACount";
+            this.lblAltR2ACount.Size = new System.Drawing.Size(13, 13);
+            this.lblAltR2ACount.TabIndex = 16;
+            this.lblAltR2ACount.Text = "0";
+            // 
+            // lblOrdR2SCount
+            // 
+            this.lblOrdR2SCount.AutoSize = true;
+            this.lblOrdR2SCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblOrdR2SCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblOrdR2SCount.Location = new System.Drawing.Point(316, 24);
+            this.lblOrdR2SCount.Name = "lblOrdR2SCount";
+            this.lblOrdR2SCount.Size = new System.Drawing.Size(13, 13);
+            this.lblOrdR2SCount.TabIndex = 17;
+            this.lblOrdR2SCount.Text = "0";
             // 
             // Main
             // 
@@ -1182,15 +1208,11 @@
         private System.Windows.Forms.DataGridView dgvAltSIP;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblOrdSIPCount;
-        private System.Windows.Forms.Label lblAltSIPCount;
+        private System.Windows.Forms.Label lblAltAIPCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
         private System.Windows.Forms.DataGridViewButtonColumn colSendSMS;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn5;
-        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn3;
@@ -1199,6 +1221,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn2;
         private System.Windows.Forms.Label lblSearchCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn5;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn6;
+        private System.Windows.Forms.Label lblAltR2ACount;
+        private System.Windows.Forms.Label lblOrdR2SCount;
     }
 }
 

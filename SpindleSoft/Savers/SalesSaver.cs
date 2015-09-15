@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Linq;
+using log4net;
 
 namespace SpindleSoft.Savers
 {
     public class SalesSaver
     {
+        static ILog log = LogManager.GetLogger(typeof(SalesSaver));
+
         public static bool SaveSkuItemInfo(SKUItem skuItem)
         {
 
@@ -23,9 +26,9 @@ namespace SpindleSoft.Savers
                         transaction.Commit();
                         return true;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //todo: log4net
+                        log.Error(ex);
                         transaction.Rollback();
                         return false;
                     }
@@ -35,7 +38,7 @@ namespace SpindleSoft.Savers
 
         }
 
-        public static bool SaveSaleItemInfo(Sale sale, List<SaleItem> saleItems)
+        public static bool SaveSaleItemInfo(Sale sale)
         {
 
             using (var session = NHibernateHelper.OpenSession())
@@ -44,29 +47,27 @@ namespace SpindleSoft.Savers
                 {
                     try
                     {
-                        session.SaveOrUpdate(sale);
-                        foreach (SaleItem item in saleItems)
+                        
+                        foreach (SaleItem item in sale.SaleItems)
                         {
-                            item.SaleID = sale.ID;
-                            session.SaveOrUpdate(item);
+                            item.Sale = sale;
+                            //session.SaveOrUpdate(item);
                         }
-
+                       
                         //update SKU
-                        foreach (SaleItem item in saleItems)
+                        foreach (SaleItem item in sale.SaleItems)
                         {
-                            SKUItem sku = (from s in session.Query<SKUItem>()
-                                           where s.ID == item.SKUID
-                                           select s).Single();
+                            SKUItem sku = item.SKUItem;
                             sku.Quantity -= item.Quantity;
                             session.SaveOrUpdate(sku);
                         }
-
+                        session.SaveOrUpdate(sale);
                         transaction.Commit();
                         return true;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //todo: log4net
+                        log.Error(ex);
                         transaction.Rollback();
                         return false;
                     }
@@ -88,7 +89,7 @@ namespace SpindleSoft.Savers
                         foreach (SaleItem item in saleItems)
                         {
                             SKUItem sku = (from s in session.Query<SKUItem>()
-                                           where s.ID == item.SKUID
+                                           where s.ID == item.SKUItem.ID
                                            select s).Single();
                             sku.Quantity -= item.Quantity;
                             session.SaveOrUpdate(sku);
@@ -97,9 +98,9 @@ namespace SpindleSoft.Savers
                         return true;
                     }
 
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //todo: Log4net
+                        log.Error(ex);
                         transaction.Rollback();
                         return false;
                         //throw;
@@ -108,5 +109,28 @@ namespace SpindleSoft.Savers
             }
         }
 
+        public static bool DeleteSaleItems(int _id)
+        {
+            bool success = false;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    try
+                    {
+                        var item = session.Get<SaleItem>(_id);
+                        session.Delete(item);
+                        trans.Commit();
+                        success = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        trans.Rollback();
+                    }
+                }
+            }
+            return success;
+        }
     }
 }

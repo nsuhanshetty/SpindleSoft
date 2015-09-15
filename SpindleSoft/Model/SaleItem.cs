@@ -37,22 +37,24 @@ namespace SpindleSoft.Model
     {
         public virtual int ID { get; protected set; }
 
-        public virtual int CustID { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public virtual int TotalPrice { get; set; }
 
         public virtual int AmountPaid { get; set; }
 
         public virtual DateTime DateOfSale { get; set; }
+
+        public virtual IList<SaleItem> SaleItems { get; set; }
     }
 
     public class SaleItem
     {
         public virtual int ID { get; protected set; }
 
-        public virtual int SKUID { get; set; }
+        public virtual SKUItem SKUItem { get; set; }
 
-        public virtual int SaleID { get; set; }
+        public virtual Sale Sale { get; set; }
 
         public virtual int Quantity { get; set; }
 
@@ -62,9 +64,9 @@ namespace SpindleSoft.Model
 
         public SaleItem(){ }
 
-        public SaleItem(int _sKUID, int _quantity, int _price)
+        public SaleItem(SKUItem skuItem, int _quantity, int _price)
         {
-            this.SKUID = _sKUID;
+            this.SKUItem = skuItem;
             this.Quantity = _quantity;
             this.Price = _price;
         }

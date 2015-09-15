@@ -56,7 +56,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnDelete = new System.Windows.Forms.Button();
             this.grpbxPayDet = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtAmntPaid = new System.Windows.Forms.TextBox();
@@ -64,6 +63,13 @@
             this.txtTotAmnt = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.grpBoxCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItem)).BeginInit();
@@ -165,12 +171,20 @@
             this.dgvSaleItem.AllowUserToDeleteRows = false;
             this.dgvSaleItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSaleItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSaleItem.Location = new System.Drawing.Point(381, 202);
+            this.dgvSaleItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colName,
+            this.colProductCode,
+            this.ColQuantity,
+            this.colPrice,
+            this.colStock,
+            this.colDelete});
+            this.dgvSaleItem.Location = new System.Drawing.Point(391, 193);
             this.dgvSaleItem.Name = "dgvSaleItem";
-            this.dgvSaleItem.Size = new System.Drawing.Size(445, 243);
+            this.dgvSaleItem.ReadOnly = true;
+            this.dgvSaleItem.Size = new System.Drawing.Size(435, 252);
             this.dgvSaleItem.TabIndex = 2;
-            this.dgvSaleItem.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellEndEdit);
-            this.dgvSaleItem.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvSaleItem_CellValidating);
+            this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellClick);
+            this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellDoubleClick);
             // 
             // AddCustToolStrip
             // 
@@ -179,7 +193,7 @@
             this.AddCustToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.AddCustToolStrip.Name = "AddCustToolStrip";
             this.AddCustToolStrip.Size = new System.Drawing.Size(76, 51);
-            this.AddCustToolStrip.Text = "Add Customer";
+            this.AddCustToolStrip.Text = "&Add Customer";
             this.AddCustToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.AddCustToolStrip.Click += new System.EventHandler(this.AddCustToolStrip_Click);
             // 
@@ -203,7 +217,7 @@
             this.dgvSearch.ReadOnly = true;
             this.dgvSearch.Size = new System.Drawing.Size(365, 273);
             this.dgvSearch.TabIndex = 1;
-            this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
+            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
             // 
             // grpBxSearch
             // 
@@ -344,16 +358,6 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(743, 174);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 136;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
             // grpbxPayDet
             // 
             this.grpbxPayDet.Location = new System.Drawing.Point(638, 58);
@@ -418,12 +422,63 @@
             this.txtBalanceAmnt.Size = new System.Drawing.Size(84, 20);
             this.txtBalanceAmnt.TabIndex = 4;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(385, 174);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(441, 272);
+            this.groupBox1.TabIndex = 138;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Sale Item Details";
+            // 
+            // colName
+            // 
+            this.colName.DataPropertyName = "Name";
+            this.colName.HeaderText = "Name";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            // 
+            // colProductCode
+            // 
+            this.colProductCode.DataPropertyName = "ProductCode";
+            this.colProductCode.HeaderText = "ProductCode";
+            this.colProductCode.Name = "colProductCode";
+            this.colProductCode.ReadOnly = true;
+            // 
+            // ColQuantity
+            // 
+            this.ColQuantity.DataPropertyName = "Quantity";
+            this.ColQuantity.HeaderText = "Quantity";
+            this.ColQuantity.Name = "ColQuantity";
+            this.ColQuantity.ReadOnly = true;
+            // 
+            // colPrice
+            // 
+            this.colPrice.DataPropertyName = "Price";
+            this.colPrice.HeaderText = "Price";
+            this.colPrice.Name = "colPrice";
+            this.colPrice.ReadOnly = true;
+            // 
+            // colStock
+            // 
+            this.colStock.HeaderText = "InStock";
+            this.colStock.Name = "colStock";
+            this.colStock.ReadOnly = true;
+            this.colStock.Visible = false;
+            // 
+            // colDelete
+            // 
+            this.colDelete.HeaderText = "Click To Delete";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
+            this.colDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // Winform_SalesDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 469);
-            this.Controls.Add(this.btnDelete);
+            this.ClientSize = new System.Drawing.Size(831, 471);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtBalanceAmnt);
             this.Controls.Add(this.label7);
@@ -434,9 +489,11 @@
             this.Controls.Add(this.dgvSaleItem);
             this.Controls.Add(this.grpBoxCustomer);
             this.Controls.Add(this.grpbxPayDet);
+            this.Controls.Add(this.groupBox1);
             this.Name = "Winform_SalesDetails";
-            this.Text = "Sales Details";
+            this.Text = "Add Sales Details";
             this.Load += new System.EventHandler(this.Winform_SalesDetails_Load);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.grpbxPayDet, 0);
             this.Controls.SetChildIndex(this.grpBoxCustomer, 0);
             this.Controls.SetChildIndex(this.dgvSaleItem, 0);
@@ -447,7 +504,6 @@
             this.Controls.SetChildIndex(this.label7, 0);
             this.Controls.SetChildIndex(this.txtBalanceAmnt, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
-            this.Controls.SetChildIndex(this.btnDelete, 0);
             this.grpBoxCustomer.ResumeLayout(false);
             this.grpBoxCustomer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
@@ -490,7 +546,6 @@
         internal System.Windows.Forms.TextBox txtDesc;
         internal System.Windows.Forms.Label label10;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.GroupBox grpbxPayDet;
         internal System.Windows.Forms.TextBox txtBalanceAmnt;
         internal System.Windows.Forms.Label label7;
@@ -498,6 +553,13 @@
         internal System.Windows.Forms.Label label3;
         internal System.Windows.Forms.TextBox txtAmntPaid;
         internal System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStock;
+        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
 
     }
 }

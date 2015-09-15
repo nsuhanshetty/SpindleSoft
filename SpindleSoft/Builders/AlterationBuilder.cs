@@ -22,7 +22,7 @@ namespace SpindleSoft.Builders
         /// <returns></returns>
         public static Alteration GetAlteration(int altId)
         {
-            using (var session = NHibernateHelper.OpenSession())
+            using (var session = NHibernateHelper.OpenSession())    
             {
                 Alteration alt = session.CreateCriteria<Alteration>()
                     .Add(Restrictions.IdEq(altId))
@@ -76,15 +76,15 @@ namespace SpindleSoft.Builders
             {
                 Orders orderAlias = null;
                 Customer custAlias = null;
-
-                //todo: select the order id in the inner query using select
-                List<string> namesOfCustomer = (from ord in
-                                                    (session.QueryOver<Orders>(() => orderAlias)
-                                                     .JoinAlias(() => orderAlias.Customer, () => custAlias)
-                                                     .Where(() => custAlias.ID == _custID)
-                                                     .List())
-                                                select ord.ID.ToString()).ToList();
-                return namesOfCustomer;
+                List<string> orderList = new List<string>();
+                orderList.Add("");
+                orderList.AddRange((from ord in
+                                        (session.QueryOver<Orders>(() => orderAlias)
+                                         .JoinAlias(() => orderAlias.Customer, () => custAlias)
+                                         .Where(() => custAlias.ID == _custID)
+                                         .List())
+                                    select ord.ID.ToString()).ToList());
+                return orderList;
             }
         }
 
@@ -124,6 +124,29 @@ namespace SpindleSoft.Builders
                     log.Error(ex.Message);
                     return null;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the Name of all the ordertype
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetListOfClothingTypes()
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    List<string> names = new List<string>() { "" };
+                    names.AddRange((from s in session.Query<AlterationItem>()
+                                    select s.Name).Distinct().ToList());
+                    return names;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
             }
         }
     }
