@@ -252,8 +252,6 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            UpdateStatus("Validating..", 0);
-
             List<string> exceptionlist = new List<string>() { "grpBxSearch", "pcbCustImage" };
             bool exists = SpindleSoft.Utilities.Validation.IsNullOrEmpty(this, true, exceptionlist);
             if (exists) return;
@@ -286,10 +284,10 @@ namespace SpindleSoft.Views
             sale.SaleItems = saleItems;
             bool success = SalesSaver.SaveSaleItemInfo(sale);
 
-            UpdateStatus("Saving Sale..", 100);
-
             if (success)
             {
+                UpdateStatus("Saved.", 100);
+
                 DialogResult dr = MessageBox.Show("Send SMS to Customer Regarding the Sale to Customer", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
@@ -411,7 +409,7 @@ namespace SpindleSoft.Views
         {
             if (e.RowIndex == -1) return;
 
-            new Winform_SaleItemDetails(dgvSaleItem.Rows.Count, saleItems[e.RowIndex]).ShowDialog();
+            new Winform_SaleItemDetails(e.RowIndex, saleItems[e.RowIndex]).ShowDialog();
         }
     }
 }

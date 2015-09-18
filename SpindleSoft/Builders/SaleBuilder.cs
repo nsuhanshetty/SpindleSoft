@@ -261,7 +261,8 @@ namespace SpindleSoft.Builders
                         .JoinAlias(() => saleAlias.Customer,()=> custAlias)
                          .Where(Restrictions.On(() => custAlias.Name).IsLike(name + "%")) 
                          .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(procode + "%")) 
-                         .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(mobNo + "%")) 
+                         .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(mobNo + "%"))
+                         .OrderBy(() => saleAlias.DateOfSale).Desc
                          //.Where(() => saleAlias.ID == int.Parse(saleID))
                          .List().ToList<Sale>();
 

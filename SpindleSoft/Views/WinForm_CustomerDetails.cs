@@ -89,6 +89,13 @@ namespace SpindleSoft.Views
             if (response)
             {
                 UpdateStatus("Saved", 100);
+
+                DialogResult dr = MessageBox.Show("Send SMS to Customer Regarding the registration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    MessageBox.Show("Customer Added.");
+                }
+
                 this.Close();
             }
             else

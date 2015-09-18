@@ -38,9 +38,14 @@
             this.dgvSearch = new System.Windows.Forms.DataGridView();
             this.dgvSaleItemDetails = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusStrip2 = new System.Windows.Forms.StatusStrip();
+            this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItemDetails)).BeginInit();
+            this.statusStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -53,7 +58,7 @@
             this.groupBox1.Controls.Add(this.lblName);
             this.groupBox1.Location = new System.Drawing.Point(8, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(496, 85);
+            this.groupBox1.Size = new System.Drawing.Size(579, 85);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Enter Text to Search";
@@ -61,7 +66,7 @@
             // lblMobile
             // 
             this.lblMobile.AutoSize = true;
-            this.lblMobile.Location = new System.Drawing.Point(247, 24);
+            this.lblMobile.Location = new System.Drawing.Point(321, 26);
             this.lblMobile.Name = "lblMobile";
             this.lblMobile.Size = new System.Drawing.Size(105, 13);
             this.lblMobile.TabIndex = 99;
@@ -94,7 +99,7 @@
             // 
             // txtMobNo
             // 
-            this.txtMobNo.Location = new System.Drawing.Point(355, 21);
+            this.txtMobNo.Location = new System.Drawing.Point(429, 23);
             this.txtMobNo.MaxLength = 10;
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(135, 20);
@@ -104,7 +109,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(6, 26);
+            this.lblName.Location = new System.Drawing.Point(6, 27);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(85, 13);
             this.lblName.TabIndex = 98;
@@ -112,14 +117,18 @@
             // 
             // dgvSearch
             // 
+            this.dgvSearch.AllowUserToAddRows = false;
             this.dgvSearch.AllowUserToDeleteRows = false;
             this.dgvSearch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSearch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDelete});
             this.dgvSearch.Location = new System.Drawing.Point(8, 103);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
-            this.dgvSearch.Size = new System.Drawing.Size(496, 150);
+            this.dgvSearch.Size = new System.Drawing.Size(579, 150);
             this.dgvSearch.TabIndex = 7;
+            this.dgvSearch.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellClick);
             this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
             // 
             // dgvSaleItemDetails
@@ -130,7 +139,7 @@
             this.dgvSaleItemDetails.Location = new System.Drawing.Point(8, 276);
             this.dgvSaleItemDetails.Name = "dgvSaleItemDetails";
             this.dgvSaleItemDetails.ReadOnly = true;
-            this.dgvSaleItemDetails.Size = new System.Drawing.Size(496, 150);
+            this.dgvSaleItemDetails.Size = new System.Drawing.Size(579, 150);
             this.dgvSaleItemDetails.TabIndex = 8;
             // 
             // label3
@@ -142,11 +151,46 @@
             this.label3.TabIndex = 99;
             this.label3.Text = "Sale Items:";
             // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            // 
+            // statusStrip2
+            // 
+            this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar1,
+            this.toolStrip_Label});
+            this.statusStrip2.Location = new System.Drawing.Point(0, 427);
+            this.statusStrip2.Name = "statusStrip2";
+            this.statusStrip2.Size = new System.Drawing.Size(594, 22);
+            this.statusStrip2.TabIndex = 101;
+            this.statusStrip2.Text = "statusStrip2";
+            // 
+            // toolStrip_Label
+            // 
+            this.toolStrip_Label.Name = "toolStrip_Label";
+            this.toolStrip_Label.Size = new System.Drawing.Size(482, 17);
+            this.toolStrip_Label.Spring = true;
+            this.toolStrip_Label.Text = "Ready";
+            this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // colDelete
+            // 
+            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colDelete.HeaderText = "Click To Delete ";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
+            this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colDelete.Text = "Delete";
+            this.colDelete.Width = 99;
+            // 
             // Winform_SalesRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 438);
+            this.ClientSize = new System.Drawing.Size(594, 449);
+            this.Controls.Add(this.statusStrip2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dgvSaleItemDetails);
             this.Controls.Add(this.dgvSearch);
@@ -158,6 +202,8 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItemDetails)).EndInit();
+            this.statusStrip2.ResumeLayout(false);
+            this.statusStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,5 +221,9 @@
         internal System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.DataGridView dgvSaleItemDetails;
         internal System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.StatusStrip statusStrip2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
     }
 }

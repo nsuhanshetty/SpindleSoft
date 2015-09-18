@@ -72,6 +72,7 @@ namespace SpindleSoft.Views
                 dgvSearch.DataSource = (from sale in salesList
                                         select new {sale.Customer.Name, SaleID = sale.ID, sale.TotalPrice, sale.AmountPaid,
                                             sale.DateOfSale }).ToList();
+                dgvSearch.Columns["colDelete"].DisplayIndex = dgvSearch.Columns.Count - 1;
             }
 
             dgvSaleItemDetails.DataSource = null;
@@ -79,6 +80,36 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1 || e.ColumnIndex == dgvSearch.Columns["colDelete"].Index) return;
+
+            toolStrip_Label.Text = "Gathering Data..";
+            toolStripProgressBar1.Value = 25;
+            if (dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value == null) return;
+            int orderID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString());
+
+            toolStrip_Label.Text = "Gathering Data..";
+            toolStripProgressBar1.Value = 50;
+
+            Orders order = OrderBuilder.GetOrderInfo(orderID);
+            if (order == null)
+            {
+                toolStrip_Label.Text = "Error While Fetching Data..";
+                toolStripProgressBar1.Value = 100;
+                return;
+            }
+            toolStrip_Label.Text = "Setting Up Controls.";
+            toolStripProgressBar1.Value = 100;
+            new Winform_OrderDetails(order).ShowDialog();
+        }
+
+        private void dgvSearch_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1 || e.ColumnIndex == dgvSearch.Columns["colDelete"].Index)
+            {
+
+                return;
+            }
+
             if (dgvSearch.Rows.Count == 0) return;
             List<SKUItem> skuList = SaleBuilder.GetSalesItemList(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
 

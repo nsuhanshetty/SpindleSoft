@@ -22,7 +22,7 @@ namespace SpindleSoft.Views
         {
             InitializeComponent();
 
-            this.index = _index - 1;
+            this.index = _index;
             this.saleItem = _saleItem;
 
             //skuID = int.Parse(row.Cells["ID"].Value.ToString());

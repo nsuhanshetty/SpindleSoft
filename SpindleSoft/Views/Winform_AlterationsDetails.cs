@@ -164,11 +164,11 @@ namespace SpindleSoft.Views
             orderItemList = AlterationBuilder.GetOrderItems(_orderID, this._cust.ID);
 
             if (orderItemList == null || orderItemList.Count == 0)
-            { 
+            {
                 UpdateStatus("No Order Items exists for entered Order ID..");
                 dgvSearch.DataSource = null;
                 UpdateCustomerControl(null);
-                return; 
+                return;
             }
 
             UpdateStatus("Updating Grid View..");
@@ -204,12 +204,19 @@ namespace SpindleSoft.Views
         {
             #region validation
             string errorMsg = string.Empty;
+
             if (this._cust.ID == 0)
                 errorMsg = "Add Customer, as it is mandatory for Order details.";
             else if (dgvAlterationItems.RowCount == 0 || dgvAlterationItems.Rows[0].IsNewRow)
                 errorMsg = "Add items to cart to make the Alterations.";
             else if (dtpDueDate.Value.Date.CompareTo(DateTime.Today.Date) < 0)
                 errorMsg = "The Promised date must not be less than today.";
+
+            if (!string.IsNullOrEmpty(errorMsg))
+            {
+                MessageBox.Show(errorMsg, "Error In Saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             #endregion validation
 
             int total, amntPaid;
@@ -263,30 +270,30 @@ namespace SpindleSoft.Views
                           select new { oitem.Name, oitem.Quantity, OrderID = oitem.Order.ID, oitem.Order }).ToArray();
 
             AlterationItem _item = new AlterationItem(rowVal[0].Name, rowVal[0].Quantity, 0, "");
-            UpdateAlterationListControl(_item, dgvAlterationItems.Rows.Count);            
+            UpdateAlterationListControl(_item, dgvAlterationItems.Rows.Count);
         }
 
         private void dgvAlterationItems_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            try
-            {
-                if (dgvAlterationItems.CurrentCell == dgvAlterationItems.CurrentRow.Cells["AltType"])
-                {
-                    ComboBox cb = e.Control as ComboBox;
-                    if (cb != null)
-                    {
-                        cb.DropDownStyle = ComboBoxStyle.DropDown;
-                        cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            //try
+            //{
+            //    if (dgvAlterationItems.CurrentCell == dgvAlterationItems.CurrentRow.Cells["AltType"])
+            //    {
+            //        ComboBox cb = e.Control as ComboBox;
+            //        if (cb != null)
+            //        {
+            //            cb.DropDownStyle = ComboBoxStyle.DropDown;
+            //            cb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
-                        cb.Validating += new System.ComponentModel.CancelEventHandler(cbo_Validating);
-                        //cb.Validated += new System.EventHandler(cbo_Validated);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-            }
+            //            cb.Validating += new System.ComponentModel.CancelEventHandler(cbo_Validating);
+            //            //cb.Validated += new System.EventHandler(cbo_Validated);
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Error(ex.Message);
+            //}
         }
 
         private void Winform_AlterationsDetails_Load(object sender, System.EventArgs e)
@@ -400,7 +407,7 @@ namespace SpindleSoft.Views
 
         private void dgvAlterationItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if ( e.RowIndex == -1 || dgvAlterationItems.Rows[e.RowIndex].IsNewRow == true) return;
+            if (e.RowIndex == -1 || dgvAlterationItems.Rows[e.RowIndex].IsNewRow == true) return;
 
             if (dgvAlterationItems.Columns["colDelete"].Index == e.ColumnIndex)
             {
