@@ -15,7 +15,7 @@ namespace SpindleSoft.Views
     public partial class Winform_SaleItemDetails : Winform_DetailsFormat
     {
         int index;
-        int skuID;
+        //int skuID;
         SaleItem saleItem;
 
         public Winform_SaleItemDetails(int _index, SaleItem _saleItem)

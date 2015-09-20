@@ -198,10 +198,17 @@ namespace SpindleSoft.Builders
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    Sale sale = (from s in session.Query<Sale>()
+                    Sale _sale = (from s in session.Query<Sale>()
                                  where s.ID == _saleID
                                  select s).Single();
-                    return sale;
+
+                    _sale.SaleItems = session.QueryOver<SaleItem>()
+                                    .Where(x => x.Sale.ID == _saleID)
+                                    .Fetch(o => o.Sale).Eager
+                                    .Fetch(o => o.Sale.Customer).Eager
+                                    .Fetch(o => o.SKUItem).Eager
+                                    .Future().ToList();
+                    return _sale;
                 }
             }
             catch (Exception ex)
@@ -256,14 +263,14 @@ namespace SpindleSoft.Builders
                     Customer custAlias = null;
 
                     List<Sale> query = session.QueryOver<Sale>(() => saleAlias)
-                        .JoinAlias(() => saleAlias.SaleItems, ()=> saleItemAlias)
-                        .JoinAlias(() => saleItemAlias.SKUItem, ()=> skuItemAlias)
-                        .JoinAlias(() => saleAlias.Customer,()=> custAlias)
-                         .Where(Restrictions.On(() => custAlias.Name).IsLike(name + "%")) 
-                         .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(procode + "%")) 
+                        .JoinAlias(() => saleAlias.SaleItems, () => saleItemAlias)
+                        .JoinAlias(() => saleItemAlias.SKUItem, () => skuItemAlias)
+                        .JoinAlias(() => saleAlias.Customer, () => custAlias)
+                         .Where(Restrictions.On(() => custAlias.Name).IsLike(name + "%"))
+                         .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(procode + "%"))
                          .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(mobNo + "%"))
                          .OrderBy(() => saleAlias.DateOfSale).Desc
-                         //.Where(() => saleAlias.ID == int.Parse(saleID))
+                        //.Where(() => saleAlias.ID == int.Parse(saleID))
                          .List().ToList<Sale>();
 
                     return query;

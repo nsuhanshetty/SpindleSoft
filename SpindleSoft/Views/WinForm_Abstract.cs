@@ -19,6 +19,7 @@ namespace SpindleSoft.Views
 
         private void Winform_DetailsFormat_Load(object sender, EventArgs e)
         {
+            this.ControlBox = false;
         }
 
         protected virtual void SaveToolStrip_Click(object sender, EventArgs e)
@@ -38,6 +39,11 @@ namespace SpindleSoft.Views
         protected virtual bool IsNullOrEmpty(object obj)
         {
             return (obj == null || obj.ToString() == "");
+        }
+
+        protected virtual void Winform_DetailsFormat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
         }
     }
 }

@@ -190,7 +190,7 @@ namespace SpindleSoft.Views
         #region Events
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
         {
-            if (SpindleSoft.Utilities.Validation.controlIsInEdit(grpbxCustomerDetails, false))
+            if (SpindleSoft.Utilities.Validation.controlIsInEdit(this, false))
             {
                 var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Order Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
                 if (_dialogResult == DialogResult.No)

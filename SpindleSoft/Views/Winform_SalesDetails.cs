@@ -73,6 +73,23 @@ namespace SpindleSoft.Views
             InitializeComponent();
         }
 
+        public Winform_SalesDetails(Sale _sale)
+        {
+            InitializeComponent();
+
+            //setting the controls
+            UpdateCustomerControl(_sale.Customer);
+
+           for (int i = 0; i < _sale.SaleItems.Count; i++)
+			{
+                UpdateSaleListControl(_sale.SaleItems[i], i); ;
+			}
+
+           dgvSaleItem.Enabled = false;
+           dgvSearch.Enabled = false;
+
+        }
+
         #region Events
         private void Winform_SalesDetails_Load(object sender, EventArgs e)
         {
@@ -303,7 +320,7 @@ namespace SpindleSoft.Views
         {
             if (SpindleSoft.Utilities.Validation.controlIsInEdit(this, false))
             {
-                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Order Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Sale Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
                 if (_dialogResult == DialogResult.No)
                     return;
             };
@@ -338,6 +355,13 @@ namespace SpindleSoft.Views
                 saleItems.Add(_saleitem);
             else
                 saleItems[_index] = _saleitem;
+
+            if (dgvSaleItem.Rows.Count < saleItems.Count)
+            {
+                dgvSaleItem.Rows.Add();
+                dgvSaleItem.Rows[_index].Cells["colName"].Value = _saleitem.SKUItem.Name;
+                dgvSaleItem.Rows[_index].Cells["colProductCode"].Value = _saleitem.SKUItem.ProductCode;
+            }
 
             dgvSaleItem.Rows[_index].Cells["colPrice"].Value = _saleitem.Price;
             dgvSaleItem.Rows[_index].Cells["colQuantity"].Value = _saleitem.Quantity;
@@ -383,14 +407,14 @@ namespace SpindleSoft.Views
 
                     bool success = false;
 
-                    if (sKUItems.Count != 0 && e.RowIndex + 1 <= sKUItems.Count)
+                    if (saleItems.Count != 0 && e.RowIndex + 1 <= saleItems.Count)
                     {
-                        if (sKUItems[e.RowIndex].ID != 0)
+                        if (saleItems[e.RowIndex].ID != 0)
                             success = SalesSaver.DeleteSaleItems(sKUItems[e.RowIndex].ID);
 
-                        if (success || sKUItems[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
+                        if (success || saleItems[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
                         {
-                            sKUItems.RemoveAt(e.RowIndex);
+                            saleItems.RemoveAt(e.RowIndex);
                         }
                         else
                         {

@@ -59,7 +59,6 @@
             this.expenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addExpensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewExpenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.expenseReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salaryDetailsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.bulkSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,9 +88,14 @@
             this.rdbOrders = new System.Windows.Forms.RadioButton();
             this.pnlDeliveryStatus = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lblAltR2ACount = new System.Windows.Forms.Label();
             this.lblAltAIPCount = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvAltSIP = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn5 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewButtonColumn6 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgvAltR2C = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -105,6 +109,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblOrdR2SCount = new System.Windows.Forms.Label();
             this.lblOrdSIPCount = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dgvOrdSIP = new System.Windows.Forms.DataGridView();
@@ -124,12 +129,8 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewButtonColumn5 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dataGridViewButtonColumn6 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.lblAltR2ACount = new System.Windows.Forms.Label();
-            this.lblOrdR2SCount = new System.Windows.Forms.Label();
+            this.backUpDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
@@ -372,7 +373,6 @@
             this.expenseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addExpensesToolStripMenuItem,
             this.viewExpenseToolStripMenuItem,
-            this.expenseReportsToolStripMenuItem,
             this.salaryDetailsToolStripMenuItem1});
             this.expenseToolStripMenuItem.Name = "expenseToolStripMenuItem";
             this.expenseToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
@@ -382,24 +382,19 @@
             // 
             this.addExpensesToolStripMenuItem.Name = "addExpensesToolStripMenuItem";
             this.addExpensesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.addExpensesToolStripMenuItem.Text = "Add Expenses";
+            this.addExpensesToolStripMenuItem.Text = "&Add Expenses";
             this.addExpensesToolStripMenuItem.Click += new System.EventHandler(this.addExpensesToolStripMenuItem_Click);
             // 
             // viewExpenseToolStripMenuItem
             // 
             this.viewExpenseToolStripMenuItem.Name = "viewExpenseToolStripMenuItem";
             this.viewExpenseToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.viewExpenseToolStripMenuItem.Text = "Expense Register";
+            this.viewExpenseToolStripMenuItem.Text = "Expense &Register";
             this.viewExpenseToolStripMenuItem.Click += new System.EventHandler(this.viewExpenseToolStripMenuItem_Click);
-            // 
-            // expenseReportsToolStripMenuItem
-            // 
-            this.expenseReportsToolStripMenuItem.Name = "expenseReportsToolStripMenuItem";
-            this.expenseReportsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.expenseReportsToolStripMenuItem.Text = "Expense Reports";
             // 
             // salaryDetailsToolStripMenuItem1
             // 
+            this.salaryDetailsToolStripMenuItem1.Enabled = false;
             this.salaryDetailsToolStripMenuItem1.Name = "salaryDetailsToolStripMenuItem1";
             this.salaryDetailsToolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
             this.salaryDetailsToolStripMenuItem1.Text = "Salary Details";
@@ -410,6 +405,7 @@
             this.sendSMSToolStripMenuItem,
             this.viewSMSRegistryToolStripMenuItem,
             this.sMSReportsToolStripMenuItem});
+            this.bulkSMSToolStripMenuItem.Enabled = false;
             this.bulkSMSToolStripMenuItem.Name = "bulkSMSToolStripMenuItem";
             this.bulkSMSToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.bulkSMSToolStripMenuItem.Text = "Pro&motions";
@@ -442,6 +438,7 @@
             this.salesrToolStripMenuItem,
             this.alterationSalesToolStripMenuItem,
             this.customerReportToolStripMenuItem});
+            this.reportsToolStripMenuItem.Enabled = false;
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.reportsToolStripMenuItem.Text = "&Reports";
@@ -474,7 +471,10 @@
             // 
             this.settingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.userManagerToolStripMenuItem,
-            this.updateSpindleSoftToolStripMenuItem});
+            this.updateSpindleSoftToolStripMenuItem,
+            this.backUpDataToolStripMenuItem,
+            this.restoreDataToolStripMenuItem});
+            this.settingToolStripMenuItem.Enabled = false;
             this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
             this.settingToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.settingToolStripMenuItem.Text = "Se&tting";
@@ -483,13 +483,13 @@
             // 
             this.userManagerToolStripMenuItem.Name = "userManagerToolStripMenuItem";
             this.userManagerToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.userManagerToolStripMenuItem.Text = "User Manager";
+            this.userManagerToolStripMenuItem.Text = "U&ser Manager";
             // 
             // updateSpindleSoftToolStripMenuItem
             // 
             this.updateSpindleSoftToolStripMenuItem.Name = "updateSpindleSoftToolStripMenuItem";
             this.updateSpindleSoftToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.updateSpindleSoftToolStripMenuItem.Text = "Update SpindleSoft";
+            this.updateSpindleSoftToolStripMenuItem.Text = "&Update SpindleSoft";
             // 
             // exitToolStripMenuItem
             // 
@@ -673,6 +673,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Alteration Delivery Status";
             // 
+            // lblAltR2ACount
+            // 
+            this.lblAltR2ACount.AutoSize = true;
+            this.lblAltR2ACount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblAltR2ACount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblAltR2ACount.Location = new System.Drawing.Point(316, 24);
+            this.lblAltR2ACount.Name = "lblAltR2ACount";
+            this.lblAltR2ACount.Size = new System.Drawing.Size(13, 13);
+            this.lblAltR2ACount.TabIndex = 16;
+            this.lblAltR2ACount.Text = "0";
+            // 
             // lblAltAIPCount
             // 
             this.lblAltAIPCount.AutoSize = true;
@@ -710,6 +721,38 @@
             this.dgvAltSIP.Size = new System.Drawing.Size(326, 187);
             this.dgvAltSIP.TabIndex = 14;
             this.dgvAltSIP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "AlterationID";
+            this.dataGridViewTextBoxColumn9.HeaderText = "AlterationID";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 87;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn10.HeaderText = "DueDate";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // dataGridViewButtonColumn5
+            // 
+            this.dataGridViewButtonColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn5.HeaderText = "Shift To R2A";
+            this.dataGridViewButtonColumn5.Name = "dataGridViewButtonColumn5";
+            this.dataGridViewButtonColumn5.ReadOnly = true;
+            this.dataGridViewButtonColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewButtonColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewButtonColumn6
+            // 
+            this.dataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewButtonColumn6.HeaderText = "Shift to R2C";
+            this.dataGridViewButtonColumn6.Name = "dataGridViewButtonColumn6";
+            this.dataGridViewButtonColumn6.ReadOnly = true;
             // 
             // dgvAltR2C
             // 
@@ -842,6 +885,17 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Order Delivery Status";
+            // 
+            // lblOrdR2SCount
+            // 
+            this.lblOrdR2SCount.AutoSize = true;
+            this.lblOrdR2SCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblOrdR2SCount.ForeColor = System.Drawing.Color.MediumBlue;
+            this.lblOrdR2SCount.Location = new System.Drawing.Point(316, 24);
+            this.lblOrdR2SCount.Name = "lblOrdR2SCount";
+            this.lblOrdR2SCount.Size = new System.Drawing.Size(13, 13);
+            this.lblOrdR2SCount.TabIndex = 17;
+            this.lblOrdR2SCount.Text = "0";
             // 
             // lblOrdSIPCount
             // 
@@ -1031,59 +1085,17 @@
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn9
+            // backUpDataToolStripMenuItem
             // 
-            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "AlterationID";
-            this.dataGridViewTextBoxColumn9.HeaderText = "AlterationID";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            this.dataGridViewTextBoxColumn9.Width = 87;
+            this.backUpDataToolStripMenuItem.Name = "backUpDataToolStripMenuItem";
+            this.backUpDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.backUpDataToolStripMenuItem.Text = "&BackUp Data";
             // 
-            // dataGridViewTextBoxColumn10
+            // restoreDataToolStripMenuItem
             // 
-            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn10.HeaderText = "DueDate";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            // 
-            // dataGridViewButtonColumn5
-            // 
-            this.dataGridViewButtonColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewButtonColumn5.HeaderText = "Shift To R2A";
-            this.dataGridViewButtonColumn5.Name = "dataGridViewButtonColumn5";
-            this.dataGridViewButtonColumn5.ReadOnly = true;
-            this.dataGridViewButtonColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewButtonColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // dataGridViewButtonColumn6
-            // 
-            this.dataGridViewButtonColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewButtonColumn6.HeaderText = "Shift to R2C";
-            this.dataGridViewButtonColumn6.Name = "dataGridViewButtonColumn6";
-            this.dataGridViewButtonColumn6.ReadOnly = true;
-            // 
-            // lblAltR2ACount
-            // 
-            this.lblAltR2ACount.AutoSize = true;
-            this.lblAltR2ACount.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblAltR2ACount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblAltR2ACount.Location = new System.Drawing.Point(316, 24);
-            this.lblAltR2ACount.Name = "lblAltR2ACount";
-            this.lblAltR2ACount.Size = new System.Drawing.Size(13, 13);
-            this.lblAltR2ACount.TabIndex = 16;
-            this.lblAltR2ACount.Text = "0";
-            // 
-            // lblOrdR2SCount
-            // 
-            this.lblOrdR2SCount.AutoSize = true;
-            this.lblOrdR2SCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblOrdR2SCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblOrdR2SCount.Location = new System.Drawing.Point(316, 24);
-            this.lblOrdR2SCount.Name = "lblOrdR2SCount";
-            this.lblOrdR2SCount.Size = new System.Drawing.Size(13, 13);
-            this.lblOrdR2SCount.TabIndex = 17;
-            this.lblOrdR2SCount.Text = "0";
+            this.restoreDataToolStripMenuItem.Name = "restoreDataToolStripMenuItem";
+            this.restoreDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.restoreDataToolStripMenuItem.Text = "&Restore Data";
             // 
             // Main
             // 
@@ -1146,7 +1158,6 @@
         private System.Windows.Forms.ToolStripMenuItem userManagerToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem viewExpenseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem expenseReportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendSMSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewSMSRegistryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sMSReportsToolStripMenuItem;
@@ -1227,6 +1238,8 @@
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn6;
         private System.Windows.Forms.Label lblAltR2ACount;
         private System.Windows.Forms.Label lblOrdR2SCount;
+        private System.Windows.Forms.ToolStripMenuItem backUpDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restoreDataToolStripMenuItem;
     }
 }
 

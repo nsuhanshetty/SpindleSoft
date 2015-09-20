@@ -170,7 +170,7 @@
             // toolStrip_Label
             // 
             this.toolStrip_Label.Name = "toolStrip_Label";
-            this.toolStrip_Label.Size = new System.Drawing.Size(482, 17);
+            this.toolStrip_Label.Size = new System.Drawing.Size(477, 17);
             this.toolStrip_Label.Spring = true;
             this.toolStrip_Label.Text = "Ready";
             this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -183,7 +183,8 @@
             this.colDelete.ReadOnly = true;
             this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.colDelete.Text = "Delete";
-            this.colDelete.Width = 99;
+            this.colDelete.Visible = false;
+            this.colDelete.Width = 108;
             // 
             // Winform_SalesRegister
             // 

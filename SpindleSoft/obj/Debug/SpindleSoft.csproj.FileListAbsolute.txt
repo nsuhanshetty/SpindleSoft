@@ -28,8 +28,10 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Properties.Resources.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.DesignControl.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_AlterationItemDetails.resources
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_ExpenseItemDetails.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_PictureBox.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_Queue.resources
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.winform_Register.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_SaleItemDetails.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_SalesDetails.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_SalesRegister.resources

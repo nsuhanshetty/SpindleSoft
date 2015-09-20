@@ -63,6 +63,8 @@ namespace SpindleSoft.Views
         private void txtMobNo_TextChanged(object sender, EventArgs e)
         {
             dgvSearch.DataSource = null;
+            dgvSearch.Columns["colDelete"].Visible = false;
+
             if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text) && string.IsNullOrEmpty(txtProCode.Text))
                 return;
 
@@ -70,8 +72,16 @@ namespace SpindleSoft.Views
             if (salesList != null)
             {
                 dgvSearch.DataSource = (from sale in salesList
-                                        select new {sale.Customer.Name, SaleID = sale.ID, sale.TotalPrice, sale.AmountPaid,
-                                            sale.DateOfSale }).ToList();
+                                        select new
+                                        {
+                                            sale.Customer.Name,
+                                            SaleID = sale.ID,
+                                            sale.TotalPrice,
+                                            sale.AmountPaid,
+                                            sale.DateOfSale.Date
+                                        }).ToList();
+
+                dgvSearch.Columns["colDelete"].Visible = true;
                 dgvSearch.Columns["colDelete"].DisplayIndex = dgvSearch.Columns.Count - 1;
             }
 
@@ -82,31 +92,42 @@ namespace SpindleSoft.Views
         {
             if (e.RowIndex == -1 || e.ColumnIndex == dgvSearch.Columns["colDelete"].Index) return;
 
-            toolStrip_Label.Text = "Gathering Data..";
-            toolStripProgressBar1.Value = 25;
-            if (dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value == null) return;
-            int orderID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString());
+            //toolStrip_Label.Text = "Gathering Data..";
+            //toolStripProgressBar1.Value = 25;
+            //if (dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value == null) return;
+            //int saleID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
 
-            toolStrip_Label.Text = "Gathering Data..";
-            toolStripProgressBar1.Value = 50;
+            //toolStrip_Label.Text = "Gathering Data..";
+            //toolStripProgressBar1.Value = 50;
 
-            Orders order = OrderBuilder.GetOrderInfo(orderID);
-            if (order == null)
-            {
-                toolStrip_Label.Text = "Error While Fetching Data..";
-                toolStripProgressBar1.Value = 100;
-                return;
-            }
-            toolStrip_Label.Text = "Setting Up Controls.";
-            toolStripProgressBar1.Value = 100;
-            new Winform_OrderDetails(order).ShowDialog();
+            //Sale sale = SaleBuilder.GetSaleInfo(saleID);
+            //if (sale == null)
+            //{
+            //    toolStrip_Label.Text = "Error While Fetching Data..";
+            //    toolStripProgressBar1.Value = 100;
+            //    return;
+            //}
+            //toolStrip_Label.Text = "Setting Up Controls.";
+            //toolStripProgressBar1.Value = 100;
+            //new Winform_SalesDetails(sale).ShowDialog();
         }
 
         private void dgvSearch_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1 || e.ColumnIndex == dgvSearch.Columns["colDelete"].Index)
-            {
+            if (e.RowIndex == -1) return;
+            int saleID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
 
+            if (e.ColumnIndex == dgvSearch.Columns["colDelete"].Index)
+            {
+                DialogResult dr = MessageBox.Show("Do you want to Delete Sale No. " + saleID, "Delete Sale", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.No) return;
+
+                bool success = SpindleSoft.Savers.SalesSaver.DeleteSale(saleID);
+                if (success == true)
+                {
+                    txtMobNo_TextChanged(this, new EventArgs());
+                    toolStrip_Label.Text = "Sale Deleted.";
+                }
                 return;
             }
 
@@ -122,6 +143,5 @@ namespace SpindleSoft.Views
                 dgvSaleItemDetails.DataSource = null;
         }
 
-        //dgv datasource = product name, code, selling price, sale date, quantity
     }
 }

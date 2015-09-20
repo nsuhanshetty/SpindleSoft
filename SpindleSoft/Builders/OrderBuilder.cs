@@ -157,9 +157,6 @@ namespace SpindleSoft.Builders
                         .Where(x => x.Order.ID == orderID)
                         .Fetch(o => o.Order).Eager
                         .Future().ToList();
-                    //return query.ToList();
-                    //_order.OrdersItems = query.List<OrderItem>() as List<OrderItem>;
-
 
                     return _order;
                 }

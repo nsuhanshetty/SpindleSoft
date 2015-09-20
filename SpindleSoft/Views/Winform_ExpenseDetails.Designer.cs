@@ -34,27 +34,26 @@
             this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtTotalAmount = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.CancelToolStrip = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnAddItem = new System.Windows.Forms.Button();
+            this.dgvExpenseItem = new System.Windows.Forms.DataGridView();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExpenseItem)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStrip_Label});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 311);
+            this.toolStripProgressBar1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 356);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(472, 22);
             this.statusStrip1.TabIndex = 4;
@@ -75,32 +74,33 @@
             // 
             // dtpDeliveryDate
             // 
-            this.dtpDeliveryDate.Location = new System.Drawing.Point(329, 60);
+            this.dtpDeliveryDate.Location = new System.Drawing.Point(407, 60);
             this.dtpDeliveryDate.Name = "dtpDeliveryDate";
             this.dtpDeliveryDate.Size = new System.Drawing.Size(133, 20);
-            this.dtpDeliveryDate.TabIndex = 114;
+            this.dtpDeliveryDate.TabIndex = 0;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(235, 64);
+            this.label4.Location = new System.Drawing.Point(313, 64);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 13);
             this.label4.TabIndex = 113;
             this.label4.Text = "Date Of Expense";
             // 
-            // textBox1
+            // txtTotalAmount
             // 
-            this.textBox1.Location = new System.Drawing.Point(329, 284);
-            this.textBox1.MaxLength = 10;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(133, 20);
-            this.textBox1.TabIndex = 115;
+            this.txtTotalAmount.Enabled = false;
+            this.txtTotalAmount.Location = new System.Drawing.Point(442, 329);
+            this.txtTotalAmount.MaxLength = 10;
+            this.txtTotalAmount.Name = "txtTotalAmount";
+            this.txtTotalAmount.Size = new System.Drawing.Size(93, 20);
+            this.txtTotalAmount.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(256, 287);
+            this.label2.Location = new System.Drawing.Point(366, 332);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 13);
             this.label2.TabIndex = 116;
@@ -108,96 +108,99 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 115);
+            this.groupBox1.Controls.Add(this.btnAddItem);
+            this.groupBox1.Controls.Add(this.dgvExpenseItem);
+            this.groupBox1.Location = new System.Drawing.Point(12, 86);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(449, 163);
-            this.groupBox1.TabIndex = 117;
+            this.groupBox1.Size = new System.Drawing.Size(528, 237);
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add Expense Details";
             // 
-            // dataGridView1
+            // btnAddItem
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 16);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(443, 144);
-            this.dataGridView1.TabIndex = 0;
+            this.btnAddItem.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddItem.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
+            this.btnAddItem.Location = new System.Drawing.Point(483, 14);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(39, 35);
+            this.btnAddItem.TabIndex = 0;
+            this.btnAddItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAddItem.UseVisualStyleBackColor = false;
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
-            // button1
+            // dgvExpenseItem
             // 
-            this.button1.Location = new System.Drawing.Point(329, 86);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 23);
-            this.button1.TabIndex = 118;
-            this.button1.Text = "Edit Expense Template";
-            this.button1.UseVisualStyleBackColor = true;
+            this.dgvExpenseItem.AllowUserToAddRows = false;
+            this.dgvExpenseItem.AllowUserToDeleteRows = false;
+            this.dgvExpenseItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvExpenseItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvExpenseItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colName,
+            this.colType,
+            this.colAmount,
+            this.colComment,
+            this.colDelete});
+            this.dgvExpenseItem.Location = new System.Drawing.Point(3, 55);
+            this.dgvExpenseItem.Name = "dgvExpenseItem";
+            this.dgvExpenseItem.ReadOnly = true;
+            this.dgvExpenseItem.Size = new System.Drawing.Size(520, 176);
+            this.dgvExpenseItem.TabIndex = 1;
+            this.dgvExpenseItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpenseItem_CellDoubleClick);
             // 
-            // toolStrip1
+            // colName
             // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.CancelToolStrip,
-            this.toolStripSeparator1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip1.Size = new System.Drawing.Size(472, 54);
-            this.toolStrip1.TabIndex = 132;
-            this.toolStrip1.Text = "toolStrip1";
+            this.colName.HeaderText = "Name";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
             // 
-            // toolStripButton1
+            // colType
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripButton1.Size = new System.Drawing.Size(47, 51);
-            this.toolStripButton1.Text = "Cancel";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.colType.HeaderText = "Type";
+            this.colType.Name = "colType";
+            this.colType.ReadOnly = true;
             // 
-            // CancelToolStrip
+            // colAmount
             // 
-            this.CancelToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("CancelToolStrip.Image")));
-            this.CancelToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.CancelToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CancelToolStrip.Name = "CancelToolStrip";
-            this.CancelToolStrip.Size = new System.Drawing.Size(36, 51);
-            this.CancelToolStrip.Text = "Save";
-            this.CancelToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.colAmount.HeaderText = "Amount";
+            this.colAmount.Name = "colAmount";
+            this.colAmount.ReadOnly = true;
             // 
-            // toolStripSeparator1
+            // colComment
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 54);
+            this.colComment.HeaderText = "Comment";
+            this.colComment.Name = "colComment";
+            this.colComment.ReadOnly = true;
+            // 
+            // colDelete
+            // 
+            this.colDelete.HeaderText = "Click to Delete";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
             // 
             // Winform_ExpenseDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(472, 333);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(545, 378);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtTotalAmount);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dtpDeliveryDate);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.statusStrip1);
             this.Name = "Winform_ExpenseDetails";
             this.Text = "Expense Details";
-            this.Load += new System.EventHandler(this.Winform_ExpenseDetails_Load);
+            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.dtpDeliveryDate, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.txtTotalAmount, 0);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExpenseItem)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -210,14 +213,15 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         private System.Windows.Forms.DateTimePicker dtpDeliveryDate;
         internal System.Windows.Forms.Label label4;
-        internal System.Windows.Forms.TextBox textBox1;
+        internal System.Windows.Forms.TextBox txtTotalAmount;
         internal System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.DataGridView dgvExpenseItem;
+        private System.Windows.Forms.Button btnAddItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colComment;
+        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
     }
 }

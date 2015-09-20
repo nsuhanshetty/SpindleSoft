@@ -237,7 +237,7 @@ namespace SpindleSoftTest
                     return JsonConvert.DeserializeObject<Customer>(s);
                 }
             }
-            catch (WebException ex)
+            catch (WebException )
             {
                 //add to log4net
                 return null;

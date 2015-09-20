@@ -121,6 +121,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Winform_DetailsFormat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Winform_DetailsFormat_FormClosing);
             this.Load += new System.EventHandler(this.Winform_DetailsFormat_Load);
             this.toolStripParent.ResumeLayout(false);
             this.toolStripParent.PerformLayout();

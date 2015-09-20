@@ -28,7 +28,7 @@
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>25</ApplicationRevision>
+    <ApplicationRevision>26</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -137,16 +137,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\AlterationBuilder.cs" />
+    <Compile Include="Builders\ExpenseBuilder.cs" />
     <Compile Include="Builders\MainBuilder.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
     <Compile Include="Builders\SaleBuilder.cs" />
     <Compile Include="FluentMapping\DocumentMapping.cs" />
+    <Compile Include="FluentMapping\ExpenseMapping.cs" />
     <Compile Include="FluentMapping\OrdersMapping.cs" />
     <Compile Include="FluentMapping\SaleMapping.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\SaleItem.cs" />
     <Compile Include="Savers\AlterationSaver.cs" />
+    <Compile Include="Savers\ExpenseSaver.cs" />
     <Compile Include="Savers\MainSaver.cs" />
     <Compile Include="Savers\OrderSaver.cs" />
     <Compile Include="Savers\PeoplePracticeSaverRestApi.cs" />
@@ -184,6 +187,12 @@
     <Compile Include="Views\Winform_AlterationItemDetails.Designer.cs">
       <DependentUpon>Winform_AlterationItemDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Winform_ExpenseItemDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_ExpenseItemDetails.Designer.cs">
+      <DependentUpon>Winform_ExpenseItemDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Winform_PictureBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +204,12 @@
     </Compile>
     <Compile Include="Views\Winform_Queue.Designer.cs">
       <DependentUpon>Winform_Queue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\winform_Register.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\winform_Register.Designer.cs">
+      <DependentUpon>winform_Register.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_SaleItemDetails.cs">
       <SubType>Form</SubType>
@@ -389,11 +404,17 @@
     <EmbeddedResource Include="Views\Winform_AlterationItemDetails.resx">
       <DependentUpon>Winform_AlterationItemDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_ExpenseItemDetails.resx">
+      <DependentUpon>Winform_ExpenseItemDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_PictureBox.resx">
       <DependentUpon>Winform_PictureBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_Queue.resx">
       <DependentUpon>Winform_Queue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\winform_Register.resx">
+      <DependentUpon>winform_Register.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_SaleItemDetails.resx">
       <DependentUpon>Winform_SaleItemDetails.cs</DependentUpon>
