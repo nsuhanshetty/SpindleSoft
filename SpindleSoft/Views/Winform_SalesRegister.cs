@@ -66,7 +66,9 @@ namespace SpindleSoft.Views
             dgvSearch.Columns["colDelete"].Visible = false;
 
             if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text) && string.IsNullOrEmpty(txtProCode.Text))
+            {
                 return;
+            }
 
             List<Sale> salesList = (SaleBuilder.GetSalesList(txtName.Text, txtProCode.Text, txtMobNo.Text));
             if (salesList != null)

@@ -160,7 +160,7 @@ namespace SpindleSoft.Views
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //need to handle this situation well
-            string[] input = { "txtPhoneNo" };
+            string[] input = { "txtPhoneNo","pcbStaffImage" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;

@@ -28,7 +28,7 @@
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>26</ApplicationRevision>
+    <ApplicationRevision>27</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -94,6 +94,22 @@
     <Reference Include="log4net-loggly, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net-loggly.7.0.0\lib\net40\log4net-loggly.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Expression\Encoder 4\SDK\Microsoft.Expression.Encoder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Encoder.Api2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Expression\Encoder 4\SDK\Microsoft.Expression.Encoder.Api2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Encoder.Types, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Expression\Encoder 4\SDK\Microsoft.Expression.Encoder.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Encoder.Utilities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Expression\Encoder 4\SDK\Microsoft.Expression.Encoder.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -259,11 +275,11 @@
     <Compile Include="Views\Winform_AlterationsDetails.Designer.cs">
       <DependentUpon>Winform_AlterationsDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Winform_CustomerRegistry.cs">
+    <Compile Include="Views\Winform_CustomerRegister.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Winform_CustomerRegistry.Designer.cs">
-      <DependentUpon>Winform_CustomerRegistry.cs</DependentUpon>
+    <Compile Include="Views\Winform_CustomerRegister.Designer.cs">
+      <DependentUpon>Winform_CustomerRegister.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_ImageCapture.cs">
       <SubType>Form</SubType>
@@ -440,8 +456,8 @@
     <EmbeddedResource Include="Views\Winform_AlterationsDetails.resx">
       <DependentUpon>Winform_AlterationsDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Winform_CustomerRegistry.resx">
-      <DependentUpon>Winform_CustomerRegistry.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Winform_CustomerRegister.resx">
+      <DependentUpon>Winform_CustomerRegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_ImageCapture.resx">
       <DependentUpon>Winform_ImageCapture.cs</DependentUpon>

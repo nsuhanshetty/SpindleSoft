@@ -37,13 +37,9 @@
             this.lblName = new System.Windows.Forms.Label();
             this.lblMobile = new System.Windows.Forms.Label();
             this.dgvStaffRregister = new System.Windows.Forms.DataGridView();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.progBarStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaffRregister)).BeginInit();
-            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,30 +124,6 @@
             this.dgvStaffRregister.TabIndex = 3;
             this.dgvStaffRregister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStaffRregister_CellContentClick);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus,
-            this.progBarStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 359);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(568, 22);
-            this.statusStrip1.TabIndex = 4;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(451, 17);
-            this.lblStatus.Spring = true;
-            this.lblStatus.Text = "Search Completed";
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // progBarStatus
-            // 
-            this.progBarStatus.Name = "progBarStatus";
-            this.progBarStatus.Size = new System.Drawing.Size(100, 16);
-            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
@@ -161,17 +133,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(568, 381);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dgvStaffRregister);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_StaffRegister";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Staff Register";
+            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.dgvStaffRregister, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaffRregister)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -188,9 +158,6 @@
         internal System.Windows.Forms.Label lblName;
         internal System.Windows.Forms.Label lblMobile;
         private System.Windows.Forms.DataGridView dgvStaffRregister;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.ToolStripProgressBar progBarStatus;
     }
 }

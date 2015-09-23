@@ -66,6 +66,7 @@
             this.txtAmntPaid = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnAddItem = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.grpbxCustomerDetails.SuspendLayout();
@@ -265,9 +266,9 @@
             // 
             this.panel1.Controls.Add(this.grpBxSearch);
             this.panel1.Controls.Add(this.dgvSearch);
-            this.panel1.Location = new System.Drawing.Point(12, 57);
+            this.panel1.Location = new System.Drawing.Point(12, 99);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(412, 348);
+            this.panel1.Size = new System.Drawing.Size(412, 306);
             this.panel1.TabIndex = 0;
             // 
             // grpBxSearch
@@ -441,11 +442,24 @@
             this.btnAddItem.UseVisualStyleBackColor = false;
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label6.Location = new System.Drawing.Point(13, 80);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(390, 13);
+            this.label6.TabIndex = 157;
+            this.label6.Text = "Respective Customer and their Orders will be selected by selecting either of them" +
+    ".";
+            // 
             // Winform_AlterationsDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1018, 433);
+            this.ControlBox = false;
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.btnAddItem);
             this.Controls.Add(this.grpbxPayDet);
             this.Controls.Add(this.panel1);
@@ -472,6 +486,7 @@
             this.Controls.SetChildIndex(this.panel1, 0);
             this.Controls.SetChildIndex(this.grpbxPayDet, 0);
             this.Controls.SetChildIndex(this.btnAddItem, 0);
+            this.Controls.SetChildIndex(this.label6, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.grpbxCustomerDetails.ResumeLayout(false);
@@ -528,5 +543,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn AltQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltComment;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.Label label6;
     }
 }

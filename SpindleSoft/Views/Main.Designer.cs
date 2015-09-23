@@ -72,6 +72,8 @@
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateSpindleSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backUpDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -129,8 +131,6 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.backUpDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restoreDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
@@ -183,7 +183,7 @@
             this.addCustomerToolStripMenuItem1,
             this.customerRegisterToolStripMenuItem});
             this.addCustomerToolStripMenuItem.Name = "addCustomerToolStripMenuItem";
-            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addCustomerToolStripMenuItem.Text = "&Customer";
             // 
             // addCustomerToolStripMenuItem1
@@ -207,7 +207,7 @@
             this.staffRegisterToolStripMenuItem,
             this.salaryRegisterToolStripMenuItem});
             this.searchCustomerToolStripMenuItem.Name = "searchCustomerToolStripMenuItem";
-            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.searchCustomerToolStripMenuItem.Text = "&Staff";
             // 
             // addStaffToolStripMenuItem
@@ -226,8 +226,9 @@
             // 
             // salaryRegisterToolStripMenuItem
             // 
+            this.salaryRegisterToolStripMenuItem.Enabled = false;
             this.salaryRegisterToolStripMenuItem.Name = "salaryRegisterToolStripMenuItem";
-            this.salaryRegisterToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.salaryRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.salaryRegisterToolStripMenuItem.Text = "Salary Register";
             this.salaryRegisterToolStripMenuItem.Click += new System.EventHandler(this.salaryRegisterToolStripMenuItem_Click);
             // 
@@ -237,13 +238,13 @@
             this.addVendorToolStripMenuItem2,
             this.vendorRegisterToolStripMenuItem});
             this.addVendorToolStripMenuItem1.Name = "addVendorToolStripMenuItem1";
-            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
+            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.addVendorToolStripMenuItem1.Text = "&Vendor";
             // 
             // addVendorToolStripMenuItem2
             // 
             this.addVendorToolStripMenuItem2.Name = "addVendorToolStripMenuItem2";
-            this.addVendorToolStripMenuItem2.Size = new System.Drawing.Size(156, 22);
+            this.addVendorToolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
             this.addVendorToolStripMenuItem2.Text = "&Add Vendor";
             this.addVendorToolStripMenuItem2.Click += new System.EventHandler(this.addVendorToolStripMenuItem2_Click);
             // 
@@ -260,7 +261,7 @@
             this.addGroupsToolStripMenuItem,
             this.groupRegisterToolStripMenuItem});
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.groupsToolStripMenuItem.Text = "&Groups";
             // 
             // addGroupsToolStripMenuItem
@@ -295,8 +296,8 @@
             // searchOrderToolStripMenuItem
             // 
             this.searchOrderToolStripMenuItem.Name = "searchOrderToolStripMenuItem";
-            this.searchOrderToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.searchOrderToolStripMenuItem.Text = "Orders Register";
+            this.searchOrderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.searchOrderToolStripMenuItem.Text = "Order Register";
             this.searchOrderToolStripMenuItem.Click += new System.EventHandler(this.searchOrderToolStripMenuItem_Click);
             // 
             // alterationsToolStripMenuItem
@@ -318,8 +319,8 @@
             // searchAlterationToolStripMenuItem
             // 
             this.searchAlterationToolStripMenuItem.Name = "searchAlterationToolStripMenuItem";
-            this.searchAlterationToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.searchAlterationToolStripMenuItem.Text = "AlterationRegister";
+            this.searchAlterationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.searchAlterationToolStripMenuItem.Text = "Alteration Register";
             this.searchAlterationToolStripMenuItem.Click += new System.EventHandler(this.searchAlterationToolStripMenuItem_Click);
             // 
             // inventoryToolStripMenuItem
@@ -490,6 +491,18 @@
             this.updateSpindleSoftToolStripMenuItem.Name = "updateSpindleSoftToolStripMenuItem";
             this.updateSpindleSoftToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.updateSpindleSoftToolStripMenuItem.Text = "&Update SpindleSoft";
+            // 
+            // backUpDataToolStripMenuItem
+            // 
+            this.backUpDataToolStripMenuItem.Name = "backUpDataToolStripMenuItem";
+            this.backUpDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.backUpDataToolStripMenuItem.Text = "&BackUp Data";
+            // 
+            // restoreDataToolStripMenuItem
+            // 
+            this.restoreDataToolStripMenuItem.Name = "restoreDataToolStripMenuItem";
+            this.restoreDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.restoreDataToolStripMenuItem.Text = "&Restore Data";
             // 
             // exitToolStripMenuItem
             // 
@@ -1084,18 +1097,6 @@
             this.colClickShift.HeaderText = "Click To Shift";
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
-            // 
-            // backUpDataToolStripMenuItem
-            // 
-            this.backUpDataToolStripMenuItem.Name = "backUpDataToolStripMenuItem";
-            this.backUpDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.backUpDataToolStripMenuItem.Text = "&BackUp Data";
-            // 
-            // restoreDataToolStripMenuItem
-            // 
-            this.restoreDataToolStripMenuItem.Name = "restoreDataToolStripMenuItem";
-            this.restoreDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.restoreDataToolStripMenuItem.Text = "&Restore Data";
             // 
             // Main
             // 

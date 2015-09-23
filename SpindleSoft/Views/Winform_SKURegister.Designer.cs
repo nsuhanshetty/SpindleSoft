@@ -77,7 +77,7 @@
             this.groupBox1.Size = new System.Drawing.Size(554, 96);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Search SKU";
+            this.groupBox1.Text = "Search Inventory";
             // 
             // label7
             // 
@@ -229,7 +229,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_SKURegister";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SKU Register";
+            this.Text = "Item Master";
             this.Load += new System.EventHandler(this.Winform_SKURegister_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

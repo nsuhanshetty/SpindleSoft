@@ -26,6 +26,12 @@ namespace SpindleSoft.Views
 
         public void txtName_TextChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtDesc.Text) && string.IsNullOrEmpty(txtName.Text) && string.IsNullOrEmpty(txtProCode.Text))
+            {
+                dgvSearch.DataSource = null;
+                return;
+            }
+
             //todo : how do we add vendors name along with salename
             //bool isSelfMade = cmbSource.Text == "Self" ? true : false;
             dgvSearch.DataSource = null;
