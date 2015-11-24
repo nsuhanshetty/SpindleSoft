@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>ftp://buyhoney.in/spindlesoft/</PublishUrl>
+    <PublishUrl>ftp://solutionstudios.in/spindlesoft/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -22,13 +22,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://buyhoney.in/SpindleSoft/SpindleSoft/</InstallUrl>
+    <InstallUrl>http://solutionstudios.in/spindlesoft/</InstallUrl>
     <ProductName>SpindleSoft</ProductName>
     <PublisherName>SpindleSoft</PublisherName>
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>27</ApplicationRevision>
+    <ApplicationRevision>31</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -76,7 +76,14 @@
   <PropertyGroup>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SpindleSoft.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dropbox.Api, Version=0.1.5774.28238, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dropbox.Api.1.1.4\lib\portable-net45+sl50+win+wpa81+wp80\Dropbox.Api.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Equin.ApplicationFramework.BindingListView, Version=1.2.2446.31718, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Desktop\Equin.ApplicationFramework.BindingListView.dll</HintPath>
@@ -111,6 +118,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Expression\Encoder 4\SDK\Microsoft.Expression.Encoder.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\Connector NET 6.8.3\Assemblies\v4.5\MySql.Data.dll</HintPath>
@@ -127,14 +146,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -162,13 +175,13 @@
     <Compile Include="FluentMapping\ExpenseMapping.cs" />
     <Compile Include="FluentMapping\OrdersMapping.cs" />
     <Compile Include="FluentMapping\SaleMapping.cs" />
+    <Compile Include="Model\Bank.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\SaleItem.cs" />
     <Compile Include="Savers\AlterationSaver.cs" />
     <Compile Include="Savers\ExpenseSaver.cs" />
     <Compile Include="Savers\MainSaver.cs" />
     <Compile Include="Savers\OrderSaver.cs" />
-    <Compile Include="Savers\PeoplePracticeSaverRestApi.cs" />
     <Compile Include="FluentMapping\PeoplePracticeMapping.cs" />
     <Compile Include="Helpers\Main_Helper.cs" />
     <Compile Include="Logger.cs" />
@@ -202,6 +215,12 @@
     </Compile>
     <Compile Include="Views\Winform_AlterationItemDetails.Designer.cs">
       <DependentUpon>Winform_AlterationItemDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_DocumentDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_DocumentDetails.Designer.cs">
+      <DependentUpon>Winform_DocumentDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_ExpenseItemDetails.cs">
       <SubType>Form</SubType>
@@ -419,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_AlterationItemDetails.resx">
       <DependentUpon>Winform_AlterationItemDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_DocumentDetails.resx">
+      <DependentUpon>Winform_DocumentDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_ExpenseItemDetails.resx">
       <DependentUpon>Winform_ExpenseItemDetails.cs</DependentUpon>

@@ -35,10 +35,12 @@ namespace SpindleSoft.Views
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             Bitmap profileImage = CaptureImage();
             this.pcb.Image = profileImage;
 
             StopJob();
+            Cursor.Current = Cursors.Arrow;
             this.Close();
         }
 
@@ -66,6 +68,7 @@ namespace SpindleSoft.Views
 
         private void WinformWebcam_Load(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             picCapture.Image = null;
             List<string> deviceNames = new List<string>();
 
@@ -78,6 +81,7 @@ namespace SpindleSoft.Views
             }
             cmbCameraSelect.DataSource = deviceNames;
             btnPreview_Click(this, new EventArgs());
+            Cursor.Current = Cursors.Arrow;
         }
 
         private void btnPreview_Click(object sender, EventArgs e)

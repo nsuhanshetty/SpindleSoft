@@ -39,7 +39,7 @@ namespace SpindleSoft.Builders
                                               .Where(x => x.Status == _status)
                                               .OrderBy(x => x.PromisedDate).Asc
                                               .List()))
-                                 select new { ord.ID, DueDate = ord.PromisedDate };
+                                 select new { ord.ID, DueDate = ord.PromisedDate};
 
                 return listOrders.ToList();
             }

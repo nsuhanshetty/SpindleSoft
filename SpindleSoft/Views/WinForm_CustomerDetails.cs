@@ -76,26 +76,21 @@ namespace SpindleSoft.Views
             this._cust.Email = txtEmailID.Text;
             this._cust.Address = txtAddress.Text;
             this._cust.Image = pcbCustImage.Image;
-            //this._cust.Image = pcbCustImage.Image;
             if (refCust != null)
                 this._cust.ReferralID = refCust.ID;
 
             UpdateStatus("Saving..", 50);
             bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
 
-            UpdateStatus("Saving..", 75);
-            //bool response = _id!=0 ? PeoplePracticeSaver.SaveCustomerImage(this._cust.Image, this._cust.ID) : false;
-
             if (response)
             {
                 UpdateStatus("Saved", 100);
 
-                DialogResult dr = MessageBox.Show("Send SMS to Customer Regarding the registration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Send SMS to customer regarding the registration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
                     MessageBox.Show("Customer Added.");
                 }
-
                 this.Close();
             }
             else

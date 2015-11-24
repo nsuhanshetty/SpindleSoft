@@ -144,7 +144,9 @@ namespace SpindleSoft
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult dr = MessageBox.Show("Do you want to Exit the Application", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+                this.Close();
         }
 
         private void importCustomersToolStripMenuItem_Click(object sender, EventArgs e)

@@ -78,7 +78,6 @@ namespace SpindleSoft.Savers
                     }
                     catch (Exception ex)
                     {
-
                         log.Error(ex);
                     }
                 }

@@ -1,17 +1,20 @@
-﻿using SpindleSoft.Model;
+﻿using SpindleSoft.Builders;
+using SpindleSoft.Model;
 using SpindleSoft.Savers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_VendorDetails : Winform_DetailsFormat
     {
-        Vendors _vendor = new Vendors();
+        Vendor _vendor;
 
-        public Winform_VendorDetails(Vendors vendor)
+        public Winform_VendorDetails(Vendor vendor)
         {
             InitializeComponent();
             this._vendor = vendor;
@@ -24,14 +27,12 @@ namespace SpindleSoft.Views
             txtBankUserName.Text = _vendor.BankUserName;
             txtIfscCode.Text = _vendor.IFSCCode;
             txtAccNo.Text = _vendor.AccNo;
-            cmbBankName.Text = _vendor.BankName;
+            //cmbBankName.Text = _vendor.Bank;
         }
 
         public Winform_VendorDetails()
         {
             InitializeComponent();
-
-            //todo: Load bank names from db
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
@@ -43,9 +44,16 @@ namespace SpindleSoft.Views
 
             UpdateStatus("fetching vendor data..", 33);
 
+            if (this._vendor == null)
+                this._vendor = new Vendor();
+
             _vendor.BankUserName = txtBankUserName.Text;
-            //todo : Capitalize each word
-            _vendor.BankName = cmbBankName.Text;
+
+            if (!PeoplePracticeBuilder.IfBankExits(cmbBankName.Text))
+                this._vendor.Bank = new Bank(cmbBankName.Text);
+            else
+                this._vendor.Bank = Builders.PeoplePracticeBuilder.GetBankNames(cmbBankName.Text);
+
             _vendor.IFSCCode = txtIfscCode.Text;
             _vendor.AccNo = txtAccNo.Text;
 
@@ -119,5 +127,26 @@ namespace SpindleSoft.Views
         }
 
         #endregion Validation
+
+        private void Winform_VendorDetails_Load(object sender, EventArgs e)
+        {
+
+            List<Bank> BankList = PeoplePracticeBuilder.GetBankNames();
+            cmbBankName.DataSource = BankList;
+            cmbBankName.DisplayMember = "Name";
+            cmbBankName.ValueMember = "ID";
+
+            string[] bankNames = BankList.Select(x => x.Name).ToArray();
+            var nameCollection = new AutoCompleteStringCollection();
+            nameCollection.AddRange(bankNames);
+
+            cmbBankName.AutoCompleteCustomSource = nameCollection;
+            cmbBankName.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cmbBankName.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+            cmbBankName.Text = "";
+            if (this._vendor != null)
+                cmbBankName.SelectedText = this._vendor.Bank.Name;
+        }
     }
 }

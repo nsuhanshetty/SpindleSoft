@@ -12,9 +12,7 @@ namespace SpindleSoft.FluentMapping
                                     .Class<Staff>()
                                     .Column("StaffID")
                                     .Cascade.None();
-            //Map(x => x.Path);
             Map(x => x.Type);
-           // Map(x => x.DateUpdated);
         }
     }
 }

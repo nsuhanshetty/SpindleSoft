@@ -67,6 +67,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnAddItem = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.grpbxCustomerDetails.SuspendLayout();
@@ -266,9 +268,9 @@
             // 
             this.panel1.Controls.Add(this.grpBxSearch);
             this.panel1.Controls.Add(this.dgvSearch);
-            this.panel1.Location = new System.Drawing.Point(12, 99);
+            this.panel1.Location = new System.Drawing.Point(12, 113);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(412, 306);
+            this.panel1.Size = new System.Drawing.Size(412, 292);
             this.panel1.TabIndex = 0;
             // 
             // grpBxSearch
@@ -307,10 +309,10 @@
             this.dgvSearch.AllowUserToAddRows = false;
             this.dgvSearch.AllowUserToDeleteRows = false;
             this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSearch.Location = new System.Drawing.Point(3, 65);
+            this.dgvSearch.Location = new System.Drawing.Point(4, 65);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
-            this.dgvSearch.Size = new System.Drawing.Size(406, 280);
+            this.dgvSearch.Size = new System.Drawing.Size(406, 224);
             this.dgvSearch.TabIndex = 0;
             this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
             // 
@@ -446,12 +448,32 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label6.Location = new System.Drawing.Point(13, 80);
+            this.label6.Location = new System.Drawing.Point(9, 57);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(390, 13);
+            this.label6.Size = new System.Drawing.Size(302, 13);
             this.label6.TabIndex = 157;
-            this.label6.Text = "Respective Customer and their Orders will be selected by selecting either of them" +
-    ".";
+            this.label6.Text = "* Add Customer to get their respective orders in the drop down.";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label8.Location = new System.Drawing.Point(9, 77);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(410, 13);
+            this.label8.TabIndex = 158;
+            this.label8.Text = "* Selecting a given Order No. in the drop down will auto load the respective cust" +
+    "omer.";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label10.Location = new System.Drawing.Point(10, 97);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(323, 13);
+            this.label10.TabIndex = 159;
+            this.label10.Text = "* Clothes from mulitple orders can be selected for a given customer.";
             // 
             // Winform_AlterationsDetails
             // 
@@ -459,6 +481,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1018, 433);
             this.ControlBox = false;
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnAddItem);
             this.Controls.Add(this.grpbxPayDet);
@@ -487,6 +511,8 @@
             this.Controls.SetChildIndex(this.grpbxPayDet, 0);
             this.Controls.SetChildIndex(this.btnAddItem, 0);
             this.Controls.SetChildIndex(this.label6, 0);
+            this.Controls.SetChildIndex(this.label8, 0);
+            this.Controls.SetChildIndex(this.label10, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.grpbxCustomerDetails.ResumeLayout(false);
@@ -535,8 +561,8 @@
         private System.Windows.Forms.ComboBox cmbOrder;
         private System.Windows.Forms.ComboBox cmbStatus;
         internal System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        //private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnAddItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltType;
         private System.Windows.Forms.DataGridViewTextBoxColumn AltPrice;
@@ -544,5 +570,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn AltComment;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label10;
     }
 }

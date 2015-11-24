@@ -36,8 +36,11 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Mobile_No);
             Map(x => x.Phone_No);
             Map(x => x.Address);
+            Map(x => x.Designation);
             Map(x => x.IsTemporary);
-            Map(x => x.BankName);
+            References(x => x.Bank).Class<Bank>()
+                                    .Columns("BankID")
+                                    .Cascade.None();
             Map(x => x.BankUserName);
             Map(x => x.AccNo);
             Map(x => x.IfscCode);
@@ -47,7 +50,7 @@ namespace SpindleSoft.FluentMapping
         }
     }
 
-    class VendorMapping : ClassMap<Vendors>
+    class VendorMapping : ClassMap<Vendor>
     {
         public VendorMapping()
         {
@@ -57,8 +60,19 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Address);
             Map(x => x.BankUserName);
             Map(x => x.AccNo);
-            Map(x => x.BankName);
+            References(x => x.Bank).Class<Bank>()
+                                   .Columns("BankID")
+                                   .Cascade.None();
             Map(x => x.IFSCCode);
+        }
+    }
+
+    class BankMapping : ClassMap<Bank>
+    {
+        public BankMapping()
+        {
+            Id(x => x.ID);
+            Map(x => x.Name);
         }
     }
 

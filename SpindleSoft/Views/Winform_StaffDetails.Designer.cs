@@ -35,6 +35,8 @@
             this.pcbStaffImage = new System.Windows.Forms.PictureBox();
             this.btnCapture = new System.Windows.Forms.Button();
             this.grbMemPersonDetail = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtDesignation = new System.Windows.Forms.TextBox();
             this.lblPhoneNo = new System.Windows.Forms.Label();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,6 +54,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbBankName = new System.Windows.Forms.ComboBox();
             this.txtUserBankName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtIFSCNo = new System.Windows.Forms.TextBox();
@@ -59,13 +62,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtAccNo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtBankName = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnAddItem = new System.Windows.Forms.Button();
             this.dgvSecurityDoc = new System.Windows.Forms.DataGridView();
-            this.colDocType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colDocPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDocAdd = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colDocView = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colDocType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.grbMemNo.SuspendLayout();
@@ -123,6 +123,8 @@
             // 
             // grbMemPersonDetail
             // 
+            this.grbMemPersonDetail.Controls.Add(this.label6);
+            this.grbMemPersonDetail.Controls.Add(this.txtDesignation);
             this.grbMemPersonDetail.Controls.Add(this.lblPhoneNo);
             this.grbMemPersonDetail.Controls.Add(this.txtPhoneNo);
             this.grbMemPersonDetail.Controls.Add(this.label1);
@@ -135,10 +137,27 @@
             this.grbMemPersonDetail.Controls.Add(this.txtMobNo);
             this.grbMemPersonDetail.Location = new System.Drawing.Point(159, 62);
             this.grbMemPersonDetail.Name = "grbMemPersonDetail";
-            this.grbMemPersonDetail.Size = new System.Drawing.Size(364, 192);
+            this.grbMemPersonDetail.Size = new System.Drawing.Size(364, 210);
             this.grbMemPersonDetail.TabIndex = 0;
             this.grbMemPersonDetail.TabStop = false;
             this.grbMemPersonDetail.Text = "Personal Details";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 147);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(63, 13);
+            this.label6.TabIndex = 98;
+            this.label6.Text = "Designation";
+            // 
+            // txtDesignation
+            // 
+            this.txtDesignation.Location = new System.Drawing.Point(98, 145);
+            this.txtDesignation.MaxLength = 100;
+            this.txtDesignation.Name = "txtDesignation";
+            this.txtDesignation.Size = new System.Drawing.Size(243, 20);
+            this.txtDesignation.TabIndex = 4;
             // 
             // lblPhoneNo
             // 
@@ -161,7 +180,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 154);
+            this.label1.Location = new System.Drawing.Point(12, 182);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 13);
             this.label1.TabIndex = 95;
@@ -172,10 +191,10 @@
             this.grpBoxStaffType.Controls.Add(this.rdbOSrc);
             this.grpBoxStaffType.Controls.Add(this.rdbTemp);
             this.grpBoxStaffType.Controls.Add(this.rdbPerm);
-            this.grpBoxStaffType.Location = new System.Drawing.Point(98, 140);
+            this.grpBoxStaffType.Location = new System.Drawing.Point(98, 168);
             this.grpBoxStaffType.Name = "grpBoxStaffType";
             this.grpBoxStaffType.Size = new System.Drawing.Size(243, 36);
-            this.grpBoxStaffType.TabIndex = 4;
+            this.grpBoxStaffType.TabIndex = 6;
             this.grpBoxStaffType.TabStop = false;
             // 
             // rdbOSrc
@@ -286,6 +305,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmbBankName);
             this.groupBox1.Controls.Add(this.txtUserBankName);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.txtIFSCNo);
@@ -293,13 +313,20 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtAccNo);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtBankName);
-            this.groupBox1.Location = new System.Drawing.Point(159, 259);
+            this.groupBox1.Location = new System.Drawing.Point(159, 278);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 119);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bank Details";
+            // 
+            // cmbBankName
+            // 
+            this.cmbBankName.FormattingEnabled = true;
+            this.cmbBankName.Location = new System.Drawing.Point(98, 40);
+            this.cmbBankName.Name = "cmbBankName";
+            this.cmbBankName.Size = new System.Drawing.Size(243, 21);
+            this.cmbBankName.TabIndex = 1;
             // 
             // txtUserBankName
             // 
@@ -319,7 +346,7 @@
             // 
             // txtIFSCNo
             // 
-            this.txtIFSCNo.Location = new System.Drawing.Point(98, 89);
+            this.txtIFSCNo.Location = new System.Drawing.Point(98, 87);
             this.txtIFSCNo.MaxLength = 20;
             this.txtIFSCNo.Name = "txtIFSCNo";
             this.txtIFSCNo.Size = new System.Drawing.Size(243, 20);
@@ -360,74 +387,61 @@
             this.label2.TabIndex = 86;
             this.label2.Text = "Bank Name";
             // 
-            // txtBankName
-            // 
-            this.txtBankName.Location = new System.Drawing.Point(98, 41);
-            this.txtBankName.MaxLength = 10;
-            this.txtBankName.Name = "txtBankName";
-            this.txtBankName.Size = new System.Drawing.Size(243, 20);
-            this.txtBankName.TabIndex = 1;
-            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnAddItem);
             this.groupBox2.Controls.Add(this.dgvSecurityDoc);
-            this.groupBox2.Location = new System.Drawing.Point(159, 385);
+            this.groupBox2.Location = new System.Drawing.Point(159, 404);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(418, 119);
+            this.groupBox2.Size = new System.Drawing.Size(418, 161);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Security Documents";
             // 
+            // btnAddItem
+            // 
+            this.btnAddItem.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddItem.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
+            this.btnAddItem.Location = new System.Drawing.Point(373, 15);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(39, 35);
+            this.btnAddItem.TabIndex = 156;
+            this.btnAddItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAddItem.UseVisualStyleBackColor = false;
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
+            // 
             // dgvSecurityDoc
             // 
+            this.dgvSecurityDoc.AllowUserToAddRows = false;
+            this.dgvSecurityDoc.AllowUserToDeleteRows = false;
+            this.dgvSecurityDoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSecurityDoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSecurityDoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDocType,
-            this.colDocPath,
-            this.colDocAdd,
-            this.colDocView,
             this.ColDelete});
-            this.dgvSecurityDoc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvSecurityDoc.Location = new System.Drawing.Point(3, 16);
+            this.dgvSecurityDoc.Location = new System.Drawing.Point(3, 54);
             this.dgvSecurityDoc.Name = "dgvSecurityDoc";
+            this.dgvSecurityDoc.ReadOnly = true;
             this.dgvSecurityDoc.Size = new System.Drawing.Size(412, 100);
             this.dgvSecurityDoc.TabIndex = 0;
             this.dgvSecurityDoc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSecurityDoc_CellContentClick);
             this.dgvSecurityDoc.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSecurityDoc_DataError);
-            this.dgvSecurityDoc.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvSecDocumet_EditingControlShowing);
             // 
             // colDocType
             // 
-            this.colDocType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.colDocType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.colDocType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colDocType.HeaderText = "Document Type";
             this.colDocType.Name = "colDocType";
-            this.colDocType.Width = 80;
-            // 
-            // colDocPath
-            // 
-            this.colDocPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colDocPath.HeaderText = "Document Path";
-            this.colDocPath.Name = "colDocPath";
-            this.colDocPath.ReadOnly = true;
-            // 
-            // colDocAdd
-            // 
-            this.colDocAdd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colDocAdd.HeaderText = "Click To Add";
-            this.colDocAdd.Name = "colDocAdd";
-            // 
-            // colDocView
-            // 
-            this.colDocView.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colDocView.HeaderText = "Click To View";
-            this.colDocView.Name = "colDocView";
+            this.colDocType.ReadOnly = true;
+            this.colDocType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // ColDelete
             // 
             this.ColDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ColDelete.HeaderText = "Click To Delete";
             this.ColDelete.Name = "ColDelete";
+            this.ColDelete.ReadOnly = true;
             // 
             // openFileDialog1
             // 
@@ -437,7 +451,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 532);
+            this.ClientSize = new System.Drawing.Size(589, 590);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbMemNo);
@@ -495,7 +510,6 @@
         internal System.Windows.Forms.Label label3;
         internal System.Windows.Forms.TextBox txtAccNo;
         internal System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.TextBox txtBankName;
         internal System.Windows.Forms.Label label4;
         internal System.Windows.Forms.TextBox txtIFSCNo;
         internal System.Windows.Forms.TextBox txtUserBankName;
@@ -505,11 +519,15 @@
         //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgvSecurityDoc;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colDocType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDocPath;
-        private System.Windows.Forms.DataGridViewButtonColumn colDocAdd;
-        private System.Windows.Forms.DataGridViewButtonColumn colDocView;
-        private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ComboBox cmbBankName;
+        private System.Windows.Forms.Button btnAddItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocType;
+        private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
+        internal System.Windows.Forms.Label label6;
+        internal System.Windows.Forms.TextBox txtDesignation;
     }
 }

@@ -147,7 +147,7 @@
             // toolStrip_Label
             // 
             this.toolStrip_Label.Name = "toolStrip_Label";
-            this.toolStrip_Label.Size = new System.Drawing.Size(330, 17);
+            this.toolStrip_Label.Size = new System.Drawing.Size(361, 17);
             this.toolStrip_Label.Spring = true;
             this.toolStrip_Label.Text = "Ready";
             this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -159,7 +159,8 @@
             this.colDelete.Name = "colDelete";
             this.colDelete.ReadOnly = true;
             this.colDelete.Text = "Delete";
-            this.colDelete.Width = 80;
+            this.colDelete.Visible = false;
+            this.colDelete.Width = 89;
             // 
             // Winform_OrderRegister
             // 

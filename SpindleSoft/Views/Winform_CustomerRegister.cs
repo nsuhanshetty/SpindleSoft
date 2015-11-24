@@ -14,7 +14,7 @@ using Equin.ApplicationFramework;
 
 namespace SpindleSoft.Views
 {
-    public partial class Winform_CustomerRegister : Form
+    public partial class Winform_CustomerRegister : winform_Register
     {
         public Winform_CustomerRegister()
         {
@@ -49,8 +49,7 @@ namespace SpindleSoft.Views
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            lblStatus.Text = "Searching...";
-            progBarStatus.Value = 50;
+            UpdateStatus("Searching", 50);
 
             List<Customer> custList = new List<Customer>();
             custList = PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
@@ -58,15 +57,51 @@ namespace SpindleSoft.Views
             if (custList != null && custList.Count != 0)
             {
                 dgvCustomerRegister.DataSource = (from cust in custList
-                                                  select new { cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+                                                  select new
+                                                  {
+                                                      cust.ID,
+                                                      cust.Name,
+                                                      cust.Mobile_No,
+                                                      cust.Phone_No
+                                                  })
+                                                    .ToList();
+                dgvCustomerRegister.Columns["colDelete"].Visible = true;
+                dgvCustomerRegister.Columns["colDelete"].DisplayIndex = dgvCustomerRegister.Columns.Count - 1;
             }
             else
+            {
                 dgvCustomerRegister.DataSource = null;
+                dgvCustomerRegister.Columns["colDelete"].Visible = false;
+            }
 
-            lblStatus.Text = (dgvCustomerRegister.RowCount == 0) ? "No Results Found" : dgvCustomerRegister.RowCount + " Results Found";
-            progBarStatus.Value = 100;
+            UpdateStatus((dgvCustomerRegister.RowCount == 0) ? "No Results Found" : dgvCustomerRegister.RowCount + " Results Found", 100);
         }
         #endregion Events
+
+        private void dgvCustomerRegister_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            if (dgvCustomerRegister.Columns["colDelete"].Index == e.ColumnIndex)
+            {
+                int custID = int.Parse(dgvCustomerRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
+                DialogResult dr =  MessageBox.Show("Do you want to delete Customer " + custID,"Delete Customer",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                if (dr == DialogResult.No) return;
+
+                bool success = Savers.PeoplePracticeSaver.DeleteCustomer(custID);
+
+                if (success)
+                {
+                    txtName_TextChanged(this, new EventArgs());
+                    UpdateStatus("Customer Deleted.", 100);
+                    
+                }
+                else
+                {
+                    UpdateStatus("Error deleting Customer. ", 100);
+                }
+            }
+        }
 
         #region Validation
         //  private void txtName_Validating(object sender, CancelEventArgs e)

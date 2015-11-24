@@ -32,9 +32,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.progBarStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
@@ -44,37 +41,13 @@
             this.lblMobile = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvCustomerRegister = new System.Windows.Forms.DataGridView();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomerRegister)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus,
-            this.progBarStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 365);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(577, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(460, 17);
-            this.lblStatus.Spring = true;
-            this.lblStatus.Text = "Search Completed";
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // progBarStatus
-            // 
-            this.progBarStatus.Name = "progBarStatus";
-            this.progBarStatus.Size = new System.Drawing.Size(100, 16);
             // 
             // groupBox1
             // 
@@ -166,6 +139,8 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvCustomerRegister.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomerRegister.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCustomerRegister.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDelete});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -189,7 +164,17 @@
             this.dgvCustomerRegister.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvCustomerRegister.Size = new System.Drawing.Size(563, 286);
             this.dgvCustomerRegister.TabIndex = 0;
+            this.dgvCustomerRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellClick);
             this.dgvCustomerRegister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellContentClick);
+            // 
+            // colDelete
+            // 
+            this.colDelete.HeaderText = "Click To Delete";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
+            this.colDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colDelete.Visible = false;
             // 
             // errorProvider1
             // 
@@ -202,13 +187,11 @@
             this.ClientSize = new System.Drawing.Size(577, 387);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.statusStrip1);
             this.Name = "Winform_CustomerRegister";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Customer Register";
             this.Load += new System.EventHandler(this.Winform_StaffRegister_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.panel1, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -221,8 +204,6 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.GroupBox groupBox1;
         internal System.Windows.Forms.TextBox txtMobNo;
         internal System.Windows.Forms.TextBox txtName;
@@ -232,7 +213,7 @@
         internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.ToolStripProgressBar progBarStatus;
         private System.Windows.Forms.DataGridView dgvCustomerRegister;
+        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
     }
 }

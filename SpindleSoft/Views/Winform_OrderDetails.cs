@@ -189,7 +189,7 @@ namespace SpindleSoft.Views
             UpdateStatus("Saving..", 100);
             if (success)
             {
-                DialogResult dr = MessageBox.Show("Send SMS to Customer Regarding the Order to Customer", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Send SMS to customer regarding the order", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
                     MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");

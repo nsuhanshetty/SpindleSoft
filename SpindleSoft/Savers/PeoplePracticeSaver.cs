@@ -1,13 +1,14 @@
-﻿using log4net;
-using Newtonsoft.Json;
+﻿using Dropbox.Api;
+using Dropbox.Api.Files;
+using log4net;
 using SpindleSoft.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Net;
-using System.Net.Http;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SpindleSoft.Savers
 {
@@ -29,8 +30,10 @@ namespace SpindleSoft.Savers
                     try
                     {
                         session.SaveOrUpdate(_customer);
-                       
                         bool response = _customer.ID != 0 ? PeoplePracticeSaver.SaveCustomerImage(_customer.Image, _customer.ID) : false;
+                        if (!response)
+                            return false;
+
                         tx.Commit();
                         return true;
                     }
@@ -64,6 +67,30 @@ namespace SpindleSoft.Savers
                 return false;
             }
         }
+
+        public static bool DeleteCustomer(int custID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        Customer cust = session.Get<Customer>(custID);
+                        string filePath = string.Format("{0}\\{1}.png", CustomerImagePath, custID);
+                        System.IO.File.Delete(filePath);
+                        session.Delete(cust);
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        return false;
+                    }
+                }
+            }
+        }
         #endregion Customer
 
         #region Staff
@@ -79,7 +106,16 @@ namespace SpindleSoft.Savers
                         {
                             doc.Staff = staff;
                         }
+
+                        if (staff.Bank.ID == 0)
+                            session.SaveOrUpdate(staff.Bank);
+
                         session.SaveOrUpdate(staff);
+
+                        bool response = staff.ID != 0 ? PeoplePracticeSaver.SaveStaffImage(staff.Image, staff.ID) : false;
+                        if (!response)
+                            return 0;
+
                         transaction.Commit();
                         return staff.ID;
                     }
@@ -95,6 +131,7 @@ namespace SpindleSoft.Savers
 
         public static bool SaveStaffImage(Image image, int _ID)
         {
+            if (image == null) return true;
             string filePath = string.Format("{0}\\{1}.png", StaffImagePath, _ID);
             try
             {
@@ -113,19 +150,62 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static bool SaveStaffDocument(List<Document> docList, int _staffID)
+        public static bool SaveStaffDocumentAsync(List<Document> docList, int _staffID)
         {
-            foreach (Document doc in docList)
+            if (docList.Count == 0) return true;
+
+            int count = docList.Count;
+            Task[] tasks = new Task[count];
+            IEnumerable<Task<bool>> docListTasks = from _doc in docList select Upload(_doc, _staffID);
+            tasks = docListTasks.ToArray();
+
+            bool success = false;
+            //bool completed = false;
+            try
+            { 
+               var tasls =  Task.Factory.ContinueWhenAll(tasks, antecedents =>
+                    {
+                        foreach (Task task in antecedents)
+                        {
+                            if (task.Status == TaskStatus.Faulted)
+                            {
+                                success = false;
+                                break;
+                            }
+                            success = true;
+                        }
+                        return success;
+                    });
+
+               return true;
+            }
+            catch (Exception ex)
             {
-                string filePath = string.Format("{0}\\{2}_{1}.png", DocumentImagePath, doc.Type, _staffID);
+                log.Error(ex);
+                success = false;
+            }
+            return success;
+        }
+
+        private static async Task<bool> Upload(Document doc, int _staffID)
+        {
+            string dropfilePath = string.Format("/staffDocument/{0}_{1}.png", _staffID, doc.Type);
+            string tempfileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".png";
+            doc.Image.Save(tempfileName);
+
+            using (var mem = new FileStream(tempfileName, FileMode.Open))
+            {
+                //todo: shift and fetch from passsword-appconfig;
+                DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi");
                 try
                 {
-                    if (!System.IO.Directory.Exists(DocumentImagePath))
-                        System.IO.Directory.CreateDirectory(DocumentImagePath);
-                    else if (System.IO.File.Exists(filePath))
-                        System.IO.File.Delete(filePath);
-
-                    doc.Image.Save(filePath, ImageFormat.Png);
+                    var updated = await dbx.Files.UploadAsync(dropfilePath, WriteMode.Overwrite.Instance, body: mem).ConfigureAwait(false);
+                    return true;
+                }
+                catch (ApiException<UploadError> apiEx)
+                {
+                    log.Error(apiEx);
+                    return false;
                 }
                 catch (Exception ex)
                 {
@@ -133,7 +213,6 @@ namespace SpindleSoft.Savers
                     return false;
                 }
             }
-            return true;
         }
 
         public static bool DeleteStaffDocument(int _ID)
@@ -144,6 +223,7 @@ namespace SpindleSoft.Savers
                 {
                     try
                     {
+                        //todo : Delete document from dropbox on delete
                         Document doc = session.Get<Document>(_ID);
                         session.Delete(doc);
                         tx.Commit();
@@ -163,7 +243,7 @@ namespace SpindleSoft.Savers
 
         #region Vendor
 
-        public static bool SaveVendorInfo(Vendors vendor)
+        public static bool SaveVendorInfo(Vendor vendor)
         {
             try
             {
@@ -171,6 +251,9 @@ namespace SpindleSoft.Savers
                 {
                     using (var transaction = session.BeginTransaction())
                     {
+                        if (vendor.Bank.ID == 0)
+                            session.SaveOrUpdate(vendor.Bank);
+
                         session.SaveOrUpdate(vendor);
                         transaction.Commit();
                         return true;

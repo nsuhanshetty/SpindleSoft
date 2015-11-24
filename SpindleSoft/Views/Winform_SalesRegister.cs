@@ -71,7 +71,7 @@ namespace SpindleSoft.Views
             }
 
             List<Sale> salesList = (SaleBuilder.GetSalesList(txtName.Text, txtProCode.Text, txtMobNo.Text));
-            if (salesList != null)
+            if (salesList != null && salesList.Count != 0)
             {
                 dgvSearch.DataSource = (from sale in salesList
                                         select new
@@ -86,8 +86,10 @@ namespace SpindleSoft.Views
                 dgvSearch.Columns["colDelete"].Visible = true;
                 dgvSearch.Columns["colDelete"].DisplayIndex = dgvSearch.Columns.Count - 1;
             }
-
-            dgvSaleItemDetails.DataSource = null;
+            else
+            {
+                dgvSaleItemDetails.DataSource = null;
+            }
         }
 
         private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

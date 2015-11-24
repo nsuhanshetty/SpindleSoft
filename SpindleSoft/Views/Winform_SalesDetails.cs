@@ -130,6 +130,8 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1) return;
+
             string _proname = dgvSearch.Rows[e.RowIndex].Cells["Name"].Value.ToString();
 
             //Add SaleItem to Cart
@@ -269,7 +271,7 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            List<string> exceptionlist = new List<string>() { "grpBxSearch", "pcbCustImage" };
+            List<string> exceptionlist = new List<string>() { "grpBxSearch", "pcbCustImage","txtPhoneNo" };
             bool exists = SpindleSoft.Utilities.Validation.IsNullOrEmpty(this, true, exceptionlist);
             if (exists) return;
             if (dgvSaleItem.Rows.Count == 0)
@@ -305,10 +307,10 @@ namespace SpindleSoft.Views
             {
                 UpdateStatus("Saved.", 100);
 
-                DialogResult dr = MessageBox.Show("Send SMS to Customer Regarding the Sale to Customer", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Send SMS to customer regarding the sale", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
-                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                    MessageBox.Show("Thanks for choosing our product. We lend free alternations within fours days from date of Delivery.");
                 }
                 this.Close();
             }

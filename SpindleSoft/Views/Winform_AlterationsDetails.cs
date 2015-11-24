@@ -234,7 +234,7 @@ namespace SpindleSoft.Views
 
             if (success)
             {
-                DialogResult dr = MessageBox.Show("Do you want Send SMS to notify the Customer.", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Send SMS to customer regarding the alteration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
                     //todo: Replace with SMS funtion.

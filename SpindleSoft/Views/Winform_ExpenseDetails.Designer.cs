@@ -208,9 +208,9 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        //private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        //private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         private System.Windows.Forms.DateTimePicker dtpDeliveryDate;
         internal System.Windows.Forms.Label label4;
         internal System.Windows.Forms.TextBox txtTotalAmount;

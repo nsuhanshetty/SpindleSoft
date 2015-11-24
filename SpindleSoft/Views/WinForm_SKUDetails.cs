@@ -12,7 +12,7 @@ namespace SpindleSoft.Views
     public partial class WinForm_SKUDetails : Winform_DetailsFormat
     {
         SKUItem saleItem = new SKUItem();
-        Vendors vendor;
+        Vendor vendor;
         bool editMode = false;
 
         public WinForm_SKUDetails()
@@ -199,7 +199,7 @@ namespace SpindleSoft.Views
             string code = string.Empty;
             foreach (var s in nameArray)
             {
-                code += s.Substring(0, 3);
+                code += s.Length < 4 ? s : s.Substring(0, 3);
             }
 
             var varcode = "-" + cmbMaterial.Text.Substring(0, 3) + "-";
@@ -236,7 +236,7 @@ namespace SpindleSoft.Views
         }
         #endregion Validation
 
-        public void UpdateVendorDetails(Vendors vend)
+        public void UpdateVendorDetails(Vendor vend)
         {
             this.vendor = vend;
             txtVendMobile.Text = vend.MobileNo;

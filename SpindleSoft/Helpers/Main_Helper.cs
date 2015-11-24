@@ -51,7 +51,7 @@ namespace SpindleSoft.Helpers
                                               order.ID,
                                               Total = order.TotalPrice,
                                               Paid = order.CurrentPayment,
-                                              DueDate = order.PromisedDate.ToString("dd-MM-yy")
+                                              DueDate = order.PromisedDate.ToString("dd/MMM/yy")
                                           }).ToList();
                     }
                     break;
@@ -84,7 +84,7 @@ namespace SpindleSoft.Helpers
                 {
                     int index = dgv.Rows.Add();
                     dgv.Rows[index].Cells[0].Value = item.GetType().GetProperty("ID").GetValue(item, null);
-                    dgv.Rows[index].Cells[1].Value = ((DateTime)item.GetType().GetProperty("DueDate").GetValue(item, null)).ToString("dd/MMMM/yy");
+                    dgv.Rows[index].Cells[1].Value = ((DateTime)item.GetType().GetProperty("DueDate").GetValue(item, null)).ToString("dd/MMM/yy");
                 }
             }
             return datalist == null ? 0 : datalist.Count;

@@ -23,8 +23,16 @@ namespace SpindleSoft.Views
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             //todo : Check txtboxes for sql injection
+            dgvSearch.Columns["colDelete"].Visible = false;
+
+            if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtOrderId.Text) && string.IsNullOrEmpty(txtName.Text))
+            {
+                dgvSearch.DataSource = null;
+                return;
+            }
+
             List<Orders> OrdersList = (OrderBuilder.GetOrdersList(txtName.Text, txtMobNo.Text, txtOrderId.Text));
-            if (OrdersList != null)
+            if (OrdersList != null && OrdersList.Count != 0)
             {
                 dgvSearch.DataSource = (from order in OrdersList
                                         select new
@@ -35,6 +43,7 @@ namespace SpindleSoft.Views
                                             PromisedDate = order.PromisedDate
                                         }).ToList();
                 dgvSearch.Columns["colDelete"].DisplayIndex = dgvSearch.Columns.Count - 1;
+                dgvSearch.Columns["colDelete"].Visible = true;
             }
             else
                 dgvSearch.DataSource = null;

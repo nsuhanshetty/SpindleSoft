@@ -39,6 +39,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtPhoneNo = new System.Windows.Forms.TextBox();
             this.dgvSaleItem = new System.Windows.Forms.DataGridView();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.AddCustToolStrip = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
@@ -64,12 +70,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.grpBoxCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItem)).BeginInit();
@@ -185,6 +185,49 @@
             this.dgvSaleItem.TabIndex = 2;
             this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellClick);
             this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellDoubleClick);
+            // 
+            // colName
+            // 
+            this.colName.DataPropertyName = "Name";
+            this.colName.HeaderText = "Name";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            // 
+            // colProductCode
+            // 
+            this.colProductCode.DataPropertyName = "ProductCode";
+            this.colProductCode.HeaderText = "ProductCode";
+            this.colProductCode.Name = "colProductCode";
+            this.colProductCode.ReadOnly = true;
+            // 
+            // ColQuantity
+            // 
+            this.ColQuantity.DataPropertyName = "Quantity";
+            this.ColQuantity.HeaderText = "Quantity";
+            this.ColQuantity.Name = "ColQuantity";
+            this.ColQuantity.ReadOnly = true;
+            // 
+            // colPrice
+            // 
+            this.colPrice.DataPropertyName = "Price";
+            this.colPrice.HeaderText = "Price";
+            this.colPrice.Name = "colPrice";
+            this.colPrice.ReadOnly = true;
+            // 
+            // colStock
+            // 
+            this.colStock.HeaderText = "InStock";
+            this.colStock.Name = "colStock";
+            this.colStock.ReadOnly = true;
+            this.colStock.Visible = false;
+            // 
+            // colDelete
+            // 
+            this.colDelete.HeaderText = "Click To Delete";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
+            this.colDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // AddCustToolStrip
             // 
@@ -383,7 +426,6 @@
             this.txtAmntPaid.Name = "txtAmntPaid";
             this.txtAmntPaid.Size = new System.Drawing.Size(84, 20);
             this.txtAmntPaid.TabIndex = 3;
-            this.txtAmntPaid.Text = "0";
             this.txtAmntPaid.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtAmntPaid_KeyPress);
             // 
             // label3
@@ -431,54 +473,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Sale Item Details";
             // 
-            // colName
-            // 
-            this.colName.DataPropertyName = "Name";
-            this.colName.HeaderText = "Name";
-            this.colName.Name = "colName";
-            this.colName.ReadOnly = true;
-            // 
-            // colProductCode
-            // 
-            this.colProductCode.DataPropertyName = "ProductCode";
-            this.colProductCode.HeaderText = "ProductCode";
-            this.colProductCode.Name = "colProductCode";
-            this.colProductCode.ReadOnly = true;
-            // 
-            // ColQuantity
-            // 
-            this.ColQuantity.DataPropertyName = "Quantity";
-            this.ColQuantity.HeaderText = "Quantity";
-            this.ColQuantity.Name = "ColQuantity";
-            this.ColQuantity.ReadOnly = true;
-            // 
-            // colPrice
-            // 
-            this.colPrice.DataPropertyName = "Price";
-            this.colPrice.HeaderText = "Price";
-            this.colPrice.Name = "colPrice";
-            this.colPrice.ReadOnly = true;
-            // 
-            // colStock
-            // 
-            this.colStock.HeaderText = "InStock";
-            this.colStock.Name = "colStock";
-            this.colStock.ReadOnly = true;
-            this.colStock.Visible = false;
-            // 
-            // colDelete
-            // 
-            this.colDelete.HeaderText = "Click To Delete";
-            this.colDelete.Name = "colDelete";
-            this.colDelete.ReadOnly = true;
-            this.colDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
             // Winform_SalesDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(831, 471);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtBalanceAmnt);
             this.Controls.Add(this.label7);

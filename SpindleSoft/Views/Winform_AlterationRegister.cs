@@ -34,15 +34,16 @@ namespace SpindleSoft
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             var delCol = dgvSearch.Columns["colDelete"];
+            delCol.Visible = false;
+
             if (string.IsNullOrEmpty(txtAltNo.Text) && string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text))
             {
                 dgvSearch.DataSource = null;
-                delCol.Visible = false;
                 return;
             }
 
             List<Alteration> altList = (AlterationBuilder.GetAlterationList(txtName.Text, txtMobNo.Text, txtAltNo.Text));
-            if (altList != null)
+            if (altList != null && altList.Count != 0)
             {
                 dgvSearch.DataSource = (from alt in altList
                                         select new
@@ -58,7 +59,6 @@ namespace SpindleSoft
             else
             {
                 dgvSearch.DataSource = null;
-                delCol.Visible = false;
             }
         }
 

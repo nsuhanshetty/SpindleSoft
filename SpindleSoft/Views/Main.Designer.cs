@@ -162,7 +162,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1354, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1357, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -183,7 +183,7 @@
             this.addCustomerToolStripMenuItem1,
             this.customerRegisterToolStripMenuItem});
             this.addCustomerToolStripMenuItem.Name = "addCustomerToolStripMenuItem";
-            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.addCustomerToolStripMenuItem.Text = "&Customer";
             // 
             // addCustomerToolStripMenuItem1
@@ -207,7 +207,7 @@
             this.staffRegisterToolStripMenuItem,
             this.salaryRegisterToolStripMenuItem});
             this.searchCustomerToolStripMenuItem.Name = "searchCustomerToolStripMenuItem";
-            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.searchCustomerToolStripMenuItem.Text = "&Staff";
             // 
             // addStaffToolStripMenuItem
@@ -228,7 +228,7 @@
             // 
             this.salaryRegisterToolStripMenuItem.Enabled = false;
             this.salaryRegisterToolStripMenuItem.Name = "salaryRegisterToolStripMenuItem";
-            this.salaryRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.salaryRegisterToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.salaryRegisterToolStripMenuItem.Text = "Salary Register";
             this.salaryRegisterToolStripMenuItem.Click += new System.EventHandler(this.salaryRegisterToolStripMenuItem_Click);
             // 
@@ -238,13 +238,13 @@
             this.addVendorToolStripMenuItem2,
             this.vendorRegisterToolStripMenuItem});
             this.addVendorToolStripMenuItem1.Name = "addVendorToolStripMenuItem1";
-            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
             this.addVendorToolStripMenuItem1.Text = "&Vendor";
             // 
             // addVendorToolStripMenuItem2
             // 
             this.addVendorToolStripMenuItem2.Name = "addVendorToolStripMenuItem2";
-            this.addVendorToolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
+            this.addVendorToolStripMenuItem2.Size = new System.Drawing.Size(156, 22);
             this.addVendorToolStripMenuItem2.Text = "&Add Vendor";
             this.addVendorToolStripMenuItem2.Click += new System.EventHandler(this.addVendorToolStripMenuItem2_Click);
             // 
@@ -261,7 +261,7 @@
             this.addGroupsToolStripMenuItem,
             this.groupRegisterToolStripMenuItem});
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.groupsToolStripMenuItem.Text = "&Groups";
             // 
             // addGroupsToolStripMenuItem
@@ -289,14 +289,14 @@
             // addOrdersToolStripMenuItem
             // 
             this.addOrdersToolStripMenuItem.Name = "addOrdersToolStripMenuItem";
-            this.addOrdersToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.addOrdersToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.addOrdersToolStripMenuItem.Text = "Add Order";
             this.addOrdersToolStripMenuItem.Click += new System.EventHandler(this.addOrdersToolStripMenuItem_Click);
             // 
             // searchOrderToolStripMenuItem
             // 
             this.searchOrderToolStripMenuItem.Name = "searchOrderToolStripMenuItem";
-            this.searchOrderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.searchOrderToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.searchOrderToolStripMenuItem.Text = "Order Register";
             this.searchOrderToolStripMenuItem.Click += new System.EventHandler(this.searchOrderToolStripMenuItem_Click);
             // 
@@ -312,7 +312,7 @@
             // addAlterationToolStripMenuItem
             // 
             this.addAlterationToolStripMenuItem.Name = "addAlterationToolStripMenuItem";
-            this.addAlterationToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.addAlterationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.addAlterationToolStripMenuItem.Text = "Add Alteration";
             this.addAlterationToolStripMenuItem.Click += new System.EventHandler(this.addAlterationToolStripMenuItem_Click);
             // 
@@ -515,9 +515,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 521);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 677);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1354, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1357, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -665,7 +665,7 @@
             this.pnlDeliveryStatus.Controls.Add(this.groupBox2);
             this.pnlDeliveryStatus.Location = new System.Drawing.Point(287, 28);
             this.pnlDeliveryStatus.Name = "pnlDeliveryStatus";
-            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1077, 490);
+            this.pnlDeliveryStatus.Size = new System.Drawing.Size(1070, 490);
             this.pnlDeliveryStatus.TabIndex = 3;
             // 
             // groupBox3
@@ -681,7 +681,7 @@
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Location = new System.Drawing.Point(8, 244);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1035, 233);
+            this.groupBox3.Size = new System.Drawing.Size(1053, 233);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Alteration Delivery Status";
@@ -702,7 +702,7 @@
             this.lblAltAIPCount.AutoSize = true;
             this.lblAltAIPCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblAltAIPCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblAltAIPCount.Location = new System.Drawing.Point(663, 24);
+            this.lblAltAIPCount.Location = new System.Drawing.Point(671, 24);
             this.lblAltAIPCount.Name = "lblAltAIPCount";
             this.lblAltAIPCount.Size = new System.Drawing.Size(13, 13);
             this.lblAltAIPCount.TabIndex = 15;
@@ -711,7 +711,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(351, 24);
+            this.label6.Location = new System.Drawing.Point(358, 24);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 14;
@@ -721,6 +721,8 @@
             // 
             this.dgvAltSIP.AllowUserToAddRows = false;
             this.dgvAltSIP.AllowUserToDeleteRows = false;
+            this.dgvAltSIP.AllowUserToResizeColumns = false;
+            this.dgvAltSIP.AllowUserToResizeRows = false;
             this.dgvAltSIP.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvAltSIP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAltSIP.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -728,10 +730,10 @@
             this.dataGridViewTextBoxColumn10,
             this.dataGridViewButtonColumn5,
             this.dataGridViewButtonColumn6});
-            this.dgvAltSIP.Location = new System.Drawing.Point(354, 40);
+            this.dgvAltSIP.Location = new System.Drawing.Point(361, 40);
             this.dgvAltSIP.Name = "dgvAltSIP";
             this.dgvAltSIP.ReadOnly = true;
-            this.dgvAltSIP.Size = new System.Drawing.Size(326, 187);
+            this.dgvAltSIP.Size = new System.Drawing.Size(325, 187);
             this.dgvAltSIP.TabIndex = 14;
             this.dgvAltSIP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
             // 
@@ -771,6 +773,8 @@
             // 
             this.dgvAltR2C.AllowUserToAddRows = false;
             this.dgvAltR2C.AllowUserToDeleteRows = false;
+            this.dgvAltR2C.AllowUserToResizeColumns = false;
+            this.dgvAltR2C.AllowUserToResizeRows = false;
             this.dgvAltR2C.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvAltR2C.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAltR2C.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -778,10 +782,10 @@
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewButtonColumn3,
             this.colAltSendSMS});
-            this.dgvAltR2C.Location = new System.Drawing.Point(702, 40);
+            this.dgvAltR2C.Location = new System.Drawing.Point(716, 40);
             this.dgvAltR2C.Name = "dgvAltR2C";
             this.dgvAltR2C.ReadOnly = true;
-            this.dgvAltR2C.Size = new System.Drawing.Size(326, 187);
+            this.dgvAltR2C.Size = new System.Drawing.Size(325, 187);
             this.dgvAltR2C.TabIndex = 14;
             this.dgvAltR2C.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
             // 
@@ -818,6 +822,8 @@
             // 
             this.dgvAltR2A.AllowUserToAddRows = false;
             this.dgvAltR2A.AllowUserToDeleteRows = false;
+            this.dgvAltR2A.AllowUserToResizeColumns = false;
+            this.dgvAltR2A.AllowUserToResizeRows = false;
             this.dgvAltR2A.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvAltR2A.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAltR2A.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -827,7 +833,7 @@
             this.dgvAltR2A.Location = new System.Drawing.Point(6, 40);
             this.dgvAltR2A.Name = "dgvAltR2A";
             this.dgvAltR2A.ReadOnly = true;
-            this.dgvAltR2A.Size = new System.Drawing.Size(326, 187);
+            this.dgvAltR2A.Size = new System.Drawing.Size(325, 187);
             this.dgvAltR2A.TabIndex = 13;
             this.dgvAltR2A.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAltR2A_CellContentClick);
             // 
@@ -857,7 +863,7 @@
             // 
             this.lblAltCollectCount.AutoSize = true;
             this.lblAltCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblAltCollectCount.Location = new System.Drawing.Point(1011, 24);
+            this.lblAltCollectCount.Location = new System.Drawing.Point(1024, 24);
             this.lblAltCollectCount.Name = "lblAltCollectCount";
             this.lblAltCollectCount.Size = new System.Drawing.Size(13, 13);
             this.lblAltCollectCount.TabIndex = 12;
@@ -866,7 +872,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(699, 24);
+            this.label3.Location = new System.Drawing.Point(713, 24);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 13);
             this.label3.TabIndex = 10;
@@ -894,7 +900,7 @@
             this.groupBox2.Controls.Add(this.dgvOrdR2S);
             this.groupBox2.Location = new System.Drawing.Point(8, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1035, 233);
+            this.groupBox2.Size = new System.Drawing.Size(1053, 233);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Order Delivery Status";
@@ -915,7 +921,7 @@
             this.lblOrdSIPCount.AutoSize = true;
             this.lblOrdSIPCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblOrdSIPCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblOrdSIPCount.Location = new System.Drawing.Point(663, 24);
+            this.lblOrdSIPCount.Location = new System.Drawing.Point(671, 24);
             this.lblOrdSIPCount.Name = "lblOrdSIPCount";
             this.lblOrdSIPCount.Size = new System.Drawing.Size(13, 13);
             this.lblOrdSIPCount.TabIndex = 14;
@@ -924,7 +930,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(351, 24);
+            this.label5.Location = new System.Drawing.Point(358, 24);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 13);
             this.label5.TabIndex = 13;
@@ -934,6 +940,9 @@
             // 
             this.dgvOrdSIP.AllowUserToAddRows = false;
             this.dgvOrdSIP.AllowUserToDeleteRows = false;
+            this.dgvOrdSIP.AllowUserToResizeColumns = false;
+            this.dgvOrdSIP.AllowUserToResizeRows = false;
+            this.dgvOrdSIP.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrdSIP.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvOrdSIP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrdSIP.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -941,10 +950,10 @@
             this.dataGridViewTextBoxColumn8,
             this.colShiftR2S,
             this.dataGridViewButtonColumn4});
-            this.dgvOrdSIP.Location = new System.Drawing.Point(354, 39);
+            this.dgvOrdSIP.Location = new System.Drawing.Point(361, 40);
             this.dgvOrdSIP.Name = "dgvOrdSIP";
             this.dgvOrdSIP.ReadOnly = true;
-            this.dgvOrdSIP.Size = new System.Drawing.Size(326, 187);
+            this.dgvOrdSIP.Size = new System.Drawing.Size(325, 187);
             this.dgvOrdSIP.TabIndex = 12;
             this.dgvOrdSIP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
             // 
@@ -984,6 +993,9 @@
             // 
             this.dgvOrdR2C.AllowUserToAddRows = false;
             this.dgvOrdR2C.AllowUserToDeleteRows = false;
+            this.dgvOrdR2C.AllowUserToResizeColumns = false;
+            this.dgvOrdR2C.AllowUserToResizeRows = false;
+            this.dgvOrdR2C.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrdR2C.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvOrdR2C.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrdR2C.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -991,10 +1003,10 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewButtonColumn1,
             this.colSendSMS});
-            this.dgvOrdR2C.Location = new System.Drawing.Point(702, 39);
+            this.dgvOrdR2C.Location = new System.Drawing.Point(716, 40);
             this.dgvOrdR2C.Name = "dgvOrdR2C";
             this.dgvOrdR2C.ReadOnly = true;
-            this.dgvOrdR2C.Size = new System.Drawing.Size(326, 187);
+            this.dgvOrdR2C.Size = new System.Drawing.Size(325, 187);
             this.dgvOrdR2C.TabIndex = 11;
             this.dgvOrdR2C.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
             // 
@@ -1034,7 +1046,7 @@
             this.lblOrdCollectCount.AutoSize = true;
             this.lblOrdCollectCount.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblOrdCollectCount.ForeColor = System.Drawing.Color.MediumBlue;
-            this.lblOrdCollectCount.Location = new System.Drawing.Point(1011, 24);
+            this.lblOrdCollectCount.Location = new System.Drawing.Point(1024, 24);
             this.lblOrdCollectCount.Name = "lblOrdCollectCount";
             this.lblOrdCollectCount.Size = new System.Drawing.Size(13, 13);
             this.lblOrdCollectCount.TabIndex = 10;
@@ -1043,7 +1055,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(699, 24);
+            this.label2.Location = new System.Drawing.Point(713, 24);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 8;
@@ -1062,6 +1074,9 @@
             // 
             this.dgvOrdR2S.AllowUserToAddRows = false;
             this.dgvOrdR2S.AllowUserToDeleteRows = false;
+            this.dgvOrdR2S.AllowUserToResizeColumns = false;
+            this.dgvOrdR2S.AllowUserToResizeRows = false;
+            this.dgvOrdR2S.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrdR2S.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvOrdR2S.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrdR2S.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1071,7 +1086,7 @@
             this.dgvOrdR2S.Location = new System.Drawing.Point(6, 40);
             this.dgvOrdR2S.Name = "dgvOrdR2S";
             this.dgvOrdR2S.ReadOnly = true;
-            this.dgvOrdR2S.Size = new System.Drawing.Size(326, 187);
+            this.dgvOrdR2S.Size = new System.Drawing.Size(325, 187);
             this.dgvOrdR2S.TabIndex = 2;
             this.dgvOrdR2S.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdR2S_CellContentClick);
             // 
@@ -1102,12 +1117,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1354, 543);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(1362, 543);
             this.Controls.Add(this.pnlDeliveryStatus);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

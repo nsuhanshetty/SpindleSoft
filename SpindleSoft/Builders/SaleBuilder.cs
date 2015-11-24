@@ -5,6 +5,7 @@ using System.Linq;
 using NHibernate.Linq;
 using log4net;
 using NHibernate.Criterion;
+using NHibernate.Transform;
 
 namespace SpindleSoft.Builders
 {
@@ -152,14 +153,14 @@ namespace SpindleSoft.Builders
         #endregion SKUItems
 
         #region Vendors
-        public static Vendors GetVendorsInfo(int? vendorId)
+        public static Vendor GetVendorsInfo(int? vendorId)
         {
-            Vendors _vendor = new Vendors();
+            Vendor _vendor = new Vendor();
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    _vendor = (from v in session.Query<Vendors>()
+                    _vendor = (from v in session.Query<Vendor>()
                                where v.ID == vendorId
                                select v).Single();
                     return _vendor;
@@ -178,7 +179,7 @@ namespace SpindleSoft.Builders
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    List<string> vendorNames = (from v in session.Query<Vendors>()
+                    List<string> vendorNames = (from v in session.Query<Vendor>()
                                                 select v.Name).Distinct().ToList<string>();
                     return vendorNames;
                 }
@@ -199,8 +200,8 @@ namespace SpindleSoft.Builders
                 using (var session = NHibernateHelper.OpenSession())
                 {
                     Sale _sale = (from s in session.Query<Sale>()
-                                 where s.ID == _saleID
-                                 select s).Single();
+                                  where s.ID == _saleID
+                                  select s).Single();
 
                     _sale.SaleItems = session.QueryOver<SaleItem>()
                                     .Where(x => x.Sale.ID == _saleID)
@@ -263,13 +264,15 @@ namespace SpindleSoft.Builders
                     Customer custAlias = null;
 
                     List<Sale> query = session.QueryOver<Sale>(() => saleAlias)
-                        .JoinAlias(() => saleAlias.SaleItems, () => saleItemAlias)
-                        .JoinAlias(() => saleItemAlias.SKUItem, () => skuItemAlias)
-                        .JoinAlias(() => saleAlias.Customer, () => custAlias)
-                         .Where(Restrictions.On(() => custAlias.Name).IsLike(name + "%"))
-                         .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(procode + "%"))
-                         .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(mobNo + "%"))
-                         .OrderBy(() => saleAlias.DateOfSale).Desc
+                                                                    .JoinAlias(() => saleAlias.Customer, () => custAlias)
+                                                                    .Left.JoinAlias(() => saleAlias.SaleItems, () => saleItemAlias)
+                                                                    .Left.JoinAlias(() => saleItemAlias.SKUItem, () => skuItemAlias)
+                                                                    .Where(Restrictions.On(() => custAlias.Name).IsLike(name + "%"))
+                                                                    .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(procode + "%"))
+                                                                    .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(mobNo + "%"))
+                                                                    .OrderBy(() => saleAlias.DateOfSale).Desc
+                                                                    .TransformUsing(Transformers.DistinctRootEntity)
+
                         //.Where(() => saleAlias.ID == int.Parse(saleID))
                          .List().ToList<Sale>();
 

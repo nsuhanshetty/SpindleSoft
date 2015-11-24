@@ -9,6 +9,9 @@ using NHibernate.Criterion;
 using System.Linq;
 using System.Threading.Tasks;
 using log4net;
+using Dropbox.Api;
+using System.IO;
+using Dropbox.Api.Files;
 //using NHibernate;
 
 namespace SpindleSoft.Builders
@@ -163,9 +166,15 @@ namespace SpindleSoft.Builders
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    var staff = (from _staff in session.Query<Staff>()
-                                 where _staff.ID == _ID
-                                 select _staff).SingleOrDefault();
+                    //var staff = (from _staff in session.Query<Staff>()
+                    //             where _staff.ID == _ID
+                    //             select _staff).SingleOrDefault();
+
+                    var staff = session.QueryOver<Staff>()
+                        .Where(x => x.ID == _ID)
+                        .Fetch(x => x.Bank).Eager
+                        .Future().SingleOrDefault();
+
                     staff.SecurityDocuments = session.QueryOver<Document>()
                         .Where(x => (x.Staff.ID == _ID))
                         .Fetch(o => o.Staff).Eager
@@ -207,64 +216,70 @@ namespace SpindleSoft.Builders
                                              select s.Type).Distinct().ToList();
                     return _docList;
                 }
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return null;
             }
         }
 
-        public static IList<Document> GetDocumentList(IList<Document> docList)
+        public static async Task<IList<Document>> GetDocumentListAsync(IList<Document> docList)
         {
-            using (var session = NHibernateHelper.OpenSession())
+            //todo: shift the key to passConfig
+            using (DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi"))
             {
                 try
                 {
                     foreach (Document doc in docList)
                     {
-                        doc.Path = string.Format("{0}\\{2}_{1}.png", DocumentImagePath, doc.Type, doc.Staff.ID);
-                        doc.Image = Image.FromFile(doc.Path);
+                        string dropfilePath = string.Format("/staffDocument/{0}_{1}.png", doc.Staff.ID, doc.Type);
+                        var downloadedFileResponse = await dbx.Files.DownloadAsync(dropfilePath);
+                        var downloadedFileStream = await downloadedFileResponse.GetContentAsStreamAsync();
+                        doc.Image = Image.FromStream(downloadedFileStream);
                     }
-                    return docList;
+                }
+                catch (ApiException<DownloadError> apiEx)
+                {
+                    log.Error(apiEx);
                 }
                 catch (Exception ex)
                 {
                     log.Error(ex);
-                    return null;
                 }
             }
+            return docList;
         }
 
         #endregion Staff
 
         #region Vendor
-        public static List<Vendors> GetVendorsList(string name = "", string mobileno = "")
+        public static List<Vendor> GetVendorsList(string name = "", string mobileno = "")
         {
-            List<Vendors> _vend = new List<Vendors>();
+            List<Vendor> _vend = new List<Vendor>();
             using (var session = NHibernateHelper.OpenSession())
             {
-                string query = "select v.Name,v.MobileNo,v.ID from vendors v where (v.Name like :Name)" +
-                "and (v.MobileNo like :MobileNo) order by v.UpdatedTime desc";
+                Vendor vend = null;
+                List<Vendor> custList = session.QueryOver<Vendor>(() => vend)
+                     .Where(NHibernate.Criterion.Restrictions.On(() => vend.Name).IsLike(name + "%"))
+                     .Where(NHibernate.Criterion.Restrictions.On(() => vend.MobileNo).IsLike(mobileno + "%"))
+                     .Take(15)
+                     .List() as List<Vendor>;
 
-                NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
-                   .SetParameter("Name", name + "%")
-                   .SetParameter("MobileNo", mobileno + "%"))
-                   .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Vendors)));
-                return _vend = sqlQuery.List<Vendors>() as List<Vendors>;
+                return custList;
             }
         }
 
-        public static Vendors GetVendorInfo(string mobileno)
+        public static Vendor GetVendorInfo(int _ID)
         {
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    Vendors vendor = (from v in session.Query<Vendors>()
-                                      where v.MobileNo == mobileno
-                                      select v).Single();
+                    var vendor = session.QueryOver<Vendor>()
+                                 .Where(x => x.ID == _ID)
+                                 .Fetch(x => x.Bank).Eager
+                                 .Future().SingleOrDefault();
                     return vendor;
                 }
             }
@@ -275,6 +290,61 @@ namespace SpindleSoft.Builders
             }
         }
         #endregion Vendor
+
+        public static List<Bank> GetBankNames()
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    List<Bank> bankList = session.Query<Bank>().ToList();
+                    log.Info("Fetching Bank Names successfull");
+                    return bankList;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
+            }
+        }
+
+        public static Bank GetBankNames(string name)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    Bank bank = session.Query<Bank>()
+                        .Where(x => x.Name == name).SingleOrDefault();
+
+                    log.Info("Fetching Bank Names successfull");
+                    return bank;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
+            }
+        }
+
+        public static bool IfBankExits(string name)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    bool exists = session.Query<Bank>().Any(x => x.Name == name);
+                    return exists;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return false;
+                }
+            }
+        }
 
         public static DataTable ToDataTable<T>(List<T> items)
         {

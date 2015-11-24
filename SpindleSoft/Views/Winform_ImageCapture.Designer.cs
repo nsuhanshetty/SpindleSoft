@@ -50,6 +50,7 @@
             this.cmbCameraSelect.Name = "cmbCameraSelect";
             this.cmbCameraSelect.Size = new System.Drawing.Size(144, 21);
             this.cmbCameraSelect.TabIndex = 3;
+            this.cmbCameraSelect.SelectedIndexChanged += new System.EventHandler(this.btnPreview_Click);
             // 
             // picCapture
             // 

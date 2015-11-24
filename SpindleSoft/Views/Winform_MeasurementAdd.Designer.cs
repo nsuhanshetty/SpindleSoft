@@ -657,9 +657,9 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.GroupBox grbxProdDetails;
         internal System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
-        private System.Windows.Forms.ToolStripButton CancelToolStrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        //private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        //private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.GroupBox groupBox1;
         internal System.Windows.Forms.TextBox txtBotLoose;
         internal System.Windows.Forms.Label label17;

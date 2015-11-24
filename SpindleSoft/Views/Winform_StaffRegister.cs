@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Linq;
 using SpindleSoft.Builders;
+using System.Threading.Tasks;
 
 namespace SpindleSoft.Views
 {
@@ -70,6 +71,7 @@ namespace SpindleSoft.Views
         #region Events
         private void dgvStaffRregister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            UpdateStatus("Checking for internet connection", 50);
             DialogResult _dialogResult = MessageBox.Show("Do you want to Modify the details of Staff " +
                                          Convert.ToString(dgvStaffRregister.Rows[e.RowIndex].Cells[1].Value),
                                          "Modify Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
@@ -77,12 +79,28 @@ namespace SpindleSoft.Views
 
             if (_dialogResult == DialogResult.No) return;
 
+            if (!Utilities.Validation.CheckForInternetConnection())
+            {
+                MessageBox.Show("Turn On Internet Connectivity and try again.", "Turn On Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("Internet connection not found.", 100);
+                return;
+            }
+            UpdateStatus("Ready", 100);
+
             int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
             SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
+            var documentTask = new Task(() => PeoplePracticeBuilder.GetDocumentListAsync(_staff.SecurityDocuments).ConfigureAwait(true));
+            documentTask.Start();
             _staff.Image = PeoplePracticeBuilder.GetStaffImage(_staff.ID);
-            _staff.SecurityDocuments = PeoplePracticeBuilder.GetDocumentList(_staff.SecurityDocuments);
+
+            while (!documentTask.IsCompleted) ;
+            {
+                Cursor.Current = Cursors.WaitCursor;
+            }
+            Cursor.Current = Cursors.Arrow;
 
             new Winform_StaffDetails(_staff).ShowDialog();
+            UpdateStatus("Ready", 0);
         }
         private void txtName_TextChanged(object sender, EventArgs e)
         {

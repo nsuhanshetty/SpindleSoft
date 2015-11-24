@@ -161,6 +161,29 @@ namespace SpindleSoft.Utilities
             return false;
         }
 
+        /// <summary>
+        /// CheckForInternetConnection
+        /// </summary>
+        /// <returns>true/false based on connectivity</returns>
+        public static bool CheckForInternetConnection()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                using (var client = new System.Net.WebClient())
+                {
+                    using (var stream = client.OpenRead("http://www.dropbox.com"))
+                    {
+                        Cursor.Current = Cursors.Arrow;
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
         #endregion 'Validation
     }
 }

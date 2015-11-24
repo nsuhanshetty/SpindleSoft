@@ -71,6 +71,7 @@
             // txtAccNo
             // 
             this.txtAccNo.Location = new System.Drawing.Point(94, 49);
+            this.txtAccNo.MaxLength = 20;
             this.txtAccNo.Name = "txtAccNo";
             this.txtAccNo.Size = new System.Drawing.Size(156, 20);
             this.txtAccNo.TabIndex = 1;
@@ -133,6 +134,7 @@
             // txtIfscCode
             // 
             this.txtIfscCode.Location = new System.Drawing.Point(94, 102);
+            this.txtIfscCode.MaxLength = 20;
             this.txtIfscCode.Name = "txtIfscCode";
             this.txtIfscCode.Size = new System.Drawing.Size(156, 20);
             this.txtIfscCode.TabIndex = 3;
@@ -214,10 +216,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 339);
+            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox4);
             this.Name = "Winform_VendorDetails";
             this.Text = "Vendor Details";
+            this.Load += new System.EventHandler(this.Winform_VendorDetails_Load);
             this.Controls.SetChildIndex(this.groupBox4, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.groupBox4.ResumeLayout(false);

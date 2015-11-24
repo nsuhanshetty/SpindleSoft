@@ -79,7 +79,9 @@ namespace SpindleSoft.Model
 
         public virtual bool IsTemporary { get; set; }
 
-        public virtual string BankName { get; set; }
+        public virtual string Designation { get; set; }
+
+        public virtual Bank Bank { get; set; }
 
         public virtual string BankUserName { get; set; }
 
@@ -112,7 +114,7 @@ namespace SpindleSoft.Model
         public List<Customer> CustomerList { get; set; }
     }
 
-    public class Vendors
+    public class Vendor
     {
         public virtual int ID{ get; set; }
 
@@ -122,7 +124,7 @@ namespace SpindleSoft.Model
 
         public virtual string Address { get; set; }
 
-        public virtual string BankName { get; set; }
+        public virtual Bank Bank { get; set; }
 
         public virtual string AccNo { get; set; }
 
@@ -130,7 +132,7 @@ namespace SpindleSoft.Model
 
         public virtual string BankUserName { get; set; }
 
-        public Vendors(string name,string mobno, string address, string bankusername, string accno, string bankname,string IfscNo)
+        public Vendor(string name,string mobno, string address, string bankusername, string accno, Bank bank,string IfscNo)
         {
             this.Name = name;
             this.MobileNo = mobno;
@@ -138,10 +140,10 @@ namespace SpindleSoft.Model
 
             this.BankUserName = bankusername;
             this.AccNo = accno;
-            this.BankName = bankname;
+            this.Bank = bank;
             this.IFSCCode = IfscNo;
         }
 
-        public Vendors(){ }
+        public Vendor(){ }
     }
 }

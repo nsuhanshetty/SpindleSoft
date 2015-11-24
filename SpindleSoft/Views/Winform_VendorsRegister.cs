@@ -14,7 +14,7 @@ namespace SpindleSoft.Views
 {
     public partial class Winform_VendorsRegister : winform_Register
     {
-        Vendors vendor = new Vendors();
+        Vendor vendor = new Vendor();
         public Winform_VendorsRegister()
         {
             InitializeComponent();
@@ -28,9 +28,18 @@ namespace SpindleSoft.Views
         public void LoadDgv()
         {
             var venList = (from vend in PeoplePracticeBuilder.GetVendorsList(txtName.Text, txtMobNo.Text)
-                           select new { vend.Name, vend.MobileNo, vend.Address }).ToList();
+                           select new { vend.ID, vend.Name, vend.MobileNo, vend.Address }).ToList();
 
-            dgvSearch.DataSource = venList.Count == 0 ? null : venList;
+            if (venList.Count == 0)
+            {
+                dgvSearch.DataSource = null;
+            }
+            else
+            {
+                dgvSearch.DataSource = venList;
+                dgvSearch.Columns["ID"].Visible = false;
+            }
+
             UpdateStatus(dgvSearch.RowCount + " Results found.", 100);
         }
 
@@ -49,7 +58,7 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvSearch.RowCount == 0) return;
+            if (e.RowIndex == -1) return;
             var row = dgvSearch.Rows[e.RowIndex];
 
             WinForm_SKUDetails skuDetails = Application.OpenForms["WinForm_SKUDetails"] as WinForm_SKUDetails;
@@ -78,7 +87,7 @@ namespace SpindleSoft.Views
                                            MessageBoxDefaultButton.Button2);
                 if (_dialogResult == DialogResult.No) return;
 
-                vendor = PeoplePracticeBuilder.GetVendorInfo(dgvSearch.Rows[e.RowIndex].Cells["MobileNo"].Value.ToString());
+                vendor = PeoplePracticeBuilder.GetVendorInfo(int.Parse(dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString()));
                 new Winform_VendorDetails(vendor).ShowDialog();
             }
 
