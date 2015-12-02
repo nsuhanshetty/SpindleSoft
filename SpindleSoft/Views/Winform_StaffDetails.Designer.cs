@@ -35,6 +35,16 @@
             this.pcbStaffImage = new System.Windows.Forms.PictureBox();
             this.btnCapture = new System.Windows.Forms.Button();
             this.grbMemPersonDetail = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rdbDay = new System.Windows.Forms.RadioButton();
+            this.rdbWeek = new System.Windows.Forms.RadioButton();
+            this.rdbMonth = new System.Windows.Forms.RadioButton();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtDesignation = new System.Windows.Forms.TextBox();
             this.lblPhoneNo = new System.Windows.Forms.Label();
@@ -71,6 +81,7 @@
             this.grbMemNo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbStaffImage)).BeginInit();
             this.grbMemPersonDetail.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.grpBoxStaffType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -123,6 +134,13 @@
             // 
             // grbMemPersonDetail
             // 
+            this.grbMemPersonDetail.Controls.Add(this.label13);
+            this.grbMemPersonDetail.Controls.Add(this.groupBox3);
+            this.grbMemPersonDetail.Controls.Add(this.label9);
+            this.grbMemPersonDetail.Controls.Add(this.label12);
+            this.grbMemPersonDetail.Controls.Add(this.label11);
+            this.grbMemPersonDetail.Controls.Add(this.label8);
+            this.grbMemPersonDetail.Controls.Add(this.label7);
             this.grbMemPersonDetail.Controls.Add(this.label6);
             this.grbMemPersonDetail.Controls.Add(this.txtDesignation);
             this.grbMemPersonDetail.Controls.Add(this.lblPhoneNo);
@@ -137,10 +155,112 @@
             this.grbMemPersonDetail.Controls.Add(this.txtMobNo);
             this.grbMemPersonDetail.Location = new System.Drawing.Point(159, 62);
             this.grbMemPersonDetail.Name = "grbMemPersonDetail";
-            this.grbMemPersonDetail.Size = new System.Drawing.Size(364, 210);
+            this.grbMemPersonDetail.Size = new System.Drawing.Size(364, 249);
             this.grbMemPersonDetail.TabIndex = 0;
             this.grbMemPersonDetail.TabStop = false;
             this.grbMemPersonDetail.Text = "Personal Details";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(345, 223);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(11, 13);
+            this.label13.TabIndex = 106;
+            this.label13.Text = "*";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.rdbDay);
+            this.groupBox3.Controls.Add(this.rdbWeek);
+            this.groupBox3.Controls.Add(this.rdbMonth);
+            this.groupBox3.Location = new System.Drawing.Point(98, 207);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(243, 36);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            // 
+            // rdbDay
+            // 
+            this.rdbDay.AutoSize = true;
+            this.rdbDay.Location = new System.Drawing.Point(162, 14);
+            this.rdbDay.Name = "rdbDay";
+            this.rdbDay.Size = new System.Drawing.Size(48, 17);
+            this.rdbDay.TabIndex = 2;
+            this.rdbDay.Text = "Daily";
+            this.rdbDay.UseVisualStyleBackColor = true;
+            // 
+            // rdbWeek
+            // 
+            this.rdbWeek.AutoSize = true;
+            this.rdbWeek.Location = new System.Drawing.Point(88, 14);
+            this.rdbWeek.Name = "rdbWeek";
+            this.rdbWeek.Size = new System.Drawing.Size(61, 17);
+            this.rdbWeek.TabIndex = 1;
+            this.rdbWeek.Text = "Weekly";
+            this.rdbWeek.UseVisualStyleBackColor = true;
+            // 
+            // rdbMonth
+            // 
+            this.rdbMonth.AutoSize = true;
+            this.rdbMonth.Checked = true;
+            this.rdbMonth.Location = new System.Drawing.Point(6, 14);
+            this.rdbMonth.Name = "rdbMonth";
+            this.rdbMonth.Size = new System.Drawing.Size(62, 17);
+            this.rdbMonth.TabIndex = 0;
+            this.rdbMonth.TabStop = true;
+            this.rdbMonth.Text = "Monthly";
+            this.rdbMonth.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 223);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 13);
+            this.label9.TabIndex = 105;
+            this.label9.Text = "Payment Cycle";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(345, 184);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(11, 13);
+            this.label12.TabIndex = 104;
+            this.label12.Text = "*";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.Location = new System.Drawing.Point(345, 147);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(11, 13);
+            this.label11.TabIndex = 103;
+            this.label11.Text = "*";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.Red;
+            this.label8.Location = new System.Drawing.Point(346, 57);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(11, 13);
+            this.label8.TabIndex = 100;
+            this.label8.Text = "*";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Red;
+            this.label7.Location = new System.Drawing.Point(346, 32);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(11, 13);
+            this.label7.TabIndex = 99;
+            this.label7.Text = "*";
             // 
             // label6
             // 
@@ -153,11 +273,13 @@
             // 
             // txtDesignation
             // 
+            this.txtDesignation.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtDesignation.Location = new System.Drawing.Point(98, 145);
             this.txtDesignation.MaxLength = 100;
             this.txtDesignation.Name = "txtDesignation";
             this.txtDesignation.Size = new System.Drawing.Size(243, 20);
             this.txtDesignation.TabIndex = 4;
+            this.txtDesignation.Validated += new System.EventHandler(this.txtDesignation_Validated);
             // 
             // lblPhoneNo
             // 
@@ -232,7 +354,7 @@
             // lblAddress
             // 
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(12, 111);
+            this.lblAddress.Location = new System.Drawing.Point(13, 111);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(45, 13);
             this.lblAddress.TabIndex = 93;
@@ -246,7 +368,6 @@
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(243, 32);
             this.txtAddress.TabIndex = 3;
-            this.txtAddress.Validating += new System.ComponentModel.CancelEventHandler(this.txtAddress_Validating);
             // 
             // lblMobile
             // 
@@ -313,7 +434,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtAccNo);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(159, 278);
+            this.groupBox1.Location = new System.Drawing.Point(159, 317);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 119);
             this.groupBox1.TabIndex = 2;
@@ -391,7 +512,7 @@
             // 
             this.groupBox2.Controls.Add(this.btnAddItem);
             this.groupBox2.Controls.Add(this.dgvSecurityDoc);
-            this.groupBox2.Location = new System.Drawing.Point(159, 404);
+            this.groupBox2.Location = new System.Drawing.Point(159, 443);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(418, 161);
             this.groupBox2.TabIndex = 3;
@@ -451,7 +572,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 590);
+            this.ClientSize = new System.Drawing.Size(589, 629);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -468,6 +589,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pcbStaffImage)).EndInit();
             this.grbMemPersonDetail.ResumeLayout(false);
             this.grbMemPersonDetail.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.grpBoxStaffType.ResumeLayout(false);
             this.grpBoxStaffType.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
@@ -529,5 +652,15 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
         internal System.Windows.Forms.Label label6;
         internal System.Windows.Forms.TextBox txtDesignation;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton rdbDay;
+        private System.Windows.Forms.RadioButton rdbWeek;
+        private System.Windows.Forms.RadioButton rdbMonth;
+        internal System.Windows.Forms.Label label9;
     }
 }

@@ -21,7 +21,7 @@ namespace SpindleSoft.Builders
         //todo: appsettings not working for path
         static string customerPicPath = "d:\\CustomerImages";
         static string StaffImagePath = "d:\\StaffImages";
-        static string DocumentImagePath = "d:\\DocumentImages";
+        //static string DocumentImagePath = "d:\\DocumentImages";
 
         static ILog log = LogManager.GetLogger(typeof(PeoplePracticeBuilder));
 
@@ -251,6 +251,25 @@ namespace SpindleSoft.Builders
             return docList;
         }
 
+        public static List<string> GetDesignations()
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    List<string> designationList = (from s in session.Query<Staff>()
+                                                    select s.Designation).Distinct().ToList();
+                    log.Info("Fetching Bank Names successfull");
+                    return designationList;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
+            }
+        }
+
         #endregion Staff
 
         #region Vendor
@@ -291,6 +310,8 @@ namespace SpindleSoft.Builders
         }
         #endregion Vendor
 
+
+
         public static List<Bank> GetBankNames()
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -309,7 +330,7 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static Bank GetBankNames(string name)
+        public static Bank GetBankByName(string name)
         {
             using (var session = NHibernateHelper.OpenSession())
             {

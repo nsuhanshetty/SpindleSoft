@@ -42,8 +42,19 @@ namespace SpindleSoft.Views
             txtAccNo.Text = _staff.AccNo;
             txtIFSCNo.Text = _staff.IfscCode;
 
-            rdbPerm.Checked = !_staff.IsTemporary;
-            rdbTemp.Checked = _staff.IsTemporary;
+            if (_staff.Type == 1)
+                rdbPerm.Checked = true;
+            else if (_staff.Type == 2)
+                rdbTemp.Checked = true;
+            else
+                rdbOSrc.Checked = true;
+
+            if (_staff.PayCycle == 1)
+                rdbMonth.Checked = true;
+            else if (_staff.PayCycle == 2)
+                rdbWeek.Checked = true;
+            else
+                rdbDay.Checked = true;
 
             if (_staff.SecurityDocuments != null && _staff.SecurityDocuments.Count != 0)
             {
@@ -95,20 +106,20 @@ namespace SpindleSoft.Views
             }
         }
 
-        private void txtAddress_Validating(object sender, CancelEventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtAddress.Text))
-            {
-                string errorMsg = "Address field is mandatory";
-                errorProvider1.SetError(txtAddress, errorMsg);
-                e.Cancel = true;
-                txtMobNo.Select(0, txtAddress.TextLength);
-            }
-            else
-            {
-                errorProvider1.SetError(txtAddress, "");
-            }
-        }
+        //private void txtAddress_Validating(object sender, CancelEventArgs e)
+        //{
+        //    if (String.IsNullOrEmpty(txtAddress.Text))
+        //    {
+        //        string errorMsg = "Address field is mandatory";
+        //        errorProvider1.SetError(txtAddress, errorMsg);
+        //        e.Cancel = true;
+        //        txtMobNo.Select(0, txtAddress.TextLength);
+        //    }
+        //    else
+        //    {
+        //        errorProvider1.SetError(txtAddress, "");
+        //    }
+        //}
 
         private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
         {
@@ -149,15 +160,20 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            //need to handle this situation well
-            string[] input = { "txtPhoneNo", "pcbStaffImage" };
+            if (!Utilities.Validation.CheckForInternetConnection())
+            {
+                MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("Error connecting to Internet.", 100);
+                return;
+            }
+
+            string[] input = { "txtPhoneNo", "pcbStaffImage", "txtAddress","txtUserBankName","cmbBankName","txtAccNo","txtIFSCNo" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
             }
 
             UpdateStatus("Validating..", 25);
-            //set customer
 
             if (this._staff == null)
                 this._staff = new Staff();
@@ -168,14 +184,16 @@ namespace SpindleSoft.Views
             this._staff.Phone_No = txtPhoneNo.Text;
             this._staff.Image = pcbStaffImage.Image;
             this._staff.Designation = txtDesignation.Text;
-            this._staff.IsTemporary = rdbPerm.Checked == true ? false : true;
+            this._staff.Type = rdbPerm.Checked == true ? 1 : (rdbOSrc.Checked == true ? 3 : 2);
+            this._staff.PayCycle = rdbMonth.Checked == true ? 1 : (rdbDay.Checked == true ? 3 : 2);
 
-            if (!PeoplePracticeBuilder.IfBankExits(cmbBankName.Text))
+            if (!IsNullOrEmpty(cmbBankName.Text) && !PeoplePracticeBuilder.IfBankExits(cmbBankName.Text))
                 this._staff.Bank = new Bank(cmbBankName.Text);
-            else
-                this._staff.Bank = Builders.PeoplePracticeBuilder.GetBankNames(cmbBankName.Text);
+            else if (!IsNullOrEmpty(cmbBankName.Text))
+                this._staff.Bank = Builders.PeoplePracticeBuilder.GetBankByName(cmbBankName.Text);
+            //else
+            //    this._staff.Bank = null;
 
-            //this._staff.Bank = cmbBankName.Text;
             this._staff.BankUserName = txtUserBankName.Text;
             this._staff.AccNo = txtAccNo.Text;
             this._staff.IfscCode = txtIFSCNo.Text;
@@ -190,12 +208,12 @@ namespace SpindleSoft.Views
             bool response = false;
             if (_ID != 0)
             {
-            UpdateStatus("Saving Staff Documents..", 75);
-            //Task<bool> _task = PeoplePracticeSaver.SaveStaffDocumentAsync(docList, _ID);
-            //_task.Start();
-            response = PeoplePracticeSaver.SaveStaffDocumentAsync(docList, _ID);
+                UpdateStatus("Saving Staff Documents..", 75);
+                //Task<bool> _task = PeoplePracticeSaver.SaveStaffDocumentAsync(docList, _ID);
+                //_task.Start();
+                response = PeoplePracticeSaver.SaveStaffDocumentAsync(docList, _ID);
             }
-            
+
             if (response)
             {
                 UpdateStatus("Saved", 100);
@@ -260,11 +278,19 @@ namespace SpindleSoft.Views
 
         private void Winform_StaffDetails_Load(object sender, EventArgs e)
         {
-
-
             List<string> docTypeList = PeoplePracticeBuilder.GetDocumentTypeList();
-            List<Bank> BankList = PeoplePracticeBuilder.GetBankNames();
 
+            /*txtDesignation*/
+            string[] designationArray = PeoplePracticeBuilder.GetDesignations().ToArray();
+            var designationCollection = new AutoCompleteStringCollection();
+            designationCollection.AddRange(designationArray);
+
+            txtDesignation.AutoCompleteCustomSource = designationCollection;
+            txtDesignation.AutoCompleteMode = AutoCompleteMode.Suggest;
+            txtDesignation.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            /*cmbBankName*/
+            List<Bank> BankList = PeoplePracticeBuilder.GetBankNames();
             cmbBankName.DataSource = BankList;
             cmbBankName.DisplayMember = "Name";
             cmbBankName.ValueMember = "ID";
@@ -278,7 +304,7 @@ namespace SpindleSoft.Views
             cmbBankName.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             cmbBankName.Text = "";
-            if (this._staff != null)
+            if (this._staff != null && this._staff.Bank != null)
                 cmbBankName.SelectedText = this._staff.Bank.Name;
         }
 
@@ -311,6 +337,14 @@ namespace SpindleSoft.Views
 
             dgvSecurityDoc.Rows[docindex].Cells["colDocType"].Value = _doc.Type;
             return true;
+        }
+
+        private void txtDesignation_Validated(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtDesignation.Text))
+            {
+                txtDesignation.Text = Utilities.Validation.ToTitleCase(txtDesignation.Text);
+            }
         }
     }
 }

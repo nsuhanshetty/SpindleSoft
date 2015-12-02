@@ -77,7 +77,9 @@ namespace SpindleSoft.Model
 
         public virtual Image Image { get; set; }
 
-        public virtual bool IsTemporary { get; set; }
+        public virtual int Type { get; set; }
+
+        public virtual int PayCycle { get; set; }
 
         public virtual string Designation { get; set; }
 
@@ -93,13 +95,13 @@ namespace SpindleSoft.Model
 
         public Staff() { }
 
-        public Staff(string name, string mobNo, string phNo, string address="", bool isTempo=true)
+        public Staff(string name, string mobNo, string phNo, string address="", int type=1)
         {
             this.Name = name;
             this.Mobile_No = mobNo;
             this.Phone_No = phNo;
             this.Address = address;
-            this.IsTemporary = isTempo;
+            this.Type = type;
         }
     }
 

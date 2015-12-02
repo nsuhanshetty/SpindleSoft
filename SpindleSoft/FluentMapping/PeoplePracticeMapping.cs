@@ -37,7 +37,8 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Phone_No);
             Map(x => x.Address);
             Map(x => x.Designation);
-            Map(x => x.IsTemporary);
+            Map(x => x.Type);
+            Map(x => x.PayCycle);
             References(x => x.Bank).Class<Bank>()
                                     .Columns("BankID")
                                     .Cascade.None();

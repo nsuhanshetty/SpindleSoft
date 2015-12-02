@@ -81,8 +81,9 @@ namespace SpindleSoft.Views
 
             if (!Utilities.Validation.CheckForInternetConnection())
             {
-                MessageBox.Show("Turn On Internet Connectivity and try again.", "Turn On Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                UpdateStatus("Internet connection not found.", 100);
+                MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("Error connecting to Internet.", 100);
                 return;
             }
             UpdateStatus("Ready", 100);
@@ -93,7 +94,7 @@ namespace SpindleSoft.Views
             documentTask.Start();
             _staff.Image = PeoplePracticeBuilder.GetStaffImage(_staff.ID);
 
-            while (!documentTask.IsCompleted) ;
+            while (!documentTask.IsCompleted)
             {
                 Cursor.Current = Cursors.WaitCursor;
             }

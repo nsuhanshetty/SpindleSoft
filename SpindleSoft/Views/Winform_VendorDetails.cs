@@ -52,7 +52,7 @@ namespace SpindleSoft.Views
             if (!PeoplePracticeBuilder.IfBankExits(cmbBankName.Text))
                 this._vendor.Bank = new Bank(cmbBankName.Text);
             else
-                this._vendor.Bank = Builders.PeoplePracticeBuilder.GetBankNames(cmbBankName.Text);
+                this._vendor.Bank = Builders.PeoplePracticeBuilder.GetBankByName(cmbBankName.Text);
 
             _vendor.IFSCCode = txtIfscCode.Text;
             _vendor.AccNo = txtAccNo.Text;

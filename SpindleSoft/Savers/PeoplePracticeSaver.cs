@@ -18,7 +18,7 @@ namespace SpindleSoft.Savers
 
         static string CustomerImagePath = "d:\\CustomerImages";
         static string StaffImagePath = "d:\\StaffImages";
-        static string DocumentImagePath = "d:\\DocumentImages";
+        //static string DocumentImagePath = "d:\\DocumentImages";
 
         #region Customer
         public static bool SaveCustomerInfo(Customer _customer)
@@ -107,7 +107,7 @@ namespace SpindleSoft.Savers
                             doc.Staff = staff;
                         }
 
-                        if (staff.Bank.ID == 0)
+                        if (staff.Bank!= null && staff.Bank.ID == 0)
                             session.SaveOrUpdate(staff.Bank);
 
                         session.SaveOrUpdate(staff);
