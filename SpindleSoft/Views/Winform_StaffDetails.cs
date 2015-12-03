@@ -158,7 +158,7 @@ namespace SpindleSoft.Views
             this.Close();
         }
 
-        protected override void SaveToolStrip_Click(object sender, EventArgs e)
+        protected async override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             if (!Utilities.Validation.CheckForInternetConnection())
             {
@@ -203,15 +203,13 @@ namespace SpindleSoft.Views
             UpdateStatus("Saving..", 25);
 
             UpdateStatus("Saving Staff Info..", 50);
-            int _ID = PeoplePracticeSaver.SaveStaffInfo(this._staff);
+            int _ID = await PeoplePracticeSaver.SaveStaffInfo(this._staff);
 
             bool response = false;
             if (_ID != 0)
             {
                 UpdateStatus("Saving Staff Documents..", 75);
-                //Task<bool> _task = PeoplePracticeSaver.SaveStaffDocumentAsync(docList, _ID);
-                //_task.Start();
-                response = PeoplePracticeSaver.SaveStaffDocumentAsync(docList, _ID);
+                response = await PeoplePracticeSaver.SaveStaffDocument(docList, _ID);
             }
 
             if (response)

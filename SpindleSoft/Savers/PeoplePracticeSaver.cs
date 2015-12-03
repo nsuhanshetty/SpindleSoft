@@ -16,9 +16,8 @@ namespace SpindleSoft.Savers
     {
         static ILog log = LogManager.GetLogger(typeof(PeoplePracticeSaver));
 
-        static string CustomerImagePath = "d:\\CustomerImages";
-        static string StaffImagePath = "d:\\StaffImages";
-        //static string DocumentImagePath = "d:\\DocumentImages";
+        static string CustomerImagePath = "/Customer_ProfilePictures";
+        static string StaffImagePath = "/Staff_ProfilePictures";
 
         #region Customer
         public static bool SaveCustomerInfo(Customer _customer)
@@ -94,7 +93,7 @@ namespace SpindleSoft.Savers
         #endregion Customer
 
         #region Staff
-        public static int SaveStaffInfo(Staff staff)
+        public static async Task<int> SaveStaffInfo(Staff staff)
         {
             try
             {
@@ -112,7 +111,7 @@ namespace SpindleSoft.Savers
 
                         session.SaveOrUpdate(staff);
 
-                        bool response = staff.ID != 0 ? PeoplePracticeSaver.SaveStaffImage(staff.Image, staff.ID) : false;
+                        bool response = staff.ID != 0 ? await PeoplePracticeSaver.SaveStaffImage(staff.Image, staff.ID) : false;
                         if (!response)
                             return 0;
 
@@ -129,19 +128,23 @@ namespace SpindleSoft.Savers
 
         }
 
-        public static bool SaveStaffImage(Image image, int _ID)
+        public async static Task<bool> SaveStaffImage(Image image, int _ID)
         {
             if (image == null) return true;
-            string filePath = string.Format("{0}\\{1}.png", StaffImagePath, _ID);
+            string filePath = string.Format("{0}/{1}.png", StaffImagePath, _ID);
             try
             {
-                if (!System.IO.Directory.Exists(StaffImagePath))
-                    System.IO.Directory.CreateDirectory(StaffImagePath);
-                else if (System.IO.File.Exists(filePath))
-                    System.IO.File.Delete(filePath);
+                //Task<bool> uploadTask = ;
+                //uploadTask.Wait();
+                return await Upload(image, filePath);
 
-                image.Save(filePath, ImageFormat.Png);
-                return true;
+                //if (!System.IO.Directory.Exists(StaffImagePath))
+                //    System.IO.Directory.CreateDirectory(StaffImagePath);
+                //else if (System.IO.File.Exists(filePath))
+                //    System.IO.File.Delete(filePath);
+
+                //image.Save(filePath, ImageFormat.Png);
+                //return true;
             }
             catch (Exception ex)
             {
@@ -150,20 +153,20 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static bool SaveStaffDocumentAsync(List<Document> docList, int _staffID)
+        public static async Task<bool> SaveStaffDocument(List<Document> docList, int _staffID)
         {
             if (docList.Count == 0) return true;
 
             int count = docList.Count;
             Task[] tasks = new Task[count];
-            IEnumerable<Task<bool>> docListTasks = from _doc in docList select Upload(_doc, _staffID);
+            IEnumerable<Task<bool>> docListTasks = from _doc in docList 
+                                                   select Upload(_doc.Image,string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type));
             tasks = docListTasks.ToArray();
 
             bool success = false;
-            //bool completed = false;
             try
             { 
-               var tasls =  Task.Factory.ContinueWhenAll(tasks, antecedents =>
+               await Task.Factory.ContinueWhenAll(tasks, antecedents =>
                     {
                         foreach (Task task in antecedents)
                         {
@@ -187,11 +190,10 @@ namespace SpindleSoft.Savers
             return success;
         }
 
-        private static async Task<bool> Upload(Document doc, int _staffID)
+        private static async Task<bool> Upload(Image doc, string dropfilePath)
         {
-            string dropfilePath = string.Format("/staffDocument/{0}_{1}.png", _staffID, doc.Type);
             string tempfileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".png";
-            doc.Image.Save(tempfileName);
+            doc.Save(tempfileName);
 
             using (var mem = new FileStream(tempfileName, FileMode.Open))
             {
