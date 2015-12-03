@@ -120,6 +120,7 @@
             this.Name = "Winform_ImageCapture";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Capture Image";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Winform_ImageCapture_FormClosing);
             this.Load += new System.EventHandler(this.WinformWebcam_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picCapture)).EndInit();
             this.groupBox1.ResumeLayout(false);

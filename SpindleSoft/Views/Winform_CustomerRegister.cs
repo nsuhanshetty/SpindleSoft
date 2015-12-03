@@ -28,7 +28,7 @@ namespace SpindleSoft.Views
         }
 
         #region Events
-        private void dgvCustomerRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvCustomerRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
 
@@ -38,10 +38,18 @@ namespace SpindleSoft.Views
                                          MessageBoxDefaultButton.Button2);
 
             if (_dialogResult == DialogResult.No) return;
+            if (!Utilities.Validation.CheckForInternetConnection())
+            {
+                UpdateStatus("Checking for internet connection", 50);
+                MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("Error connecting to Internet.", 100);
+                return;
+            }
 
             int _ID = int.Parse(dgvCustomerRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
             Customer _customer = PeoplePracticeBuilder.GetCustomerInfo(_ID);
-            _customer.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_customer.ID);
+            _customer.Image = await PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _customer.ID));
 
             new WinForm_CustomerDetails(_customer).ShowDialog();
             txtName_TextChanged(this, new EventArgs());

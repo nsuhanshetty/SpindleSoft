@@ -33,14 +33,13 @@ namespace SpindleSoft.Views
             this.pcb = pcb;
         }
 
+        #region Events
         private void button1_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             Bitmap profileImage = CaptureImage();
             this.pcb.Image = profileImage;
 
-            StopJob();
-            Cursor.Current = Cursors.Arrow;
             this.Close();
         }
 
@@ -202,6 +201,13 @@ namespace SpindleSoft.Views
             }
         }
 
+        private void Winform_ImageCapture_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StopJob();
+            Cursor.Current = Cursors.Arrow;
+        }
+        #endregion Events
+
         private void GetSelectedVideoAndAudioDevices(out EncoderDevice video, out EncoderDevice audio)
         {
             video = null;
@@ -239,5 +245,7 @@ namespace SpindleSoft.Views
                 _deviceSource = null;
             }
         }
+
+
     }
 }

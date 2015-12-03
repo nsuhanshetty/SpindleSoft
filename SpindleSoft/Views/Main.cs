@@ -360,20 +360,22 @@ namespace SpindleSoft
             //new WinForm_CustomerDetails(_cust).ShowDialog();
         }
 
-        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
             try
             {
+                Cursor.Current = Cursors.WaitCursor;
                 switch (searchState.ToString())
                 {
                     case "Customer":
+
                         var _ID = dgvSearch.Rows[e.RowIndex].Cells[0].Value.ToString();
 
                         if (String.IsNullOrEmpty(_ID)) return;
 
                         Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(int.Parse(_ID));
-                        _cust.Image = PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
+                        _cust.Image = await PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _cust.ID));
 
                         if (_cust == null && _cust.Image == null) return;
 
@@ -392,8 +394,9 @@ namespace SpindleSoft
                         MessageBox.Show("Invalid Search State.Try again");
                         break;
                 }
-
+                Cursor.Current = Cursors.Arrow;
             }
+
             catch (Exception ex)
             {
                 log.Error(ex);

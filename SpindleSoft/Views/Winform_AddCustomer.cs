@@ -27,7 +27,7 @@ namespace SpindleSoft.Views
             new WinForm_CustomerDetails().ShowDialog();
         }
 
-        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
 
@@ -40,7 +40,7 @@ namespace SpindleSoft.Views
 
             var ID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value;
             this._cust = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerInfo(int.Parse(ID.ToString()));
-            this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(this._cust.ID);
+            this._cust.Image = await SpindleSoft.Builders.PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)

@@ -37,14 +37,38 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtPhoneNo.Text = _cust.Phone_No;
             pcbCustImage.Image = _cust.Image;
-
-
             refCust = PeoplePracticeBuilder.GetCustomerInfo(_cust.ReferralID);
-            if (refCust == null) return;
+        }
 
-            txtRefMob.Text = refCust.Mobile_No;
-            txtRefName.Text = refCust.Name;
-            pcbReferral.Image = PeoplePracticeBuilder.GetCustomerImage(refCust.ID);
+        #region Events
+        private void AddReferralToolStrip_Click(object sender, EventArgs e)
+        {
+            new Winform_AddCustomer().ShowDialog();
+        }
+
+        private void MeasurementDetailsToolStrip_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(txtMobNo.Text))
+            {
+                MessageBox.Show("");
+                return;
+            }
+        }
+
+        private async void WinForm_CustomerDetails_Load(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            this.toolStripParent.Items.Add(this.AddReferralToolStrip);
+
+            if (refCust.ReferralID != 0)
+                await LoadReferral();
+            Cursor.Current = Cursors.Arrow;
+        }
+
+        private void btnCapture_Click_1(object sender, EventArgs e)
+        {
+            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbCustImage);
+            _imageCapture.ShowDialog();
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -59,7 +83,7 @@ namespace SpindleSoft.Views
             this.Close();
         }
 
-        protected override void SaveToolStrip_Click(object sender, EventArgs e)
+        protected async override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //need to handle this situation well
             string[] input = { "txtAddress", "txtEmailID", "txtRefMob", "txtRefName", "pcbReferral", "txtPhoneNo", "pcbCustImage" };
@@ -80,7 +104,7 @@ namespace SpindleSoft.Views
                 this._cust.ReferralID = refCust.ID;
 
             UpdateStatus("Saving..", 50);
-            bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
+            bool response = await PeoplePracticeSaver.SaveCustomerInfo(this._cust);
 
             if (response)
             {
@@ -102,23 +126,7 @@ namespace SpindleSoft.Views
             if (addCust != null)
                 addCust.LoadDgv();
         }
-
-        //todo: Remove AddReferralToolStrip_Click
-        private void AddReferralToolStrip_Click(object sender, EventArgs e)
-        {
-            new Winform_AddCustomer().ShowDialog();
-        }
-
-        //todo: Remove MeasurementDetailsToolStrip_Click
-        private void MeasurementDetailsToolStrip_Click(object sender, EventArgs e)
-        {
-            //MessageBox.Show("Measurement Details Working");
-            if (String.IsNullOrEmpty(txtMobNo.Text))
-            {
-                MessageBox.Show("");
-                return;
-            }
-        }
+        #endregion Events
 
         #region _Validations
         private void txtEmailID_Validating(object sender, CancelEventArgs e)
@@ -200,61 +208,15 @@ namespace SpindleSoft.Views
         }
         #endregion _Validations
 
-        private void WinForm_CustomerDetails_Load(object sender, EventArgs e)
+        private async Task LoadReferral()
         {
-            //todo: remove toolStripParent.Items.Add
-            this.toolStripParent.Items.Add(this.AddReferralToolStrip);
-            //this.toolStripParent.Items.Add(this.MeasurementDetailsToolStrip);
 
-            //get customers names
-            //Winform_AddCustomer
+            if (refCust == null) return;
+
+            txtRefMob.Text = refCust.Mobile_No;
+            txtRefName.Text = refCust.Name;
+            pcbReferral.Image = await PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", refCust.ID));
         }
-
-        private void btnCapture_Click_1(object sender, EventArgs e)
-        {
-            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbCustImage);
-            _imageCapture.ShowDialog();
-        }
-
-        #region AddReferral
-        //private void cmbRefMobNo_TextChanged(object sender, EventArgs e)
-        //{
-        //    //todo: Reset controls if cmbRefMobNo.Text == ""
-        //    System.Collections.IList _custList = PeoplePracticeBuilder.GetCustomersList("", cmbRefMobNo.Text, "");
-        //    if (_custList != null || _custList.Count == 0)
-        //    {
-        //        //cmbRefMobNo.DataSource = from cust in _custList
-        //        //                         select cust.Mobile_No;
-        //    }
-        //}
-
-        //private void cmbRefMobNo_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    UpdateStatus("Fetching Referral...", 50);
-
-        //    if (String.IsNullOrEmpty(cmbRefMobNo.Text))
-        //    {
-        //        //todo: use utility to reset the controls
-        //        //pcbReferral.Image = get resource
-        //        txtName.Text = "";
-        //        return;
-        //    }
-
-        //    //set referral
-        //    Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(cmbRefMobNo.Text);
-        //    Image _custImage = PeoplePracticeBuilder.GetCustomerImage(cmbRefMobNo.Text);
-
-        //    if (_custImage == null || _custImage == null)
-        //    {
-        //        //show msgbox;
-        //        UpdateStatus("Error Fetching Referral", 100);
-        //        return;
-        //    }
-
-        //    UpdateStatus("Referral Added", 100);
-        //    txtRefName.Text = _cust.Name;
-        //    pcbReferral.Image = _custImage;
-        //}
 
         public void UpdateCustomerControl(Customer refCustomer)
         {
@@ -266,6 +228,5 @@ namespace SpindleSoft.Views
             txtRefMob.Text = refCustomer.Mobile_No;
             pcbReferral.Image = refCustomer.Image;
         }
-        #endregion AddReferral
     }
 }

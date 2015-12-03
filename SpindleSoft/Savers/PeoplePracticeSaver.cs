@@ -20,7 +20,7 @@ namespace SpindleSoft.Savers
         static string StaffImagePath = "/Staff_ProfilePictures";
 
         #region Customer
-        public static bool SaveCustomerInfo(Customer _customer)
+        public static async Task<bool> SaveCustomerInfo(Customer _customer)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -29,7 +29,7 @@ namespace SpindleSoft.Savers
                     try
                     {
                         session.SaveOrUpdate(_customer);
-                        bool response = _customer.ID != 0 ? PeoplePracticeSaver.SaveCustomerImage(_customer.Image, _customer.ID) : false;
+                        bool response = _customer.ID != 0 ? await PeoplePracticeSaver.SaveCustomerImage(_customer.Image, _customer.ID) : false;
                         if (!response)
                             return false;
 
@@ -46,19 +46,19 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static bool SaveCustomerImage(Image image, int custID)
+        public static async Task<bool> SaveCustomerImage(Image image, int custID)
         {
             if (image == null) return true;
-            string filePath = string.Format("{0}\\{1}.png", CustomerImagePath, custID);
+            string filePath = string.Format("{0}/{1}.png", CustomerImagePath, custID);
             try
             {
-                if (!System.IO.Directory.Exists(CustomerImagePath))
-                    System.IO.Directory.CreateDirectory(CustomerImagePath);
-                else if (System.IO.File.Exists(filePath))
-                    System.IO.File.Delete(filePath);
+                //if (!System.IO.Directory.Exists(CustomerImagePath))
+                //    System.IO.Directory.CreateDirectory(CustomerImagePath);
+                //else if (System.IO.File.Exists(filePath))
+                //    System.IO.File.Delete(filePath);
 
-                image.Save(filePath);
-                return true;
+                //image.Save(filePath);
+                return await Upload(image, filePath);
             }
             catch (Exception ex)
             {
@@ -106,7 +106,7 @@ namespace SpindleSoft.Savers
                             doc.Staff = staff;
                         }
 
-                        if (staff.Bank!= null && staff.Bank.ID == 0)
+                        if (staff.Bank != null && staff.Bank.ID == 0)
                             session.SaveOrUpdate(staff.Bank);
 
                         session.SaveOrUpdate(staff);
@@ -159,28 +159,28 @@ namespace SpindleSoft.Savers
 
             int count = docList.Count;
             Task[] tasks = new Task[count];
-            IEnumerable<Task<bool>> docListTasks = from _doc in docList 
-                                                   select Upload(_doc.Image,string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type));
+            IEnumerable<Task<bool>> docListTasks = from _doc in docList
+                                                   select Upload(_doc.Image, string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type));
             tasks = docListTasks.ToArray();
 
             bool success = false;
             try
-            { 
-               await Task.Factory.ContinueWhenAll(tasks, antecedents =>
-                    {
-                        foreach (Task task in antecedents)
-                        {
-                            if (task.Status == TaskStatus.Faulted)
-                            {
-                                success = false;
-                                break;
-                            }
-                            success = true;
-                        }
-                        return success;
-                    });
+            {
+                await Task.Factory.ContinueWhenAll(tasks, antecedents =>
+                     {
+                         foreach (Task task in antecedents)
+                         {
+                             if (task.Status == TaskStatus.Faulted)
+                             {
+                                 success = false;
+                                 break;
+                             }
+                             success = true;
+                         }
+                         return success;
+                     });
 
-               return true;
+                return true;
             }
             catch (Exception ex)
             {

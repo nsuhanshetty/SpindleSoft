@@ -60,10 +60,10 @@ namespace SpindleSoftTest
         TestCase("akashied", "8971100725", "", "", ""),
         TestCase("akashin", "8971100727", "7242496394", "", "")]
         [Test]
-        public void CreateCustomer_Test(string name, string mobile_no, string phone_no, string address, string email)
+        public async void CreateCustomer_Test(string name, string mobile_no, string phone_no, string address, string email)
         {
             Customer _customer = new Customer(name, mobile_no, phone_no, address, email);
-            bool response = SpindleSoft.Savers.PeoplePracticeSaver.SaveCustomerInfo(_customer);
+            bool response = await SpindleSoft.Savers.PeoplePracticeSaver.SaveCustomerInfo(_customer);
             Assert.AreEqual(response, true);
         }
         #endregion Create

@@ -58,22 +58,22 @@ namespace SpindlesSoftTestCases.PeoplePractice_Tests
         [TestCase("Customer1", "2111111112", 2, "#no Address", "n@s.com"),
         TestCase("Customer2", "2111111113", 2, "", "m@s.com"),
         TestCase("Customer3", "2111111114", 2, "", "")]
-        public void SaveCustomerInfo_Test(string name, string mobNo, string phoneNo, string address = "", string email = "")
+        public async void SaveCustomerInfo_Test(string name, string mobNo, string phoneNo, string address = "", string email = "")
         {
             Customer cust = new Customer(name, mobNo, phoneNo, address, email);
-            bool response = PeoplePracticeSaver.SaveCustomerInfo(cust);
+            bool response = await PeoplePracticeSaver.SaveCustomerInfo(cust);
             Assert.AreEqual(response, true);
         }
 
         [Test]
         [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\AddReferral.png", 2)]
         [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\User.png", 2)]
-        public void SaveCustomerImage_Test(string path, int _ID)
+        public async void SaveCustomerImage_Test(string path, int _ID)
         {
             //byte[] bytes = System.IO.File.ReadAllBytes(path);
             //System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
             Image image = Image.FromFile(path);
-            bool success = PeoplePracticeSaver.SaveCustomerImage(image, _ID);
+            bool success = await PeoplePracticeSaver.SaveCustomerImage(image, _ID);
             Assert.AreEqual(success, true);
         }
         #endregion Customer
