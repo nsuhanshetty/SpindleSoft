@@ -39,6 +39,7 @@ namespace SpindleSoft.Views
             txtCustName.Text = custName;
 
             //if (orderItem == null) return;
+            pcbMaterialImage.Image = this.orderItem.Image;
             txtLength.Text = this.orderItem.Length;
             txtWaist.Text = this.orderItem.Waist;
             txtChest.Text = this.orderItem.Chest;
@@ -81,6 +82,8 @@ namespace SpindleSoft.Views
             _item.Name = cmbType.Text;
             _item.Price = float.Parse(txtPrice.Text);
             _item.Quantity = int.Parse(nudQuantity.Value.ToString());
+
+            _item.Image = pcbMaterialImage.Image;
 
             _item.Length = txtLength.Text;
             _item.Waist = txtWaist.Text;
@@ -179,6 +182,12 @@ namespace SpindleSoft.Views
 
                 UpdateControls(this.cust.Name, orderItem);
             }
+        }
+
+        private void btnCapture_Click(object sender, EventArgs e)
+        {
+            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbMaterialImage);
+            _imageCapture.ShowDialog();
         }
     }
 }

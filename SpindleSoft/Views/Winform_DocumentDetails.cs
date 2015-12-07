@@ -89,9 +89,15 @@ namespace SpindleSoft.Views
             ProcessTabKey(true);
 
             if (String.IsNullOrEmpty(cmbDocType.Text))
+            {
                 errorProvider1.SetError(cmbDocType, "Select Document Type.");
+                return;
+            }
             else if (pcbDocImage.Image == null)
+            {
                 MessageBox.Show("Select Document to be added", "Add Document", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             if (document == null)
                 document = new Document();
@@ -104,9 +110,9 @@ namespace SpindleSoft.Views
                 bool success = staffDetails.UpdateDocumentItemList(document);
                 if (!success)
                 {
-                    MessageBox.Show("Cannot add new Document of type "+ document.Type +" as it already exits.","Document already exists",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    MessageBox.Show("Cannot add new Document of type " + document.Type + " as it already exits.", "Document already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
-                }                
+                }
             }
             this.Close();
         }

@@ -192,7 +192,7 @@ namespace SpindleSoft.Views
         {
             if (SpindleSoft.Utilities.Validation.controlIsInEdit(this, false))
             {
-                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Order Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Alteration Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
                 if (_dialogResult == DialogResult.No)
                     return;
             };
@@ -296,8 +296,14 @@ namespace SpindleSoft.Views
             //}
         }
 
-        private void Winform_AlterationsDetails_Load(object sender, System.EventArgs e)
+        private async void Winform_AlterationsDetails_Load(object sender, System.EventArgs e)
         {
+            if (_alteration.ID != 0)
+            {
+                _cust = PeoplePracticeBuilder.GetCustomer(_alteration.Customer.ID);
+                this._cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
+                UpdateCustomerControl(_cust);
+            }
             this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
 
             try
@@ -339,7 +345,7 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
+            pcbCustImage.Image = this._cust.Image;// = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
 
             ////todo: add this as event listner onCustomerControlUpdation
             cmbOrder.DataSource = AlterationBuilder.GetOrderIDs(_cust.ID).ToArray();

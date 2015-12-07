@@ -49,7 +49,7 @@ namespace SpindleSoft.Views
                 dgvSearch.DataSource = null;
         }
 
-        private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == dgvSearch.Columns["colDelete"].Index) return;
 
@@ -61,7 +61,7 @@ namespace SpindleSoft.Views
             statusStrip1.Text = "Gathering Data..";
             toolStripProgressBar1.Value = 50;
 
-            Orders order = OrderBuilder.GetOrderInfo(orderID);
+            Orders order = await OrderBuilder.GetOrderInfo(orderID);
             if (order == null)
             {
                 statusStrip1.Text = "Error While Fetching Data..";

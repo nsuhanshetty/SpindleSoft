@@ -25,7 +25,7 @@ namespace SpindleSoft.Views
             txtAddress.Text = _vendor.Address;
 
             txtBankUserName.Text = _vendor.BankUserName;
-            txtIfscCode.Text = _vendor.IFSCCode;
+            txtIfscNo.Text = _vendor.IFSCCode;
             txtAccNo.Text = _vendor.AccNo;
             //cmbBankName.Text = _vendor.Bank;
         }
@@ -37,7 +37,8 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            if (Utilities.Validation.IsNullOrEmpty(this, true))
+            string[] input = { "txtBankUserName", "cmbBankName", "txtAccNo", "txtIfscNo" };
+            if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
             }
@@ -49,12 +50,12 @@ namespace SpindleSoft.Views
 
             _vendor.BankUserName = txtBankUserName.Text;
 
-            if (!PeoplePracticeBuilder.IfBankExits(cmbBankName.Text))
+            if (!IsNullOrEmpty(cmbBankName.Text) && !PeoplePracticeBuilder.IfBankExits(cmbBankName.Text))
                 this._vendor.Bank = new Bank(cmbBankName.Text);
             else
                 this._vendor.Bank = Builders.PeoplePracticeBuilder.GetBankByName(cmbBankName.Text);
 
-            _vendor.IFSCCode = txtIfscCode.Text;
+            _vendor.IFSCCode = txtIfscNo.Text;
             _vendor.AccNo = txtAccNo.Text;
 
             _vendor.Name = txtName.Text;
@@ -65,7 +66,7 @@ namespace SpindleSoft.Views
             bool response = PeoplePracticeSaver.SaveVendorInfo(this._vendor);
 
             if(response)
-                UpdateStatus("Saved.", 100);
+                UpdateStatus("Vendor Saved.", 100);
             else
                 UpdateStatus("Error Saving Vendor Details.", 100);
 
@@ -145,7 +146,7 @@ namespace SpindleSoft.Views
             cmbBankName.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             cmbBankName.Text = "";
-            if (this._vendor != null)
+            if (this._vendor != null && this._vendor.Bank != null)
                 cmbBankName.SelectedText = this._vendor.Bank.Name;
         }
     }

@@ -53,6 +53,8 @@
             this.txtRefName = new System.Windows.Forms.TextBox();
             this.pcbReferral = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.grbMemPersonDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -62,6 +64,8 @@
             // 
             // grbMemPersonDetail
             // 
+            this.grbMemPersonDetail.Controls.Add(this.label1);
+            this.grbMemPersonDetail.Controls.Add(this.label7);
             this.grbMemPersonDetail.Controls.Add(this.pcbCustImage);
             this.grbMemPersonDetail.Controls.Add(this.btnCapture);
             this.grbMemPersonDetail.Controls.Add(this.lblPhoneNo);
@@ -74,9 +78,9 @@
             this.grbMemPersonDetail.Controls.Add(this.txtName);
             this.grbMemPersonDetail.Controls.Add(this.lblName);
             this.grbMemPersonDetail.Controls.Add(this.txtMobNo);
-            this.grbMemPersonDetail.Location = new System.Drawing.Point(12, 65);
+            this.grbMemPersonDetail.Location = new System.Drawing.Point(7, 65);
             this.grbMemPersonDetail.Name = "grbMemPersonDetail";
-            this.grbMemPersonDetail.Size = new System.Drawing.Size(509, 188);
+            this.grbMemPersonDetail.Size = new System.Drawing.Size(509, 179);
             this.grbMemPersonDetail.TabIndex = 0;
             this.grbMemPersonDetail.TabStop = false;
             this.grbMemPersonDetail.Text = "Personal Details";
@@ -98,11 +102,11 @@
             // 
             this.btnCapture.BackColor = System.Drawing.SystemColors.MenuBar;
             this.btnCapture.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCapture.Location = new System.Drawing.Point(11, 152);
+            this.btnCapture.Location = new System.Drawing.Point(11, 147);
             this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(130, 28);
+            this.btnCapture.Size = new System.Drawing.Size(128, 28);
             this.btnCapture.TabIndex = 109;
-            this.btnCapture.Text = "CAPTURE PHOTO";
+            this.btnCapture.Text = "CAPTURE";
             this.btnCapture.UseVisualStyleBackColor = false;
             this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click_1);
             // 
@@ -240,7 +244,7 @@
             this.groupBox1.Controls.Add(this.txtRefName);
             this.groupBox1.Controls.Add(this.pcbReferral);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 259);
+            this.groupBox1.Location = new System.Drawing.Point(7, 251);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(509, 130);
             this.groupBox1.TabIndex = 124;
@@ -294,11 +298,31 @@
             this.label2.TabIndex = 103;
             this.label2.Text = "Name";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Red;
+            this.label7.Location = new System.Drawing.Point(492, 22);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(11, 13);
+            this.label7.TabIndex = 125;
+            this.label7.Text = "*";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(492, 47);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(11, 13);
+            this.label1.TabIndex = 126;
+            this.label1.Text = "*";
+            // 
             // WinForm_CustomerDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 419);
+            this.ClientSize = new System.Drawing.Size(523, 406);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbMemPersonDetail);
@@ -344,5 +368,7 @@
         private System.Windows.Forms.TextBox txtRefName;
         internal System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtRefMob;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label7;
     }
 }

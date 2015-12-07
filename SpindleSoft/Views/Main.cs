@@ -208,7 +208,7 @@ namespace SpindleSoft
         #endregion Toolstrip_Click
 
         #region Alteration
-        private void dgvOrdR2S_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvOrdR2S_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -255,7 +255,7 @@ namespace SpindleSoft
                 }
                 else
                 {
-                    new Winform_OrderDetails(OrderBuilder.GetOrderInfo(_orderID)).ShowDialog();
+                    new Winform_OrderDetails(await OrderBuilder.GetOrderInfo(_orderID)).ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -375,9 +375,9 @@ namespace SpindleSoft
                         if (String.IsNullOrEmpty(_ID)) return;
 
                         Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(int.Parse(_ID));
-                        _cust.Image = await PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _cust.ID));
+                        _cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _cust.ID));
 
-                        if (_cust == null && _cust.Image == null) return;
+                        if (_cust == null) return;
 
                         new WinForm_CustomerDetails(_cust).ShowDialog();
                         break;
@@ -385,7 +385,7 @@ namespace SpindleSoft
                         var orderID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString();
                         if (String.IsNullOrEmpty(orderID)) return;
 
-                        Orders order = OrderBuilder.GetOrderInfo(int.Parse(orderID));
+                        Orders order = await OrderBuilder.GetOrderInfo(int.Parse(orderID));
                         if (order == null) return;
                         new Winform_OrderDetails(order).ShowDialog();
                         break;

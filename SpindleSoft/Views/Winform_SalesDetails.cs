@@ -78,7 +78,7 @@ namespace SpindleSoft.Views
             InitializeComponent();
 
             //setting the controls
-            UpdateCustomerControl(_sale.Customer);
+            //UpdateCustomerControl(_sale.Customer);
 
            for (int i = 0; i < _sale.SaleItems.Count; i++)
 			{
@@ -91,8 +91,15 @@ namespace SpindleSoft.Views
         }
 
         #region Events
-        private void Winform_SalesDetails_Load(object sender, EventArgs e)
+        private async  void Winform_SalesDetails_Load(object sender, EventArgs e)
         {
+            if (sale.ID != 0)
+            {
+                _cust = PeoplePracticeBuilder.GetCustomer(sale.Customer.ID);
+                this._cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
+                UpdateCustomerControl(_cust);
+            }
+
             this.toolStripParent.Items.Add(this.AddCustToolStrip);
 
             //Load ComboBox

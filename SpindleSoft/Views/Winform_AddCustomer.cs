@@ -39,8 +39,8 @@ namespace SpindleSoft.Views
             if (_dialogResult == DialogResult.No) return;
 
             var ID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value;
-            this._cust = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerInfo(int.Parse(ID.ToString()));
-            this._cust.Image = await SpindleSoft.Builders.PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
+            this._cust = Builders.PeoplePracticeBuilder.GetCustomerInfo(int.Parse(ID.ToString()));
+            this._cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)

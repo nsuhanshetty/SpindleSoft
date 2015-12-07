@@ -37,7 +37,7 @@
             this.txtBankUserName = new System.Windows.Forms.TextBox();
             this.cmbBankName = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtIfscCode = new System.Windows.Forms.TextBox();
+            this.txtIfscNo = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,6 +46,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label7 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -60,7 +63,7 @@
             this.groupBox4.Controls.Add(this.txtBankUserName);
             this.groupBox4.Controls.Add(this.cmbBankName);
             this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Controls.Add(this.txtIfscCode);
+            this.groupBox4.Controls.Add(this.txtIfscNo);
             this.groupBox4.Location = new System.Drawing.Point(9, 184);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(266, 128);
@@ -131,16 +134,18 @@
             this.label10.TabIndex = 29;
             this.label10.Text = "IFSC Code";
             // 
-            // txtIfscCode
+            // txtIfscNo
             // 
-            this.txtIfscCode.Location = new System.Drawing.Point(94, 102);
-            this.txtIfscCode.MaxLength = 20;
-            this.txtIfscCode.Name = "txtIfscCode";
-            this.txtIfscCode.Size = new System.Drawing.Size(156, 20);
-            this.txtIfscCode.TabIndex = 3;
+            this.txtIfscNo.Location = new System.Drawing.Point(94, 102);
+            this.txtIfscNo.MaxLength = 20;
+            this.txtIfscNo.Name = "txtIfscNo";
+            this.txtIfscNo.Size = new System.Drawing.Size(156, 20);
+            this.txtIfscNo.TabIndex = 3;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtMobNo);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
@@ -211,12 +216,43 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Red;
+            this.label7.Location = new System.Drawing.Point(252, 27);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(11, 13);
+            this.label7.TabIndex = 100;
+            this.label7.Text = "*";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(261, 108);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(11, 13);
+            this.label3.TabIndex = 101;
+            this.label3.Text = "*";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(252, 75);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(11, 13);
+            this.label5.TabIndex = 101;
+            this.label5.Text = "*";
+            // 
             // Winform_VendorDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 339);
             this.ControlBox = false;
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox4);
             this.Name = "Winform_VendorDetails";
@@ -224,6 +260,7 @@
             this.Load += new System.EventHandler(this.Winform_VendorDetails_Load);
             this.Controls.SetChildIndex(this.groupBox4, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -244,7 +281,7 @@
         private System.Windows.Forms.TextBox txtBankUserName;
         private System.Windows.Forms.ComboBox cmbBankName;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtIfscCode;
+        private System.Windows.Forms.TextBox txtIfscNo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtMobNo;
         private System.Windows.Forms.Label label1;
@@ -253,5 +290,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label3;
     }
 }

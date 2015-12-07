@@ -160,10 +160,11 @@ namespace SpindleSoft.Views
 
         protected async override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            if (!Utilities.Validation.CheckForInternetConnection())
+            int flags;
+            if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
             {
                 MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                UpdateStatus("Error connecting to Internet.", 100);
+                UpdateStatus("Error connecting to Internet.", 0);
                 return;
             }
 
@@ -214,7 +215,7 @@ namespace SpindleSoft.Views
 
             if (response)
             {
-                UpdateStatus("Saved", 100);
+                UpdateStatus("Staff Saved", 100);
                 this.Close();
             }
             else
@@ -224,7 +225,7 @@ namespace SpindleSoft.Views
         }
         #endregion events
 
-        private void dgvSecurityDoc_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvSecurityDoc_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
 
@@ -257,7 +258,7 @@ namespace SpindleSoft.Views
                     {
                         bool success = false;
                         if (docList[e.RowIndex].ID != 0)
-                            success = PeoplePracticeSaver.DeleteStaffDocument(docList[e.RowIndex].ID);
+                            success = await PeoplePracticeSaver.DeleteStaffDocument(docList[e.RowIndex].ID);
 
                         if (success || docList[e.RowIndex].ID == 0)
                         {

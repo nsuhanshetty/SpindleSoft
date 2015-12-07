@@ -60,7 +60,7 @@ namespace SpindleSoft.Views
             Cursor.Current = Cursors.WaitCursor;
             this.toolStripParent.Items.Add(this.AddReferralToolStrip);
 
-            if (refCust.ReferralID != 0)
+            if (refCust != null && refCust.ReferralID != 0)
                 await LoadReferral();
             Cursor.Current = Cursors.Arrow;
         }
@@ -86,7 +86,7 @@ namespace SpindleSoft.Views
         protected async override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             //need to handle this situation well
-            string[] input = { "txtAddress", "txtEmailID", "txtRefMob", "txtRefName", "pcbReferral", "txtPhoneNo", "pcbCustImage" };
+            string[] input = { "txtPhoneNo", "txtAddress", "txtEmailID", "pcbCustImage", "txtRefMob", "txtRefName", "pcbReferral" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
@@ -108,12 +108,12 @@ namespace SpindleSoft.Views
 
             if (response)
             {
-                UpdateStatus("Saved", 100);
+                UpdateStatus("Customer Saved", 100);
 
                 DialogResult dr = MessageBox.Show("Send SMS to customer regarding the registration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
-                    MessageBox.Show("Customer Added.");
+                    //todo: Send SMS
                 }
                 this.Close();
             }
@@ -210,12 +210,11 @@ namespace SpindleSoft.Views
 
         private async Task LoadReferral()
         {
-
             if (refCust == null) return;
 
             txtRefMob.Text = refCust.Mobile_No;
             txtRefName.Text = refCust.Name;
-            pcbReferral.Image = await PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", refCust.ID));
+            pcbReferral.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", refCust.ID));
         }
 
         public void UpdateCustomerControl(Customer refCustomer)

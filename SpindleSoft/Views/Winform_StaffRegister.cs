@@ -79,12 +79,13 @@ namespace SpindleSoft.Views
 
             if (_dialogResult == DialogResult.No) return;
 
-            if (!Utilities.Validation.CheckForInternetConnection())
+            int flags;
+            if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
             {
                 UpdateStatus("Checking for internet connection", 50);
                 MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-                UpdateStatus("Error connecting to Internet.", 100);
+                UpdateStatus("Error connecting to Internet.", 0);
                 return;
             }
 
@@ -92,7 +93,7 @@ namespace SpindleSoft.Views
             int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
             SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
             await PeoplePracticeBuilder.GetDocumentListAsync(_staff.SecurityDocuments);
-            _staff.Image = await PeoplePracticeBuilder.GetDocumentAsync(string.Format("/staff_ProfilePictures/{0}.png", _staff.ID));
+            _staff.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/staff_ProfilePictures/{0}.png", _staff.ID));
 
             new Winform_StaffDetails(_staff).ShowDialog();
             UpdateStatus("Ready", 0);

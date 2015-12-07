@@ -76,9 +76,7 @@ namespace SpindleSoft.Views
         {
             InitializeComponent();
 
-            UpdateCustomerControl(PeoplePracticeBuilder.GetCustomer(order.Customer.ID));
-
-            this.order = OrderBuilder.GetOrderInfo(order.ID);
+            this.order = order;
             this.OrderItemsList = this.order.OrdersItems as List<OrderItem>;
             dtpDeliveryDate.Value = order.PromisedDate;
             cmbStatus.SelectedIndex = order.Status;
@@ -96,11 +94,10 @@ namespace SpindleSoft.Views
             if (customer == null) return;
 
             this._cust = customer;
-
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = this._cust.Image = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
+            pcbCustImage.Image = this._cust.Image;// = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
         }
 
         internal void UpdateOrderItemList(OrderItem _item, int _index)
@@ -137,12 +134,10 @@ namespace SpindleSoft.Views
             this.Close();
         }
 
-        protected override void SaveToolStrip_Click(object sender, EventArgs e)
+        protected override async void SaveToolStrip_Click(object sender, EventArgs e)
         {
             UpdateStatus("Saving..");
-
-            //todo: look if the following method can be avoided 
-            //txtAmntPaid_Validating(txtAmntPaid, new System.ComponentModel.CancelEventArgs());
+            ProcessTabKey(true);
 
             string errorMsg = string.Empty;
             if (this._cust.ID == 0)
@@ -151,17 +146,6 @@ namespace SpindleSoft.Views
                 errorMsg = "Select items to cart to make the Order.";
             else if ((dtpDeliveryDate.Value.Date.CompareTo(DateTime.Today.Date)) < 0)
                 errorMsg = "The Promised date must not be earlier than today.";
-            //else if (dgvOrderItems.Rows.Count - 1 != OrderItemsList.Count)
-            //    errorMsg = "Measurement details for all Product is mandatory.";
-
-            //foreach (DataGridViewRow row in dgvOrderItems.Rows)
-            //{
-            //    if (row.Cells["OrderQuantity"].ErrorText != "" || row.Cells["OrderPrice"].ErrorText != "")
-            //    {
-            //        MessageBox.Show("Error Exists in Order Item Cart.");
-            //        return;
-            //    }
-            //}
 
             if (errorMsg != string.Empty)
             {
@@ -170,12 +154,6 @@ namespace SpindleSoft.Views
             }
 
             UpdateStatus("Saving..", 25);
-            //int total, amntPaid;
-            //int.TryParse(txtTotAmnt.Text, out total);
-            //int.TryParse(txtAmntPaid.Text, out amntPaid);
-
-            //order = new Orders(this._cust, dtpDeliveryDate.Value, OrderItemsList, total, amntPaid);
-
             order.Customer = this._cust;
             order.PromisedDate = dtpDeliveryDate.Value;
             order.OrdersItems = OrderItemsList;
@@ -184,11 +162,12 @@ namespace SpindleSoft.Views
             order.Status = cmbStatus.SelectedIndex;
 
             UpdateStatus("Saving..", 50);
-            bool success = OrderSaver.SaveOrder(order);
+            bool success = await OrderSaver.SaveOrder(order);
 
-            UpdateStatus("Saving..", 100);
+           
             if (success)
             {
+                UpdateStatus("Order Saved.", 100);
                 DialogResult dr = MessageBox.Show("Send SMS to customer regarding the order", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
@@ -316,10 +295,16 @@ namespace SpindleSoft.Views
         //    }
         //}
 
-        private void Winform_OrderDetails_Load(object sender, EventArgs e)
+        private async void Winform_OrderDetails_Load(object sender, EventArgs e)
         {
-            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
+            if (order.ID != 0)
+            {
+                _cust = PeoplePracticeBuilder.GetCustomer(order.Customer.ID);
+                this._cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
+                UpdateCustomerControl(_cust);
+            }
 
+            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
             if (OrderItemsList != null && OrderItemsList.Count != 0)
             {
                 foreach (var item in OrderItemsList)
@@ -395,7 +380,7 @@ namespace SpindleSoft.Views
             log.Error(e.Context);
         }
 
-        private void dgvOrderItems_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvOrderItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
 
@@ -409,7 +394,7 @@ namespace SpindleSoft.Views
                 if (OrderItemsList.Count != 0 && e.RowIndex + 1 <= OrderItemsList.Count)
                 {
                     if (OrderItemsList[e.RowIndex].ID != 0)
-                        success = OrderSaver.DeleteOrderItems(OrderItemsList[e.RowIndex].ID);
+                        success = await OrderSaver.DeleteOrderItems(OrderItemsList[e.RowIndex].ID);
 
                     if (success || OrderItemsList[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
                     {
@@ -450,9 +435,9 @@ namespace SpindleSoft.Views
 
         private void Winform_OrderDetails_FormClosing(object sender, FormClosingEventArgs e)
         {
-             Main main = Application.OpenForms["Main"] as Main;
-             if (main != null)
-                 main.UpdateOrderReadyDgv();
+            Main main = Application.OpenForms["Main"] as Main;
+            if (main != null)
+                main.UpdateOrderReadyDgv();
         }
 
         //protected override bool ProcessKeyMessage(ref Message message)

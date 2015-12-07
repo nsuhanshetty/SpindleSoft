@@ -58,7 +58,7 @@ namespace SpindleSoft.Savers
                 //    System.IO.File.Delete(filePath);
 
                 //image.Save(filePath);
-                return await Upload(image, filePath);
+                return await Utilities.Helper.UploadAsync(image, filePath);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static bool DeleteCustomer(int custID)
+        public static async Task<bool> DeleteCustomer(int custID)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -76,9 +76,12 @@ namespace SpindleSoft.Savers
                     try
                     {
                         Customer cust = session.Get<Customer>(custID);
-                        string filePath = string.Format("{0}\\{1}.png", CustomerImagePath, custID);
-                        System.IO.File.Delete(filePath);
+                        bool suceess = await Utilities.Helper.DeleteDocumentAsync(CustomerImagePath, custID.ToString());
+                        if (!suceess)
+                            return false;
+
                         session.Delete(cust);
+                        
                         tx.Commit();
                         return true;
                     }
@@ -111,7 +114,7 @@ namespace SpindleSoft.Savers
 
                         session.SaveOrUpdate(staff);
 
-                        bool response = staff.ID != 0 ? await PeoplePracticeSaver.SaveStaffImage(staff.Image, staff.ID) : false;
+                        bool response = staff.ID != 0 ? await SaveStaffImage(staff.Image, staff.ID) : false;
                         if (!response)
                             return 0;
 
@@ -136,7 +139,7 @@ namespace SpindleSoft.Savers
             {
                 //Task<bool> uploadTask = ;
                 //uploadTask.Wait();
-                return await Upload(image, filePath);
+                return await Utilities.Helper.UploadAsync(image, filePath);
 
                 //if (!System.IO.Directory.Exists(StaffImagePath))
                 //    System.IO.Directory.CreateDirectory(StaffImagePath);
@@ -156,68 +159,53 @@ namespace SpindleSoft.Savers
         public static async Task<bool> SaveStaffDocument(List<Document> docList, int _staffID)
         {
             if (docList.Count == 0) return true;
-
-            int count = docList.Count;
-            Task[] tasks = new Task[count];
-            IEnumerable<Task<bool>> docListTasks = from _doc in docList
-                                                   select Upload(_doc.Image, string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type));
-            tasks = docListTasks.ToArray();
-
-            bool success = false;
+            
             try
             {
-                await Task.Factory.ContinueWhenAll(tasks, antecedents =>
-                     {
-                         foreach (Task task in antecedents)
-                         {
-                             if (task.Status == TaskStatus.Faulted)
-                             {
-                                 success = false;
-                                 break;
-                             }
-                             success = true;
-                         }
-                         return success;
-                     });
+                var docListTasks = await Task.WhenAll(docList.Select(_doc => Utilities.Helper.UploadAsync(_doc.Image, 
+                    string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type))));
 
+                foreach (var docResult in docListTasks)
+                {
+                    if (docResult == false) return false;
+                }
                 return true;
             }
             catch (Exception ex)
             {
                 log.Error(ex);
-                success = false;
-            }
-            return success;
-        }
-
-        private static async Task<bool> Upload(Image doc, string dropfilePath)
-        {
-            string tempfileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".png";
-            doc.Save(tempfileName);
-
-            using (var mem = new FileStream(tempfileName, FileMode.Open))
-            {
-                //todo: shift and fetch from passsword-appconfig;
-                DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi");
-                try
-                {
-                    var updated = await dbx.Files.UploadAsync(dropfilePath, WriteMode.Overwrite.Instance, body: mem).ConfigureAwait(false);
-                    return true;
-                }
-                catch (ApiException<UploadError> apiEx)
-                {
-                    log.Error(apiEx);
-                    return false;
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                    return false;
-                }
+                return false;
             }
         }
 
-        public static bool DeleteStaffDocument(int _ID)
+        //private static async Task<bool> Upload(Image doc, string dropfilePath)
+        //{
+        //    string tempfileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".png";
+        //    doc.Save(tempfileName);
+
+        //    using (var mem = new FileStream(tempfileName, FileMode.Open))
+        //    {
+        //        //todo: shift and fetch from passsword-appconfig;
+        //        DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi");
+        //        try
+        //        {
+        //            var updated = await dbx.Files.UploadAsync(dropfilePath, WriteMode.Overwrite.Instance, body: mem).ConfigureAwait(false);
+        //            return true;
+        //        }
+        //        catch (ApiException<UploadError> apiEx)
+        //        {
+        //            log.Error(apiEx);
+        //            return false;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            log.Error(ex);
+        //            return false;
+        //        }
+        //    }
+        //}
+
+        public static async  Task<bool> DeleteStaffDocument(int _ID)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -227,6 +215,9 @@ namespace SpindleSoft.Savers
                     {
                         //todo : Delete document from dropbox on delete
                         Document doc = session.Get<Document>(_ID);
+                        bool suceess = await Utilities.Helper.DeleteDocumentAsync("/staffDocument", string.Format("{0}_{1}", _ID, doc.Type));
+                        if (!suceess)
+                            return false;
                         session.Delete(doc);
                         tx.Commit();
                         return true;
@@ -253,7 +244,7 @@ namespace SpindleSoft.Savers
                 {
                     using (var transaction = session.BeginTransaction())
                     {
-                        if (vendor.Bank.ID == 0)
+                        if (vendor.Bank != null && vendor.Bank.ID == 0)
                             session.SaveOrUpdate(vendor.Bank);
 
                         session.SaveOrUpdate(vendor);

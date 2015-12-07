@@ -42,6 +42,8 @@ namespace SpindleSoft.Model
 
         public virtual string Name { get; set; }
 
+        public virtual System.Drawing.Image Image { get; set; }
+
         public virtual int Quantity { get; set; }
 
         public virtual float Price { get; set; }

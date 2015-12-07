@@ -34,6 +34,9 @@ namespace SpindleSoft.Views
         {
             toolStrip_Label.Text = statusText;
             toolStripProgressBar1.Value = statusValue;
+
+            if (statusValue == 100)
+                MessageBox.Show(statusText, "Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         protected virtual bool IsNullOrEmpty(object obj)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SpindleSoft.Utilities
@@ -165,7 +166,11 @@ namespace SpindleSoft.Utilities
         /// CheckForInternetConnection
         /// </summary>
         /// <returns>true/false based on connectivity</returns>
-        public static bool CheckForInternetConnection()
+        [DllImport("wininet.dll", SetLastError = true)]
+        public static extern bool InternetGetConnectedState(out int lpdwFlags, int dwReserved);
+
+        //another way to test internet connectivity
+        public static bool _InternetGetConnectedState()
         {
             Cursor.Current = Cursors.WaitCursor;
             try

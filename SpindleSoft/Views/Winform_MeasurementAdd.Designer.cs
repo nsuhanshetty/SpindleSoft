@@ -81,6 +81,9 @@
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
+            this.grbMemNo = new System.Windows.Forms.GroupBox();
+            this.pcbMaterialImage = new System.Windows.Forms.PictureBox();
+            this.btnCapture = new System.Windows.Forms.Button();
             this.grpBxMeasurements.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -91,6 +94,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.grbxProdDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantity)).BeginInit();
+            this.grbMemNo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbMaterialImage)).BeginInit();
             this.SuspendLayout();
             // 
             // grpBxMeasurements
@@ -101,10 +106,10 @@
             this.grpBxMeasurements.Controls.Add(this.groupBox1);
             this.grpBxMeasurements.Controls.Add(this.groupBox3);
             this.grpBxMeasurements.Controls.Add(this.groupBox5);
-            this.grpBxMeasurements.Location = new System.Drawing.Point(8, 188);
+            this.grpBxMeasurements.Location = new System.Drawing.Point(8, 229);
             this.grpBxMeasurements.Name = "grpBxMeasurements";
             this.grpBxMeasurements.Size = new System.Drawing.Size(373, 367);
-            this.grpBxMeasurements.TabIndex = 2;
+            this.grpBxMeasurements.TabIndex = 3;
             this.grpBxMeasurements.TabStop = false;
             this.grpBxMeasurements.Text = "Measurement Details";
             // 
@@ -431,7 +436,7 @@
             this.groupBox5.Location = new System.Drawing.Point(0, 294);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(360, 69);
-            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Comment";
             // 
@@ -470,9 +475,9 @@
             // 
             this.grpBoxCustMeasure.Controls.Add(this.txtCustName);
             this.grpBoxCustMeasure.Controls.Add(this.label1);
-            this.grpBoxCustMeasure.Location = new System.Drawing.Point(8, 55);
+            this.grpBoxCustMeasure.Location = new System.Drawing.Point(158, 55);
             this.grpBoxCustMeasure.Name = "grpBoxCustMeasure";
-            this.grpBoxCustMeasure.Size = new System.Drawing.Size(373, 48);
+            this.grpBoxCustMeasure.Size = new System.Drawing.Size(223, 48);
             this.grpBoxCustMeasure.TabIndex = 0;
             this.grpBoxCustMeasure.TabStop = false;
             this.grpBoxCustMeasure.Text = "Customer Details";
@@ -480,16 +485,16 @@
             // txtCustName
             // 
             this.txtCustName.Enabled = false;
-            this.txtCustName.Location = new System.Drawing.Point(70, 20);
+            this.txtCustName.Location = new System.Drawing.Point(59, 20);
             this.txtCustName.MaxLength = 10;
             this.txtCustName.Name = "txtCustName";
-            this.txtCustName.Size = new System.Drawing.Size(96, 20);
+            this.txtCustName.Size = new System.Drawing.Size(146, 20);
             this.txtCustName.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 23);
+            this.label1.Location = new System.Drawing.Point(18, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 133;
@@ -507,23 +512,23 @@
             this.grbxProdDetails.Controls.Add(this.txtPrice);
             this.grbxProdDetails.Controls.Add(this.label16);
             this.grbxProdDetails.Controls.Add(this.label19);
-            this.grbxProdDetails.Location = new System.Drawing.Point(8, 109);
+            this.grbxProdDetails.Location = new System.Drawing.Point(158, 109);
             this.grbxProdDetails.Name = "grbxProdDetails";
-            this.grbxProdDetails.Size = new System.Drawing.Size(373, 73);
+            this.grbxProdDetails.Size = new System.Drawing.Size(223, 114);
             this.grbxProdDetails.TabIndex = 1;
             this.grbxProdDetails.TabStop = false;
             this.grbxProdDetails.Text = "Product Details";
             // 
             // nudQuantity
             // 
-            this.nudQuantity.Location = new System.Drawing.Point(70, 48);
+            this.nudQuantity.Location = new System.Drawing.Point(59, 48);
             this.nudQuantity.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.nudQuantity.Name = "nudQuantity";
-            this.nudQuantity.Size = new System.Drawing.Size(63, 20);
+            this.nudQuantity.Size = new System.Drawing.Size(94, 20);
             this.nudQuantity.TabIndex = 1;
             this.nudQuantity.Value = new decimal(new int[] {
             1,
@@ -534,7 +539,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(14, 50);
+            this.label18.Location = new System.Drawing.Point(7, 50);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(46, 13);
             this.label18.TabIndex = 104;
@@ -543,26 +548,26 @@
             // cmbType
             // 
             this.cmbType.FormattingEnabled = true;
-            this.cmbType.Location = new System.Drawing.Point(70, 15);
+            this.cmbType.Location = new System.Drawing.Point(59, 20);
             this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(174, 21);
+            this.cmbType.Size = new System.Drawing.Size(146, 21);
             this.cmbType.TabIndex = 0;
             this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
             this.cmbType.Validating += new System.ComponentModel.CancelEventHandler(this.cmbType_Validating);
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(181, 47);
+            this.txtPrice.Location = new System.Drawing.Point(59, 76);
             this.txtPrice.MaxLength = 10;
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(63, 20);
+            this.txtPrice.Size = new System.Drawing.Size(94, 20);
             this.txtPrice.TabIndex = 2;
             this.txtPrice.Validating += new System.ComponentModel.CancelEventHandler(this.txtPrice_Validating);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(29, 23);
+            this.label16.Location = new System.Drawing.Point(22, 23);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 133;
@@ -571,17 +576,54 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(147, 50);
+            this.label19.Location = new System.Drawing.Point(22, 79);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(31, 13);
             this.label19.TabIndex = 105;
             this.label19.Text = "Price";
             // 
+            // grbMemNo
+            // 
+            this.grbMemNo.Controls.Add(this.pcbMaterialImage);
+            this.grbMemNo.Controls.Add(this.btnCapture);
+            this.grbMemNo.Location = new System.Drawing.Point(8, 55);
+            this.grbMemNo.Name = "grbMemNo";
+            this.grbMemNo.Size = new System.Drawing.Size(141, 168);
+            this.grbMemNo.TabIndex = 2;
+            this.grbMemNo.TabStop = false;
+            // 
+            // pcbMaterialImage
+            // 
+            this.pcbMaterialImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pcbMaterialImage.BackgroundImage")));
+            this.pcbMaterialImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pcbMaterialImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pcbMaterialImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pcbMaterialImage.InitialImage")));
+            this.pcbMaterialImage.Location = new System.Drawing.Point(6, 19);
+            this.pcbMaterialImage.Name = "pcbMaterialImage";
+            this.pcbMaterialImage.Size = new System.Drawing.Size(127, 108);
+            this.pcbMaterialImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pcbMaterialImage.TabIndex = 108;
+            this.pcbMaterialImage.TabStop = false;
+            // 
+            // btnCapture
+            // 
+            this.btnCapture.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.btnCapture.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCapture.Location = new System.Drawing.Point(6, 133);
+            this.btnCapture.Name = "btnCapture";
+            this.btnCapture.Size = new System.Drawing.Size(130, 28);
+            this.btnCapture.TabIndex = 0;
+            this.btnCapture.Text = "CAPTURE ";
+            this.btnCapture.UseVisualStyleBackColor = false;
+            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
+            // 
             // Winform_MeasurementAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 580);
+            this.ClientSize = new System.Drawing.Size(387, 621);
+            this.ControlBox = false;
+            this.Controls.Add(this.grbMemNo);
             this.Controls.Add(this.grbxProdDetails);
             this.Controls.Add(this.grpBoxCustMeasure);
             this.Controls.Add(this.grpBxMeasurements);
@@ -590,6 +632,7 @@
             this.Controls.SetChildIndex(this.grpBxMeasurements, 0);
             this.Controls.SetChildIndex(this.grpBoxCustMeasure, 0);
             this.Controls.SetChildIndex(this.grbxProdDetails, 0);
+            this.Controls.SetChildIndex(this.grbMemNo, 0);
             this.grpBxMeasurements.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -607,6 +650,8 @@
             this.grbxProdDetails.ResumeLayout(false);
             this.grbxProdDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantity)).EndInit();
+            this.grbMemNo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pcbMaterialImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -668,5 +713,11 @@
         internal System.Windows.Forms.TextBox txtPrice;
         internal System.Windows.Forms.Label label19;
         private System.Windows.Forms.NumericUpDown nudQuantity;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.GroupBox grbMemNo;
+        internal System.Windows.Forms.PictureBox pcbMaterialImage;
+        internal System.Windows.Forms.Button btnCapture;
     }
 }

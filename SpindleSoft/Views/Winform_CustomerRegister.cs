@@ -38,18 +38,20 @@ namespace SpindleSoft.Views
                                          MessageBoxDefaultButton.Button2);
 
             if (_dialogResult == DialogResult.No) return;
-            if (!Utilities.Validation.CheckForInternetConnection())
+
+            int flags;
+            if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
             {
                 UpdateStatus("Checking for internet connection", 50);
                 MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-                UpdateStatus("Error connecting to Internet.", 100);
+                UpdateStatus("Error connecting to Internet.", 0);
                 return;
             }
 
             int _ID = int.Parse(dgvCustomerRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
             Customer _customer = PeoplePracticeBuilder.GetCustomerInfo(_ID);
-            _customer.Image = await PeoplePracticeBuilder.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _customer.ID));
+            _customer.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _customer.ID));
 
             new WinForm_CustomerDetails(_customer).ShowDialog();
             txtName_TextChanged(this, new EventArgs());
@@ -86,7 +88,7 @@ namespace SpindleSoft.Views
         }
         #endregion Events
 
-        private void dgvCustomerRegister_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvCustomerRegister_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
 
@@ -96,13 +98,11 @@ namespace SpindleSoft.Views
                 DialogResult dr =  MessageBox.Show("Do you want to delete Customer " + custID,"Delete Customer",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
                 if (dr == DialogResult.No) return;
 
-                bool success = Savers.PeoplePracticeSaver.DeleteCustomer(custID);
-
+                bool success = await Savers.PeoplePracticeSaver.DeleteCustomer(custID);
                 if (success)
                 {
                     txtName_TextChanged(this, new EventArgs());
                     UpdateStatus("Customer Deleted.", 100);
-                    
                 }
                 else
                 {
