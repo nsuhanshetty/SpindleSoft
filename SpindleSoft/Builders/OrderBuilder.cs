@@ -143,7 +143,7 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static async Task<Orders> GetOrderInfo(int orderID)
+        public static Orders GetOrderInfo(int orderID)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -158,10 +158,10 @@ namespace SpindleSoft.Builders
                         .Fetch(o => o.Order).Eager
                         .Future().ToList();
 
-                    foreach (var item in _order.OrdersItems)
-                    {
-                        item.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID));
-                    }
+                    //foreach (var item in _order.OrdersItems)
+                    //{
+                    //    item.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID));
+                    //}
 
                     return _order;
                 }

@@ -255,7 +255,7 @@ namespace SpindleSoft
                 }
                 else
                 {
-                    new Winform_OrderDetails(await OrderBuilder.GetOrderInfo(_orderID)).ShowDialog();
+                    new Winform_OrderDetails(OrderBuilder.GetOrderInfo(_orderID)).ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -365,7 +365,7 @@ namespace SpindleSoft
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
             try
             {
-                Cursor.Current = Cursors.WaitCursor;
+                this.Cursor = Cursors.WaitCursor;
                 switch (searchState.ToString())
                 {
                     case "Customer":
@@ -375,17 +375,18 @@ namespace SpindleSoft
                         if (String.IsNullOrEmpty(_ID)) return;
 
                         Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(int.Parse(_ID));
-                        _cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _cust.ID));
+                        _cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _ID));
 
                         if (_cust == null) return;
 
                         new WinForm_CustomerDetails(_cust).ShowDialog();
+
                         break;
                     case "Order":
                         var orderID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString();
                         if (String.IsNullOrEmpty(orderID)) return;
 
-                        Orders order = await OrderBuilder.GetOrderInfo(int.Parse(orderID));
+                        Orders order = OrderBuilder.GetOrderInfo(int.Parse(orderID));
                         if (order == null) return;
                         new Winform_OrderDetails(order).ShowDialog();
                         break;
@@ -394,7 +395,7 @@ namespace SpindleSoft
                         MessageBox.Show("Invalid Search State.Try again");
                         break;
                 }
-                Cursor.Current = Cursors.Arrow;
+                this.Cursor = Cursors.Default;
             }
 
             catch (Exception ex)

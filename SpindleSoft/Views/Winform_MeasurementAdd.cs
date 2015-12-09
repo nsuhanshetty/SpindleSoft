@@ -38,8 +38,8 @@ namespace SpindleSoft.Views
 
             txtCustName.Text = custName;
 
-            //if (orderItem == null) return;
-            pcbMaterialImage.Image = this.orderItem.Image;
+            if (pcbMaterialImage.Image == null)
+                pcbMaterialImage.Image = this.orderItem.Image;
             txtLength.Text = this.orderItem.Length;
             txtWaist.Text = this.orderItem.Waist;
             txtChest.Text = this.orderItem.Chest;

@@ -236,14 +236,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpindleSoft.exe" size="566792">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpindleSoft.exe" size="564744">
       <assemblyIdentity name="SpindleSoft" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lVLSTrFYRLDUtApOoeTnhglAYU+S5DL6Rlp5kANZdkw=</dsig:DigestValue>
+        <dsig:DigestValue>ok2xK13UYyK+eqfNIQnCMHzuy/MOkLFDqQ84hgdlYTY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

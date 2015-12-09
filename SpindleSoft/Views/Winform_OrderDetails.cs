@@ -413,8 +413,11 @@ namespace SpindleSoft.Views
 
             else
             {
+                this.Cursor = Cursors.WaitCursor;
                 OrderItem _item = OrderItemsList[e.RowIndex];
+                _item.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/OrderItem_ProfilePictures/{0}.png", _item.ID));
                 new Winform_MeasurementAdd(e.RowIndex, this._cust, _item).ShowDialog();
+                this.Cursor = Cursors.Default;
             }
         }
 
