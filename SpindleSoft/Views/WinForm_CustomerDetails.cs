@@ -28,16 +28,7 @@ namespace SpindleSoft.Views
         {
             InitializeComponent();
 
-            this._cust = _cust;
-
-            /*Load Controls*/
-            txtAddress.Text = _cust.Address;
-            txtEmailID.Text = _cust.Email;
-            txtMobNo.Text = _cust.Mobile_No;
-            txtName.Text = _cust.Name;
-            txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = _cust.Image;
-            refCust = PeoplePracticeBuilder.GetCustomerInfo(_cust.ReferralID);
+            this._cust = _cust;           
         }
 
         #region Events
@@ -60,8 +51,18 @@ namespace SpindleSoft.Views
             Cursor.Current = Cursors.WaitCursor;
             this.toolStripParent.Items.Add(this.AddReferralToolStrip);
 
+            /*Load Controls*/
+            txtAddress.Text = _cust.Address;
+            txtEmailID.Text = _cust.Email;
+            txtMobNo.Text = _cust.Mobile_No;
+            txtName.Text = _cust.Name;
+            txtPhoneNo.Text = _cust.Phone_No;
+
+            refCust = PeoplePracticeBuilder.GetCustomerInfo(_cust.ReferralID);
             if (refCust != null && refCust.ReferralID != 0)
-                await LoadReferral();
+                await UpdateCustomerControl(this.refCust);
+
+            pcbCustImage.Image = this._cust.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", this._cust.ID.ToString());
             Cursor.Current = Cursors.Arrow;
         }
 
@@ -214,10 +215,10 @@ namespace SpindleSoft.Views
 
             txtRefMob.Text = refCust.Mobile_No;
             txtRefName.Text = refCust.Name;
-            pcbReferral.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", refCust.ID));
+            pcbReferral.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", refCust.ID.ToString());
         }
 
-        public void UpdateCustomerControl(Customer refCustomer)
+        public async Task UpdateCustomerControl(Customer refCustomer)
         {
             if (refCustomer == null) return;
 
@@ -225,7 +226,7 @@ namespace SpindleSoft.Views
 
             txtRefName.Text = refCustomer.Name;
             txtRefMob.Text = refCustomer.Mobile_No;
-            pcbReferral.Image = refCustomer.Image;
+            pcbReferral.Image = refCustomer.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", refCust.ID.ToString());
         }
     }
 }

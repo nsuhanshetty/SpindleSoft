@@ -84,7 +84,7 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            string[] input = { "txtVendMobile", "txtVendName" };
+            string[] input = { "txtVendMobile", "txtVendName", "txtCP" };
             var list = rdbVendorMade.Checked ? null : new List<string>(input);
 
             if (Utilities.Validation.IsNullOrEmpty(this, true, list))
@@ -96,8 +96,8 @@ namespace SpindleSoft.Views
             UpdateStatus("Saving..", 25);
             saleItem.Name = txtName.Text;
             saleItem.Description = txtDesc.Text;
-            saleItem.CostPrice = Convert.ToInt32(txtCP.Text);
-            saleItem.SellingPrice = Convert.ToInt32(txtSP.Text);
+            saleItem.CostPrice = string.IsNullOrEmpty(txtCP.Text) ? 0 : Convert.ToInt32(txtCP.Text);
+            saleItem.SellingPrice = string.IsNullOrEmpty(txtSP.Text) ? 0 : Convert.ToInt32(txtSP.Text);
             saleItem.Size = cmbSize.Text;
             saleItem.Color = cmbColor.Text;
             saleItem.Material = cmbMaterial.Text;

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Linq;
 using log4net;
 using SpindleSoft.Savers;
+using System.Threading.Tasks;
 
 namespace SpindleSoft.Views
 {
@@ -89,7 +90,7 @@ namespace SpindleSoft.Views
 
         #region Custom
         //todo: Add it in the generic 
-        public void UpdateCustomerControl(Customer customer)
+        public async Task UpdateCustomerControl(Customer customer)
         {
             if (customer == null) return;
 
@@ -97,7 +98,7 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = this._cust.Image;// = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
+            pcbCustImage.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", this._cust.ID.ToString());//this._cust.Image;// = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
         }
 
         internal void UpdateOrderItemList(OrderItem _item, int _index)
@@ -164,7 +165,7 @@ namespace SpindleSoft.Views
             UpdateStatus("Saving..", 50);
             bool success = await OrderSaver.SaveOrder(order);
 
-           
+
             if (success)
             {
                 UpdateStatus("Order Saved.", 100);
@@ -297,13 +298,6 @@ namespace SpindleSoft.Views
 
         private async void Winform_OrderDetails_Load(object sender, EventArgs e)
         {
-            if (order.ID != 0)
-            {
-                _cust = PeoplePracticeBuilder.GetCustomer(order.Customer.ID);
-                this._cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
-                UpdateCustomerControl(_cust);
-            }
-
             this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
             if (OrderItemsList != null && OrderItemsList.Count != 0)
             {
@@ -318,6 +312,12 @@ namespace SpindleSoft.Views
                     dgvOrderItems.NotifyCurrentCellDirty(true);
                     dgvOrderItems.NotifyCurrentCellDirty(false);
                 }
+            }
+
+            if (order.ID != 0)
+            {
+                _cust = PeoplePracticeBuilder.GetCustomer(order.Customer.ID);
+                await UpdateCustomerControl(_cust);
             }
         }
         #endregion Events
@@ -415,7 +415,6 @@ namespace SpindleSoft.Views
             {
                 this.Cursor = Cursors.WaitCursor;
                 OrderItem _item = OrderItemsList[e.RowIndex];
-                _item.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/OrderItem_ProfilePictures/{0}.png", _item.ID));
                 new Winform_MeasurementAdd(e.RowIndex, this._cust, _item).ShowDialog();
                 this.Cursor = Cursors.Default;
             }

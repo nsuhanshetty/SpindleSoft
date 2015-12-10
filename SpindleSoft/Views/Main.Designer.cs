@@ -183,7 +183,7 @@
             this.addCustomerToolStripMenuItem1,
             this.customerRegisterToolStripMenuItem});
             this.addCustomerToolStripMenuItem.Name = "addCustomerToolStripMenuItem";
-            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addCustomerToolStripMenuItem.Text = "&Customer";
             // 
             // addCustomerToolStripMenuItem1
@@ -207,7 +207,7 @@
             this.staffRegisterToolStripMenuItem,
             this.salaryRegisterToolStripMenuItem});
             this.searchCustomerToolStripMenuItem.Name = "searchCustomerToolStripMenuItem";
-            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.searchCustomerToolStripMenuItem.Text = "&Staff";
             // 
             // addStaffToolStripMenuItem
@@ -238,7 +238,7 @@
             this.addVendorToolStripMenuItem2,
             this.vendorRegisterToolStripMenuItem});
             this.addVendorToolStripMenuItem1.Name = "addVendorToolStripMenuItem1";
-            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
+            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.addVendorToolStripMenuItem1.Text = "&Vendor";
             // 
             // addVendorToolStripMenuItem2
@@ -260,8 +260,9 @@
             this.groupsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addGroupsToolStripMenuItem,
             this.groupRegisterToolStripMenuItem});
+            this.groupsToolStripMenuItem.Enabled = false;
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.groupsToolStripMenuItem.Text = "&Groups";
             // 
             // addGroupsToolStripMenuItem
@@ -1118,7 +1119,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1362, 543);
+            this.ClientSize = new System.Drawing.Size(1354, 543);
             this.Controls.Add(this.pnlDeliveryStatus);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.statusStrip1);

@@ -35,7 +35,7 @@ namespace SpindleSoft.Views
             txtMobNo.Text = _staff.Mobile_No;
             txtName.Text = _staff.Name;
             txtPhoneNo.Text = _staff.Phone_No;
-            pcbStaffImage.Image = _staff.Image;
+            //pcbStaffImage.Image = _staff.Image;
             txtDesignation.Text = _staff.Designation;
 
             txtUserBankName.Text = _staff.BankUserName;
@@ -192,8 +192,6 @@ namespace SpindleSoft.Views
                 this._staff.Bank = new Bank(cmbBankName.Text);
             else if (!IsNullOrEmpty(cmbBankName.Text))
                 this._staff.Bank = Builders.PeoplePracticeBuilder.GetBankByName(cmbBankName.Text);
-            //else
-            //    this._staff.Bank = null;
 
             this._staff.BankUserName = txtUserBankName.Text;
             this._staff.AccNo = txtAccNo.Text;
@@ -275,9 +273,10 @@ namespace SpindleSoft.Views
             }
         }
 
-        private void Winform_StaffDetails_Load(object sender, EventArgs e)
+        private async void Winform_StaffDetails_Load(object sender, EventArgs e)
         {
             List<string> docTypeList = PeoplePracticeBuilder.GetDocumentTypeList();
+
 
             /*txtDesignation*/
             string[] designationArray = PeoplePracticeBuilder.GetDesignations().ToArray();
@@ -305,6 +304,8 @@ namespace SpindleSoft.Views
             cmbBankName.Text = "";
             if (this._staff != null && this._staff.Bank != null)
                 cmbBankName.SelectedText = this._staff.Bank.Name;
+
+            pcbStaffImage.Image = _staff.Image = await Utilities.Helper.GetDocumentAsync("/staff_ProfilePictures", _staff.ID.ToString());
         }
 
         private void dgvSecurityDoc_DataError(object sender, DataGridViewDataErrorEventArgs e)

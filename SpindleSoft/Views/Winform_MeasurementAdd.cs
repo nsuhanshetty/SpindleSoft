@@ -4,64 +4,68 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_MeasurementAdd : Winform_DetailsFormat
     {
-        OrderItem orderItem = new OrderItem();
-        int index = 0;
-        Customer cust;
-        List<string> orderTypeList;
+        OrderItem _orderItem = new OrderItem();
+        int _index = 0;
+        Customer _cust;
+        List<string> _orderTypeList;
 
         public Winform_MeasurementAdd()
         {
             InitializeComponent();
         }
 
-        public Winform_MeasurementAdd(int _index, Customer cust, OrderItem orderItem)
+        public Winform_MeasurementAdd(int index, Customer cust, OrderItem orderItem)
         {
             InitializeComponent();
-            this.index = _index;
-            this.cust = cust;
+            this._index = index;
+            this._cust = cust;
+            this._orderItem = orderItem;
+            this._orderTypeList = OrderBuilder.GetListOfClothingTypes();
 
-            orderTypeList = OrderBuilder.GetListOfClothingTypes();
-            cmbType.DataSource = orderTypeList;
-
-            UpdateControls(cust.Name, orderItem);
+            cmbType.DataSource = _orderTypeList;
         }
 
-        private void UpdateControls(string custName, OrderItem orderItem)
+        private async Task UpdateControls(string custName, OrderItem orderItem)
         {
-            this.orderItem = orderItem != null ? orderItem : new OrderItem();
+            this._orderItem = orderItem != null ? orderItem : new OrderItem();
 
             txtCustName.Text = custName;
+            txtLength.Text = this._orderItem.Length;
+            txtWaist.Text = this._orderItem.Waist;
+            txtChest.Text = this._orderItem.Chest;
+            txtShoulder.Text = this._orderItem.Shoulder;
+            txtFront.Text = this._orderItem.Front;
+            txtBack.Text = this._orderItem.Back;
+            txtD.Text = this._orderItem.D;
+            txtHip.Text = this._orderItem.Hip;
 
-            if (pcbMaterialImage.Image == null)
-                pcbMaterialImage.Image = this.orderItem.Image;
-            txtLength.Text = this.orderItem.Length;
-            txtWaist.Text = this.orderItem.Waist;
-            txtChest.Text = this.orderItem.Chest;
-            txtShoulder.Text = this.orderItem.Shoulder;
-            txtFront.Text = this.orderItem.Front;
-            txtBack.Text = this.orderItem.Back;
-            txtD.Text = this.orderItem.D;
-            txtHip.Text = this.orderItem.Hip;
+            txtBotHip.Text = this._orderItem.BottomHip;
+            txtBotWaist.Text = this._orderItem.BottomWaist;
+            txtBotLength.Text = this._orderItem.BottomLength;
+            txtBotLoose.Text = this._orderItem.BottomLoose;
 
-            txtBotHip.Text = this.orderItem.BottomHip;
-            txtBotWaist.Text = this.orderItem.BottomWaist;
-            txtBotLength.Text = this.orderItem.BottomLength;
-            txtBotLoose.Text = this.orderItem.BottomLoose;
+            txtSlvAHole.Text = this._orderItem.SleeveArmHole;
+            txtSlvLength.Text = this._orderItem.SleeveLength;
+            txtSlvLoose.Text = this._orderItem.SleeveLoose;
+            txtComment.Text = this._orderItem.Comment;
 
-            txtSlvAHole.Text = this.orderItem.SleeveArmHole;
-            txtSlvLength.Text = this.orderItem.SleeveLength;
-            txtSlvLoose.Text = this.orderItem.SleeveLoose;
-            txtComment.Text = this.orderItem.Comment;
+            UpdateCmbType(this._orderItem.Name ?? cmbType.Text);
+            nudQuantity.Value = this._orderItem.Quantity == 0 ? 1 : this._orderItem.Quantity;
+            txtPrice.Text = this._orderItem.Price.ToString();
 
-            UpdateCmbType(this.orderItem.Name ?? cmbType.Text);
-            nudQuantity.Value = this.orderItem.Quantity == 0 ? 1 : this.orderItem.Quantity;
-            txtPrice.Text = this.orderItem.Price.ToString();
+            if (this._orderItem.Image != null)
+                pcbMaterialImage.Image = this._orderItem.Image;
+            else if (pcbMaterialImage.Image == null)
+                pcbMaterialImage.Image = await Utilities.Helper.GetDocumentAsync("/OrderItem_ProfilePictures", this._orderItem.ID.ToString());
+
+            this._orderItem.Image = pcbMaterialImage.Image;
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
@@ -77,7 +81,7 @@ namespace SpindleSoft.Views
 
             //todo: Convert to _orderItem object
 
-            OrderItem _item = orderItem;
+            OrderItem _item = _orderItem;
 
             _item.Name = cmbType.Text;
             _item.Price = float.Parse(txtPrice.Text);
@@ -108,7 +112,7 @@ namespace SpindleSoft.Views
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
-                orderDetails.UpdateOrderItemList(_item, index);
+                orderDetails.UpdateOrderItemList(_item, _index);
             //else
             //    MessageBox.Show("Unable to Update the Order Cart as List not found.","Order Details not found",MessageBoxButtons.OK,MessageBoxIcon.Error);
 
@@ -163,24 +167,24 @@ namespace SpindleSoft.Views
 
         private void UpdateCmbType(string value)
         {
-            if (this.orderTypeList.IndexOf(value) == -1)
+            if (this._orderTypeList.IndexOf(value) == -1)
             {
-                this.orderTypeList.Add(value);
+                this._orderTypeList.Add(value);
                 cmbType.DataSource = null;
-                cmbType.DataSource = orderTypeList;
+                cmbType.DataSource = _orderTypeList;
             }
             cmbType.SelectedItem = value;
         }
 
-        private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(cmbType.Text) && (orderItem == new OrderItem() || cmbType.Text != orderItem.Name))
+            if (!string.IsNullOrEmpty(cmbType.Text) && (_orderItem == new OrderItem() || cmbType.Text != _orderItem.Name))
             {
                 //fetch  previous measurement
-                orderItem = OrderBuilder.GetOrderItem(this.cust.ID, cmbType.Text);
-                if (orderItem != null) orderItem.ID = 0;
+                _orderItem = OrderBuilder.GetOrderItem(this._cust.ID, cmbType.Text);
+                if (_orderItem != null) _orderItem.ID = 0;
 
-                UpdateControls(this.cust.Name, orderItem);
+                await UpdateControls(this._cust.Name, _orderItem);
             }
         }
 
@@ -188,6 +192,11 @@ namespace SpindleSoft.Views
         {
             Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbMaterialImage);
             _imageCapture.ShowDialog();
+        }
+
+        private async void Winform_MeasurementAdd_Load(object sender, EventArgs e)
+        {
+            await UpdateControls(this._cust.Name, this._orderItem);
         }
     }
 }

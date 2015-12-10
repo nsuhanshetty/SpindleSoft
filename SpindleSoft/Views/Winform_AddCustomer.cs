@@ -38,17 +38,18 @@ namespace SpindleSoft.Views
 
             if (_dialogResult == DialogResult.No) return;
 
+            this.Cursor = Cursors.WaitCursor;
             var ID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value;
             this._cust = Builders.PeoplePracticeBuilder.GetCustomerInfo(int.Parse(ID.ToString()));
-            this._cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
+            //this._cust.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", _ID);
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
-                orderDetails.UpdateCustomerControl(_cust);
+                await orderDetails.UpdateCustomerControl(_cust);
 
             WinForm_CustomerDetails custDetails = Application.OpenForms["WinForm_CustomerDetails"] as WinForm_CustomerDetails;
             if (custDetails != null)
-                custDetails.UpdateCustomerControl(_cust);
+                await custDetails.UpdateCustomerControl(_cust);
 
             Winform_AlterationsDetails altDetails = Application.OpenForms["Winform_AlterationsDetails"] as Winform_AlterationsDetails;
             if (altDetails != null)
@@ -57,7 +58,8 @@ namespace SpindleSoft.Views
             Winform_SalesDetails saleDetails = Application.OpenForms["Winform_SalesDetails"] as Winform_SalesDetails;
             if (saleDetails != null)
                 saleDetails.UpdateCustomerControl(_cust);
-
+            
+            this.Cursor = Cursors.Default;
             this.Close();
         }
 

@@ -63,6 +63,7 @@ namespace SpindleSoft.Views
         private void txtMobNo_TextChanged(object sender, EventArgs e)
         {
             dgvSearch.DataSource = null;
+            dgvSaleItemDetails.DataSource = null;
             dgvSearch.Columns["colDelete"].Visible = false;
 
             if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text) && string.IsNullOrEmpty(txtProCode.Text))

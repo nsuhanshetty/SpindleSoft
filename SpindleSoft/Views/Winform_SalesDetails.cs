@@ -96,7 +96,7 @@ namespace SpindleSoft.Views
             if (sale.ID != 0)
             {
                 _cust = PeoplePracticeBuilder.GetCustomer(sale.Customer.ID);
-                this._cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", this._cust.ID));
+                this._cust.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", this._cust.ID.ToString());
                 UpdateCustomerControl(_cust);
             }
 

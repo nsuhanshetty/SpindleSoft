@@ -629,6 +629,7 @@
             this.Controls.Add(this.grpBxMeasurements);
             this.Name = "Winform_MeasurementAdd";
             this.Text = "Measurement Details";
+            this.Load += new System.EventHandler(this.Winform_MeasurementAdd_Load);
             this.Controls.SetChildIndex(this.grpBxMeasurements, 0);
             this.Controls.SetChildIndex(this.grpBoxCustMeasure, 0);
             this.Controls.SetChildIndex(this.grbxProdDetails, 0);

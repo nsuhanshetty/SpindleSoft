@@ -64,17 +64,20 @@ namespace SpindleSoft.Utilities
             }
         }
 
-        public static async Task<Image> GetDocumentAsync(string dropfilePath)
+        public static async Task<Image> GetDocumentAsync(string dropfilePath, string _ID)
         {
             //todo: shift the key to passConfig
             using (DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi"))
             {
                 try
                 {
-                    //string dropfilePath = string.Format(StaffImagePath + "/{0}.png", _ID);
-                    var downloadedFileResponse = await dbx.Files.DownloadAsync(dropfilePath);
-                    var downloadedFileStream = await downloadedFileResponse.GetContentAsStreamAsync();
-                    return Image.FromStream(downloadedFileStream);
+                     var searchValue = await dbx.Files.SearchAsync(dropfilePath, _ID);
+                     if (searchValue.Matches.Count > 0)
+                     {
+                         var downloadedFileResponse = await dbx.Files.DownloadAsync(string.Format("{0}/{1}.png", dropfilePath, _ID));
+                         var downloadedFileStream = await downloadedFileResponse.GetContentAsStreamAsync();
+                         return Image.FromStream(downloadedFileStream);
+                     }
                 }
                 catch (ApiException<DownloadError> apiEx)
                 {

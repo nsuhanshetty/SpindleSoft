@@ -51,10 +51,33 @@ namespace SpindleSoft.Views
 
             int _ID = int.Parse(dgvCustomerRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
             Customer _customer = PeoplePracticeBuilder.GetCustomerInfo(_ID);
-            _customer.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _customer.ID));
+            //_customer.Image = ;
 
             new WinForm_CustomerDetails(_customer).ShowDialog();
             txtName_TextChanged(this, new EventArgs());
+        }
+
+        private async void dgvCustomerRegister_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            if (dgvCustomerRegister.Columns["colDelete"].Index == e.ColumnIndex)
+            {
+                int custID = int.Parse(dgvCustomerRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
+                DialogResult dr = MessageBox.Show("Do you want to delete Customer " + custID, "Delete Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No) return;
+
+                bool success = await Savers.PeoplePracticeSaver.DeleteCustomer(custID);
+                if (success)
+                {
+                    txtName_TextChanged(this, new EventArgs());
+                    UpdateStatus("Customer Deleted.", 100);
+                }
+                else
+                {
+                    UpdateStatus("Error deleting Customer. ", 100);
+                }
+            }
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
@@ -86,30 +109,7 @@ namespace SpindleSoft.Views
 
             UpdateStatus((dgvCustomerRegister.RowCount == 0) ? "No Results Found" : dgvCustomerRegister.RowCount + " Results Found", 100);
         }
-        #endregion Events
-
-        private async void dgvCustomerRegister_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1) return;
-
-            if (dgvCustomerRegister.Columns["colDelete"].Index == e.ColumnIndex)
-            {
-                int custID = int.Parse(dgvCustomerRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
-                DialogResult dr =  MessageBox.Show("Do you want to delete Customer " + custID,"Delete Customer",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-                if (dr == DialogResult.No) return;
-
-                bool success = await Savers.PeoplePracticeSaver.DeleteCustomer(custID);
-                if (success)
-                {
-                    txtName_TextChanged(this, new EventArgs());
-                    UpdateStatus("Customer Deleted.", 100);
-                }
-                else
-                {
-                    UpdateStatus("Error deleting Customer. ", 100);
-                }
-            }
-        }
+        #endregion Events       
 
         #region Validation
         //  private void txtName_Validating(object sender, CancelEventArgs e)

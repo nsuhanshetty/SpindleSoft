@@ -59,13 +59,14 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
-            this.txtQuantity = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.txtQuantity = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.grpBxVendDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtQuantity)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -348,15 +349,6 @@
             this.txtCode.Size = new System.Drawing.Size(155, 20);
             this.txtCode.TabIndex = 1;
             // 
-            // txtQuantity
-            // 
-            this.txtQuantity.Location = new System.Drawing.Point(105, 428);
-            this.txtQuantity.MaxLength = 4;
-            this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(154, 20);
-            this.txtQuantity.TabIndex = 8;
-            this.txtQuantity.Validating += new System.ComponentModel.CancelEventHandler(this.textBox2_Validating);
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -366,11 +358,29 @@
             this.label12.TabIndex = 127;
             this.label12.Text = "Quantity";
             // 
+            // txtQuantity
+            // 
+            this.txtQuantity.Location = new System.Drawing.Point(80, 424);
+            this.txtQuantity.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.txtQuantity.Name = "txtQuantity";
+            this.txtQuantity.Size = new System.Drawing.Size(120, 20);
+            this.txtQuantity.TabIndex = 128;
+            this.txtQuantity.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // WinForm_SKUDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(280, 480);
+            this.ControlBox = false;
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtCode);
@@ -409,6 +419,7 @@
             this.grpBxVendDetails.ResumeLayout(false);
             this.grpBxVendDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtQuantity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -443,9 +454,9 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.TextBox txtDesc;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown txtQuantity;
     }
 }

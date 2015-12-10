@@ -13,7 +13,7 @@ namespace SpindleSoft.Savers
     class OrderSaver
     {
         static ILog log = LogManager.GetLogger(typeof(OrderSaver));
-        static string OrderItemProfile = "/OrderItem_ProfilePictures";
+        //static string OrderItemProfile = "/OrderItem_ProfilePictures";
 
         public static async Task<bool> SaveOrder(Orders order)
         {
@@ -33,7 +33,8 @@ namespace SpindleSoft.Savers
 
                         foreach (var item in order.OrdersItems)
                         {
-                            if (item.Image != null && !await SaveItemImage(item.Image, item.ID))
+                            if (item.Image != null && 
+                                !await Utilities.Helper.UploadAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID)))
                                 return false;
                         }
                         transaction.Commit();

@@ -113,12 +113,11 @@ namespace SpindleSoft.Savers
                             session.SaveOrUpdate(staff.Bank);
 
                         session.SaveOrUpdate(staff);
+                        transaction.Commit();
 
                         bool response = staff.ID != 0 ? await SaveStaffImage(staff.Image, staff.ID) : false;
                         if (!response)
                             return 0;
-
-                        transaction.Commit();
                         return staff.ID;
                     }
                 }
@@ -137,17 +136,7 @@ namespace SpindleSoft.Savers
             string filePath = string.Format("{0}/{1}.png", StaffImagePath, _ID);
             try
             {
-                //Task<bool> uploadTask = ;
-                //uploadTask.Wait();
                 return await Utilities.Helper.UploadAsync(image, filePath);
-
-                //if (!System.IO.Directory.Exists(StaffImagePath))
-                //    System.IO.Directory.CreateDirectory(StaffImagePath);
-                //else if (System.IO.File.Exists(filePath))
-                //    System.IO.File.Delete(filePath);
-
-                //image.Save(filePath, ImageFormat.Png);
-                //return true;
             }
             catch (Exception ex)
             {

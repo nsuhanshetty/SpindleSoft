@@ -375,7 +375,7 @@ namespace SpindleSoft
                         if (String.IsNullOrEmpty(_ID)) return;
 
                         Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(int.Parse(_ID));
-                        _cust.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/customer_ProfilePictures/{0}.png", _ID));
+                        _cust.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", _ID);
 
                         if (_cust == null) return;
 
