@@ -46,7 +46,7 @@
             // 
             this.cmbCameraSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCameraSelect.FormattingEnabled = true;
-            this.cmbCameraSelect.Location = new System.Drawing.Point(94, 453);
+            this.cmbCameraSelect.Location = new System.Drawing.Point(90, 356);
             this.cmbCameraSelect.Name = "cmbCameraSelect";
             this.cmbCameraSelect.Size = new System.Drawing.Size(144, 21);
             this.cmbCameraSelect.TabIndex = 3;
@@ -57,7 +57,7 @@
             this.picCapture.BackColor = System.Drawing.SystemColors.ControlDark;
             this.picCapture.Location = new System.Drawing.Point(1, 1);
             this.picCapture.Name = "picCapture";
-            this.picCapture.Size = new System.Drawing.Size(640, 408);
+            this.picCapture.Size = new System.Drawing.Size(481, 307);
             this.picCapture.TabIndex = 6;
             this.picCapture.TabStop = false;
             // 
@@ -66,7 +66,7 @@
             this.btnCapture.BackColor = System.Drawing.Color.Transparent;
             this.btnCapture.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.btnCapture.Image = ((System.Drawing.Image)(resources.GetObject("btnCapture.Image")));
-            this.btnCapture.Location = new System.Drawing.Point(491, 420);
+            this.btnCapture.Location = new System.Drawing.Point(371, 323);
             this.btnCapture.Name = "btnCapture";
             this.btnCapture.Size = new System.Drawing.Size(111, 54);
             this.btnCapture.TabIndex = 0;
@@ -88,7 +88,7 @@
             // checkBoxShowConfigDialog
             // 
             this.checkBoxShowConfigDialog.AutoSize = true;
-            this.checkBoxShowConfigDialog.Location = new System.Drawing.Point(12, 428);
+            this.checkBoxShowConfigDialog.Location = new System.Drawing.Point(8, 331);
             this.checkBoxShowConfigDialog.Name = "checkBoxShowConfigDialog";
             this.checkBoxShowConfigDialog.Size = new System.Drawing.Size(226, 17);
             this.checkBoxShowConfigDialog.TabIndex = 2;
@@ -99,7 +99,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblCameraSelect);
-            this.groupBox1.Location = new System.Drawing.Point(5, 411);
+            this.groupBox1.Location = new System.Drawing.Point(1, 314);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(252, 71);
             this.groupBox1.TabIndex = 1;
@@ -110,10 +110,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 488);
+            this.ClientSize = new System.Drawing.Size(485, 389);
             this.Controls.Add(this.checkBoxShowConfigDialog);
-            this.Controls.Add(this.btnCapture);
             this.Controls.Add(this.cmbCameraSelect);
+            this.Controls.Add(this.btnCapture);
             this.Controls.Add(this.picCapture);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

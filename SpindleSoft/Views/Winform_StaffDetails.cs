@@ -168,7 +168,7 @@ namespace SpindleSoft.Views
                 return;
             }
 
-            string[] input = { "txtPhoneNo", "pcbStaffImage", "txtAddress","txtUserBankName","cmbBankName","txtAccNo","txtIFSCNo" };
+            string[] input = { "txtPhoneNo", "pcbStaffImage", "txtAddress", "txtUserBankName", "cmbBankName", "txtAccNo", "txtIFSCNo" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
@@ -305,7 +305,8 @@ namespace SpindleSoft.Views
             if (this._staff != null && this._staff.Bank != null)
                 cmbBankName.SelectedText = this._staff.Bank.Name;
 
-            pcbStaffImage.Image = _staff.Image = await Utilities.Helper.GetDocumentAsync("/staff_ProfilePictures", _staff.ID.ToString());
+            if (_staff != null)
+                pcbStaffImage.Image = _staff.Image = await Utilities.Helper.GetDocumentAsync("/staff_ProfilePictures", _staff.ID.ToString());
         }
 
         private void dgvSecurityDoc_DataError(object sender, DataGridViewDataErrorEventArgs e)
