@@ -402,7 +402,7 @@ namespace SpindleSoft.Views
                     }
                     else
                     {
-                        MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
+                        MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
                         return;
                     }
                 }

@@ -279,11 +279,12 @@ namespace SpindleSoft.Builders
             using (var session = NHibernateHelper.OpenSession())
             {
                 Vendor vend = null;
-                List<Vendor> custList = session.QueryOver<Vendor>(() => vend)
-                     .Where(NHibernate.Criterion.Restrictions.On(() => vend.Name).IsLike(name + "%"))
-                     .Where(NHibernate.Criterion.Restrictions.On(() => vend.MobileNo).IsLike(mobileno + "%"))
-                     .Take(15)
-                     .List() as List<Vendor>;
+                List<Vendor> custList = (session.QueryOver<Vendor>(() => vend)
+                     .WhereRestrictionOn(c => c.Name).IsLike(name + '%')
+                     .WhereRestrictionOn(c => c.MobileNo).IsLike(mobileno + '%')
+                     )
+                     .List()
+                     as List<Vendor>; //.Take(15) 
 
                 return custList;
             }
@@ -302,15 +303,33 @@ namespace SpindleSoft.Builders
                     return vendor;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
+                return null;
+            }
+        }
+
+        public static List<string> GetVendorOfferingType(bool _section)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    var offeringList = (from vend in session.Query<Vendor>()
+                                        where vend.IsProduct == _section
+                                        select vend.OfferingType).Distinct().ToList();
+
+                    return offeringList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
                 return null;
             }
         }
         #endregion Vendor
-
-
 
         public static List<Bank> GetBankNames()
         {

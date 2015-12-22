@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace SpindleSoft.Savers
 {
-
+    //todo: remove comments
     class OrderSaver
     {
         static ILog log = LogManager.GetLogger(typeof(OrderSaver));
@@ -31,12 +31,21 @@ namespace SpindleSoft.Savers
                         }
                         session.SaveOrUpdate(order);
 
-                        foreach (var item in order.OrdersItems)
-                        {
-                            if (item.Image != null && 
-                                !await Utilities.Helper.UploadAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID)))
-                                return false;
-                        }
+                        //foreach (var item in order.OrdersItems)
+                        //{
+                        //    if (item.Image != null &&
+                        //        !await Utilities.Helper.UploadAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID)))
+                        //        return false;
+                        //}
+
+                        var tasks = (from item in order.OrdersItems
+                                    where item.Image != null
+                                    select Utilities.Helper.UploadAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID))).ToArray();
+                        
+                        bool[] results= await Task.WhenAll(tasks);
+                        if (results.Contains(false))
+                            return false;
+
                         transaction.Commit();
                         return true;
                     }

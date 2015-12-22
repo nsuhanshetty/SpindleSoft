@@ -61,6 +61,8 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Address);
             Map(x => x.BankUserName);
             Map(x => x.AccNo);
+            Map(x => x.OfferingType);
+            Map(x => x.IsProduct);
             References(x => x.Bank).Class<Bank>()
                                    .Columns("BankID")
                                    .Cascade.None();

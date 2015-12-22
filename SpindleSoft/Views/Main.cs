@@ -208,7 +208,7 @@ namespace SpindleSoft
         #endregion Toolstrip_Click
 
         #region Alteration
-        private async void dgvOrdR2S_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvOrdR2S_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {

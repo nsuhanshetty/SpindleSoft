@@ -1,9 +1,9 @@
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Dropbox.Api.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\FluentNHibernate.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\log4net.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Newtonsoft.Json.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\NHibernate.dll
+C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe
+C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Dropbox.Api.dll
+C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\FluentNHibernate.dll
+C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\log4net.dll
+C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Newtonsoft.Json.dll
+C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\NHibernate.dll
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe.config
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe.manifest
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.application
@@ -78,4 +78,3 @@ C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.application
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.exe
 C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.pdb
-C:\Users\NSuhanShetty\documents\visual studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.csprojResolveAssemblyReference.cache

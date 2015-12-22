@@ -27,7 +27,10 @@ namespace SpindleSoft.Views
             txtBankUserName.Text = _vendor.BankUserName;
             txtIfscNo.Text = _vendor.IFSCCode;
             txtAccNo.Text = _vendor.AccNo;
-            //cmbBankName.Text = _vendor.Bank;
+            if( _vendor.IsProduct)
+                rdbProd.Checked = true;
+            else
+                rdnServ.Checked = true;
         }
 
         public Winform_VendorDetails()
@@ -62,20 +65,23 @@ namespace SpindleSoft.Views
             _vendor.Address = txtAddress.Text;
             _vendor.MobileNo = txtMobNo.Text;
 
+            _vendor.IsProduct = rdbProd.Checked ? true : false;
+            _vendor.OfferingType = cmbSectionType.Text;
+
             UpdateStatus("Saving..", 66);
             bool response = PeoplePracticeSaver.SaveVendorInfo(this._vendor);
 
-            if(response)
+            if (response)
+            {
                 UpdateStatus("Vendor Saved.", 100);
+                this.Close();
+            }
             else
                 UpdateStatus("Error Saving Vendor Details.", 100);
 
             Winform_VendorsRegister addSaleReg = Application.OpenForms["Winform_VendorsRegister"] as Winform_VendorsRegister;
             if (addSaleReg != null)
                 addSaleReg.LoadDgv();
-
-            this.Close();
-
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -94,9 +100,14 @@ namespace SpindleSoft.Views
 
         private void txtName_Validating(object sender, CancelEventArgs e)
         {
+            //todo: globally check the controls
+            //check if the control follows the regex
+            //alert if mismatch
+            //based on control reflect the error
+
             Match _match = Regex.Match(txtName.Text, "^[a-zA-Z\\s]+$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Name\n" +
-      "For example 'Geeta Prasad'";
+            string errorMsg = _match.Success ? "" : "Invalid Input for textbox\n" +
+      "For example ''";
             errorProvider1.SetError(txtName, errorMsg);
 
             if (errorMsg != "")
@@ -131,23 +142,58 @@ namespace SpindleSoft.Views
 
         private void Winform_VendorDetails_Load(object sender, EventArgs e)
         {
-
             List<Bank> BankList = PeoplePracticeBuilder.GetBankNames();
             cmbBankName.DataSource = BankList;
             cmbBankName.DisplayMember = "Name";
             cmbBankName.ValueMember = "ID";
+            AutoCompletionSource(BankList.Select(x => x.Name).ToList(), cmbBankName);
 
-            string[] bankNames = BankList.Select(x => x.Name).ToArray();
-            var nameCollection = new AutoCompleteStringCollection();
-            nameCollection.AddRange(bankNames);
+            cmbBankName.Text = cmbSectionType.Text = "";
 
-            cmbBankName.AutoCompleteCustomSource = nameCollection;
-            cmbBankName.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cmbBankName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            if (this._vendor != null)
+            {
+                if (this._vendor.Bank != null)
+                    cmbBankName.SelectedText = this._vendor.Bank.Name;
+                if (this._vendor.OfferingType != null)
+                    cmbSectionType.SelectedText = this._vendor.OfferingType;
+            }
+        }
 
-            cmbBankName.Text = "";
-            if (this._vendor != null && this._vendor.Bank != null)
-                cmbBankName.SelectedText = this._vendor.Bank.Name;
+        private void AutoCompletionSource(List<string> srcList, ComboBox cmb)
+        {
+            var autoCollection = new AutoCompleteStringCollection();
+            autoCollection.AddRange(srcList.ToArray());
+
+            cmb.AutoCompleteCustomSource = autoCollection;
+            cmb.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cmb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        }
+
+        private void cmbSectionType_Validating(object sender, CancelEventArgs e)
+        {
+            Match _match = Regex.Match(cmbSectionType.Text, "^[a-zA-Z\\s]+$");
+            string errorMsg = _match.Success ? "" : "Invalid Input for SectionType\n" +
+      "For example 'Electrician'";
+            errorProvider1.SetError(cmbSectionType, errorMsg);
+
+            if (errorMsg != "")
+            {
+                // Cancel the event and select the text to be corrected by the user.
+                e.Cancel = true;
+                txtName.Select(0, cmbSectionType.SelectedText.Length);
+            }
+        }
+
+        private void cmbSectionType_Validated(object sender, EventArgs e)
+        {
+            cmbSectionType.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(cmbSectionType.Text);
+        }
+
+        private void rdbProd_CheckedChanged(object sender, EventArgs e)
+        {
+            var offeringList = PeoplePracticeBuilder.GetVendorOfferingType(rdbProd.Checked).ToList();
+            cmbSectionType.DataSource = offeringList;
+            AutoCompletionSource(offeringList, cmbSectionType);
         }
     }
 }

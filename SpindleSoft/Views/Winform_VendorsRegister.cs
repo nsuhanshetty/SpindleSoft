@@ -27,15 +27,15 @@ namespace SpindleSoft.Views
 
         public void LoadDgv()
         {
-            var venList = (from vend in PeoplePracticeBuilder.GetVendorsList(txtName.Text, txtMobNo.Text)
-                           select new { vend.ID, vend.Name, vend.MobileNo, vend.Address }).ToList();
+            var dgvValue =PeoplePracticeBuilder.GetVendorsList(txtName.Text, txtMobNo.Text);
 
-            if (venList.Count == 0)
+            if (dgvValue.Count == 0)
             {
                 dgvSearch.DataSource = null;
             }
             else
             {
+                var venList = (from vend in dgvValue select new { vend.ID, vend.Name, vend.MobileNo, vend.Address }).ToList();
                 dgvSearch.DataSource = venList;
                 dgvSearch.Columns["ID"].Visible = false;
             }

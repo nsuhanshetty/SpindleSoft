@@ -126,6 +126,10 @@ namespace SpindleSoft.Model
 
         public virtual string Address { get; set; }
 
+        public virtual bool IsProduct { get; set; }
+
+        public virtual string OfferingType { get; set; }
+
         public virtual Bank Bank { get; set; }
 
         public virtual string AccNo { get; set; }
@@ -134,17 +138,17 @@ namespace SpindleSoft.Model
 
         public virtual string BankUserName { get; set; }
 
-        public Vendor(string name,string mobno, string address, string bankusername, string accno, Bank bank,string IfscNo)
-        {
-            this.Name = name;
-            this.MobileNo = mobno;
-            this.Address = address;
+        //public Vendor(string name,string mobno, string address, string bankusername, string accno, Bank bank,string IfscNo)
+        //{
+        //    this.Name = name;
+        //    this.MobileNo = mobno;
+        //    this.Address = address;
 
-            this.BankUserName = bankusername;
-            this.AccNo = accno;
-            this.Bank = bank;
-            this.IFSCCode = IfscNo;
-        }
+        //    this.BankUserName = bankusername;
+        //    this.AccNo = accno;
+        //    this.Bank = bank;
+        //    this.IFSCCode = IfscNo;
+        //}
 
         public Vendor(){ }
     }

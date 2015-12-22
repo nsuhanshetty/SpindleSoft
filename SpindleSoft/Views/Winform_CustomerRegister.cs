@@ -28,7 +28,7 @@ namespace SpindleSoft.Views
         }
 
         #region Events
-        private async void dgvCustomerRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvCustomerRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
 

@@ -39,6 +39,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.txtIfscNo = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtMobNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,12 +48,20 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rdbProd = new System.Windows.Forms.RadioButton();
+            this.rdnServ = new System.Windows.Forms.RadioButton();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cmbSectionType = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox4
@@ -64,10 +74,10 @@
             this.groupBox4.Controls.Add(this.cmbBankName);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.txtIfscNo);
-            this.groupBox4.Location = new System.Drawing.Point(9, 184);
+            this.groupBox4.Location = new System.Drawing.Point(9, 262);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(266, 128);
-            this.groupBox4.TabIndex = 1;
+            this.groupBox4.Size = new System.Drawing.Size(263, 130);
+            this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Bank Details";
             // 
@@ -159,6 +169,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Vendor Details";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(252, 75);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(11, 13);
+            this.label5.TabIndex = 101;
+            this.label5.Text = "*";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Red;
+            this.label7.Location = new System.Drawing.Point(252, 27);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(11, 13);
+            this.label7.TabIndex = 100;
+            this.label7.Text = "*";
+            // 
             // txtMobNo
             // 
             this.txtMobNo.Location = new System.Drawing.Point(94, 48);
@@ -216,16 +246,6 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.Color.Red;
-            this.label7.Location = new System.Drawing.Point(252, 27);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(11, 13);
-            this.label7.TabIndex = 100;
-            this.label7.Text = "*";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -236,22 +256,98 @@
             this.label3.TabIndex = 101;
             this.label3.Text = "*";
             // 
-            // label5
+            // groupBox2
             // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(252, 75);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(11, 13);
-            this.label5.TabIndex = 101;
-            this.label5.Text = "*";
+            this.groupBox2.Controls.Add(this.label13);
+            this.groupBox2.Controls.Add(this.cmbSectionType);
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Location = new System.Drawing.Point(9, 178);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(265, 78);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Product/ Service Details";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(11, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Section";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.rdnServ);
+            this.groupBox3.Controls.Add(this.rdbProd);
+            this.groupBox3.Location = new System.Drawing.Point(94, 14);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(156, 30);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            // 
+            // rdbProd
+            // 
+            this.rdbProd.AutoSize = true;
+            this.rdbProd.Checked = true;
+            this.rdbProd.Location = new System.Drawing.Point(11, 9);
+            this.rdbProd.Name = "rdbProd";
+            this.rdbProd.Size = new System.Drawing.Size(62, 17);
+            this.rdbProd.TabIndex = 0;
+            this.rdbProd.Text = "Product";
+            this.rdbProd.UseVisualStyleBackColor = true;
+            this.rdbProd.CheckedChanged += new System.EventHandler(this.rdbProd_CheckedChanged);
+            // 
+            // rdnServ
+            // 
+            this.rdnServ.AutoSize = true;
+            this.rdnServ.Location = new System.Drawing.Point(85, 9);
+            this.rdnServ.Name = "rdnServ";
+            this.rdnServ.Size = new System.Drawing.Size(61, 17);
+            this.rdnServ.TabIndex = 1;
+            this.rdnServ.Text = "Service";
+            this.rdnServ.UseVisualStyleBackColor = true;
+            this.rdnServ.CheckedChanged += new System.EventHandler(this.rdbProd_CheckedChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(11, 53);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Type ";
+            // 
+            // cmbSectionType
+            // 
+            this.cmbSectionType.FormattingEnabled = true;
+            this.cmbSectionType.Location = new System.Drawing.Point(94, 50);
+            this.cmbSectionType.Name = "cmbSectionType";
+            this.cmbSectionType.Size = new System.Drawing.Size(156, 21);
+            this.cmbSectionType.TabIndex = 1;
+            this.cmbSectionType.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSectionType_Validating);
+            this.cmbSectionType.Validated += new System.EventHandler(this.cmbSectionType_Validated);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(252, 53);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(11, 13);
+            this.label13.TabIndex = 102;
+            this.label13.Text = "*";
             // 
             // Winform_VendorDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 339);
+            this.ClientSize = new System.Drawing.Size(280, 416);
             this.ControlBox = false;
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox4);
@@ -261,11 +357,16 @@
             this.Controls.SetChildIndex(this.groupBox4, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.groupBox2, 0);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,5 +394,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton rdnServ;
+        private System.Windows.Forms.RadioButton rdbProd;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbSectionType;
+        private System.Windows.Forms.Label label13;
     }
 }
