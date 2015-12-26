@@ -71,33 +71,52 @@ namespace SpindleSoft.Views
         #region Events
         private async void dgvStaffRregister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
-            DialogResult _dialogResult = MessageBox.Show("Do you want to Modify the details of Staff " +
-                                         Convert.ToString(dgvStaffRregister.Rows[e.RowIndex].Cells[1].Value),
-                                         "Modify Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                                         MessageBoxDefaultButton.Button2);
-
-            if (_dialogResult == DialogResult.No) return;
-
-            int flags;
-            if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
+            Winform_AddSalary addSalary = Application.OpenForms["Winform_AddSalary"] as Winform_AddSalary;
+            if (addSalary != null)
             {
-                UpdateStatus("Checking for internet connection", 50);
-                UpdateStatus("Error connecting to Internet.", 0);
-                DialogResult dr = MessageBox.Show("Error connecting to Internet, Do you want to continue as some of the documents might be missing", "Error connecting to Internet", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                if (dr == DialogResult.No)
-                    return;
+                DialogResult _dialogResult = MessageBox.Show("Do you want to add Staff Details to Add Salary form",
+                                            "Add Staff Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                                            MessageBoxDefaultButton.Button2);
+
+                if (_dialogResult == DialogResult.No) return;
+
+                //todo: optimize
+                int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
+                SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
+
+                addSalary.UpdateStaffDetails(_staff);
+                this.Close();
             }
+            else
+            {
 
-            this.Cursor = Cursors.WaitCursor;
-            int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
-            SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
-            await PeoplePracticeBuilder.GetDocumentListAsync(_staff.SecurityDocuments);
-            //_staff.Image = await Utilities.Helper.GetDocumentAsync("/staff_ProfilePictures", _staff.ID.ToString());
+                DialogResult _dialogResult = MessageBox.Show("Do you want to Modify the details of Staff " +
+                                             Convert.ToString(dgvStaffRregister.Rows[e.RowIndex].Cells[1].Value),
+                                             "Modify Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                                             MessageBoxDefaultButton.Button2);
 
-            new Winform_StaffDetails(_staff).ShowDialog();
-            UpdateStatus("Ready", 0);
-            this.Cursor = Cursors.Arrow;
+                if (_dialogResult == DialogResult.No) return;
+
+                int flags;
+                if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
+                {
+                    UpdateStatus("Checking for internet connection", 50);
+                    UpdateStatus("Error connecting to Internet.", 0);
+                    DialogResult dr = MessageBox.Show("Error connecting to Internet, Do you want to continue as some of the documents might be missing", "Error connecting to Internet", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (dr == DialogResult.No)
+                        return;
+                }
+
+                this.Cursor = Cursors.WaitCursor;
+                int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
+                SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
+                await PeoplePracticeBuilder.GetDocumentListAsync(_staff.SecurityDocuments);
+                //_staff.Image = await Utilities.Helper.GetDocumentAsync("/staff_ProfilePictures", _staff.ID.ToString());
+
+                new Winform_StaffDetails(_staff).ShowDialog();
+                UpdateStatus("Ready", 0);
+                this.Cursor = Cursors.Arrow;
+            }
         }
         private void txtName_TextChanged(object sender, EventArgs e)
         {

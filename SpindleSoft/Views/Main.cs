@@ -446,6 +446,11 @@ namespace SpindleSoft
         }
         #endregion Custom
 
+        private void salaryDetailsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            new Winform_SalaryDetails().ShowDialog();
+        }
+
     }
 
 }

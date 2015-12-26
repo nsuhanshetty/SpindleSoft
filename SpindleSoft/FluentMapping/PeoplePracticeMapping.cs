@@ -39,15 +39,15 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Designation);
             Map(x => x.Type);
             Map(x => x.PayCycle);
-            References(x => x.Bank).Class<Bank>()
-                                    .Columns("BankID")
-                                    .Cascade.None();
             Map(x => x.BankUserName);
             Map(x => x.AccNo);
             Map(x => x.IfscCode);
             HasMany(x => x.SecurityDocuments).KeyColumn("StaffID")
                                                         .Inverse()
                                                         .Cascade.All();
+            References(x => x.Bank).Class<Bank>()
+                                  .Columns("BankID")
+                                  .Cascade.None();
         }
     }
 
@@ -63,10 +63,10 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.AccNo);
             Map(x => x.OfferingType);
             Map(x => x.IsProduct);
+            Map(x => x.IFSCCode);
             References(x => x.Bank).Class<Bank>()
                                    .Columns("BankID")
                                    .Cascade.None();
-            Map(x => x.IFSCCode);
         }
     }
 
@@ -79,4 +79,34 @@ namespace SpindleSoft.FluentMapping
         }
     }
 
+    class SalaryMapping : ClassMap<Salary>
+    {
+        public SalaryMapping()
+        {
+            Id(x => x.ID);
+            Map(x => x.DateOfSalary);
+            Map(x => x.TotalSalaryAmount);
+            HasMany(x => x.SalaryItemList).KeyColumn("SalaryID")
+                                          .Inverse()
+                                          .Cascade.All();
+            //References(x => x.Expense).Class<Expense>()
+            //                          .Columns("ExpenseID")
+            //                          .Cascade.None();
+        }
+    }
+
+    class SalaryItemMapping : ClassMap<SalaryItem>
+    {
+        public SalaryItemMapping()
+        {
+            Id(x => x.ID);
+            Map(x => x.Amount);
+            References(x => x.Staff).Class<Staff>()
+                                   .Columns("StaffID")
+                                   .Cascade.None();
+            References(x => x.Salary).Class<Salary>()
+                                   .Columns("SalaryID")
+                                   .Cascade.None();
+        }
+    }
 }

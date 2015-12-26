@@ -81,7 +81,7 @@ namespace SpindleSoft.Savers
                             return false;
 
                         session.Delete(cust);
-                        
+
                         tx.Commit();
                         return true;
                     }
@@ -148,10 +148,10 @@ namespace SpindleSoft.Savers
         public static async Task<bool> SaveStaffDocument(List<Document> docList, int _staffID)
         {
             if (docList.Count == 0) return true;
-            
+
             try
             {
-                var docListTasks = await Task.WhenAll(docList.Select(_doc => Utilities.Helper.UploadAsync(_doc.Image, 
+                var docListTasks = await Task.WhenAll(docList.Select(_doc => Utilities.Helper.UploadAsync(_doc.Image,
                     string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type))));
 
                 foreach (var docResult in docListTasks)
@@ -194,7 +194,7 @@ namespace SpindleSoft.Savers
         //    }
         //}
 
-        public static async  Task<bool> DeleteStaffDocument(int _ID)
+        public static async Task<bool> DeleteStaffDocument(int _ID)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -250,5 +250,75 @@ namespace SpindleSoft.Savers
         }
 
         #endregion Vendor
+
+        #region Salary
+        public static bool DeleteSalaryItem(int _id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    try
+                    {
+                        var item = session.Get<SalaryItem>(_id);
+                        session.Delete(item);
+                        trans.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public static bool SaveSalary(Salary _salary)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        foreach (SalaryItem _item in _salary.SalaryItemList)
+                        {
+                            _item.Salary = _salary;
+                        }
+
+                        //if (_salary.Expense == null)
+                        //{
+                        //    _salary.Expense = new Expense(_salary.DateOfSalary, new List<ExpenseItem>(), _salary.TotalSalaryAmount);
+                        //    _salary.Expense.ExpenseItems = new List<ExpenseItem>();
+                        //    foreach (var item in _salary.SalaryItemList)
+                        //    {
+                        //        _salary.Expense.ExpenseItems.Add(new ExpenseItem(true, item.Amount, "StaffSalary", "", _salary.Expense));
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    _salary.Expense.DateOfExpense = _salary.DateOfSalary;
+                        //    _salary.Expense.TotalAmount = _salary.TotalSalaryAmount;
+                        //    //foreach (var item in salaryList)
+                        //    //{
+                        //    //    _salary.Expense.ExpenseItems.(new ExpenseItem(true, item.Amount, "StaffSalary", "", _salary.Expense));
+                        //    //}
+                        //}
+
+                        session.SaveOrUpdate(_salary);
+                        transaction.Commit();
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return false;
+            }
+        }
+        #endregion Salary
     }
 }

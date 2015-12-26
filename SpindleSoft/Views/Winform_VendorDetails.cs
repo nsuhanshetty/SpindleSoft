@@ -157,7 +157,7 @@ namespace SpindleSoft.Views
                 if (this._vendor.OfferingType != null)
                     cmbSectionType.SelectedText = this._vendor.OfferingType;
             }
-        }
+        } 
 
         private void AutoCompletionSource(List<string> srcList, ComboBox cmb)
         {

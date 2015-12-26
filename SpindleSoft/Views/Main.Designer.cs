@@ -183,7 +183,7 @@
             this.addCustomerToolStripMenuItem1,
             this.customerRegisterToolStripMenuItem});
             this.addCustomerToolStripMenuItem.Name = "addCustomerToolStripMenuItem";
-            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.addCustomerToolStripMenuItem.Text = "&Customer";
             // 
             // addCustomerToolStripMenuItem1
@@ -207,7 +207,7 @@
             this.staffRegisterToolStripMenuItem,
             this.salaryRegisterToolStripMenuItem});
             this.searchCustomerToolStripMenuItem.Name = "searchCustomerToolStripMenuItem";
-            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.searchCustomerToolStripMenuItem.Text = "&Staff";
             // 
             // addStaffToolStripMenuItem
@@ -238,7 +238,7 @@
             this.addVendorToolStripMenuItem2,
             this.vendorRegisterToolStripMenuItem});
             this.addVendorToolStripMenuItem1.Name = "addVendorToolStripMenuItem1";
-            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
             this.addVendorToolStripMenuItem1.Text = "&Vendor";
             // 
             // addVendorToolStripMenuItem2
@@ -262,7 +262,7 @@
             this.groupRegisterToolStripMenuItem});
             this.groupsToolStripMenuItem.Enabled = false;
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.groupsToolStripMenuItem.Text = "&Groups";
             // 
             // addGroupsToolStripMenuItem
@@ -359,14 +359,14 @@
             // addCatalogueToolStripMenuItem
             // 
             this.addCatalogueToolStripMenuItem.Name = "addCatalogueToolStripMenuItem";
-            this.addCatalogueToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.addCatalogueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addCatalogueToolStripMenuItem.Text = "&Add Sale";
             this.addCatalogueToolStripMenuItem.Click += new System.EventHandler(this.addCatalogueToolStripMenuItem_Click);
             // 
             // SalesRegisterToolStripMenuItem
             // 
             this.SalesRegisterToolStripMenuItem.Name = "SalesRegisterToolStripMenuItem";
-            this.SalesRegisterToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.SalesRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.SalesRegisterToolStripMenuItem.Text = "&Sales Register";
             this.SalesRegisterToolStripMenuItem.Click += new System.EventHandler(this.SalesRegisterToolStripMenuItem_Click);
             // 
@@ -396,10 +396,10 @@
             // 
             // salaryDetailsToolStripMenuItem1
             // 
-            this.salaryDetailsToolStripMenuItem1.Enabled = false;
             this.salaryDetailsToolStripMenuItem1.Name = "salaryDetailsToolStripMenuItem1";
             this.salaryDetailsToolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
             this.salaryDetailsToolStripMenuItem1.Text = "Salary Details";
+            this.salaryDetailsToolStripMenuItem1.Click += new System.EventHandler(this.salaryDetailsToolStripMenuItem1_Click);
             // 
             // bulkSMSToolStripMenuItem
             // 

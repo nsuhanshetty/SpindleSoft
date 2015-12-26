@@ -95,7 +95,7 @@ namespace SpindleSoft.Model
 
         public Staff() { }
 
-        public Staff(string name, string mobNo, string phNo, string address="", int type=1)
+        public Staff(string name, string mobNo, string phNo, string address = "", int type = 1)
         {
             this.Name = name;
             this.Mobile_No = mobNo;
@@ -105,7 +105,37 @@ namespace SpindleSoft.Model
         }
     }
 
+    public class SalaryItem
+    {
+        public virtual int ID { get; set; }
 
+        public virtual Staff Staff { get; set; }
+
+        public virtual Salary Salary { get; set; }
+
+        public virtual decimal Amount { get; set; }
+
+        public SalaryItem() { }
+
+        public SalaryItem(Staff _staff, decimal _amount)
+        {
+            this.Staff = _staff;
+            this.Amount = _amount;
+        }
+    }
+
+    public class Salary
+    {
+        public virtual int ID { get; set; }
+
+        public virtual DateTime DateOfSalary { get; set; }
+
+        public virtual decimal TotalSalaryAmount { get; set; }
+
+        public virtual IList<SalaryItem> SalaryItemList { get; set; }
+
+        //public virtual Expense Expense { get; set; }
+    }
 
     public class Group
     {
@@ -118,7 +148,7 @@ namespace SpindleSoft.Model
 
     public class Vendor
     {
-        public virtual int ID{ get; set; }
+        public virtual int ID { get; set; }
 
         public virtual string Name { get; set; }
 
@@ -150,6 +180,6 @@ namespace SpindleSoft.Model
         //    this.IFSCCode = IfscNo;
         //}
 
-        public Vendor(){ }
+        public Vendor() { }
     }
 }
