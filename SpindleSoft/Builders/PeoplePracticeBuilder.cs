@@ -12,6 +12,8 @@ using log4net;
 using Dropbox.Api;
 using System.IO;
 using Dropbox.Api.Files;
+using System.Collections;
+using System.Configuration;
 //using NHibernate;
 
 namespace SpindleSoft.Builders
@@ -19,30 +21,40 @@ namespace SpindleSoft.Builders
     public class PeoplePracticeBuilder
     {
         //todo: appsettings not working for path
-        static string customerPicPath = "d:\\CustomerImages";
-        static string StaffImagePath = "d:\\StaffImages";
+        //static string customerPicPath = "d:\\CustomerImages";
+        //static string StaffImagePath = "d:\\StaffImages";
         //static string DocumentImagePath = "d:\\DocumentImages";
+
+        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+        static string StaffImagePath = ConfigurationManager.AppSettings["StaffImages"];
+        static string StaffDocImagePath = ConfigurationManager.AppSettings["StaffDocImages"];
+
 
         static ILog log = LogManager.GetLogger(typeof(PeoplePracticeBuilder));
 
         #region CustomerBuilder
-        public static List<Customer> GetCustomersList(string name = "", string mobileno = "", string phoneno = "")
+        public static IList GetCustomersList(string name = "", string mobileno = "", string phoneno = "")
         {
-            if (name == "" && mobileno == "" && phoneno == "") return null;
-
             using (var session = NHibernateHelper.OpenSession())
             {
-                Customer cust = null;
-                List<Customer> custList = session.QueryOver<Customer>(() => cust)
-                     .Where(NHibernate.Criterion.Restrictions.On(() => cust.Name).IsLike(name + "%"))
-                     .Where(NHibernate.Criterion.Restrictions.On(() => cust.Mobile_No).IsLike(mobileno + "%"))
-                     .Where(NHibernate.Criterion.Restrictions.On(() => cust.Phone_No).IsLike(phoneno + "%"))
-                     .Take(15)
-                     .List() as List<Customer>;
-
+                IList custList;
+                if (name == "" && mobileno == "" && phoneno == "")
+                {
+                    custList = (from c in session.Query<Customer>()
+                                join o in session.Query<Orders>() on c.ID equals o.Customer.ID
+                                where o.Status != 3 /* completed Orders*/
+                                orderby o.PromisedDate descending
+                                select new { c.ID, c.Name, c.Mobile_No, c.Phone_No }).Distinct().Take(25).ToList();
+                }
+                else
+                {
+                    custList = (from c in session.Query<Customer>()
+                                where (c.Name.StartsWith(name) && c.Mobile_No.StartsWith(mobileno) && c.Phone_No.StartsWith(phoneno))
+                                select new { c.ID, c.Name, c.Mobile_No, c.Phone_No }).Take(25).ToList();
+                }
                 return custList;
             }
-
         }
 
         public static Customer GetCustomerInfo(string mobNo)
@@ -105,7 +117,7 @@ namespace SpindleSoft.Builders
         {
             try
             {
-                using (Image image = Image.FromFile(customerPicPath + "\\" + _custID + ".png"))
+                using (Image image = Image.FromFile(CustomerImagePath + "\\" + _custID + ".png"))
                 {
                     Bitmap bitmap = new Bitmap(image);
                     return bitmap;
@@ -139,19 +151,22 @@ namespace SpindleSoft.Builders
         #endregion CustomerBuilder
 
         #region Staff
-        public static List<Staff> GetStaffList(string name = "", string mobNo = "", string phNo = "")
+        public static IList GetStaffList(string name = "", string mobNo = "", string phNo = "")
         {
-            List<Staff> staff = new List<Staff>();
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    staff = session.QueryOver<Staff>()
-                         .WhereRestrictionOn(c => c.Mobile_No).IsLike(mobNo + '%')
-                         .And(Restrictions.On<Staff>(c => c.Name).IsLike(name + '%'))
-                         .And(Restrictions.On<Staff>(c => c.Phone_No).IsLike(phNo + '%')).List() as List<Staff>;
+                    //staff = session.QueryOver<Staff>()
+                    //     .WhereRestrictionOn(c => c.Mobile_No).IsLike(mobNo + '%')
+                    //     .And(Restrictions.On<Staff>(c => c.Name).IsLike(name + '%'))
+                    //     .And(Restrictions.On<Staff>(c => c.Phone_No).IsLike(phNo + '%')).List() as List<Staff>;
+
+                    var staff = (from _staff in session.Query<Staff>()
+                                 where (_staff.Name.StartsWith(name) && _staff.Mobile_No.StartsWith(mobNo) && _staff.Phone_No.StartsWith(phNo))
+                                 select new { _staff.ID, _staff.Name, _staff.Mobile_No, _staff.Phone_No }).ToList();
+                    return staff;
                 }
-                return staff;
             }
             catch (Exception)
             {
@@ -175,7 +190,7 @@ namespace SpindleSoft.Builders
                         .Fetch(x => x.Bank).Eager
                         .Future().SingleOrDefault();
 
-                    staff.SecurityDocuments = session.QueryOver<Document>()
+                    staff.SecurityDocuments = session.QueryOver<SecurityDocument>()
                         .Where(x => (x.Staff.ID == _ID))
                         .Fetch(o => o.Staff).Eager
                         .Future().ToList();
@@ -206,13 +221,13 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static List<string> GetDocumentTypeList()
+        public static List<string> GetSecurityDocumentTypeList()
         {
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    List<string> _docList = (from s in session.Query<Document>()
+                    List<string> _docList = (from s in session.Query<SecurityDocument>()
                                              select s.Type).Distinct().ToList();
                     return _docList;
                 }
@@ -224,15 +239,16 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static async Task<IList<Document>> GetDocumentListAsync(IList<Document> docList)
+        public static async Task<IList<SecurityDocument>> GetDocumentListAsync(IList<SecurityDocument> docList)
         {
             //todo: shift the key to passConfig
             using (DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi"))
             {
                 try
                 {
-                    foreach (Document doc in docList)
+                    foreach (SecurityDocument doc in docList)
                     {
+
                         string dropfilePath = string.Format("/staffDocument/{0}_{1}.png", doc.Staff.ID, doc.Type);
                         var downloadedFileResponse = await dbx.Files.DownloadAsync(dropfilePath);
                         var downloadedFileStream = await downloadedFileResponse.GetContentAsStreamAsync();
@@ -249,6 +265,30 @@ namespace SpindleSoft.Builders
                 }
             }
             return docList;
+        }
+
+        public static void GetSecurityDocumentListLocal(IList<SecurityDocument> docList)
+        {
+            try
+            {
+                foreach (SecurityDocument doc in docList)
+                {
+                    string _fileName = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, StaffDocImagePath, doc.Staff.ID, doc.Type);
+                    if (File.Exists(_fileName))
+                    {
+                        using (var stream = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            doc.Image = Image.FromStream(stream);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+
+            //return docList;
         }
 
         public static List<string> GetDesignations()
@@ -273,20 +313,14 @@ namespace SpindleSoft.Builders
         #endregion Staff
 
         #region Vendor
-        public static List<Vendor> GetVendorsList(string name = "", string mobileno = "")
+        public static IList GetVendorsList(string name = "", string mobileno = "")
         {
-            List<Vendor> _vend = new List<Vendor>();
             using (var session = NHibernateHelper.OpenSession())
             {
-                Vendor vend = null;
-                List<Vendor> custList = (session.QueryOver<Vendor>(() => vend)
-                     .WhereRestrictionOn(c => c.Name).IsLike(name + '%')
-                     .WhereRestrictionOn(c => c.MobileNo).IsLike(mobileno + '%')
-                     )
-                     .List()
-                     as List<Vendor>; //.Take(15) 
-
-                return custList;
+                var _vendList = (from vend in session.Query<Vendor>()
+                                 where (vend.Name.StartsWith(name) && vend.MobileNo.StartsWith(mobileno))
+                                 select new { vend.ID, vend.Name, vend.MobileNo, vend.Address }).Take(20).ToList();
+                return _vendList;
             }
         }
 

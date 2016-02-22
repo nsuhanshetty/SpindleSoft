@@ -55,6 +55,8 @@
             // 
             // dtpSalary
             // 
+            this.dtpSalary.CustomFormat = "dd MMMM yyyy";
+            this.dtpSalary.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpSalary.Location = new System.Drawing.Point(335, 65);
             this.dtpSalary.Name = "dtpSalary";
             this.dtpSalary.Size = new System.Drawing.Size(136, 20);
@@ -70,7 +72,7 @@
             this.groupBox2.Size = new System.Drawing.Size(461, 213);
             this.groupBox2.TabIndex = 125;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Add Order Details";
+            this.groupBox2.Text = "Add Salary Details";
             // 
             // btnAddSalary
             // 
@@ -99,7 +101,7 @@
             this.dgvSalaryItems.ReadOnly = true;
             this.dgvSalaryItems.Size = new System.Drawing.Size(452, 156);
             this.dgvSalaryItems.TabIndex = 0;
-            this.dgvSalaryItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellContentClick);
+            this.dgvSalaryItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellContentClick);
             // 
             // StaffName
             // 
@@ -169,6 +171,7 @@
             this.Controls.Add(this.lblDateOfSalary);
             this.Name = "Winform_SalaryDetails";
             this.Text = "Salary Details";
+            this.Load += new System.EventHandler(this.Winform_SalaryDetails_Load);
             this.Controls.SetChildIndex(this.lblDateOfSalary, 0);
             this.Controls.SetChildIndex(this.dtpSalary, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);

@@ -15,48 +15,42 @@ namespace SpindleSoft.Views
     public partial class Winform_VendorsRegister : winform_Register
     {
         Vendor vendor = new Vendor();
+
+        #region Ctor
         public Winform_VendorsRegister()
         {
             InitializeComponent();
         }
+        #endregion Ctor
 
-        private void NewVendToolStrip_Click(object sender, EventArgs e)
+        #region Events
+        protected override void NewVendToolStrip_Click(object sender, EventArgs e)
         {
             new Winform_VendorDetails().ShowDialog();
+            dgvSearch_ReloadRegister(this, new EventArgs());
         }
 
-        public void LoadDgv()
-        {
-            var dgvValue =PeoplePracticeBuilder.GetVendorsList(txtName.Text, txtMobNo.Text);
-
-            if (dgvValue.Count == 0)
-            {
-                dgvSearch.DataSource = null;
-            }
-            else
-            {
-                var venList = (from vend in dgvValue select new { vend.ID, vend.Name, vend.MobileNo, vend.Address }).ToList();
-                dgvSearch.DataSource = venList;
-                dgvSearch.Columns["ID"].Visible = false;
-            }
-
-            UpdateStatus(dgvSearch.RowCount + " Results found.", 100);
-        }
-
-        private void txtName_TextChanged(object sender, EventArgs e)
+        private void dgvSearch_ReloadRegister(object sender, EventArgs e)
         {
             dgvSearch.DataSource = null;
-            if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text))
-            {
-                UpdateStatus("No Results found.", 100);
-                return;
-            }
-
             UpdateStatus("Searching..", 50);
             LoadDgv();
         }
 
-        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void Winform_VendorsRegister_Load(object sender, EventArgs e)
+        {
+            dgvSearch_ReloadRegister(this, new EventArgs());
+        }
+
+        private void dgvSearch_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvSearch_CellClick(this, new DataGridViewCellEventArgs(dgvSearch.CurrentCell.ColumnIndex, dgvSearch.CurrentCell.RowIndex));
+            }
+        }
+
+        private void dgvSearch_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
             var row = dgvSearch.Rows[e.RowIndex];
@@ -81,17 +75,67 @@ namespace SpindleSoft.Views
             }
             else
             {
-                DialogResult _dialogResult = MessageBox.Show("Do you want to Edit " +
-                                           Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value),
-                                           "Add Vendor Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                                           MessageBoxDefaultButton.Button2);
-                if (_dialogResult == DialogResult.No) return;
+                int vendID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString());
+                if (dgvSearch.Columns["colDelete"].Index == e.ColumnIndex)
+                {
+                    DialogResult dr = MessageBox.Show("Do you want to delete Vendor " + dgvSearch.Rows[e.RowIndex].Cells["Name"].Value + "?", "Delete Vendor", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.No) return;
 
-                vendor = PeoplePracticeBuilder.GetVendorInfo(int.Parse(dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString()));
-                new Winform_VendorDetails(vendor).ShowDialog();
+                    bool success = Savers.PeoplePracticeSaver.DeleteVendor(vendID);
+                    if (success)
+                    {
+                        dgvSearch_ReloadRegister(this, new EventArgs());
+                        UpdateStatus("Vendor Deleted.", 100);
+                    }
+                    else
+                    {
+                        UpdateStatus("Error deleting Vendor. ", 100);
+                    }
+                }
+                else
+                {
+                    bool _inEdit = false;
+                    if (dgvSearch.Columns["colEdit"].Index == e.ColumnIndex)
+                    {
+                        DialogResult _dialogResult = MessageBox.Show("Do you want to Edit " +
+                                                   Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value),
+                                                   "Add Vendor Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                                                   MessageBoxDefaultButton.Button2);
+                        if (_dialogResult == DialogResult.No) return;
+                        _inEdit = true;
+                    }
+
+                    vendor = PeoplePracticeBuilder.GetVendorInfo(vendID);
+                    new Winform_VendorDetails(vendor, _inEdit).ShowDialog();
+                    dgvSearch_ReloadRegister(this, new EventArgs());
+                }
+            }
+        }
+        #endregion Events
+
+        #region Custom
+        public void LoadDgv()
+        {
+            dgvSearch.DataSource = null;
+            var colEdit = dgvSearch.Columns["colEdit"];
+            var colDelete = dgvSearch.Columns["colDelete"];
+
+            var dgvValue = PeoplePracticeBuilder.GetVendorsList(txtName.Text, txtMobNo.Text);
+            if (dgvValue.Count == 0)
+            {
+                dgvSearch.DataSource = null;
+                colEdit.Visible = colDelete.Visible = false;
+            }
+            else
+            {
+                dgvSearch.DataSource = dgvValue;
+                dgvSearch.Columns["ID"].Visible = false;
+                colEdit.Visible = colDelete.Visible = true;
+                colDelete.DisplayIndex = colEdit.DisplayIndex = dgvSearch.Columns.Count - 1;
             }
 
+            UpdateStatus((dgvSearch.RowCount == 0) ? "No Results Found" : dgvSearch.RowCount + " Results Found", 100);
         }
-
+        #endregion Custom
     }
 }

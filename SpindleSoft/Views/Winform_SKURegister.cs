@@ -9,11 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_SKURegister : Form
     {
+        ILog log = LogManager.GetLogger(typeof(Winform_SKURegister));
         public Winform_SKURegister()
         {
             InitializeComponent();
@@ -40,16 +42,6 @@ namespace SpindleSoft.Views
             if (skulist == null || skulist.Count == 0) return;
             dgvSearch.DataSource = (from s in skulist
                                     select new { s.Name, s.ProductCode, s.Quantity, s.Size, s.Color, s.Material }).ToList();
-
-            //dgvSearch.Columns.Remove("ID");
-            //dgvSearch.Columns.Remove("IsSelfMade");
-            //dgvSearch.Columns.Remove("Description");
-            //dgvSearch.Columns.Remove("VendorID");
-            //dgvSearch.Columns.Remove("SellingPrice");
-            //dgvSearch.Columns.Remove("CostPrice");
-
-            //List<SaleItem> listSource =
-            //listSource.Select(x => new {Name= x.Name,ProductCode = x.ProductCode, Color = x.Color, Size = x.Size, Material = x.Material, Vendor = x.}
         }
 
         private void Winform_SKURegister_Load(object sender, EventArgs e)
@@ -75,30 +67,25 @@ namespace SpindleSoft.Views
 
         private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //load if the register is selected for add sku or edit sku
-            //Winform_SKURegister addSkuReg = Application.OpenForms["Winform_SKURegister"] as Winform_SKURegister;
-            //if (addSkuReg != null)
-            //    addSkuReg.txtName_TextChanged(this, new EventArgs());
-            //else
-            //{
-                try
-                {
-                    var procode = dgvSearch.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString();
-                    SKUItem _saleItem = SaleBuilder.GetSkuItemInfo(procode);
-                    if (_saleItem != null)
-                        new WinForm_SKUDetails(_saleItem).ShowDialog();
-                }
-                catch (Exception)
-                {
-                    //todo: log4net/ Spundle
-                }
-            //}
-
+            try
+            {
+                var procode = dgvSearch.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString();
+                SKUItem _saleItem = SaleBuilder.GetSkuItemInfo(procode);
+                if (_saleItem != null)
+                    new WinForm_SKUDetails(_saleItem).ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
-        //private void cmbSource_SelectionChangeCommitted(object sender, EventArgs e)
-        //{
-        //    //cmbVendorName.Visible= cmbSource.Text == "Self" ? false : true;
-        //}
+        private void dgvSearch_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvSearch_CellDoubleClick(this, new DataGridViewCellEventArgs(dgvSearch.CurrentCell.ColumnIndex, dgvSearch.CurrentCell.RowIndex));
+            }
+        }
     }
 }

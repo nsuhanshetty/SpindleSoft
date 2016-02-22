@@ -218,6 +218,7 @@
             this.dgvSearch.Size = new System.Drawing.Size(555, 279);
             this.dgvSearch.TabIndex = 7;
             this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
+            this.dgvSearch.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSearch_PreviewKeyDown);
             // 
             // Winform_SKURegister
             // 

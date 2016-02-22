@@ -25,7 +25,7 @@ namespace SpindleSoft.Views
             dgvExpense.Columns["colDelete"].Visible = false;
             expenseList = ExpenseBuilder.GetExpenses(dtpFromExpenseDate.Value, dtpToExpenseDate.Value);
             dgvExpense.DataSource = (from exp in expenseList
-                                     select new { ExpenseID = exp.ID, exp.DateOfExpense, exp.TotalAmount }).ToList();
+                                     select new { ExpenseID = exp.ID, exp.DateOfExpense.Date, exp.TotalAmount }).ToList();
 
             if (dgvExpense.Rows.Count != 0)
             {
@@ -99,11 +99,19 @@ namespace SpindleSoft.Views
         {
             if (e.RowIndex == -1 || dgvExpense.Rows.Count == 0) return;
             int expenseID = int.Parse(dgvExpense.Rows[e.RowIndex].Cells["ExpenseID"].Value.ToString());
-            
+
             var exp = ExpenseBuilder.GetExpenseInfo(expenseID);
             new Winform_ExpenseDetails(exp).ShowDialog();
 
             LoadExpenseDGV();
+        }
+
+        private void dgvExpense_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvExpense_CellDoubleClick(this, new DataGridViewCellEventArgs(dgvExpense.CurrentCell.ColumnIndex, dgvExpense.CurrentCell.RowIndex));
+            }
         }
     }
 }

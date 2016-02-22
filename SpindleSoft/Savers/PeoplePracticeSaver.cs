@@ -4,6 +4,7 @@ using log4net;
 using SpindleSoft.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -16,11 +17,13 @@ namespace SpindleSoft.Savers
     {
         static ILog log = LogManager.GetLogger(typeof(PeoplePracticeSaver));
 
-        static string CustomerImagePath = "/Customer_ProfilePictures";
-        static string StaffImagePath = "/Staff_ProfilePictures";
+        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+        static string StaffImagePath = ConfigurationManager.AppSettings["StaffImages"];
+        static string StaffDocImagePath = ConfigurationManager.AppSettings["StaffDocImages"];
 
         #region Customer
-        public static async Task<bool> SaveCustomerInfo(Customer _customer)
+        public static bool SaveCustomerInfo(Customer _customer)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -29,7 +32,7 @@ namespace SpindleSoft.Savers
                     try
                     {
                         session.SaveOrUpdate(_customer);
-                        bool response = _customer.ID != 0 ? await PeoplePracticeSaver.SaveCustomerImage(_customer.Image, _customer.ID) : false;
+                        bool response = _customer.ID != 0 ? PeoplePracticeSaver.SaveCustomerImage(_customer.Image, _customer.ID) : false;
                         if (!response)
                             return false;
 
@@ -46,19 +49,13 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static async Task<bool> SaveCustomerImage(Image image, int custID)
+        public static bool SaveCustomerImage(Image image, int custID)
         {
             if (image == null) return true;
-            string filePath = string.Format("{0}/{1}.png", CustomerImagePath, custID);
+            string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, custID);
             try
             {
-                //if (!System.IO.Directory.Exists(CustomerImagePath))
-                //    System.IO.Directory.CreateDirectory(CustomerImagePath);
-                //else if (System.IO.File.Exists(filePath))
-                //    System.IO.File.Delete(filePath);
-
-                //image.Save(filePath);
-                return await Utilities.Helper.UploadAsync(image, filePath);
+                return Utilities.Helper.UploadToLocal(image, filePath);
             }
             catch (Exception ex)
             {
@@ -67,7 +64,7 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static async Task<bool> DeleteCustomer(int custID)
+        public static bool DeleteCustomer(int custID)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -76,7 +73,8 @@ namespace SpindleSoft.Savers
                     try
                     {
                         Customer cust = session.Get<Customer>(custID);
-                        bool suceess = await Utilities.Helper.DeleteDocumentAsync(CustomerImagePath, custID.ToString());
+                        string _filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, custID);
+                        bool suceess = Utilities.Helper.DeleteDocumentLocal(_filePath);
                         if (!suceess)
                             return false;
 
@@ -96,7 +94,7 @@ namespace SpindleSoft.Savers
         #endregion Customer
 
         #region Staff
-        public static async Task<int> SaveStaffInfo(Staff staff)
+        public static int SaveStaffInfo(Staff staff)
         {
             try
             {
@@ -104,7 +102,7 @@ namespace SpindleSoft.Savers
                 {
                     using (var transaction = session.BeginTransaction())
                     {
-                        foreach (Document doc in staff.SecurityDocuments)
+                        foreach (SecurityDocument doc in staff.SecurityDocuments)
                         {
                             doc.Staff = staff;
                         }
@@ -115,7 +113,7 @@ namespace SpindleSoft.Savers
                         session.SaveOrUpdate(staff);
                         transaction.Commit();
 
-                        bool response = staff.ID != 0 ? await SaveStaffImage(staff.Image, staff.ID) : false;
+                        bool response = staff.ID != 0 ? SaveStaffImage(staff.Image, staff.ID) : false;
                         if (!response)
                             return 0;
                         return staff.ID;
@@ -130,13 +128,40 @@ namespace SpindleSoft.Savers
 
         }
 
-        public async static Task<bool> SaveStaffImage(Image image, int _ID)
+        public static bool DeleteStaff(int staffID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        string _filePath = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, staffID);
+                        bool success = Utilities.Helper.DeleteDocumentLocal(_filePath);
+                        Staff _staff = session.Get<Staff>(staffID);
+                        if (!success)
+                            return false;
+
+                        session.Delete(_staff);
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public static bool SaveStaffImage(Image image, int _ID)
         {
             if (image == null) return true;
-            string filePath = string.Format("{0}/{1}.png", StaffImagePath, _ID);
+            string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, _ID);
             try
             {
-                return await Utilities.Helper.UploadAsync(image, filePath);
+                return Utilities.Helper.UploadToLocal(image, filePath);
             }
             catch (Exception ex)
             {
@@ -145,13 +170,13 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static async Task<bool> SaveStaffDocument(List<Document> docList, int _staffID)
+        public static async Task<bool> SaveStaffDocumentWebAsync(List<SecurityDocument> docList, int _staffID)
         {
             if (docList.Count == 0) return true;
 
             try
             {
-                var docListTasks = await Task.WhenAll(docList.Select(_doc => Utilities.Helper.UploadAsync(_doc.Image,
+                var docListTasks = await Task.WhenAll(docList.Select(_doc => Utilities.Helper.UploadToWebAsync(_doc.Image,
                     string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type))));
 
                 foreach (var docResult in docListTasks)
@@ -167,34 +192,27 @@ namespace SpindleSoft.Savers
             }
         }
 
-        //private static async Task<bool> Upload(Image doc, string dropfilePath)
-        //{
-        //    string tempfileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".png";
-        //    doc.Save(tempfileName);
+        public static bool SaveStaffDocumentLocal(List<SecurityDocument> docList, int _staffID)
+        {
+            if (docList.Count == 0) return true;
 
-        //    using (var mem = new FileStream(tempfileName, FileMode.Open))
-        //    {
-        //        //todo: shift and fetch from passsword-appconfig;
-        //        DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi");
-        //        try
-        //        {
-        //            var updated = await dbx.Files.UploadAsync(dropfilePath, WriteMode.Overwrite.Instance, body: mem).ConfigureAwait(false);
-        //            return true;
-        //        }
-        //        catch (ApiException<UploadError> apiEx)
-        //        {
-        //            log.Error(apiEx);
-        //            return false;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            log.Error(ex);
-        //            return false;
-        //        }
-        //    }
-        //}
+            try
+            {
+                foreach (var doc in docList)
+                {
+                    string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, StaffDocImagePath, _staffID, doc.Type);
+                    bool success = Utilities.Helper.UploadToLocal(doc.Image, filePath);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return false;
+            }
+        }
 
-        public static async Task<bool> DeleteStaffDocument(int _ID)
+        public static bool DeleteStaffDocument(int _ID)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -202,9 +220,10 @@ namespace SpindleSoft.Savers
                 {
                     try
                     {
-                        //todo : Delete document from dropbox on delete
                         Document doc = session.Get<Document>(_ID);
-                        bool suceess = await Utilities.Helper.DeleteDocumentAsync("/staffDocument", string.Format("{0}_{1}", _ID, doc.Type));
+
+                        string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, StaffDocImagePath, _ID, doc.Type);
+                        bool suceess = Utilities.Helper.DeleteDocumentLocal(filePath);
                         if (!suceess)
                             return false;
                         session.Delete(doc);
@@ -249,20 +268,17 @@ namespace SpindleSoft.Savers
             }
         }
 
-        #endregion Vendor
-
-        #region Salary
-        public static bool DeleteSalaryItem(int _id)
+        public static bool DeleteVendor(int _vendID)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
-                using (var trans = session.BeginTransaction())
+                using (var tx = session.BeginTransaction())
                 {
                     try
                     {
-                        var item = session.Get<SalaryItem>(_id);
-                        session.Delete(item);
-                        trans.Commit();
+                        Vendor _vend = session.Get<Vendor>(_vendID);
+                        session.Delete(_vend);
+                        tx.Commit();
                         return true;
                     }
                     catch (Exception ex)
@@ -273,52 +289,6 @@ namespace SpindleSoft.Savers
                 }
             }
         }
-
-        public static bool SaveSalary(Salary _salary)
-        {
-            try
-            {
-                using (var session = NHibernateHelper.OpenSession())
-                {
-                    using (var transaction = session.BeginTransaction())
-                    {
-                        foreach (SalaryItem _item in _salary.SalaryItemList)
-                        {
-                            _item.Salary = _salary;
-                        }
-
-                        //if (_salary.Expense == null)
-                        //{
-                        //    _salary.Expense = new Expense(_salary.DateOfSalary, new List<ExpenseItem>(), _salary.TotalSalaryAmount);
-                        //    _salary.Expense.ExpenseItems = new List<ExpenseItem>();
-                        //    foreach (var item in _salary.SalaryItemList)
-                        //    {
-                        //        _salary.Expense.ExpenseItems.Add(new ExpenseItem(true, item.Amount, "StaffSalary", "", _salary.Expense));
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    _salary.Expense.DateOfExpense = _salary.DateOfSalary;
-                        //    _salary.Expense.TotalAmount = _salary.TotalSalaryAmount;
-                        //    //foreach (var item in salaryList)
-                        //    //{
-                        //    //    _salary.Expense.ExpenseItems.(new ExpenseItem(true, item.Amount, "StaffSalary", "", _salary.Expense));
-                        //    //}
-                        //}
-
-                        session.SaveOrUpdate(_salary);
-                        transaction.Commit();
-
-                        return true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                return false;
-            }
-        }
-        #endregion Salary
+        #endregion Vendor
     }
 }

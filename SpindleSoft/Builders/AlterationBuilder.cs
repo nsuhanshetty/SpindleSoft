@@ -44,24 +44,30 @@ namespace SpindleSoft.Builders
             List<Alteration> altList = new List<Alteration>();
             int id;
             int.TryParse(altId, out id);
-            //Alteration altAlias = null;
-            //Customer custAlias = null;
 
             using (var session = NHibernateHelper.OpenSession())
             {
-                //todo : convert to Linq
-                var sqlQuery = session.CreateSQLQuery("select a.ID,a.TotalPrice,a.CurrentPayment,a.PromisedDate from alteration a " +
-                             "join customer c on c.ID = a.CustomerID " +
-                             "where c.Name like :custname  and c.Mobile_No like :custMobNo and a.ID like :altID")
-                             .SetParameter("custname", name + '%')
-                             .SetParameter("custMobNo", mobNo + '%')
-                             .SetParameter("altID", altId + '%')
-                             .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Alteration)));
-                //var query = session.QueryOver<Alteration>(() => altAlias)
-                //    .JoinAlias(() => altAlias.Customer,() => custAlias)
-                //    .Where(() => custAlias.Name )
+                if (mobNo == "" && name == "" && altId == "")
+                {
+                    altList = (from cust in session.Query<Customer>()
+                                 join alt in session.Query<Alteration>() on cust.ID equals alt.Customer.ID
+                                 orderby alt.PromisedDate descending
+                                 select alt).Take(25).ToList();
+                    return altList;
+                }
+                else
+                {
+                    //todo : convert to Linq
+                    var sqlQuery = session.CreateSQLQuery("select a.ID,a.TotalPrice,a.CurrentPayment,a.PromisedDate from alteration a " +
+                                 "join customer c on c.ID = a.CustomerID " +
+                                 "where c.Name like :custname  and c.Mobile_No like :custMobNo and a.ID like :altID")
+                                 .SetParameter("custname", name + '%')
+                                 .SetParameter("custMobNo", mobNo + '%')
+                                 .SetParameter("altID", altId + '%')
+                                 .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Alteration)));
 
-                return altList = sqlQuery.List<Alteration>() as List<Alteration>;
+                    return altList = sqlQuery.List<Alteration>() as List<Alteration>;
+                }
             }
         }
 

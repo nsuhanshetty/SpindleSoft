@@ -28,7 +28,7 @@
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>42</ApplicationRevision>
+    <ApplicationRevision>45</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -171,7 +171,7 @@
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
     <Compile Include="Builders\SaleBuilder.cs" />
-    <Compile Include="FluentMapping\DocumentMapping.cs" />
+    <Compile Include="FluentMapping\SecurityDocumentMapping.cs" />
     <Compile Include="FluentMapping\ExpenseMapping.cs" />
     <Compile Include="FluentMapping\OrdersMapping.cs" />
     <Compile Include="FluentMapping\SaleMapping.cs" />
@@ -195,6 +195,7 @@
     <Compile Include="Savers\FormUpload.cs" />
     <Compile Include="Savers\PeoplePracticeSaver.cs" />
     <Compile Include="Savers\SalesSaver.cs" />
+    <Compile Include="Utilities\BitmapImage.cs" />
     <Compile Include="Utilities\Helper.cs" />
     <Compile Include="Utilities\Validation.cs" />
     <Compile Include="Views\Main.cs">
@@ -210,6 +211,12 @@
     </Compile>
     <Compile Include="Views\DesignControl.Designer.cs">
       <DependentUpon>DesignControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_About.Designer.cs">
+      <DependentUpon>Winform_About.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_AlterationItemDetails.cs">
       <SubType>Form</SubType>
@@ -391,11 +398,11 @@
     <Compile Include="Views\Winform_OrderStatus.Designer.cs">
       <DependentUpon>Winform_OrderStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\WinForm_Abstract.cs">
+    <Compile Include="Views\Winform_DetailsFormat.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\WinForm_Abstract.Designer.cs">
-      <DependentUpon>WinForm_Abstract.cs</DependentUpon>
+    <Compile Include="Views\Winform_DetailsFormat.Designer.cs">
+      <DependentUpon>Winform_DetailsFormat.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_OrderType.cs">
       <SubType>Form</SubType>
@@ -545,8 +552,8 @@
     <EmbeddedResource Include="Views\Winform_OrderStatus.resx">
       <DependentUpon>Winform_OrderStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForm_Abstract.resx">
-      <DependentUpon>WinForm_Abstract.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Winform_DetailsFormat.resx">
+      <DependentUpon>Winform_DetailsFormat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_OrderType.resx">
       <DependentUpon>Winform_OrderType.cs</DependentUpon>

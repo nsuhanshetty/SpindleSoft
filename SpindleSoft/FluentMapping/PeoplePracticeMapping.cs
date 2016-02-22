@@ -89,9 +89,9 @@ namespace SpindleSoft.FluentMapping
             HasMany(x => x.SalaryItemList).KeyColumn("SalaryID")
                                           .Inverse()
                                           .Cascade.All();
-            //References(x => x.Expense).Class<Expense>()
-            //                          .Columns("ExpenseID")
-            //                          .Cascade.None();
+            References(x => x.Expense).Class<Expense>()
+                                      .Columns("ExpenseID")
+                                      .Cascade.None();
         }
     }
 

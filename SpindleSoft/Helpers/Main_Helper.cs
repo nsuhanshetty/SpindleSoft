@@ -26,11 +26,13 @@ namespace SpindleSoft.Helpers
             switch (searchState)
             {
                 case "Customer":
-                    List<Customer> _custList = PeoplePracticeBuilder.GetCustomersList("", searchText, "");
+                    //List<Customer> _custList = PeoplePracticeBuilder.GetCustomersList("", searchText, "");
+                    var _custList = PeoplePracticeBuilder.GetCustomersList("", searchText, "");
                     if (_custList != null && _custList.Count != 0)
                     {
-                        searchList = (from cust in _custList
-                                      select new { cust.ID, cust.Name, cust.Mobile_No }).ToList();
+                        //searchList = (from cust in _custList
+                        //              select new { cust.ID, cust.Name, cust.Mobile_No }).ToList();
+                        searchList = _custList;
                     }
                     break;
                 case "Sales":
@@ -43,16 +45,9 @@ namespace SpindleSoft.Helpers
                     break;
                 case "Order":
                     {
-                        List<Orders> ordersList = (OrderBuilder.GetOrdersList("", "", searchText));
+                        IList ordersList = (OrderBuilder.GetOrdersList("", "", searchText));
                         if (ordersList != null && ordersList.Count != 0)
-                            searchList = (from order in ordersList
-                                          select new
-                                          {
-                                              order.ID,
-                                              Total = order.TotalPrice,
-                                              Paid = order.CurrentPayment,
-                                              DueDate = order.PromisedDate.ToString("dd/MMM/yy")
-                                          }).ToList();
+                            searchList = ordersList;
                     }
                     break;
                 case "Alteration":
@@ -60,11 +55,13 @@ namespace SpindleSoft.Helpers
                         List<Alteration> altList = (AlterationBuilder.GetAlterationList("", "", searchText));
                         if (altList != null && altList.Count != 0)
                             searchList = (from alt in altList
-                                          select new { alt.ID,
-                                                       Total = alt.TotalPrice, 
-                                                       Paid = alt.CurrentPayment, 
-                                                       DueDate = alt.PromisedDate
-                                                    }).ToList();
+                                          select new
+                                          {
+                                              alt.ID,
+                                              Total = alt.TotalPrice,
+                                              Paid = alt.CurrentPayment,
+                                              DueDate = alt.PromisedDate
+                                          }).ToList();
                     }
                     break;
 

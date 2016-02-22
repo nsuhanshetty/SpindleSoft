@@ -66,7 +66,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(315, 24);
+            this.label2.Location = new System.Drawing.Point(203, 24);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(46, 13);
             this.label2.TabIndex = 135;
@@ -74,9 +74,11 @@
             // 
             // dtpToExpenseDate
             // 
-            this.dtpToExpenseDate.Location = new System.Drawing.Point(367, 19);
+            this.dtpToExpenseDate.CustomFormat = "dd MMM yyyy";
+            this.dtpToExpenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpToExpenseDate.Location = new System.Drawing.Point(255, 19);
             this.dtpToExpenseDate.Name = "dtpToExpenseDate";
-            this.dtpToExpenseDate.Size = new System.Drawing.Size(138, 20);
+            this.dtpToExpenseDate.Size = new System.Drawing.Size(102, 20);
             this.dtpToExpenseDate.TabIndex = 134;
             // 
             // label4
@@ -90,9 +92,11 @@
             // 
             // dtpFromExpenseDate
             // 
+            this.dtpFromExpenseDate.CustomFormat = "dd MMM yyyy";
+            this.dtpFromExpenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFromExpenseDate.Location = new System.Drawing.Point(75, 19);
             this.dtpFromExpenseDate.Name = "dtpFromExpenseDate";
-            this.dtpFromExpenseDate.Size = new System.Drawing.Size(138, 20);
+            this.dtpFromExpenseDate.Size = new System.Drawing.Size(102, 20);
             this.dtpFromExpenseDate.TabIndex = 132;
             this.dtpFromExpenseDate.ValueChanged += new System.EventHandler(this.dtpExpenseDate_ValueChanged);
             // 
@@ -168,6 +172,7 @@
             this.dgvExpense.TabIndex = 0;
             this.dgvExpense.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpense_CellClick);
             this.dgvExpense.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpense_CellDoubleClick);
+            this.dgvExpense.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvExpense_PreviewKeyDown);
             // 
             // colDelete
             // 

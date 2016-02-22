@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Linq;
 using SpindleSoft.Savers;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace SpindleSoft.Views
 {
@@ -19,34 +20,34 @@ namespace SpindleSoft.Views
     {
         Customer _cust = new Customer();
         Customer refCust = new Customer();
+
+        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+
+        #region Ctor
         public WinForm_CustomerDetails()
         {
             InitializeComponent();
+            this.InEdit = true;
         }
 
-        public WinForm_CustomerDetails(Customer _cust)
+        public WinForm_CustomerDetails(Customer _cust, bool inEdit = false)
         {
+            this._cust = _cust;
+            this.InEdit = inEdit;
+
             InitializeComponent();
-
-            this._cust = _cust;           
-        }
-
-        #region Events
-        private void AddReferralToolStrip_Click(object sender, EventArgs e)
-        {
-            new Winform_AddCustomer().ShowDialog();
-        }
-
-        private void MeasurementDetailsToolStrip_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtMobNo.Text))
+            if (!InEdit)
             {
-                MessageBox.Show("");
-                return;
+                DisableWinFormControls(this);
+                this.Enabled = true;
+                this.ControlBox = true;
             }
         }
+        #endregion Ctor
 
-        private async void WinForm_CustomerDetails_Load(object sender, EventArgs e)
+        #region Events
+        private void WinForm_CustomerDetails_Load(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             this.toolStripParent.Items.Add(this.AddReferralToolStrip);
@@ -58,15 +59,18 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtPhoneNo.Text = _cust.Phone_No;
 
-            refCust = PeoplePracticeBuilder.GetCustomerInfo(_cust.ReferralID);
-            if (refCust != null && refCust.ReferralID != 0)
-                await UpdateCustomerControl(this.refCust);
+            if (_cust.ReferralID != 0)
+            {
+                refCust = PeoplePracticeBuilder.GetCustomerInfo(_cust.ReferralID);
+                UpdateCustomerControl(this.refCust);
+            }
 
-            pcbCustImage.Image = this._cust.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", this._cust.ID.ToString());
+            string _fileName = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
+            pcbCustImage.Image = this._cust.Image = Utilities.Helper.GetDocumentLocal(_fileName);
             Cursor.Current = Cursors.Arrow;
         }
 
-        private void btnCapture_Click_1(object sender, EventArgs e)
+        private void btnCapture_Click(object sender, EventArgs e)
         {
             Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbCustImage);
             _imageCapture.ShowDialog();
@@ -81,19 +85,18 @@ namespace SpindleSoft.Views
                     return;
             };
 
+            this.InEdit = false;
             this.Close();
         }
 
-        protected async override void SaveToolStrip_Click(object sender, EventArgs e)
+        protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            //need to handle this situation well
             string[] input = { "txtPhoneNo", "txtAddress", "txtEmailID", "pcbCustImage", "txtRefMob", "txtRefName", "pcbReferral" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
             {
                 return;
             }
 
-            //todo: use delegate to cut overhead of UpdateStatus();
             UpdateStatus("Saving..", 25);
             this._cust.Name = txtName.Text;
             this._cust.Mobile_No = txtMobNo.Text;
@@ -105,12 +108,11 @@ namespace SpindleSoft.Views
                 this._cust.ReferralID = refCust.ID;
 
             UpdateStatus("Saving..", 50);
-            bool response = await PeoplePracticeSaver.SaveCustomerInfo(this._cust);
+            bool response = PeoplePracticeSaver.SaveCustomerInfo(this._cust);
 
             if (response)
             {
                 UpdateStatus("Customer Saved", 100);
-
                 DialogResult dr = MessageBox.Show("Send SMS to customer regarding the registration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
@@ -126,6 +128,11 @@ namespace SpindleSoft.Views
             Winform_AddCustomer addCust = Application.OpenForms["Winform_AddCustomer"] as Winform_AddCustomer;
             if (addCust != null)
                 addCust.LoadDgv();
+        }
+
+        private void AddReferralToolStrip_Click(object sender, EventArgs e)
+        {
+            new Winform_AddCustomer().ShowDialog();
         }
         #endregion Events
 
@@ -209,24 +216,28 @@ namespace SpindleSoft.Views
         }
         #endregion _Validations
 
-        private async Task LoadReferral()
+        #region Custom
+        private void LoadReferral()
         {
             if (refCust == null) return;
 
+            string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, refCust.ID);
             txtRefMob.Text = refCust.Mobile_No;
             txtRefName.Text = refCust.Name;
-            pcbReferral.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", refCust.ID.ToString());
+            pcbReferral.Image = Utilities.Helper.GetDocumentLocal(filePath);
         }
 
-        public async Task UpdateCustomerControl(Customer refCustomer)
+        public void UpdateCustomerControl(Customer refCustomer)
         {
             if (refCustomer == null) return;
 
+            string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, refCustomer.ID);
             this.refCust = refCustomer;
 
             txtRefName.Text = refCustomer.Name;
             txtRefMob.Text = refCustomer.Mobile_No;
-            pcbReferral.Image = refCustomer.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", refCust.ID.ToString());
+            pcbReferral.Image = refCustomer.Image = Utilities.Helper.GetDocumentLocal(filePath);
         }
+        #endregion Custom
     }
 }

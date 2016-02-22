@@ -98,7 +98,7 @@ namespace SpindleSoft.Views
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", this._cust.ID.ToString());//this._cust.Image;// = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
+            pcbCustImage.Image = await Utilities.Helper.GetDocumentWebAsync("/customer_ProfilePictures", this._cust.ID.ToString());//this._cust.Image;// = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomerImage(_cust.ID);
         }
 
         internal void UpdateOrderItemList(OrderItem _item, int _index)

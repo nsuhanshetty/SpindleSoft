@@ -10,13 +10,16 @@ using System.Linq;
 using SpindleSoft.Builders;
 using Dropbox.Api;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_StaffDetails : Winform_DetailsFormat
     {
-        Staff _staff;
-        List<Document> docList = new List<Document>();
+        Staff _staff = new Staff();
+        List<SecurityDocument> docList = new List<SecurityDocument>();
+        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+        static string StaffImagePath = ConfigurationManager.AppSettings["StaffImages"];
 
         #region Ctor
         public Winform_StaffDetails()
@@ -24,48 +27,17 @@ namespace SpindleSoft.Views
             InitializeComponent();
         }
 
-        public Winform_StaffDetails(Staff _staff)
+        public Winform_StaffDetails(Staff _staff, bool inEdit = false)
         {
-            InitializeComponent();
-
             this._staff = _staff;
+            this.InEdit = inEdit;
 
-            /*Load Controls*/
-            txtAddress.Text = _staff.Address;
-            txtMobNo.Text = _staff.Mobile_No;
-            txtName.Text = _staff.Name;
-            txtPhoneNo.Text = _staff.Phone_No;
-            //pcbStaffImage.Image = _staff.Image;
-            txtDesignation.Text = _staff.Designation;
-
-            txtUserBankName.Text = _staff.BankUserName;
-            txtAccNo.Text = _staff.AccNo;
-            txtIFSCNo.Text = _staff.IfscCode;
-
-            if (_staff.Type == 1)
-                rdbPerm.Checked = true;
-            else if (_staff.Type == 2)
-                rdbTemp.Checked = true;
-            else
-                rdbOSrc.Checked = true;
-
-            if (_staff.PayCycle == 1)
-                rdbMonth.Checked = true;
-            else if (_staff.PayCycle == 2)
-                rdbWeek.Checked = true;
-            else
-                rdbDay.Checked = true;
-
-            if (_staff.SecurityDocuments != null && _staff.SecurityDocuments.Count != 0)
+            InitializeComponent();
+            if (!InEdit)
             {
-                docList = _staff.SecurityDocuments as List<Document>;
-                foreach (Document doc in _staff.SecurityDocuments)
-                {
-                    int index = _staff.SecurityDocuments.IndexOf(doc);
-                    dgvSecurityDoc.Rows.Add();
-
-                    dgvSecurityDoc.Rows[index].Cells["colDocType"].Value = doc.Type;
-                }
+                DisableWinFormControls(this);
+                this.Enabled = true;
+                this.ControlBox = true;
             }
         }
         #endregion Ctor
@@ -106,29 +78,13 @@ namespace SpindleSoft.Views
             }
         }
 
-        //private void txtAddress_Validating(object sender, CancelEventArgs e)
-        //{
-        //    if (String.IsNullOrEmpty(txtAddress.Text))
-        //    {
-        //        string errorMsg = "Address field is mandatory";
-        //        errorProvider1.SetError(txtAddress, errorMsg);
-        //        e.Cancel = true;
-        //        txtMobNo.Select(0, txtAddress.TextLength);
-        //    }
-        //    else
-        //    {
-        //        errorProvider1.SetError(txtAddress, "");
-        //    }
-        //}
-
         private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
         {
             if (txtPhoneNo.Text == String.Empty)
                 return;
 
             Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Phone Number\n" +
-  " For example '8012345678'";
+            string errorMsg = _match.Success ? "" : "Invalid Input for Phone Number\n" + " For example '8012345678'";
             errorProvider1.SetError(txtPhoneNo, errorMsg);
 
             if (errorMsg != "")
@@ -158,15 +114,15 @@ namespace SpindleSoft.Views
             this.Close();
         }
 
-        protected async override void SaveToolStrip_Click(object sender, EventArgs e)
+        protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            int flags;
-            if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
-            {
-                MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                UpdateStatus("Error connecting to Internet.", 0);
-                return;
-            }
+            //int flags;
+            //if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
+            //{
+            //    MessageBox.Show("Error connecting to Internet, check the network and try again.", "Error connecting to Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    UpdateStatus("Error connecting to Internet.", 0);
+            //    return;
+            //}
 
             string[] input = { "txtPhoneNo", "pcbStaffImage", "txtAddress", "txtUserBankName", "cmbBankName", "txtAccNo", "txtIFSCNo" };
             if (Utilities.Validation.IsNullOrEmpty(this, true, new List<string>(input)))
@@ -202,13 +158,13 @@ namespace SpindleSoft.Views
             UpdateStatus("Saving..", 25);
 
             UpdateStatus("Saving Staff Info..", 50);
-            int _ID = await PeoplePracticeSaver.SaveStaffInfo(this._staff);
+            int _ID = PeoplePracticeSaver.SaveStaffInfo(this._staff);
 
             bool response = false;
             if (_ID != 0)
             {
                 UpdateStatus("Saving Staff Documents..", 75);
-                response = await PeoplePracticeSaver.SaveStaffDocument(docList, _ID);
+                response = PeoplePracticeSaver.SaveStaffDocumentLocal(docList, _ID);
             }
 
             if (response)
@@ -221,9 +177,8 @@ namespace SpindleSoft.Views
                 UpdateStatus("Error Saving Staff Details", 100);
             }
         }
-        #endregion events
 
-        private async void dgvSecurityDoc_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvSecurityDoc_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
 
@@ -238,7 +193,6 @@ namespace SpindleSoft.Views
                 DialogResult dr = MessageBox.Show("Continue Editing the Documents?", "Edit Document", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
-                    //open document
                     new Winform_DocumentDetails(_staff.SecurityDocuments[e.RowIndex]).ShowDialog();
                 }
             }
@@ -256,7 +210,7 @@ namespace SpindleSoft.Views
                     {
                         bool success = false;
                         if (docList[e.RowIndex].ID != 0)
-                            success = await PeoplePracticeSaver.DeleteStaffDocument(docList[e.RowIndex].ID);
+                            success = PeoplePracticeSaver.DeleteStaffDocument(docList[e.RowIndex].ID);
 
                         if (success || docList[e.RowIndex].ID == 0)
                         {
@@ -264,7 +218,7 @@ namespace SpindleSoft.Views
                         }
                         else
                         {
-                            MessageBox.Show("Could not delete the Item. Soemthing Nasty happened!!");
+                            MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
                             return;
                         }
                     }
@@ -273,12 +227,48 @@ namespace SpindleSoft.Views
             }
         }
 
-        private async void Winform_StaffDetails_Load(object sender, EventArgs e)
+        private void Winform_StaffDetails_Load(object sender, EventArgs e)
         {
-            List<string> docTypeList = PeoplePracticeBuilder.GetDocumentTypeList();
+            List<string> docTypeList = PeoplePracticeBuilder.GetSecurityDocumentTypeList();
 
+            /*Load Controls*/
+            txtAddress.Text = _staff.Address;
+            txtMobNo.Text = _staff.Mobile_No;
+            txtName.Text = _staff.Name;
+            txtPhoneNo.Text = _staff.Phone_No;
+            txtDesignation.Text = _staff.Designation;
 
-            /*txtDesignation*/
+            txtUserBankName.Text = _staff.BankUserName;
+            txtAccNo.Text = _staff.AccNo;
+            txtIFSCNo.Text = _staff.IfscCode;
+
+            if (_staff.Type == 1)
+                rdbPerm.Checked = true;
+            else if (_staff.Type == 2)
+                rdbTemp.Checked = true;
+            else
+                rdbOSrc.Checked = true;
+
+            if (_staff.PayCycle == 1)
+                rdbMonth.Checked = true;
+            else if (_staff.PayCycle == 2)
+                rdbWeek.Checked = true;
+            else
+                rdbDay.Checked = true;
+
+            if (_staff.SecurityDocuments != null && _staff.SecurityDocuments.Count != 0)
+            {
+                docList = _staff.SecurityDocuments as List<SecurityDocument>;
+                foreach (SecurityDocument doc in _staff.SecurityDocuments)
+                {
+                    int index = _staff.SecurityDocuments.IndexOf(doc);
+                    dgvSecurityDoc.Rows.Add();
+
+                    dgvSecurityDoc.Rows[index].Cells["colDocType"].Value = doc.Type;
+                }
+            }
+
+            /*Binding txtDesignation*/
             string[] designationArray = PeoplePracticeBuilder.GetDesignations().ToArray();
             var designationCollection = new AutoCompleteStringCollection();
             designationCollection.AddRange(designationArray);
@@ -287,7 +277,7 @@ namespace SpindleSoft.Views
             txtDesignation.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtDesignation.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-            /*cmbBankName*/
+            /*Binding cmbBankName*/
             List<Bank> BankList = PeoplePracticeBuilder.GetBankNames();
             cmbBankName.DataSource = BankList;
             cmbBankName.DisplayMember = "Name";
@@ -306,7 +296,11 @@ namespace SpindleSoft.Views
                 cmbBankName.SelectedText = this._staff.Bank.Name;
 
             if (_staff != null)
-                pcbStaffImage.Image = _staff.Image = await Utilities.Helper.GetDocumentAsync("/staff_ProfilePictures", _staff.ID.ToString());
+            {
+                string _filePath = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, _staff.ID);
+                //todo: Shift getting images to Builder function
+                pcbStaffImage.Image = _staff.Image = Utilities.Helper.GetDocumentLocal(_filePath);
+            }
         }
 
         private void dgvSecurityDoc_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -320,6 +314,16 @@ namespace SpindleSoft.Views
             new Winform_DocumentDetails().ShowDialog();
         }
 
+        private void txtDesignation_Validated(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtDesignation.Text))
+            {
+                txtDesignation.Text = Utilities.Validation.ToTitleCase(txtDesignation.Text);
+            }
+        }
+        #endregion events
+
+        #region Custom
         internal bool UpdateDocumentItemList(Document _doc)
         {
             var docindex = docList.IndexOf(docList.Where(x => x.Type == _doc.Type).SingleOrDefault());
@@ -329,23 +333,23 @@ namespace SpindleSoft.Views
             }
             else if (docList.Count == 0 || docindex == -1)
             {
-                docList.Add(_doc);
+                docList.Add(new SecurityDocument
+                {
+                    Image = _doc.Image,
+                    Type = _doc.Type,
+                });
                 dgvSecurityDoc.Rows.Add();
                 docindex = dgvSecurityDoc.Rows.Count - 1;
             }
             else
-                docList[docindex] = _doc;
+            {
+                docList[docindex].Image = _doc.Image;
+                docList[docindex].Type = _doc.Type;
+            }
 
             dgvSecurityDoc.Rows[docindex].Cells["colDocType"].Value = _doc.Type;
             return true;
         }
-
-        private void txtDesignation_Validated(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtDesignation.Text))
-            {
-                txtDesignation.Text = Utilities.Validation.ToTitleCase(txtDesignation.Text);
-            }
-        }
+        #endregion Custom
     }
 }

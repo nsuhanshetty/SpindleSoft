@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.dgvSearch = new System.Windows.Forms.DataGridView();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtAltNo = new System.Windows.Forms.TextBox();
@@ -39,7 +40,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
-            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -60,6 +60,15 @@
             this.dgvSearch.TabIndex = 6;
             this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
             this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
+            this.dgvSearch.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSearch_PreviewKeyDown);
+            // 
+            // colDelete
+            // 
+            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colDelete.HeaderText = "Click To Delete";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
+            this.colDelete.Visible = false;
             // 
             // groupBox1
             // 
@@ -152,15 +161,6 @@
             this.toolStrip_Label.Text = "Ready";
             this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // colDelete
-            // 
-            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.colDelete.HeaderText = "Click To Delete";
-            this.colDelete.Name = "colDelete";
-            this.colDelete.ReadOnly = true;
-            this.colDelete.Visible = false;
-            this.colDelete.Width = 86;
-            // 
             // Winform_AlterationRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +172,7 @@
             this.Name = "Winform_AlterationRegister";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Alteration Register";
+            this.Load += new System.EventHandler(this.Winform_AlterationRegister_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

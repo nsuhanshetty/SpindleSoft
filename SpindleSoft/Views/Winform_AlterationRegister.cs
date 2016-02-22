@@ -36,11 +36,11 @@ namespace SpindleSoft
             var delCol = dgvSearch.Columns["colDelete"];
             delCol.Visible = false;
 
-            if (string.IsNullOrEmpty(txtAltNo.Text) && string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text))
-            {
-                dgvSearch.DataSource = null;
-                return;
-            }
+            //if (string.IsNullOrEmpty(txtAltNo.Text) && string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text))
+            //{
+            //    dgvSearch.DataSource = null;
+            //    return;
+            //}
 
             List<Alteration> altList = (AlterationBuilder.GetAlterationList(txtName.Text, txtMobNo.Text, txtAltNo.Text));
             if (altList != null && altList.Count != 0)
@@ -64,7 +64,7 @@ namespace SpindleSoft
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvSearch.Rows[e.RowIndex].Cells["AlterationID"].Value == null) return;
+            //if (dgvSearch.Rows[e.RowIndex].Cells["AlterationID"].Value == null) return;
             int altID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["AlterationID"].Value.ToString());
 
             if (e.ColumnIndex == dgvSearch.Columns["colDelete"].Index)
@@ -79,6 +79,19 @@ namespace SpindleSoft
                     statusStrip1.Text = "Alteration Deleted.";
                 }
                 return;
+            }
+        }
+
+        private void Winform_AlterationRegister_Load(object sender, EventArgs e)
+        {
+            txtName_TextChanged(this, new EventArgs());
+        }
+
+        private void dgvSearch_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvSearch_CellDoubleClick(this, new DataGridViewCellEventArgs(dgvSearch.CurrentCell.ColumnIndex, dgvSearch.CurrentCell.RowIndex));
             }
         }
     }

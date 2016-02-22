@@ -22,5 +22,10 @@ namespace SpindleSoft.Views
             toolStrip_Label.Text = statusText;
             toolStripProgressBar1.Value = statusValue;
         }
+
+        protected virtual void NewVendToolStrip_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Linq;
+using NHibernate.Criterion;
+using System.Collections;
 
 namespace SpindleSoft.Builders
 {
@@ -13,7 +15,7 @@ namespace SpindleSoft.Builders
     {
         static ILog log = LogManager.GetLogger(typeof(AlterationBuilder));
 
-        public static List<String> GetExpenseNames(bool IsFixed,string expenseName="")
+        public static List<String> GetExpenseNames(bool IsFixed, string expenseName = "")
         {
             var namesList = new List<String>();
             using (var session = NHibernateHelper.OpenSession())
@@ -73,6 +75,70 @@ namespace SpindleSoft.Builders
                     return null;
                 }
 
+            }
+        }
+
+        public static IList GetSalaryItemList(int salaryID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    return (from salItem in session.Query<SalaryItem>()
+                            join staff in session.Query<Staff>() on salItem.Staff equals staff
+                            where (salItem.Salary.ID == salaryID)
+                            select new { ID = salItem.ID, Staff_Name = staff.Name, Amount_Paid = salItem.Amount }).ToList();
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
+            }
+
+        }
+
+        public static IList GetSalaryList(DateTime fromDate, DateTime toDate, string _name = "")
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    return ((from sal in session.Query<Salary>()
+                            join salItem in session.Query<SalaryItem>() on sal equals salItem.Salary
+                            join staff in session.Query<Staff>() on salItem.Staff equals staff
+                            where (staff.Name.StartsWith(_name) && (salItem.Salary.DateOfSalary.Date >= fromDate.Date && salItem.Salary.DateOfSalary.Date <= toDate.Date))
+                             select new { ID = sal.ID, sal.TotalSalaryAmount, sal.DateOfSalary.Date }).ToList()).GroupBy(x => x.ID).Select(y => y.First()).ToList();
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
+            }
+
+        }
+
+        public static Salary GetSalary(int salaryID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    Salary sal = session.Get<Salary>(salaryID);
+                    sal.SalaryItemList = session.QueryOver<SalaryItem>()
+                        .Where(i => i.Salary.ID == salaryID)
+                        .Fetch(s => s.Salary).Eager
+                        .Fetch(s => s.Salary.Expense).Eager
+                        .Fetch(s => s.Staff).Eager
+                        .Future().ToList();
+                    return sal;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
             }
         }
     }

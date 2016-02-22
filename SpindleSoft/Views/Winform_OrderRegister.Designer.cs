@@ -36,10 +36,11 @@
             this.lblName = new System.Windows.Forms.Label();
             this.lblMobile = new System.Windows.Forms.Label();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
-            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -66,7 +67,7 @@
             this.txtOrderId.Name = "txtOrderId";
             this.txtOrderId.Size = new System.Drawing.Size(135, 20);
             this.txtOrderId.TabIndex = 102;
-            this.txtOrderId.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtOrderId.TextChanged += new System.EventHandler(this.dgvSearch_ReloadRegister);
             // 
             // label2
             // 
@@ -84,7 +85,7 @@
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(135, 20);
             this.txtMobNo.TabIndex = 97;
-            this.txtMobNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtMobNo.TextChanged += new System.EventHandler(this.dgvSearch_ReloadRegister);
             // 
             // txtName
             // 
@@ -92,7 +93,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(135, 20);
             this.txtName.TabIndex = 96;
-            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtName.TextChanged += new System.EventHandler(this.dgvSearch_ReloadRegister);
             // 
             // lblName
             // 
@@ -119,14 +120,33 @@
             this.dgvSearch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSearch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDelete});
-            this.dgvSearch.Location = new System.Drawing.Point(7, 90);
+            this.colDelete,
+            this.colEdit});
+            this.dgvSearch.Location = new System.Drawing.Point(8, 90);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
-            this.dgvSearch.Size = new System.Drawing.Size(464, 253);
+            this.dgvSearch.Size = new System.Drawing.Size(574, 253);
             this.dgvSearch.TabIndex = 4;
+            this.dgvSearch.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellClick);
             this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
             this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
+            this.dgvSearch.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSearch_PreviewKeyDown);
+            // 
+            // colDelete
+            // 
+            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.colDelete.HeaderText = "Click To Delete ";
+            this.colDelete.Name = "colDelete";
+            this.colDelete.ReadOnly = true;
+            this.colDelete.Text = "Delete";
+            this.colDelete.Visible = false;
+            // 
+            // colEdit
+            // 
+            this.colEdit.HeaderText = "Click to Edit";
+            this.colEdit.Name = "colEdit";
+            this.colEdit.ReadOnly = true;
+            this.colEdit.Visible = false;
             // 
             // statusStrip1
             // 
@@ -135,7 +155,7 @@
             this.toolStrip_Label});
             this.statusStrip1.Location = new System.Drawing.Point(0, 348);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(478, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(593, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -147,26 +167,16 @@
             // toolStrip_Label
             // 
             this.toolStrip_Label.Name = "toolStrip_Label";
-            this.toolStrip_Label.Size = new System.Drawing.Size(361, 17);
+            this.toolStrip_Label.Size = new System.Drawing.Size(476, 17);
             this.toolStrip_Label.Spring = true;
             this.toolStrip_Label.Text = "Ready";
             this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // colDelete
-            // 
-            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.colDelete.HeaderText = "Click To Delete ";
-            this.colDelete.Name = "colDelete";
-            this.colDelete.ReadOnly = true;
-            this.colDelete.Text = "Delete";
-            this.colDelete.Visible = false;
-            this.colDelete.Width = 89;
             // 
             // Winform_OrderRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(478, 370);
+            this.ClientSize = new System.Drawing.Size(593, 370);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dgvSearch);
             this.Controls.Add(this.groupBox1);
@@ -198,5 +208,6 @@
         internal System.Windows.Forms.Label lblName;
         internal System.Windows.Forms.Label lblMobile;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.DataGridViewButtonColumn colEdit;
     }
 }

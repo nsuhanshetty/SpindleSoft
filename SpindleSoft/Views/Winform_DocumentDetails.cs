@@ -30,7 +30,8 @@ namespace SpindleSoft.Views
         private void Winform_DocumentDetails_Load(object sender, EventArgs e)
         {
             //load and autopopulate all the document Types from db
-            var docList = Builders.PeoplePracticeBuilder.GetDocumentTypeList();
+
+            var docList = Builders.PeoplePracticeBuilder.GetSecurityDocumentTypeList();
             if (document != null && docList.IndexOf(document.Type) == -1)
                 docList.Add(document.Type);
 
@@ -60,12 +61,11 @@ namespace SpindleSoft.Views
             //regex
             Match _match = Regex.Match(cmbDocType.Text, "^[a-zA-Z\\s]+$");
             string errorMsg = _match.Success ? "" : "Invalid Input for Name\n" +
-                                                    "For example 'PAN Card'";
+                                                    "For example 'abcDocument'";
             errorProvider1.SetError(cmbDocType, errorMsg);
 
             if (errorMsg != "")
             {
-                // Cancel the event and select the text to be corrected by the user.
                 e.Cancel = true;
                 cmbDocType.Select(0, cmbDocType.Text.Length);
             }
@@ -113,6 +113,17 @@ namespace SpindleSoft.Views
                     MessageBox.Show("Cannot add new Document of type " + document.Type + " as it already exits.", "Document already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+            }
+
+            Winform_MeasurementAdd measurementDetails = Application.OpenForms["Winform_MeasurementAdd"] as Winform_MeasurementAdd;
+            if (measurementDetails != null)
+            {
+                //bool success = staffDetails.UpdateDocumentItemList(document);
+                //if (!success)
+                //{
+                //    MessageBox.Show("Cannot add new Document of type " + document.Type + " as it already exits.", "Document already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
             }
             this.Close();
         }

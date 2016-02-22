@@ -91,7 +91,7 @@ namespace SpindleSoft.Model
 
         public virtual string IfscCode { get; set; }
 
-        public virtual IList<Document> SecurityDocuments { get; set; }
+        public virtual IList<SecurityDocument> SecurityDocuments { get; set; }
 
         public Staff() { }
 
@@ -134,7 +134,7 @@ namespace SpindleSoft.Model
 
         public virtual IList<SalaryItem> SalaryItemList { get; set; }
 
-        //public virtual Expense Expense { get; set; }
+        public virtual Expense Expense { get; set; }
     }
 
     public class Group

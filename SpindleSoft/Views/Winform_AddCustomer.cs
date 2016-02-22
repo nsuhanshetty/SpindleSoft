@@ -27,7 +27,7 @@ namespace SpindleSoft.Views
             new WinForm_CustomerDetails().ShowDialog();
         }
 
-        private async void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
 
@@ -45,11 +45,11 @@ namespace SpindleSoft.Views
 
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
-                await orderDetails.UpdateCustomerControl(_cust);
+                orderDetails.UpdateCustomerControl(_cust);
 
             WinForm_CustomerDetails custDetails = Application.OpenForms["WinForm_CustomerDetails"] as WinForm_CustomerDetails;
             if (custDetails != null)
-                await custDetails.UpdateCustomerControl(_cust);
+                custDetails.UpdateCustomerControl(_cust);
 
             Winform_AlterationsDetails altDetails = Application.OpenForms["Winform_AlterationsDetails"] as Winform_AlterationsDetails;
             if (altDetails != null)
@@ -58,7 +58,7 @@ namespace SpindleSoft.Views
             Winform_SalesDetails saleDetails = Application.OpenForms["Winform_SalesDetails"] as Winform_SalesDetails;
             if (saleDetails != null)
                 saleDetails.UpdateCustomerControl(_cust);
-            
+
             this.Cursor = Cursors.Default;
             this.Close();
         }
@@ -69,8 +69,9 @@ namespace SpindleSoft.Views
 
             if (custList != null && custList.Count != 0)
             {
-                dgvSearch.DataSource = (from cust in custList
-                                        select new { cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+                //dgvSearch.DataSource = (from cust in custList
+                //                        select new { cust.ID, cust.Name, cust.Mobile_No, cust.Phone_No }).ToList();
+                dgvSearch.DataSource = custList;
             }
             else
                 dgvSearch.DataSource = null;

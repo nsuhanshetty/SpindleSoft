@@ -53,7 +53,7 @@ namespace SpindleSoft.Views
             txtName.Text = _staff.Name;
             txtMobNo.Text = _staff.Mobile_No;
             txtPhoneNo.Text = _staff.Phone_No;
-            pcbCustImage.Image = await Utilities.Helper.GetDocumentAsync("/Staff_ProfilePictures", this._staff.ID.ToString());
+            pcbCustImage.Image = await Utilities.Helper.GetDocumentWebAsync("/Staff_ProfilePictures", this._staff.ID.ToString());
 
             //todo: Fetch his last salary
         }

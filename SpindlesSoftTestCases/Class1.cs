@@ -7,6 +7,7 @@ using SpindleSoft.Model;
 using System.Collections.Generic;
 using System;
 using SpindleSoft.Savers;
+using System.Collections;
 namespace SpindleSoftTest
 {
     [TestFixture]
@@ -60,10 +61,10 @@ namespace SpindleSoftTest
         TestCase("akashied", "8971100725", "", "", ""),
         TestCase("akashin", "8971100727", "7242496394", "", "")]
         [Test]
-        public async void CreateCustomer_Test(string name, string mobile_no, string phone_no, string address, string email)
+        public void CreateCustomer_Test(string name, string mobile_no, string phone_no, string address, string email)
         {
             Customer _customer = new Customer(name, mobile_no, phone_no, address, email);
-            bool response = await SpindleSoft.Savers.PeoplePracticeSaver.SaveCustomerInfo(_customer);
+            bool response = SpindleSoft.Savers.PeoplePracticeSaver.SaveCustomerInfo(_customer);
             Assert.AreEqual(response, true);
         }
         #endregion Create
@@ -173,7 +174,7 @@ namespace SpindleSoftTest
         public void PGetAllCustomers_Test(string name, string mobileno, string phoneno)
         {
 
-            List<Customer> customers = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(name, mobileno, phoneno);
+            IList customers = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(name, mobileno, phoneno);
             Assert.Greater(customers.Count, 0);
         }
 

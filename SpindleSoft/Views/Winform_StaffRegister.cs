@@ -5,72 +5,51 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using SpindleSoft.Builders;
 using System.Threading.Tasks;
+using SpindleSoft.Model;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_StaffRegister : winform_Register
     {
+        #region ctor
         public Winform_StaffRegister()
         {
             InitializeComponent();
         }
-
-        #region Validation
-        private void txtName_Validating(object sender, CancelEventArgs e)
-        {
-            if (String.IsNullOrEmpty(txtName.Text)) return;
-
-            Match _match = Regex.Match(txtName.Text, "^[a-zA-Z\\s]+$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-      "For example '9880123456'";
-            errorProvider1.SetError(txtName, errorMsg);
-
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtName.Select(0, txtName.TextLength);
-            }
-        }
-
-        //  private void txtMobNo_Validating(object sender, CancelEventArgs e)
-        //  {
-        //      if (String.IsNullOrEmpty(txtMobNo.Text)) return;
-
-        //      Match _match = Regex.Match(txtMobNo.Text, "\\d{10}$");
-        //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-        //"For example '9880123456'";
-        //      errorProvider1.SetError(txtMobNo, errorMsg);
-
-        //      if (errorMsg != "")
-        //      {
-        //          // Cancel the event and select the text to be corrected by the user.
-        //          e.Cancel = true;
-        //          txtMobNo.Select(0, txtMobNo.TextLength);
-        //      }
-        //  }
-
-        //  private void txtPhoneNo_Validating(object sender, CancelEventArgs e)
-        //  {
-        //      if (String.IsNullOrEmpty(txtPhoneNo.Text)) return;
-
-        //      Match _match = Regex.Match(txtPhoneNo.Text, "\\d{10}$");
-        //      string errorMsg = _match.Success ? "" : "Invalid Input for Mobile Number\n" +
-        //"For example '9880123456'";
-        //      errorProvider1.SetError(txtPhoneNo, errorMsg);
-
-        //      if (errorMsg != "")
-        //      {
-        //          // Cancel the event and select the text to be corrected by the user.
-        //          e.Cancel = true;
-        //          txtPhoneNo.Select(0, txtPhoneNo.TextLength);
-        //      }
-        //  }
-        #endregion Validation
+        #endregion ctor
 
         #region Events
-        private async void dgvStaffRregister_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void Winform_StaffRegister_ReloadRegister(object sender, EventArgs e)
         {
+            UpdateStatus("Searching..", 50);
+            var colEdit = dgvStaffRregister.Columns["colEdit"];
+            var colDelete = dgvStaffRregister.Columns["colDelete"];
+
+            var staffList = SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
+            if (staffList != null && staffList.Count != 0)
+            {
+                dgvStaffRregister.DataSource = staffList;
+                colEdit.Visible = colDelete.Visible = true;
+                colDelete.DisplayIndex = colEdit.DisplayIndex = dgvStaffRregister.Columns.Count - 1;
+            }
+            else
+            {
+                dgvStaffRregister.DataSource = null;
+                colEdit.Visible = colDelete.Visible = false;
+            }
+            UpdateStatus((dgvStaffRregister.RowCount == 0) ? "No Results Found." : dgvStaffRregister.RowCount + " Results Found.", 100);
+        }
+
+        private void Winform_StaffRegister_Load(object sender, EventArgs e)
+        {
+            Winform_StaffRegister_ReloadRegister(this, new EventArgs());
+        }
+
+        private void dgvStaffRregister_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            int staffID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
             Winform_AddSalary addSalary = Application.OpenForms["Winform_AddSalary"] as Winform_AddSalary;
             if (addSalary != null)
             {
@@ -80,61 +59,58 @@ namespace SpindleSoft.Views
 
                 if (_dialogResult == DialogResult.No) return;
 
-                //todo: optimize
-                int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
-                SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
-
+                Staff _staff = PeoplePracticeBuilder.GetStaffInfo(staffID);
                 addSalary.UpdateStaffDetails(_staff);
                 this.Close();
             }
             else
             {
-
-                DialogResult _dialogResult = MessageBox.Show("Do you want to Modify the details of Staff " +
-                                             Convert.ToString(dgvStaffRregister.Rows[e.RowIndex].Cells[1].Value),
-                                             "Modify Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                                             MessageBoxDefaultButton.Button2);
-
-                if (_dialogResult == DialogResult.No) return;
-
-                int flags;
-                if (!Utilities.Validation.InternetGetConnectedState(out flags, 0))
+                if (dgvStaffRregister.Columns["colDelete"].Index == e.ColumnIndex)
                 {
-                    UpdateStatus("Checking for internet connection", 50);
-                    UpdateStatus("Error connecting to Internet.", 0);
-                    DialogResult dr = MessageBox.Show("Error connecting to Internet, Do you want to continue as some of the documents might be missing", "Error connecting to Internet", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                    if (dr == DialogResult.No)
-                        return;
+                    DialogResult dr = MessageBox.Show("Do you want to delete Staff " + dgvStaffRregister.Rows[e.RowIndex].Cells["Name"].Value + "?", "Delete Staff", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.No) return;
+
+                    bool success = Savers.PeoplePracticeSaver.DeleteStaff(staffID);
+                    if (success)
+                    {
+                        Winform_StaffRegister_ReloadRegister(this, new EventArgs());
+                        UpdateStatus("Staff Deleted.", 100);
+                    }
+                    else
+                    {
+                        UpdateStatus("Error deleting Staff. ", 100);
+                    }
                 }
+                else
+                {
+                    bool _inEdit = false;
+                    if (dgvStaffRregister.Columns["colEdit"].Index == e.ColumnIndex)
+                    {
+                        DialogResult dr = MessageBox.Show("Do you want to Edit Staff " + dgvStaffRregister.Rows[e.RowIndex].Cells["Name"].Value + " details ?", "Edit Staff Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (dr == DialogResult.No) return;
+                        _inEdit = true;
+                    }
 
-                this.Cursor = Cursors.WaitCursor;
-                int _ID = int.Parse(dgvStaffRregister.Rows[e.RowIndex].Cells[0].Value.ToString());
-                SpindleSoft.Model.Staff _staff = PeoplePracticeBuilder.GetStaffInfo(_ID);
-                await PeoplePracticeBuilder.GetDocumentListAsync(_staff.SecurityDocuments);
-                //_staff.Image = await Utilities.Helper.GetDocumentAsync("/staff_ProfilePictures", _staff.ID.ToString());
-
-                new Winform_StaffDetails(_staff).ShowDialog();
-                UpdateStatus("Ready", 0);
-                this.Cursor = Cursors.Arrow;
+                    Staff _staff = PeoplePracticeBuilder.GetStaffInfo(staffID);
+                    PeoplePracticeBuilder.GetSecurityDocumentListLocal(_staff.SecurityDocuments);
+                    new Winform_StaffDetails(_staff, _inEdit).ShowDialog();
+                    Winform_StaffRegister_ReloadRegister(this, new EventArgs());
+                }
             }
         }
-        private void txtName_TextChanged(object sender, EventArgs e)
+
+        private void dgvStaffRregister_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            dgvStaffRregister.DataSource = null;
-            if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text) && string.IsNullOrEmpty(txtPhoneNo.Text))
+            if (e.KeyCode == Keys.Enter)
             {
-                UpdateStatus("No Results found.", 100);
-                return;
+                dgvStaffRregister_CellClick(this, new DataGridViewCellEventArgs(dgvStaffRregister.CurrentCell.ColumnIndex, dgvStaffRregister.CurrentCell.RowIndex));
             }
+        }
 
-            UpdateStatus("Searching..", 50);
-
-            var staffList = (from _staff in (SpindleSoft.Builders.PeoplePracticeBuilder.GetStaffList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text))
-                             select new { _staff.ID, _staff.Name, _staff.Mobile_No, _staff.Phone_No }).ToList();
-
-            dgvStaffRregister.DataSource = staffList.Count == 0 ? null : staffList;
-
-            UpdateStatus(dgvStaffRregister.RowCount + " Results found.", 100);
+        protected override void NewVendToolStrip_Click(object sender, EventArgs e)
+        {
+            new Winform_StaffDetails().ShowDialog();
+            Winform_StaffRegister_ReloadRegister(this, new EventArgs());
         }
         #endregion Events
     }

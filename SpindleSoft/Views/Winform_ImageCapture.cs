@@ -27,10 +27,10 @@ namespace SpindleSoft.Views
         /// </summary>
         private LiveDeviceSource _deviceSource;
 
-        public Winform_ImageCapture(PictureBox pcb)
+        public Winform_ImageCapture(PictureBox _pcb)
         {
             InitializeComponent();
-            this.pcb = pcb;
+            this.pcb = _pcb;
         }
 
         #region Events
@@ -73,7 +73,7 @@ namespace SpindleSoft.Views
 
             foreach (EncoderDevice edv in EncoderDevices.FindDevices(EncoderDeviceType.Video))
             {
-                //todo: Avoid ScreenCapture
+                // Avoid ScreenCapture
                 if (edv.Name == "Screen Capture Source") continue;
 
                 deviceNames.Add(edv.Name);

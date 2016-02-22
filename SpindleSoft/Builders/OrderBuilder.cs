@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Linq;
 using log4net;
+using System.Collections;
 
 namespace SpindleSoft.Builders
 {
@@ -78,7 +79,6 @@ namespace SpindleSoft.Builders
             {
                 try
                 {
-                    //get order items belonging to that customer
                     bool OrderExists = false;
                     if (custID != 0)
                     {
@@ -88,13 +88,6 @@ namespace SpindleSoft.Builders
 
                     if (custID != 0 && !OrderExists)
                         return null;
-
-                    //todo : Remove
-                    //var query = session.QueryOver<OrderItem>()
-                    //    .Where(x => x.Name == productName)
-                    //    .Fetch(o => o.Order).Eager
-                    //    .Future()
-                    //    .OrderBy(x => x.DateUpdated);
 
                     OrderItem item;
                     var list = (session.QueryOver<OrderItem>()
@@ -112,28 +105,42 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static List<Orders> GetOrdersList(string custName = "", string custMob = "", string orderId = "")
+        public static IList GetOrdersList(string custName = "", string custMob = "", string orderId = "")
         {
-            if (custMob == "" && custName == "" && orderId == "") return null;
-
-            List<Orders> orderList = new List<Orders>();
-            int id;
-            int.TryParse(orderId, out id);
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    //todo: Update to Linq
-                    NHibernate.IQuery sqlQuery = session.CreateSQLQuery("select o.ID,o.TotalPrice,o.CurrentPayment,o.PromisedDate from orders o " +
-                                                "join customer c on c.ID = o.CustomerID " +
-                                                "where c.Name like :custName and c.Mobile_No like :custMob " +
-                                                "and o.ID like :orderId")// and o.PromisedDate = :dateOfDelivery ")
-                        //.SetParameter("dateOfDelivery", dateOfDelivery.Date.ToString("yyyy-MM-dd"))
-                                                .SetParameter("orderId", id == 0 ? "" + "%" : id.ToString() + "%")
-                                                .SetParameter("custName", custName + "%")
-                                                .SetParameter("custMob", custMob + "%")
-                                                .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Orders)));
-                    return orderList = sqlQuery.List<Orders>() as List<Orders>;
+                    IList orderList;
+                    if (custMob == "" && custName == "" && orderId == "")
+                    {
+                        orderList = (from cust in session.Query<Customer>()
+                                     join ord in session.Query<Orders>() on cust.ID equals ord.Customer.ID
+                                     orderby ord.PromisedDate descending
+                                     select new
+                                        {
+                                            OrderID = ord.ID,
+                                            cust.Name,
+                                            ord.TotalPrice,
+                                            AmountPaid = ord.CurrentPayment,
+                                            PromisedDate = ord.PromisedDate
+                                        }).Take(25).ToList();
+                    }
+                    else
+                    {
+                        orderList = (from cust in session.Query<Customer>()
+                                     join ord in session.Query<Orders>() on cust.ID equals ord.Customer.ID
+                                     where (cust.Name.StartsWith(custName) && cust.Mobile_No.StartsWith(custMob) && ord.ID.ToString().StartsWith(orderId))
+                                     select new
+                                        {
+                                            OrderID = ord.ID,
+                                            cust.Name,
+                                            ord.TotalPrice,
+                                            AmountPaid = ord.CurrentPayment,
+                                            PromisedDate = ord.PromisedDate
+                                        }).Take(25).ToList();
+                    }
+                    return orderList;
                 }
             }
             catch (Exception ex)

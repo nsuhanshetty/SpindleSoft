@@ -63,7 +63,7 @@ namespace SpindleSoft.Views
             if (this._orderItem.Image != null)
                 pcbMaterialImage.Image = this._orderItem.Image;
             else if (pcbMaterialImage.Image == null)
-                pcbMaterialImage.Image = await Utilities.Helper.GetDocumentAsync("/OrderItem_ProfilePictures", this._orderItem.ID.ToString());
+                pcbMaterialImage.Image = await Utilities.Helper.GetDocumentWebAsync("/OrderItem_ProfilePictures", this._orderItem.ID.ToString());
 
             this._orderItem.Image = pcbMaterialImage.Image;
         }
@@ -78,8 +78,11 @@ namespace SpindleSoft.Views
                 MessageBox.Show("No values found in Product Details, Add values and Save", "No Values Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            //todo: Convert to _orderItem object
+            else if (int.Parse(txtPrice.Text) == 0)
+            {
+                MessageBox.Show("Price is Mandatory", "No Price Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             OrderItem _item = _orderItem;
 
@@ -197,6 +200,11 @@ namespace SpindleSoft.Views
         private async void Winform_MeasurementAdd_Load(object sender, EventArgs e)
         {
             await UpdateControls(this._cust.Name, this._orderItem);
+        }
+
+        private void btnAddItem_Click(object sender, EventArgs e)
+        {
+            new Winform_DocumentDetails().ShowDialog();
         }
     }
 }

@@ -74,15 +74,17 @@
             // 
             // dtpDeliveryDate
             // 
-            this.dtpDeliveryDate.Location = new System.Drawing.Point(407, 60);
+            this.dtpDeliveryDate.CustomFormat = "dd MMM yyyy";
+            this.dtpDeliveryDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDeliveryDate.Location = new System.Drawing.Point(409, 60);
             this.dtpDeliveryDate.Name = "dtpDeliveryDate";
-            this.dtpDeliveryDate.Size = new System.Drawing.Size(133, 20);
+            this.dtpDeliveryDate.Size = new System.Drawing.Size(131, 20);
             this.dtpDeliveryDate.TabIndex = 0;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(313, 64);
+            this.label4.Location = new System.Drawing.Point(315, 66);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 13);
             this.label4.TabIndex = 113;
@@ -147,7 +149,7 @@
             this.dgvExpenseItem.ReadOnly = true;
             this.dgvExpenseItem.Size = new System.Drawing.Size(520, 176);
             this.dgvExpenseItem.TabIndex = 1;
-            this.dgvExpenseItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpenseItem_CellDoubleClick);
+            this.dgvExpenseItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpenseItem_CellDoubleClick);
             // 
             // colName
             // 
@@ -223,5 +225,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn colComment;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
     }
 }

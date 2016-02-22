@@ -42,6 +42,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvCustomerRegister = new System.Windows.Forms.DataGridView();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -57,7 +58,7 @@
             this.groupBox1.Controls.Add(this.txtName);
             this.groupBox1.Controls.Add(this.lblName);
             this.groupBox1.Controls.Add(this.lblMobile);
-            this.groupBox1.Location = new System.Drawing.Point(7, 9);
+            this.groupBox1.Location = new System.Drawing.Point(5, 57);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(563, 60);
             this.groupBox1.TabIndex = 1;
@@ -71,7 +72,7 @@
             this.txtPhoneNo.Name = "txtPhoneNo";
             this.txtPhoneNo.Size = new System.Drawing.Size(115, 20);
             this.txtPhoneNo.TabIndex = 100;
-            this.txtPhoneNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtPhoneNo.TextChanged += new System.EventHandler(this.dgvCustomerRegister_ReloadRegister);
             // 
             // txtMobNo
             // 
@@ -80,7 +81,7 @@
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(115, 20);
             this.txtMobNo.TabIndex = 97;
-            this.txtMobNo.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtMobNo.TextChanged += new System.EventHandler(this.dgvCustomerRegister_ReloadRegister);
             // 
             // label1
             // 
@@ -97,7 +98,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(115, 20);
             this.txtName.TabIndex = 96;
-            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtName.TextChanged += new System.EventHandler(this.dgvCustomerRegister_ReloadRegister);
             // 
             // lblName
             // 
@@ -120,7 +121,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.dgvCustomerRegister);
-            this.panel1.Location = new System.Drawing.Point(7, 76);
+            this.panel1.Location = new System.Drawing.Point(5, 123);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(563, 286);
             this.panel1.TabIndex = 2;
@@ -140,7 +141,8 @@
             this.dgvCustomerRegister.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomerRegister.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCustomerRegister.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDelete});
+            this.colDelete,
+            this.colEdit});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -165,7 +167,7 @@
             this.dgvCustomerRegister.Size = new System.Drawing.Size(563, 286);
             this.dgvCustomerRegister.TabIndex = 0;
             this.dgvCustomerRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellClick);
-            this.dgvCustomerRegister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomerRegister_CellContentClick);
+            this.dgvCustomerRegister.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvCustomerRegister_PreviewKeyDown);
             // 
             // colDelete
             // 
@@ -176,6 +178,13 @@
             this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.colDelete.Visible = false;
             // 
+            // colEdit
+            // 
+            this.colEdit.HeaderText = "Click to Edit";
+            this.colEdit.Name = "colEdit";
+            this.colEdit.ReadOnly = true;
+            this.colEdit.Visible = false;
+            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
@@ -184,12 +193,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(577, 387);
+            this.ClientSize = new System.Drawing.Size(574, 438);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_CustomerRegister";
             this.Text = "Customer Register";
-            this.Load += new System.EventHandler(this.Winform_StaffRegister_Load);
+            this.Load += new System.EventHandler(this.Winform_CustomerRegister_Load);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
             this.groupBox1.ResumeLayout(false);
@@ -215,5 +224,6 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.DataGridView dgvCustomerRegister;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.DataGridViewButtonColumn colEdit;
     }
 }

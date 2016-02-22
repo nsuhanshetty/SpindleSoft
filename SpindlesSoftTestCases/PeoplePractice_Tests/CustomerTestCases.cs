@@ -3,6 +3,7 @@ using SpindleSoft.Builders;
 using SpindleSoft.Model;
 using SpindleSoft.Savers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace SpindlesSoftTestCases.PeoplePractice_Tests
         TestCase("", "8973", "")]
         public void GetCustomerList_Test(string name, string mobileno, string phoneno)
         {
-            List<Customer> customers = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(name, mobileno, phoneno);
+            IList customers = SpindleSoft.Builders.PeoplePracticeBuilder.GetCustomersList(name, mobileno, phoneno);
             Assert.Greater(customers.Count, 0);
         }
         #endregion getCustomer
@@ -58,22 +59,22 @@ namespace SpindlesSoftTestCases.PeoplePractice_Tests
         [TestCase("Customer1", "2111111112", 2, "#no Address", "n@s.com"),
         TestCase("Customer2", "2111111113", 2, "", "m@s.com"),
         TestCase("Customer3", "2111111114", 2, "", "")]
-        public async void SaveCustomerInfo_Test(string name, string mobNo, string phoneNo, string address = "", string email = "")
+        public void SaveCustomerInfo_Test(string name, string mobNo, string phoneNo, string address = "", string email = "")
         {
             Customer cust = new Customer(name, mobNo, phoneNo, address, email);
-            bool response = await PeoplePracticeSaver.SaveCustomerInfo(cust);
+            bool response = PeoplePracticeSaver.SaveCustomerInfo(cust);
             Assert.AreEqual(response, true);
         }
 
         [Test]
         [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\AddReferral.png", 2)]
         [TestCase("C:\\Users\\NSuhanShetty\\Desktop\\icon\\User.png", 2)]
-        public async void SaveCustomerImage_Test(string path, int _ID)
+        public void SaveCustomerImage_Test(string path, int _ID)
         {
             //byte[] bytes = System.IO.File.ReadAllBytes(path);
             //System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
             Image image = Image.FromFile(path);
-            bool success = await PeoplePracticeSaver.SaveCustomerImage(image, _ID);
+            bool success = PeoplePracticeSaver.SaveCustomerImage(image, _ID);
             Assert.AreEqual(success, true);
         }
         #endregion Customer

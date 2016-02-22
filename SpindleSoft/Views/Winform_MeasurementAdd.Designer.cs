@@ -81,9 +81,14 @@
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.grbMemNo = new System.Windows.Forms.GroupBox();
-            this.pcbMaterialImage = new System.Windows.Forms.PictureBox();
             this.btnCapture = new System.Windows.Forms.Button();
+            this.pcbMaterialImage = new System.Windows.Forms.PictureBox();
+            this.grbMemNo = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnAddItem = new System.Windows.Forms.Button();
+            this.dgvSecurityDoc = new System.Windows.Forms.DataGridView();
+            this.colDocType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.grpBxMeasurements.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -94,8 +99,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.grbxProdDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantity)).BeginInit();
-            this.grbMemNo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbMaterialImage)).BeginInit();
+            this.grbMemNo.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSecurityDoc)).BeginInit();
             this.SuspendLayout();
             // 
             // grpBxMeasurements
@@ -106,9 +113,9 @@
             this.grpBxMeasurements.Controls.Add(this.groupBox1);
             this.grpBxMeasurements.Controls.Add(this.groupBox3);
             this.grpBxMeasurements.Controls.Add(this.groupBox5);
-            this.grpBxMeasurements.Location = new System.Drawing.Point(8, 229);
+            this.grpBxMeasurements.Location = new System.Drawing.Point(0, 63);
             this.grpBxMeasurements.Name = "grpBxMeasurements";
-            this.grpBxMeasurements.Size = new System.Drawing.Size(373, 367);
+            this.grpBxMeasurements.Size = new System.Drawing.Size(373, 370);
             this.grpBxMeasurements.TabIndex = 3;
             this.grpBxMeasurements.TabStop = false;
             this.grpBxMeasurements.Text = "Measurement Details";
@@ -433,7 +440,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.txtComment);
-            this.groupBox5.Location = new System.Drawing.Point(0, 294);
+            this.groupBox5.Location = new System.Drawing.Point(6, 292);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(360, 69);
             this.groupBox5.TabIndex = 4;
@@ -475,7 +482,7 @@
             // 
             this.grpBoxCustMeasure.Controls.Add(this.txtCustName);
             this.grpBoxCustMeasure.Controls.Add(this.label1);
-            this.grpBoxCustMeasure.Location = new System.Drawing.Point(158, 55);
+            this.grpBoxCustMeasure.Location = new System.Drawing.Point(391, 57);
             this.grpBoxCustMeasure.Name = "grpBoxCustMeasure";
             this.grpBoxCustMeasure.Size = new System.Drawing.Size(223, 48);
             this.grpBoxCustMeasure.TabIndex = 0;
@@ -512,7 +519,7 @@
             this.grbxProdDetails.Controls.Add(this.txtPrice);
             this.grbxProdDetails.Controls.Add(this.label16);
             this.grbxProdDetails.Controls.Add(this.label19);
-            this.grbxProdDetails.Location = new System.Drawing.Point(158, 109);
+            this.grbxProdDetails.Location = new System.Drawing.Point(391, 111);
             this.grbxProdDetails.Name = "grbxProdDetails";
             this.grbxProdDetails.Size = new System.Drawing.Size(223, 114);
             this.grbxProdDetails.TabIndex = 1;
@@ -582,15 +589,17 @@
             this.label19.TabIndex = 105;
             this.label19.Text = "Price";
             // 
-            // grbMemNo
+            // btnCapture
             // 
-            this.grbMemNo.Controls.Add(this.pcbMaterialImage);
-            this.grbMemNo.Controls.Add(this.btnCapture);
-            this.grbMemNo.Location = new System.Drawing.Point(8, 55);
-            this.grbMemNo.Name = "grbMemNo";
-            this.grbMemNo.Size = new System.Drawing.Size(141, 168);
-            this.grbMemNo.TabIndex = 2;
-            this.grbMemNo.TabStop = false;
+            this.btnCapture.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.btnCapture.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCapture.Location = new System.Drawing.Point(6, 133);
+            this.btnCapture.Name = "btnCapture";
+            this.btnCapture.Size = new System.Drawing.Size(130, 28);
+            this.btnCapture.TabIndex = 0;
+            this.btnCapture.Text = "CAPTURE ";
+            this.btnCapture.UseVisualStyleBackColor = false;
+            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
             // 
             // pcbMaterialImage
             // 
@@ -605,24 +614,79 @@
             this.pcbMaterialImage.TabIndex = 108;
             this.pcbMaterialImage.TabStop = false;
             // 
-            // btnCapture
+            // grbMemNo
             // 
-            this.btnCapture.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.btnCapture.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCapture.Location = new System.Drawing.Point(6, 133);
-            this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(130, 28);
-            this.btnCapture.TabIndex = 0;
-            this.btnCapture.Text = "CAPTURE ";
-            this.btnCapture.UseVisualStyleBackColor = false;
-            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
+            this.grbMemNo.Controls.Add(this.pcbMaterialImage);
+            this.grbMemNo.Controls.Add(this.btnCapture);
+            this.grbMemNo.Location = new System.Drawing.Point(391, 246);
+            this.grbMemNo.Name = "grbMemNo";
+            this.grbMemNo.Size = new System.Drawing.Size(141, 168);
+            this.grbMemNo.TabIndex = 2;
+            this.grbMemNo.TabStop = false;
+            this.grbMemNo.Visible = false;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnAddItem);
+            this.groupBox6.Controls.Add(this.dgvSecurityDoc);
+            this.groupBox6.Location = new System.Drawing.Point(6, 439);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(604, 161);
+            this.groupBox6.TabIndex = 109;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Security Documents";
+            // 
+            // btnAddItem
+            // 
+            this.btnAddItem.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddItem.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
+            this.btnAddItem.Location = new System.Drawing.Point(559, 13);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(39, 35);
+            this.btnAddItem.TabIndex = 156;
+            this.btnAddItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAddItem.UseVisualStyleBackColor = false;
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
+            // 
+            // dgvSecurityDoc
+            // 
+            this.dgvSecurityDoc.AllowUserToAddRows = false;
+            this.dgvSecurityDoc.AllowUserToDeleteRows = false;
+            this.dgvSecurityDoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSecurityDoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSecurityDoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDocType,
+            this.ColDelete});
+            this.dgvSecurityDoc.Location = new System.Drawing.Point(3, 54);
+            this.dgvSecurityDoc.Name = "dgvSecurityDoc";
+            this.dgvSecurityDoc.ReadOnly = true;
+            this.dgvSecurityDoc.Size = new System.Drawing.Size(595, 100);
+            this.dgvSecurityDoc.TabIndex = 0;
+            // 
+            // colDocType
+            // 
+            this.colDocType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDocType.HeaderText = "Document Type";
+            this.colDocType.Name = "colDocType";
+            this.colDocType.ReadOnly = true;
+            this.colDocType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // ColDelete
+            // 
+            this.ColDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ColDelete.HeaderText = "Click To Delete";
+            this.ColDelete.Name = "ColDelete";
+            this.ColDelete.ReadOnly = true;
+            this.ColDelete.Width = 77;
             // 
             // Winform_MeasurementAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 621);
+            this.ClientSize = new System.Drawing.Size(622, 627);
             this.ControlBox = false;
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.grbMemNo);
             this.Controls.Add(this.grbxProdDetails);
             this.Controls.Add(this.grpBoxCustMeasure);
@@ -634,6 +698,7 @@
             this.Controls.SetChildIndex(this.grpBoxCustMeasure, 0);
             this.Controls.SetChildIndex(this.grbxProdDetails, 0);
             this.Controls.SetChildIndex(this.grbMemNo, 0);
+            this.Controls.SetChildIndex(this.groupBox6, 0);
             this.grpBxMeasurements.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -651,8 +716,10 @@
             this.grbxProdDetails.ResumeLayout(false);
             this.grbxProdDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuantity)).EndInit();
-            this.grbMemNo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pcbMaterialImage)).EndInit();
+            this.grbMemNo.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSecurityDoc)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -720,5 +787,10 @@
         private System.Windows.Forms.GroupBox grbMemNo;
         internal System.Windows.Forms.PictureBox pcbMaterialImage;
         internal System.Windows.Forms.Button btnCapture;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnAddItem;
+        private System.Windows.Forms.DataGridView dgvSecurityDoc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocType;
+        private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
     }
 }

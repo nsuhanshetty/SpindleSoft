@@ -60,6 +60,7 @@
             this.addExpensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewExpenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salaryDetailsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.salaryRegisterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.bulkSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewSMSRegistryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +79,13 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblSearchCount = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
@@ -131,9 +139,11 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             this.pnlDeliveryStatus.SuspendLayout();
@@ -159,7 +169,8 @@
             this.bulkSMSToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.settingToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.exitToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1357, 24);
@@ -359,14 +370,14 @@
             // addCatalogueToolStripMenuItem
             // 
             this.addCatalogueToolStripMenuItem.Name = "addCatalogueToolStripMenuItem";
-            this.addCatalogueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addCatalogueToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.addCatalogueToolStripMenuItem.Text = "&Add Sale";
             this.addCatalogueToolStripMenuItem.Click += new System.EventHandler(this.addCatalogueToolStripMenuItem_Click);
             // 
             // SalesRegisterToolStripMenuItem
             // 
             this.SalesRegisterToolStripMenuItem.Name = "SalesRegisterToolStripMenuItem";
-            this.SalesRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.SalesRegisterToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.SalesRegisterToolStripMenuItem.Text = "&Sales Register";
             this.SalesRegisterToolStripMenuItem.Click += new System.EventHandler(this.SalesRegisterToolStripMenuItem_Click);
             // 
@@ -375,7 +386,8 @@
             this.expenseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addExpensesToolStripMenuItem,
             this.viewExpenseToolStripMenuItem,
-            this.salaryDetailsToolStripMenuItem1});
+            this.salaryDetailsToolStripMenuItem1,
+            this.salaryRegisterToolStripMenuItem1});
             this.expenseToolStripMenuItem.Name = "expenseToolStripMenuItem";
             this.expenseToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.expenseToolStripMenuItem.Text = "&Expenses";
@@ -398,8 +410,15 @@
             // 
             this.salaryDetailsToolStripMenuItem1.Name = "salaryDetailsToolStripMenuItem1";
             this.salaryDetailsToolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
-            this.salaryDetailsToolStripMenuItem1.Text = "Salary Details";
+            this.salaryDetailsToolStripMenuItem1.Text = "&Salary Details";
             this.salaryDetailsToolStripMenuItem1.Click += new System.EventHandler(this.salaryDetailsToolStripMenuItem1_Click);
+            // 
+            // salaryRegisterToolStripMenuItem1
+            // 
+            this.salaryRegisterToolStripMenuItem1.Name = "salaryRegisterToolStripMenuItem1";
+            this.salaryRegisterToolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
+            this.salaryRegisterToolStripMenuItem1.Text = "S&alary Register";
+            this.salaryRegisterToolStripMenuItem1.Click += new System.EventHandler(this.salaryRegisterToolStripMenuItem1_Click);
             // 
             // bulkSMSToolStripMenuItem
             // 
@@ -535,11 +554,84 @@
             this.pnlSearch.AutoSize = true;
             this.pnlSearch.BackColor = System.Drawing.SystemColors.ControlLight;
             this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSearch.Controls.Add(this.groupBox4);
             this.pnlSearch.Controls.Add(this.groupBox1);
             this.pnlSearch.Location = new System.Drawing.Point(2, 27);
             this.pnlSearch.Name = "pnlSearch";
             this.pnlSearch.Size = new System.Drawing.Size(283, 650);
             this.pnlSearch.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label12);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Location = new System.Drawing.Point(12, 433);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(255, 107);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Days Summary";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(122, 84);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(13, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.Location = new System.Drawing.Point(122, 55);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(13, 13);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.Color.Red;
+            this.label10.Location = new System.Drawing.Point(122, 25);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(13, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(48, 84);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(67, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Sales Count:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 55);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(107, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Alterations Delivered:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 25);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Orders Delivered:";
             // 
             // groupBox1
             // 
@@ -1114,12 +1206,21 @@
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
             // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "A&bout";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1354, 543);
+            this.ClientSize = new System.Drawing.Size(1354, 613);
             this.Controls.Add(this.pnlDeliveryStatus);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.statusStrip1);
@@ -1134,6 +1235,8 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.pnlSearch.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
@@ -1257,6 +1360,15 @@
         private System.Windows.Forms.Label lblOrdR2SCount;
         private System.Windows.Forms.ToolStripMenuItem backUpDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem salaryRegisterToolStripMenuItem1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

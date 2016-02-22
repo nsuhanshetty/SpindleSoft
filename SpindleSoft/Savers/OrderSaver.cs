@@ -40,7 +40,7 @@ namespace SpindleSoft.Savers
 
                         var tasks = (from item in order.OrdersItems
                                     where item.Image != null
-                                    select Utilities.Helper.UploadAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID))).ToArray();
+                                    select Utilities.Helper.UploadToWebAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID))).ToArray();
                         
                         bool[] results= await Task.WhenAll(tasks);
                         if (results.Contains(false))
@@ -66,7 +66,7 @@ namespace SpindleSoft.Savers
             string filePath = string.Format("/OrderItem_ProfilePictures/{0}.png", _ID);
             try
             {
-                return await Utilities.Helper.UploadAsync(image, filePath);
+                return await Utilities.Helper.UploadToWebAsync(image, filePath);
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace SpindleSoft.Savers
                     try
                     {
                         var item = session.Get<OrderItem>(_id);
-                        bool suceess = await Utilities.Helper.DeleteDocumentAsync("/OrderItem_ProfilePictures", _id.ToString());
+                        bool suceess = await Utilities.Helper.DeleteDocumentWebAsync("/OrderItem_ProfilePictures", _id.ToString());
                         if (!suceess)
                             return false;
                         session.Delete(item);

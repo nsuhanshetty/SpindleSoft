@@ -17,16 +17,32 @@ namespace SpindleSoft.Views
         List<SalaryItem> salaryList = new List<SalaryItem>();
         Salary _salary;
 
+        #region Ctor
         public Winform_SalaryDetails()
         {
             InitializeComponent();
         }
 
-        private void btnAddSalary_Click(object sender, EventArgs e)
+        public Winform_SalaryDetails(Salary salary)
         {
-            new Winform_AddSalary(dgvSalaryItems.Rows.Count, null).ShowDialog();
-        }
+            InitializeComponent();
 
+            this._salary = salary;
+            this.salaryList = this._salary.SalaryItemList.ToList();
+
+            foreach (var salItem in this.salaryList)
+            {
+                dgvSalaryItems.Rows.Add();
+
+                var _index = this.salaryList.IndexOf(salItem);
+                dgvSalaryItems.Rows[_index].Cells[0].Value = salItem.Staff.Name;
+                dgvSalaryItems.Rows[_index].Cells[1].Value = salItem.Amount;
+            }
+            CalculatePaymentDetails();
+        } 
+        #endregion
+
+        #region Custom
         internal bool UpdateSalaryList(SalaryItem _salary, int _index)
         {
             var staffindex = salaryList.IndexOf(salaryList.Where(x => (x.Staff.ID == _salary.Staff.ID && salaryList.IndexOf(x) != _index)).SingleOrDefault());
@@ -60,8 +76,10 @@ namespace SpindleSoft.Views
             }
 
             txtTotalSalaryPaid.Text = total.ToString();
-        }
+        } 
+        #endregion
 
+        #region Events
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
         {
             if (SpindleSoft.Utilities.Validation.controlIsInEdit(this, false))
@@ -90,7 +108,7 @@ namespace SpindleSoft.Views
             this._salary.TotalSalaryAmount = decimal.Parse(txtTotalSalaryPaid.Text);
 
             //todo: Add Expense along with Saving Salary
-            bool sucess = PeoplePracticeSaver.SaveSalary(_salary);
+            bool sucess = ExpenseSaver.SaveSalary(_salary);
 
             if (sucess)
             {
@@ -117,7 +135,7 @@ namespace SpindleSoft.Views
                 if (salaryList.Count != 0 && e.RowIndex + 1 <= salaryList.Count)
                 {
                     if (salaryList[e.RowIndex].ID != 0)
-                        success = PeoplePracticeSaver.DeleteSalaryItem(salaryList[e.RowIndex].ID);
+                        success = ExpenseSaver.DeleteSalaryItem(salaryList[e.RowIndex].ID);
 
                     if (success || salaryList[e.RowIndex].ID == 0)
                     {
@@ -138,11 +156,19 @@ namespace SpindleSoft.Views
             }
         }
 
+        private void Winform_SalaryDetails_Load(object sender, EventArgs e)
+        {
+            if (_salary != null)
+            {
+                dtpSalary.Value = _salary.DateOfSalary;
+            }
+        }
+
+        private void btnAddSalary_Click(object sender, EventArgs e)
+        {
+            new Winform_AddSalary(dgvSalaryItems.Rows.Count, null).ShowDialog();
+        }
+        #endregion
     }
+
 }
-
-
-/*todo:
- * add save button logic, 
- * mapping for salary
-*/

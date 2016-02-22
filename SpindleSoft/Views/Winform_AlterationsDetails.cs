@@ -301,7 +301,7 @@ namespace SpindleSoft.Views
             if (_alteration.ID != 0)
             {
                 _cust = PeoplePracticeBuilder.GetCustomer(_alteration.Customer.ID);
-                this._cust.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", this._cust.ID.ToString());
+                this._cust.Image = await Utilities.Helper.GetDocumentWebAsync("/customer_ProfilePictures", this._cust.ID.ToString());
                 UpdateCustomerControl(_cust);
             }
             this.toolStripParent.Items.Add(this.AddCustomerToolStrip);

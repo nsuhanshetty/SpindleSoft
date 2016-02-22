@@ -1,4 +1,5 @@
 ﻿using SpindleSoft.Model;
+using SpindleSoft.Savers;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -70,11 +71,37 @@ namespace SpindleSoft.Views
 
         private void dgvExpenseItem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1) return;
-            var row = dgvExpenseItem.Rows[e.RowIndex];
+            if (e.RowIndex == -1 || dgvExpenseItem.Rows[e.RowIndex].IsNewRow == true) return;
 
-            ExpenseItem item = expenseList[e.RowIndex];
-            new Winform_ExpenseItemDetails(e.RowIndex, item).ShowDialog();
+            if (dgvExpenseItem.Columns["colDelete"].Index == e.ColumnIndex)
+            {
+                DialogResult dr = MessageBox.Show("Continue deleting Expense Item Salary?", "Delete Expense Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.No) return;
+
+                bool success = false;
+
+                if (expenseList.Count != 0 && e.RowIndex + 1 <= expenseList.Count)
+                {
+                    if (expenseList[e.RowIndex].ID != 0)
+                        success = ExpenseSaver.DeleteExpenseItem(expenseList[e.RowIndex].ID);
+
+                    if (success || expenseList[e.RowIndex].ID == 0)
+                    {
+                        expenseList.RemoveAt(e.RowIndex);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
+                        return;
+                    }
+                }
+                dgvExpenseItem.Rows.RemoveAt(e.RowIndex);
+                CalculatePaymentDetails();
+            }
+            else
+            {
+                new Winform_ExpenseItemDetails(e.RowIndex, expenseList[e.RowIndex]).ShowDialog();
+            }
         }
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
@@ -96,7 +123,7 @@ namespace SpindleSoft.Views
                 expense.TotalAmount = decimal.Parse(txtTotalAmount.Text);
             }
 
-            bool success = Savers.ExpenseSaver.SaveExpenses(expense);
+            bool success = ExpenseSaver.SaveExpenses(expense);
 
             if (success)
             {

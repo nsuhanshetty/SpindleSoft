@@ -15,6 +15,7 @@ namespace SpindleSoft
     using SpindleSoft.Helpers;
     using SpindleSoft.Model;
     using SpindleSoft.Savers;
+    // using SpindleSoft.Views;
     using SpindleSoft.Views;
     using System.Collections;
 
@@ -375,7 +376,7 @@ namespace SpindleSoft
                         if (String.IsNullOrEmpty(_ID)) return;
 
                         Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(int.Parse(_ID));
-                        _cust.Image = await Utilities.Helper.GetDocumentAsync("/customer_ProfilePictures", _ID);
+                        _cust.Image = await Utilities.Helper.GetDocumentWebAsync("/customer_ProfilePictures", _ID);
 
                         if (_cust == null) return;
 
@@ -449,6 +450,16 @@ namespace SpindleSoft
         private void salaryDetailsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             new Winform_SalaryDetails().ShowDialog();
+        }
+
+        private void salaryRegisterToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            new Winform_SalaryRegister().ShowDialog();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_About().ShowDialog();
         }
 
     }

@@ -103,7 +103,7 @@
             this.grbMemNo.Controls.Add(this.btnCapture);
             this.grbMemNo.Location = new System.Drawing.Point(12, 61);
             this.grbMemNo.Name = "grbMemNo";
-            this.grbMemNo.Size = new System.Drawing.Size(141, 193);
+            this.grbMemNo.Size = new System.Drawing.Size(169, 196);
             this.grbMemNo.TabIndex = 1;
             this.grbMemNo.TabStop = false;
             // 
@@ -115,7 +115,7 @@
             this.pcbStaffImage.InitialImage = ((System.Drawing.Image)(resources.GetObject("pcbStaffImage.InitialImage")));
             this.pcbStaffImage.Location = new System.Drawing.Point(6, 19);
             this.pcbStaffImage.Name = "pcbStaffImage";
-            this.pcbStaffImage.Size = new System.Drawing.Size(128, 121);
+            this.pcbStaffImage.Size = new System.Drawing.Size(157, 121);
             this.pcbStaffImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbStaffImage.TabIndex = 108;
             this.pcbStaffImage.TabStop = false;
@@ -124,11 +124,11 @@
             // 
             this.btnCapture.BackColor = System.Drawing.SystemColors.MenuBar;
             this.btnCapture.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCapture.Location = new System.Drawing.Point(6, 151);
+            this.btnCapture.Location = new System.Drawing.Point(6, 148);
             this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(130, 28);
+            this.btnCapture.Size = new System.Drawing.Size(157, 28);
             this.btnCapture.TabIndex = 0;
-            this.btnCapture.Text = "CAPTURE PHOTO";
+            this.btnCapture.Text = "TAKE PHOTO";
             this.btnCapture.UseVisualStyleBackColor = false;
             this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
             // 
@@ -153,7 +153,7 @@
             this.grbMemPersonDetail.Controls.Add(this.txtName);
             this.grbMemPersonDetail.Controls.Add(this.lblName);
             this.grbMemPersonDetail.Controls.Add(this.txtMobNo);
-            this.grbMemPersonDetail.Location = new System.Drawing.Point(159, 62);
+            this.grbMemPersonDetail.Location = new System.Drawing.Point(192, 62);
             this.grbMemPersonDetail.Name = "grbMemPersonDetail";
             this.grbMemPersonDetail.Size = new System.Drawing.Size(364, 249);
             this.grbMemPersonDetail.TabIndex = 0;
@@ -434,7 +434,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtAccNo);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(159, 317);
+            this.groupBox1.Location = new System.Drawing.Point(192, 317);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 119);
             this.groupBox1.TabIndex = 2;
@@ -512,7 +512,7 @@
             // 
             this.groupBox2.Controls.Add(this.btnAddItem);
             this.groupBox2.Controls.Add(this.dgvSecurityDoc);
-            this.groupBox2.Location = new System.Drawing.Point(159, 443);
+            this.groupBox2.Location = new System.Drawing.Point(192, 443);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(418, 161);
             this.groupBox2.TabIndex = 3;
@@ -572,8 +572,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 629);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(617, 629);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbMemNo);
@@ -662,5 +661,8 @@
         private System.Windows.Forms.RadioButton rdbWeek;
         private System.Windows.Forms.RadioButton rdbMonth;
         internal System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
+        private System.Windows.Forms.ToolStripButton CancelToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

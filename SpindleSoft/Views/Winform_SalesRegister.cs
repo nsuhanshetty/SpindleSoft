@@ -148,5 +148,13 @@ namespace SpindleSoft.Views
                 dgvSaleItemDetails.DataSource = null;
         }
 
+        private void dgvSearch_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvSearch_CellClick(this, new DataGridViewCellEventArgs(dgvSearch.CurrentCell.ColumnIndex, dgvSearch.CurrentCell.RowIndex));
+            }
+        }
+
     }
 }
