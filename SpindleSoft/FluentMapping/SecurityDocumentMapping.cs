@@ -15,4 +15,17 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Type);
         }
     }
+
+    class OrderItemDocumentMapping : ClassMap<OrderItemDocument>
+    {
+        public OrderItemDocumentMapping()
+        {
+            Id(x => x.ID).GeneratedBy.Identity();
+            References(x => x.orderItem)
+                                    .Class<OrderItem>()
+                                    .Column("OrderItemID")
+                                    .Cascade.None();
+            Map(x => x.Type);
+        }
+    }
 }

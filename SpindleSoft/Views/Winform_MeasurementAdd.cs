@@ -6,22 +6,26 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_MeasurementAdd : Winform_DetailsFormat
     {
         OrderItem _orderItem = new OrderItem();
+        List<OrderItemDocument> docList = new List<OrderItemDocument>();
+
         int _index = 0;
         Customer _cust;
         List<string> _orderTypeList;
 
+        #region Ctor
         public Winform_MeasurementAdd()
         {
             InitializeComponent();
         }
 
-        public Winform_MeasurementAdd(int index, Customer cust, OrderItem orderItem)
+        public Winform_MeasurementAdd(int index, Customer cust, OrderItem orderItem, bool _inEdit = false)
         {
             InitializeComponent();
             this._index = index;
@@ -30,47 +34,21 @@ namespace SpindleSoft.Views
             this._orderTypeList = OrderBuilder.GetListOfClothingTypes();
 
             cmbType.DataSource = _orderTypeList;
+            InEdit = _inEdit;
+
+            if (!InEdit)
+            {
+                var exList = new List<string>() { "dgvOrderItemDoc", "groupBox6" };
+                WinFormControls_InEdit(this, exList);
+                this.Enabled = true;
+                this.ControlBox = true;
+            }
         }
+        #endregion
 
-        private async Task UpdateControls(string custName, OrderItem orderItem)
-        {
-            this._orderItem = orderItem != null ? orderItem : new OrderItem();
-
-            txtCustName.Text = custName;
-            txtLength.Text = this._orderItem.Length;
-            txtWaist.Text = this._orderItem.Waist;
-            txtChest.Text = this._orderItem.Chest;
-            txtShoulder.Text = this._orderItem.Shoulder;
-            txtFront.Text = this._orderItem.Front;
-            txtBack.Text = this._orderItem.Back;
-            txtD.Text = this._orderItem.D;
-            txtHip.Text = this._orderItem.Hip;
-
-            txtBotHip.Text = this._orderItem.BottomHip;
-            txtBotWaist.Text = this._orderItem.BottomWaist;
-            txtBotLength.Text = this._orderItem.BottomLength;
-            txtBotLoose.Text = this._orderItem.BottomLoose;
-
-            txtSlvAHole.Text = this._orderItem.SleeveArmHole;
-            txtSlvLength.Text = this._orderItem.SleeveLength;
-            txtSlvLoose.Text = this._orderItem.SleeveLoose;
-            txtComment.Text = this._orderItem.Comment;
-
-            UpdateCmbType(this._orderItem.Name ?? cmbType.Text);
-            nudQuantity.Value = this._orderItem.Quantity == 0 ? 1 : this._orderItem.Quantity;
-            txtPrice.Text = this._orderItem.Price.ToString();
-
-            if (this._orderItem.Image != null)
-                pcbMaterialImage.Image = this._orderItem.Image;
-            else if (pcbMaterialImage.Image == null)
-                pcbMaterialImage.Image = await Utilities.Helper.GetDocumentWebAsync("/OrderItem_ProfilePictures", this._orderItem.ID.ToString());
-
-            this._orderItem.Image = pcbMaterialImage.Image;
-        }
-
+        #region Events
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            //todo: check if is in edit
             bool hasValue = SpindleSoft.Utilities.Validation.controlIsInEdit(grbxProdDetails, true);
 
             if (hasValue != true)
@@ -83,14 +61,17 @@ namespace SpindleSoft.Views
                 MessageBox.Show("Price is Mandatory", "No Price Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            else if (String.IsNullOrEmpty(cmbType.Text))
+            {
+                MessageBox.Show("Order Item Type is Mandatory", "No Order Item Type Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             OrderItem _item = _orderItem;
 
             _item.Name = cmbType.Text;
             _item.Price = float.Parse(txtPrice.Text);
             _item.Quantity = int.Parse(nudQuantity.Value.ToString());
-
-            _item.Image = pcbMaterialImage.Image;
 
             _item.Length = txtLength.Text;
             _item.Waist = txtWaist.Text;
@@ -116,15 +97,6 @@ namespace SpindleSoft.Views
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
                 orderDetails.UpdateOrderItemList(_item, _index);
-            //else
-            //    MessageBox.Show("Unable to Update the Order Cart as List not found.","Order Details not found",MessageBoxButtons.OK,MessageBoxIcon.Error);
-
-            //Winform_AlterationsDetails altDetails = Application.OpenForms["Winform_AlterationsDetails"] as Winform_AlterationsDetails;
-            //if (altDetails != null)
-            //    altDetails.updateOrderItemList(_item);
-            //else
-            //    MessageBox.Show("Unable to Update the Order Cart as List not found.", "Alteration Details not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             this.Close();
         }
 
@@ -179,32 +151,142 @@ namespace SpindleSoft.Views
             cmbType.SelectedItem = value;
         }
 
-        private async void cmbType_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(cmbType.Text) && (_orderItem == new OrderItem() || cmbType.Text != _orderItem.Name))
             {
                 //fetch  previous measurement
-                _orderItem = OrderBuilder.GetOrderItem(this._cust.ID, cmbType.Text);
+                _orderItem = OrderBuilder.GetOrderItemLatestMeasurementBasedonProdName(this._cust.ID, cmbType.Text);
                 if (_orderItem != null) _orderItem.ID = 0;
 
-                await UpdateControls(this._cust.Name, _orderItem);
+                UpdateControls(this._cust.Name, _orderItem);
             }
         }
 
-        private void btnCapture_Click(object sender, EventArgs e)
+        private void Winform_MeasurementAdd_Load(object sender, EventArgs e)
         {
-            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbMaterialImage);
-            _imageCapture.ShowDialog();
-        }
-
-        private async void Winform_MeasurementAdd_Load(object sender, EventArgs e)
-        {
-            await UpdateControls(this._cust.Name, this._orderItem);
+            UpdateControls(this._cust.Name, this._orderItem);
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
             new Winform_DocumentDetails().ShowDialog();
         }
+
+        private void dgvOrderItemDoc_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            if (IsNullOrEmpty(dgvOrderItemDoc.Rows[e.RowIndex].Cells[0].Value))
+            {
+                MessageBox.Show("Document Type is Mandatory", "Enter Document Type", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (e.ColumnIndex == 0)
+            {
+                new Winform_DocumentDetails(docList[e.RowIndex], InEdit).ShowDialog();
+            }
+            else if (e.ColumnIndex == 1) //delete Document
+            {
+                if (IsNullOrEmpty(dgvOrderItemDoc.Rows[e.RowIndex].Cells[0].Value))
+                    return;
+
+                if (dgvOrderItemDoc.Columns["colDelete"].Index == e.ColumnIndex)
+                {
+                    DialogResult dres = MessageBox.Show("Continue deleting selected Document?", "Delete Document", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dres == DialogResult.No) return;
+
+                    if (docList.Count != 0 && e.RowIndex + 1 <= docList.Count)
+                    {
+                        bool success = false;
+                        if (docList[e.RowIndex].ID != 0)
+                            success = SpindleSoft.Savers.OrderSaver.DeleteOrderItemDocument(docList[e.RowIndex].ID);
+
+                        if (success || docList[e.RowIndex].ID == 0)
+                        {
+                            docList.RemoveAt(e.RowIndex);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
+                            return;
+                        }
+                    }
+                    dgvOrderItemDoc.Rows.RemoveAt(e.RowIndex);
+                }
+            }
+        }
+        #endregion
+
+        #region Custom
+        internal bool UpdateDocumentItemList(Document _doc)
+        {
+            var docindex = docList.IndexOf(docList.Where(x => x.Type == _doc.Type).SingleOrDefault());
+            if (docList.Count == 0 || docindex == -1)
+            {
+                docList.Add(new OrderItemDocument
+                {
+                    Image = _doc.Image,
+                    Type = _doc.Type,
+                });
+                dgvOrderItemDoc.Rows.Add();
+                docindex = dgvOrderItemDoc.Rows.Count - 1;
+            }
+            else
+            {
+                docList[docindex].Image = _doc.Image;
+                docList[docindex].Type = _doc.Type;
+            }
+
+            dgvOrderItemDoc.Rows[docindex].Cells["colDocType"].Value = _doc.Type;
+            _orderItem.OrderItemDocuments = docList;
+            return true;
+        }
+
+        private void UpdateControls(string custName, OrderItem orderItem)
+        {
+            this._orderItem = orderItem != null ? orderItem : new OrderItem();
+
+            txtCustName.Text = custName;
+            txtLength.Text = this._orderItem.Length;
+            txtWaist.Text = this._orderItem.Waist;
+            txtChest.Text = this._orderItem.Chest;
+            txtShoulder.Text = this._orderItem.Shoulder;
+            txtFront.Text = this._orderItem.Front;
+            txtBack.Text = this._orderItem.Back;
+            txtD.Text = this._orderItem.D;
+            txtHip.Text = this._orderItem.Hip;
+
+            txtBotHip.Text = this._orderItem.BottomHip;
+            txtBotWaist.Text = this._orderItem.BottomWaist;
+            txtBotLength.Text = this._orderItem.BottomLength;
+            txtBotLoose.Text = this._orderItem.BottomLoose;
+
+            txtSlvAHole.Text = this._orderItem.SleeveArmHole;
+            txtSlvLength.Text = this._orderItem.SleeveLength;
+            txtSlvLoose.Text = this._orderItem.SleeveLoose;
+            txtComment.Text = this._orderItem.Comment;
+
+            UpdateCmbType(this._orderItem.Name ?? cmbType.Text);
+            nudQuantity.Value = this._orderItem.Quantity == 0 ? 1 : this._orderItem.Quantity;
+            txtPrice.Text = this._orderItem.Price.ToString();
+
+            if (_orderItem != null && _orderItem.OrderItemDocuments != null && _orderItem.OrderItemDocuments.Count != 0)
+            {
+                docList = _orderItem.OrderItemDocuments as List<OrderItemDocument>;
+                foreach (OrderItemDocument doc in _orderItem.OrderItemDocuments)
+                {
+                    int index = _orderItem.OrderItemDocuments.IndexOf(doc);
+                    dgvOrderItemDoc.Rows.Add();
+
+                    dgvOrderItemDoc.Rows[index].Cells["colDocType"].Value = doc.Type;
+                }
+
+                if (!InEdit)
+                    dgvOrderItemDoc.Columns["ColDelete"].Visible = false;
+            }
+        }
+        #endregion Custom
     }
 }

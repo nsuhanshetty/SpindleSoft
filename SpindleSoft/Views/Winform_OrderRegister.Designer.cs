@@ -38,12 +38,8 @@
             this.dgvSearch = new System.Windows.Forms.DataGridView();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -54,7 +50,7 @@
             this.groupBox1.Controls.Add(this.txtName);
             this.groupBox1.Controls.Add(this.lblName);
             this.groupBox1.Controls.Add(this.lblMobile);
-            this.groupBox1.Location = new System.Drawing.Point(7, 9);
+            this.groupBox1.Location = new System.Drawing.Point(7, 57);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(464, 75);
             this.groupBox1.TabIndex = 3;
@@ -122,14 +118,14 @@
             this.dgvSearch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDelete,
             this.colEdit});
-            this.dgvSearch.Location = new System.Drawing.Point(8, 90);
+            this.dgvSearch.Location = new System.Drawing.Point(7, 138);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
-            this.dgvSearch.Size = new System.Drawing.Size(574, 253);
+            this.dgvSearch.Size = new System.Drawing.Size(574, 241);
             this.dgvSearch.TabIndex = 4;
             this.dgvSearch.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellClick);
-            this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
-            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
+            //this.dgvSearch.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
+            //this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
             this.dgvSearch.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSearch_PreviewKeyDown);
             // 
             // colDelete
@@ -148,47 +144,21 @@
             this.colEdit.ReadOnly = true;
             this.colEdit.Visible = false;
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStrip_Label});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 348);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(593, 22);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
-            // 
-            // toolStrip_Label
-            // 
-            this.toolStrip_Label.Name = "toolStrip_Label";
-            this.toolStrip_Label.Size = new System.Drawing.Size(476, 17);
-            this.toolStrip_Label.Spring = true;
-            this.toolStrip_Label.Text = "Ready";
-            this.toolStrip_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // Winform_OrderRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 370);
-            this.Controls.Add(this.statusStrip1);
+            this.ClientSize = new System.Drawing.Size(590, 409);
             this.Controls.Add(this.dgvSearch);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_OrderRegister";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Order Register";
             this.Load += new System.EventHandler(this.Winform_OrderRegister_Load);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
+            this.Controls.SetChildIndex(this.dgvSearch, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,9 +168,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvSearch;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         internal System.Windows.Forms.TextBox txtOrderId;
         internal System.Windows.Forms.Label label2;
         internal System.Windows.Forms.TextBox txtMobNo;

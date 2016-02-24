@@ -33,6 +33,7 @@
             this.CancelToolStrip = new System.Windows.Forms.ToolStripButton();
             this.SaveToolStrip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.EditToolStrip = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStrip_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -46,7 +47,8 @@
             this.toolStripParent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CancelToolStrip,
             this.SaveToolStrip,
-            this.toolStripSeparator1});
+            this.toolStripSeparator1,
+            this.EditToolStrip});
             this.toolStripParent.Location = new System.Drawing.Point(0, 0);
             this.toolStripParent.Name = "toolStripParent";
             this.toolStripParent.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -87,6 +89,18 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 54);
             // 
+            // EditToolStrip
+            // 
+            this.EditToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("EditToolStrip.Image")));
+            this.EditToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.EditToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EditToolStrip.Name = "EditToolStrip";
+            this.EditToolStrip.Size = new System.Drawing.Size(36, 51);
+            this.EditToolStrip.Text = "&Edit";
+            this.EditToolStrip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.EditToolStrip.Visible = false;
+            this.EditToolStrip.Click += new System.EventHandler(this.EditToolStrip_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -116,14 +130,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(590, 387);
+            this.ControlBox = false;
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStripParent);
-            this.ControlBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "Winform_DetailsFormat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            //this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Winform_DetailsFormat_FormClosing);
             this.Load += new System.EventHandler(this.Winform_DetailsFormat_Load);
             this.toolStripParent.ResumeLayout(false);
             this.toolStripParent.PerformLayout();
@@ -143,5 +156,6 @@
         protected System.Windows.Forms.StatusStrip statusStrip1;
         protected System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripButton EditToolStrip;
     }
 }

@@ -84,6 +84,8 @@ namespace SpindleSoft.Model
 
         public virtual IList<AlterationItem> AlterationItems { get; set; }
 
+        public virtual IList<OrderItemDocument> OrderItemDocuments { get; set; }
+
         public OrderItem() { }
 
         public OrderItem(string itemName, int price, int quantity)

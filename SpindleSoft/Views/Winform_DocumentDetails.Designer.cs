@@ -37,6 +37,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnCaptureImage = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbDocImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -47,20 +48,21 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btnCaptureImage);
             this.groupBox1.Controls.Add(this.btnAdd);
             this.groupBox1.Controls.Add(this.cmbDocType);
             this.groupBox1.Controls.Add(this.pcbDocImage);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(5, 57);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(460, 403);
+            this.groupBox1.Size = new System.Drawing.Size(545, 463);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Document Details";
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(358, 376);
+            this.btnAdd.Location = new System.Drawing.Point(443, 434);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(96, 23);
             this.btnAdd.TabIndex = 1;
@@ -71,7 +73,7 @@
             // cmbDocType
             // 
             this.cmbDocType.FormattingEnabled = true;
-            this.cmbDocType.Location = new System.Drawing.Point(49, 376);
+            this.cmbDocType.Location = new System.Drawing.Point(47, 434);
             this.cmbDocType.Name = "cmbDocType";
             this.cmbDocType.Size = new System.Drawing.Size(121, 21);
             this.cmbDocType.TabIndex = 0;
@@ -83,9 +85,9 @@
             this.pcbDocImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pcbDocImage.BackgroundImage")));
             this.pcbDocImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pcbDocImage.InitialImage = null;
-            this.pcbDocImage.Location = new System.Drawing.Point(12, 19);
+            this.pcbDocImage.Location = new System.Drawing.Point(6, 19);
             this.pcbDocImage.Name = "pcbDocImage";
-            this.pcbDocImage.Size = new System.Drawing.Size(442, 351);
+            this.pcbDocImage.Size = new System.Drawing.Size(533, 409);
             this.pcbDocImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbDocImage.TabIndex = 124;
             this.pcbDocImage.TabStop = false;
@@ -93,7 +95,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 380);
+            this.label1.Location = new System.Drawing.Point(10, 438);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(31, 13);
             this.label1.TabIndex = 0;
@@ -108,12 +110,21 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // btnCaptureImage
+            // 
+            this.btnCaptureImage.Location = new System.Drawing.Point(341, 434);
+            this.btnCaptureImage.Name = "btnCaptureImage";
+            this.btnCaptureImage.Size = new System.Drawing.Size(96, 23);
+            this.btnCaptureImage.TabIndex = 125;
+            this.btnCaptureImage.Text = "Capture Image";
+            this.btnCaptureImage.UseVisualStyleBackColor = true;
+            this.btnCaptureImage.Click += new System.EventHandler(this.btnCaptureImage_Click);
+            // 
             // Winform_DocumentDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 484);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(562, 544);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_DocumentDetails";
             this.Text = "Winform_DocumentDetails";
@@ -137,5 +148,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btnCaptureImage;
     }
 }

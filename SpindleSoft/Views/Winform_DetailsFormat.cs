@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace SpindleSoft.Views
 {
@@ -8,6 +10,7 @@ namespace SpindleSoft.Views
     public partial class Winform_DetailsFormat : Form
     {
         public bool InEdit { get; set; }
+        public List<String> excludeControlList { get; set; }
 
 #else
         public abstract partial class Winform_DetailsFormat: Form
@@ -18,14 +21,29 @@ namespace SpindleSoft.Views
             InitializeComponent();
         }
 
-
-        protected void DisableWinFormControls(Control con)
+        protected void WinFormControls_InEdit(Control con, List<String> _excludeControlList = null)
         {
+            if (_excludeControlList != null)
+            {
+                if (excludeControlList == null)
+                    excludeControlList = new List<string>();
+                excludeControlList.AddRange(_excludeControlList);
+            }
+
             foreach (Control c in con.Controls)
             {
-                DisableWinFormControls(c);
+                WinFormControls_InEdit(c);
             }
-            con.Enabled = false;
+
+            if (!InEdit && excludeControlList != null && excludeControlList.Any(c => c == con.Name))
+            {
+                con.Parent.Enabled = true;
+            }
+            else
+                con.Enabled = InEdit;
+
+            /*Enable editToolStrip*/
+            //toolStripParent.Enabled = true;
         }
 
         private void Winform_DetailsFormat_Load(object sender, EventArgs e)
@@ -52,6 +70,13 @@ namespace SpindleSoft.Views
         protected virtual bool IsNullOrEmpty(object obj)
         {
             return (obj == null || obj.ToString() == "");
+        }
+
+        protected virtual void EditToolStrip_Click(object sender, EventArgs e)
+        {
+            InEdit = true;
+            WinFormControls_InEdit(this);
+            EditToolStrip.Enabled = false;
         }
     }
 }

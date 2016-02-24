@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NHibernate.Linq;
 using log4net;
 using System.Collections;
+using System.Configuration;
 
 namespace SpindleSoft.Builders
 {
@@ -33,68 +34,20 @@ namespace SpindleSoft.Builders
             }
         }
 
-
-        /// <summary>
-        ///  Based on the selected customer load the measurement from previous order
-        /// </summary>
-        /// <param name="custId"></param>
-        /// <param name="itemName"></param>
-        /// <returns>OrderItem</returns>
-        //public static OrderItem GetOrderItem(int custId, string itemName)
-        //{
-        //    OrderItem orderItem = new OrderItem();
-        //    try
-        //    {
-        //        using (var session = NHibernateHelper.OpenSession())
-        //        {
-        //            //todo: convert to linq
-        //            //order by updated date desc
-        //            //singleOrDefault
-        //            string query = ("select i.* from orderitem i " +
-        //                            "inner join orders o on o.ID = i.OrderID " +
-        //                            "where i.Name = :name and o.CustomerID = :custId " +
-        //                            "order by i.DateUpdated");
-        //            OrderItem ordItem = null;
-        //            Orders ord = null;
-
-        //            var sqlQuery = session.CreateSQLQuery(query)
-        //                                        .SetParameter("name", itemName)
-        //                                        .SetParameter("custId", custId)
-        //                                        .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(OrderItem)));
-        //            log.Info(sqlQuery as OrderItem);
-        //            return orderItem = sqlQuery as OrderItem;
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.Error(ex.Message);
-        //        return null;
-        //    }
-        //}
-
-        public static OrderItem GetOrderItem(int custID, string productName)
+        public static OrderItem GetOrderItemLatestMeasurementBasedonProdName(int custID, string productName)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
                 try
                 {
-                    bool OrderExists = false;
-                    if (custID != 0)
-                    {
-                        OrderExists = session.Query<Orders>()
-                            .Any(x => (x.Customer.ID == custID));
-                    }
+                    var ordList = from ordItem in session.Query<OrderItem>()
+                                  join ord in session.Query<Orders>() on ordItem.Order.ID equals ord.ID
+                                  join cust in session.Query<Customer>() on ord.Customer.ID equals cust.ID
+                                  where (cust.ID == custID && ordItem.Name == productName)
+                                  orderby ordItem.ID descending
+                                  select ordItem;
 
-                    if (custID != 0 && !OrderExists)
-                        return null;
-
-                    OrderItem item;
-                    var list = (session.QueryOver<OrderItem>()
-                                .Where(x => x.Name == productName)
-                                .OrderBy(x => x.ID).Desc
-                                .List<OrderItem>());
-                    item = list.FirstOrDefault();
+                    OrderItem item = ordList.ToList<OrderItem>().FirstOrDefault();
                     return item;
                 }
                 catch (Exception ex)
@@ -152,6 +105,9 @@ namespace SpindleSoft.Builders
 
         public static Orders GetOrderInfo(int orderID)
         {
+            string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+            string OrderItemDocPath = ConfigurationManager.AppSettings["OrderItemDocs"];
+
             using (var session = NHibernateHelper.OpenSession())
             {
                 try
@@ -165,11 +121,21 @@ namespace SpindleSoft.Builders
                         .Fetch(o => o.Order).Eager
                         .Future().ToList();
 
-                    //foreach (var item in _order.OrdersItems)
-                    //{
-                    //    item.Image = await Utilities.Helper.GetDocumentAsync(string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID));
-                    //}
+                    foreach (var item in _order.OrdersItems)
+                    {
+                        item.OrderItemDocuments = session.QueryOver<OrderItemDocument>()
+                            .Where(x => x.orderItem.ID == item.ID)
+                            .Fetch(o => o.orderItem).Eager
+                            .Future().ToList();
+                    }
 
+                    foreach (var item in _order.OrdersItems)
+                    {
+                        foreach (var doc in item.OrderItemDocuments)
+                        {
+                            doc.Image = Utilities.Helper.GetDocumentLocal(string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type));
+                        }
+                    }
                     return _order;
                 }
                 catch (Exception ex)
@@ -201,7 +167,23 @@ namespace SpindleSoft.Builders
             }
         }
 
-
+        public static List<string> GetOrderItemDocumentTypeList()
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    List<string> _docList = (from s in session.Query<OrderItemDocument>()
+                                             select s.Type).Distinct().ToList();
+                    return _docList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return null;
+            }
+        }
 
         #endregion OrderBuilder
     }

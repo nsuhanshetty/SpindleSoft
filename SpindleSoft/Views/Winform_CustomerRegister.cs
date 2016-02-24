@@ -82,7 +82,6 @@ namespace SpindleSoft.Views
                 dgvCustomerRegister.DataSource = null;
                 colEdit.Visible = colDelete.Visible = false;
             }
-
             UpdateStatus((dgvCustomerRegister.RowCount == 0) ? "No Results Found" : dgvCustomerRegister.RowCount + " Results Found", 100);
         }
 

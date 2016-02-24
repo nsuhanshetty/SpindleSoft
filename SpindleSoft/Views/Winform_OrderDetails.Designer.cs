@@ -114,7 +114,7 @@
             this.dgvOrderItems.Size = new System.Drawing.Size(586, 156);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellClick);
-            this.dgvOrderItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvOrderItems_DataError);
+            //this.dgvOrderItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvOrderItems_DataError);
             // 
             // OrderType
             // 

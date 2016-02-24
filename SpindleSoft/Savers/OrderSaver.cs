@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using System.Drawing;
+using System.Configuration;
 
 namespace SpindleSoft.Savers
 {
@@ -13,9 +14,10 @@ namespace SpindleSoft.Savers
     class OrderSaver
     {
         static ILog log = LogManager.GetLogger(typeof(OrderSaver));
-        //static string OrderItemProfile = "/OrderItem_ProfilePictures";
+        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+        static string OrderItemDocPath = ConfigurationManager.AppSettings["OrderItemDocs"];
 
-        public static async Task<bool> SaveOrder(Orders order)
+        public static bool SaveOrder(Orders order)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -26,23 +28,26 @@ namespace SpindleSoft.Savers
                         foreach (var item in order.OrdersItems)
                         {
                             item.Order = order;
-                            //if (item.Image != null && !await SaveItemImage(item.Image, item.ID))
-                            //    return false;
+                            foreach (var doc in item.OrderItemDocuments)
+                            {
+                                doc.orderItem = item;
+                            }
                         }
+
                         session.SaveOrUpdate(order);
 
-                        //foreach (var item in order.OrdersItems)
-                        //{
-                        //    if (item.Image != null &&
-                        //        !await Utilities.Helper.UploadAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID)))
-                        //        return false;
-                        //}
+                        List<bool> results = new List<bool>();
+                        foreach (var item in order.OrdersItems)
+                        {
+                            foreach (var doc in item.OrderItemDocuments)
+                            {
+                                if (doc.Image != null)
+                                {
+                                    results.Add(Utilities.Helper.UploadToLocal(doc.Image, string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type)));
+                                }
+                            }
+                        }
 
-                        var tasks = (from item in order.OrdersItems
-                                    where item.Image != null
-                                    select Utilities.Helper.UploadToWebAsync(item.Image, string.Format("/OrderItem_ProfilePictures/{0}.png", item.ID))).ToArray();
-                        
-                        bool[] results= await Task.WhenAll(tasks);
                         if (results.Contains(false))
                             return false;
 
@@ -98,7 +103,7 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static async Task<bool> DeleteOrderItems(int _id)
+        public static bool DeleteOrderItems(int _id)
         {
             bool success = false;
             using (var session = NHibernateHelper.OpenSession())
@@ -107,13 +112,19 @@ namespace SpindleSoft.Savers
                 {
                     try
                     {
+                        List<bool> result = new List<bool>();
                         var item = session.Get<OrderItem>(_id);
-                        bool suceess = await Utilities.Helper.DeleteDocumentWebAsync("/OrderItem_ProfilePictures", _id.ToString());
-                        if (!suceess)
+                        foreach (var doc in item.OrderItemDocuments)
+                        {
+                            var _filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type);
+                            result.Add(Utilities.Helper.DeleteDocumentLocal(_filePath));
+                        }
+
+                        if (result.Any(x => x == false))
                             return false;
                         session.Delete(item);
                         trans.Commit();
-                        success = true;
+                        return true;
                     }
                     catch (Exception ex)
                     {
@@ -122,6 +133,34 @@ namespace SpindleSoft.Savers
                 }
             }
             return success;
+        }
+
+        public static bool DeleteOrderItemDocument(int _ID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        Document doc = session.Get<Document>(_ID);
+
+                        string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, _ID, doc.Type);
+                        bool success = Utilities.Helper.DeleteDocumentLocal(filePath);
+                        if (!success)
+                            return false;
+                        session.Delete(doc);
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tx.Rollback();
+                        log.Error(ex);
+                        return false;
+                    }
+                }
+            }
         }
     }
 }

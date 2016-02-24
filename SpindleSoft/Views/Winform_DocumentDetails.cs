@@ -15,30 +15,48 @@ namespace SpindleSoft.Views
     public partial class Winform_DocumentDetails : Winform_DetailsFormat
     {
         Document document;
-        public Winform_DocumentDetails(Document _document = null)
+        public Winform_DocumentDetails(Document _document = null, bool _inEdit = false)
         {
             InitializeComponent();
             this.document = _document;
+            InEdit = _inEdit;
 
             if (_document != null)
             {
                 document = _document;
                 pcbDocImage.Image = _document.Image;
             }
+            
+            if (!InEdit)
+            {
+                WinFormControls_InEdit(this);
+                this.Enabled = true;
+                this.ControlBox = true;
+            }
         }
 
         private void Winform_DocumentDetails_Load(object sender, EventArgs e)
         {
-            //load and autopopulate all the document Types from db
+            List<string> docTypeList = null;
 
-            var docList = Builders.PeoplePracticeBuilder.GetSecurityDocumentTypeList();
-            if (document != null && docList.IndexOf(document.Type) == -1)
-                docList.Add(document.Type);
+            /*load and autopopulate all the document Types from db*/
+            Winform_StaffDetails staffDetails = Application.OpenForms["Winform_StaffDetails"] as Winform_StaffDetails;
+            if (Application.OpenForms["Winform_StaffDetails"] as Winform_StaffDetails != null)
+            {
+                docTypeList = Builders.PeoplePracticeBuilder.GetSecurityDocumentTypeList();
+            }
+            else if (Application.OpenForms["Winform_MeasurementAdd"] as Winform_MeasurementAdd != null)
+            {
+                docTypeList = Builders.OrderBuilder.GetOrderItemDocumentTypeList();
+            }
+
+            if (document != null && docTypeList.IndexOf(document.Type) == -1)
+                docTypeList.Add(document.Type);
 
             cmbDocType.DataSource = null;
-            cmbDocType.DataSource = docList;
+            cmbDocType.DataSource = docTypeList;
 
-            string[] docNames = docList.ToArray();
+            string[] docNames = docTypeList.ToArray();
             var nameCollection = new AutoCompleteStringCollection();
             nameCollection.AddRange(docNames);
 
@@ -48,7 +66,7 @@ namespace SpindleSoft.Views
 
             if (document != null)
             {
-                cmbDocType.SelectedIndex = docList.IndexOf(document.Type);
+                cmbDocType.SelectedIndex = docTypeList.IndexOf(document.Type);
             }
         }
 
@@ -118,12 +136,12 @@ namespace SpindleSoft.Views
             Winform_MeasurementAdd measurementDetails = Application.OpenForms["Winform_MeasurementAdd"] as Winform_MeasurementAdd;
             if (measurementDetails != null)
             {
-                //bool success = staffDetails.UpdateDocumentItemList(document);
-                //if (!success)
-                //{
-                //    MessageBox.Show("Cannot add new Document of type " + document.Type + " as it already exits.", "Document already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //    return;
-                //}
+                bool success = measurementDetails.UpdateDocumentItemList(document);
+                if (!success)
+                {
+                    MessageBox.Show("Cannot add new Document of type " + document.Type + " as it already exits.", "Document already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
             this.Close();
         }
@@ -131,6 +149,12 @@ namespace SpindleSoft.Views
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnCaptureImage_Click(object sender, EventArgs e)
+        {
+            Winform_ImageCapture _imageCapture = new Winform_ImageCapture(this.pcbDocImage);
+            _imageCapture.ShowDialog();
         }
     }
 }

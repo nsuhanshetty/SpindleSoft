@@ -36,6 +36,9 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.SleeveLength);
             Map(x => x.Comment);
             Map(x => x.DateUpdated);
+            HasMany(x => x.OrderItemDocuments).KeyColumn("OrderItemID")
+                                                        .Inverse()
+                                                        .Cascade.All();
         }
     }
 

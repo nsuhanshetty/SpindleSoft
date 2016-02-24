@@ -35,7 +35,7 @@ namespace SpindleSoft.Views
             InitializeComponent();
             if (!InEdit)
             {
-                DisableWinFormControls(this);
+                WinFormControls_InEdit(this);
                 this.Enabled = true;
                 this.ControlBox = true;
             }
