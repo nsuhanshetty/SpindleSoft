@@ -18,7 +18,7 @@ namespace SpindlesSoftTestCases.Functions
         TestCase("c", "6", "1")]
         public static void GetAlterationItems_Test(string name = null, string mobNo = null, string altID = null)
         {
-            List<Alteration> altList = AlterationBuilder.GetAlterationList(name, mobNo, altID);
+            System.Collections.IList altList = AlterationBuilder.GetAlterationList(name, mobNo, altID);
             Assert.IsNotEmpty(altList);
         }
 

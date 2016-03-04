@@ -2,24 +2,21 @@
 using SpindleSoft.Model;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_SalaryRegister : winform_Register
     {
+        #region ctor
         public Winform_SalaryRegister()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Validation
         private void dtpFromSalaryDate_Validating(object sender, CancelEventArgs e)
         {
             if (DateTime.Compare(dtpFromSalaryDate.Value.Date, dtpToSalaryDate.Value.Date) > 0)
@@ -28,33 +25,36 @@ namespace SpindleSoft.Views
                 MessageBox.Show("Salary from date can't be greater than the to Date", "Invalid Date", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
+        #endregion
 
+        #region Events
         private void toolStripBtnSearch_Click(object sender, EventArgs e)
         {
+            UpdateStatus("Searching", 50);
             IList salList = ExpenseBuilder.GetSalaryList(dtpFromSalaryDate.Value.Date, dtpToSalaryDate.Value.Date, txtName.Text);
-            dgvSalaryItem.DataSource = null;
+
             if (salList.Count == 0)
             {
-                dgvSalaryRegister.DataSource = null;
-                UpdateStatus("No salary Items found", 100);
+                dgvSalaryRegister.DataSource = dgvSalaryItem.DataSource = null;
+                colDelete.Visible = colEdit.Visible = false;
             }
             else
             {
                 dgvSalaryRegister.DataSource = salList;
-                dgvSalaryRegister.Columns["colDelete"].DisplayIndex = dgvSalaryRegister.Columns.Count - 1;
-                dgvSalaryRegister.Columns["colDelete"].Visible = true;
                 dgvSalaryRegister.Columns["ID"].Visible = false;
-                UpdateStatus(salList.Count + " salaries found", 100);
+                colDelete.DisplayIndex = colEdit.DisplayIndex = dgvSalaryRegister.Columns.Count - 1;
+                colDelete.Visible = colEdit.Visible = true;
+                dgvSalaryItem.DataSource = null;
             }
-
+            UpdateStatus((dgvSalaryRegister.RowCount == 0) ? "No Results Found" : dgvSalaryRegister.RowCount + " Results Found", 100);
         }
 
-        private void dgvSalaryRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvSalaryRegister_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
             int salaryID = int.Parse(dgvSalaryRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
 
-            if (e.ColumnIndex == dgvSalaryRegister.Columns["colDelete"].Index)
+            if (e.ColumnIndex == colDelete.Index)
             {
                 DialogResult dr = MessageBox.Show("Do you want to Delete Salary of date " + dgvSalaryRegister.Rows[e.RowIndex].Cells["DateOfSalary"].Value.ToString(), "Delete Salary Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dr == DialogResult.No) return;
@@ -67,9 +67,17 @@ namespace SpindleSoft.Views
                 }
                 return;
             }
+            else if (e.ColumnIndex == colEdit.Index)
+            {
+                Salary salary = ExpenseBuilder.GetSalary(salaryID);
+                if (salary != null)
+                {
+                    new Winform_SalaryDetails(salary).ShowDialog();
+                    toolStripBtnSearch_Click(new object(), new EventArgs());
+                }
+            }
             else
             {
-                this.Cursor = Cursors.WaitCursor;
                 IList salItemList = ExpenseBuilder.GetSalaryItemList(salaryID);
 
                 if (salItemList.Count == 0)
@@ -81,29 +89,26 @@ namespace SpindleSoft.Views
                     dgvSalaryItem.DataSource = salItemList;
                     dgvSalaryItem.Columns["ID"].Visible = false;
                 }
-                this.Cursor = Cursors.Arrow;
             }
-        }
-
-        private void dgvSalaryRegister_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1) return;
-            int salaryID = int.Parse(dgvSalaryRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
-
-            Salary salary = ExpenseBuilder.GetSalary(salaryID);
-            if (salary == null)
-                return;
-
-            new Winform_SalaryDetails(salary).ShowDialog();
-            toolStripBtnSearch_Click(new object(), new EventArgs());
         }
 
         private void dgvSalaryRegister_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                dgvSalaryRegister_CellDoubleClick(this, new DataGridViewCellEventArgs(dgvSalaryRegister.CurrentCell.ColumnIndex, dgvSalaryRegister.CurrentCell.RowIndex));
+                dgvSalaryRegister_CellClick(this, new DataGridViewCellEventArgs(dgvSalaryRegister.CurrentCell.ColumnIndex, dgvSalaryRegister.CurrentCell.RowIndex));
             }
         }
+
+        protected override void NewVendToolStrip_Click(object sender, EventArgs e)
+        {
+            new Winform_SalaryDetails().ShowDialog();
+        }
+
+        private void Winform_SalaryRegister_Load(object sender, EventArgs e)
+        {
+            this.toolStrip1.Items.Add(this.toolStripBtnSearch);
+        }
+        #endregion
     }
 }

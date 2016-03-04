@@ -66,7 +66,7 @@ namespace SpindleSoft.Views
             }
 
             string _fileName = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
-            pcbCustImage.Image = this._cust.Image = Utilities.Helper.GetDocumentLocal(_fileName);
+            pcbCustImage.Image = this._cust.Image = Utilities.ImageHelper.GetDocumentLocal(_fileName);
             Cursor.Current = Cursors.Arrow;
         }
 
@@ -224,7 +224,7 @@ namespace SpindleSoft.Views
             string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, refCust.ID);
             txtRefMob.Text = refCust.Mobile_No;
             txtRefName.Text = refCust.Name;
-            pcbReferral.Image = Utilities.Helper.GetDocumentLocal(filePath);
+            pcbReferral.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
         }
 
         public void UpdateCustomerControl(Customer refCustomer)
@@ -236,7 +236,7 @@ namespace SpindleSoft.Views
 
             txtRefName.Text = refCustomer.Name;
             txtRefMob.Text = refCustomer.Mobile_No;
-            pcbReferral.Image = refCustomer.Image = Utilities.Helper.GetDocumentLocal(filePath);
+            pcbReferral.Image = refCustomer.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
         }
         #endregion Custom
     }

@@ -61,10 +61,6 @@
             this.viewExpenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salaryDetailsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.salaryRegisterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bulkSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sendSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewSMSRegistryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sMSReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordersReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +72,7 @@
             this.backUpDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pnlSearch = new System.Windows.Forms.Panel();
@@ -139,7 +136,7 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sMSReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
@@ -166,7 +163,6 @@
             this.inventoryToolStripMenuItem,
             this.catalogueToolStripMenuItem,
             this.expenseToolStripMenuItem,
-            this.bulkSMSToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.settingToolStripMenuItem,
             this.exitToolStripMenuItem,
@@ -420,45 +416,14 @@
             this.salaryRegisterToolStripMenuItem1.Text = "S&alary Register";
             this.salaryRegisterToolStripMenuItem1.Click += new System.EventHandler(this.salaryRegisterToolStripMenuItem1_Click);
             // 
-            // bulkSMSToolStripMenuItem
-            // 
-            this.bulkSMSToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sendSMSToolStripMenuItem,
-            this.viewSMSRegistryToolStripMenuItem,
-            this.sMSReportsToolStripMenuItem});
-            this.bulkSMSToolStripMenuItem.Enabled = false;
-            this.bulkSMSToolStripMenuItem.Name = "bulkSMSToolStripMenuItem";
-            this.bulkSMSToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.bulkSMSToolStripMenuItem.Text = "Pro&motions";
-            this.bulkSMSToolStripMenuItem.Click += new System.EventHandler(this.bulkSMSToolStripMenuItem_Click);
-            // 
-            // sendSMSToolStripMenuItem
-            // 
-            this.sendSMSToolStripMenuItem.Name = "sendSMSToolStripMenuItem";
-            this.sendSMSToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.sendSMSToolStripMenuItem.Text = "Send Bulk SMS";
-            this.sendSMSToolStripMenuItem.Click += new System.EventHandler(this.sendSMSToolStripMenuItem_Click);
-            // 
-            // viewSMSRegistryToolStripMenuItem
-            // 
-            this.viewSMSRegistryToolStripMenuItem.Name = "viewSMSRegistryToolStripMenuItem";
-            this.viewSMSRegistryToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.viewSMSRegistryToolStripMenuItem.Text = "Promotion Registry ";
-            this.viewSMSRegistryToolStripMenuItem.Click += new System.EventHandler(this.viewSMSRegistryToolStripMenuItem_Click);
-            // 
-            // sMSReportsToolStripMenuItem
-            // 
-            this.sMSReportsToolStripMenuItem.Name = "sMSReportsToolStripMenuItem";
-            this.sMSReportsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.sMSReportsToolStripMenuItem.Text = "SMS Reports";
-            // 
             // reportsToolStripMenuItem
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ordersReportToolStripMenuItem,
             this.salesrToolStripMenuItem,
             this.alterationSalesToolStripMenuItem,
-            this.customerReportToolStripMenuItem});
+            this.customerReportToolStripMenuItem,
+            this.sMSReportToolStripMenuItem});
             this.reportsToolStripMenuItem.Enabled = false;
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
@@ -530,6 +495,15 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "A&bout";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -1206,14 +1180,11 @@
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
             // 
-            // aboutToolStripMenuItem
+            // sMSReportToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "A&bout";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.sMSReportToolStripMenuItem.Name = "sMSReportToolStripMenuItem";
+            this.sMSReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.sMSReportToolStripMenuItem.Text = "SMS Report";
             // 
             // Main
             // 
@@ -1265,7 +1236,6 @@
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem alterationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expenseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bulkSMSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCustomerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchCustomerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addOrdersToolStripMenuItem;
@@ -1278,9 +1248,6 @@
         private System.Windows.Forms.ToolStripMenuItem userManagerToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem viewExpenseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sendSMSToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewSMSRegistryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sMSReportsToolStripMenuItem;
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rdbAlteration;
@@ -1369,6 +1336,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sMSReportToolStripMenuItem;
     }
 }
 

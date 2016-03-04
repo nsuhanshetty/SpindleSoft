@@ -28,7 +28,7 @@
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>47</ApplicationRevision>
+    <ApplicationRevision>48</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -197,7 +197,7 @@
     <Compile Include="Savers\PeoplePracticeSaver.cs" />
     <Compile Include="Savers\SalesSaver.cs" />
     <Compile Include="Utilities\BitmapImage.cs" />
-    <Compile Include="Utilities\Helper.cs" />
+    <Compile Include="Utilities\ImageHelper.cs" />
     <Compile Include="Utilities\Validation.cs" />
     <Compile Include="Views\Main.cs">
       <SubType>Form</SubType>

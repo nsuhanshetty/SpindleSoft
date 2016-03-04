@@ -61,12 +61,19 @@
             this.txtCode = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtQuantity = new System.Windows.Forms.NumericUpDown();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnAddItem = new System.Windows.Forms.Button();
+            this.dgvItemSKUDoc = new System.Windows.Forms.DataGridView();
+            this.colDocType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.grpBxVendDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtQuantity)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItemSKUDoc)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -375,12 +382,68 @@
             0,
             0});
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnAddItem);
+            this.groupBox6.Controls.Add(this.dgvItemSKUDoc);
+            this.groupBox6.Location = new System.Drawing.Point(12, 454);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(329, 161);
+            this.groupBox6.TabIndex = 129;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Order Item Documents";
+            // 
+            // btnAddItem
+            // 
+            this.btnAddItem.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnAddItem.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnAddItem.Image = ((System.Drawing.Image)(resources.GetObject("btnAddItem.Image")));
+            this.btnAddItem.Location = new System.Drawing.Point(280, 13);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(39, 35);
+            this.btnAddItem.TabIndex = 156;
+            this.btnAddItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAddItem.UseVisualStyleBackColor = false;
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
+            // 
+            // dgvItemSKUDoc
+            // 
+            this.dgvItemSKUDoc.AllowUserToAddRows = false;
+            this.dgvItemSKUDoc.AllowUserToDeleteRows = false;
+            this.dgvItemSKUDoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvItemSKUDoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItemSKUDoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDocType,
+            this.ColDelete});
+            this.dgvItemSKUDoc.Location = new System.Drawing.Point(3, 54);
+            this.dgvItemSKUDoc.Name = "dgvItemSKUDoc";
+            this.dgvItemSKUDoc.ReadOnly = true;
+            this.dgvItemSKUDoc.Size = new System.Drawing.Size(316, 100);
+            this.dgvItemSKUDoc.TabIndex = 0;
+            this.dgvItemSKUDoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItemDoc_CellClick);
+            // 
+            // colDocType
+            // 
+            this.colDocType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDocType.HeaderText = "Document Type";
+            this.colDocType.Name = "colDocType";
+            this.colDocType.ReadOnly = true;
+            this.colDocType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // ColDelete
+            // 
+            this.ColDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ColDelete.HeaderText = "Click To Delete";
+            this.ColDelete.Name = "ColDelete";
+            this.ColDelete.ReadOnly = true;
+            this.ColDelete.Width = 77;
+            // 
             // WinForm_SKUDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 480);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(347, 640);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtCode);
@@ -410,6 +473,7 @@
             this.Controls.SetChildIndex(this.txtCode, 0);
             this.Controls.SetChildIndex(this.label12, 0);
             this.Controls.SetChildIndex(this.txtQuantity, 0);
+            this.Controls.SetChildIndex(this.groupBox6, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -420,6 +484,8 @@
             this.grpBxVendDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtQuantity)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItemSKUDoc)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -458,5 +524,10 @@
         private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown txtQuantity;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnAddItem;
+        private System.Windows.Forms.DataGridView dgvItemSKUDoc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocType;
+        private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
     }
 }

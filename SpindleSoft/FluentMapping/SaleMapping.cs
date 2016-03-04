@@ -24,6 +24,9 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Size);
             Map(x => x.VendorID);
             Map(x => x.Quantity);
+            HasMany(x => x.SKUItemDocuments).KeyColumn("SKUItemID")
+                                       .Inverse()
+                                       .Cascade.All();
         }
     }
 

@@ -55,7 +55,7 @@ namespace SpindleSoft.Savers
             string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, custID);
             try
             {
-                return Utilities.Helper.UploadToLocal(image, filePath);
+                return Utilities.ImageHelper.UploadToLocal(image, filePath);
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace SpindleSoft.Savers
                     {
                         Customer cust = session.Get<Customer>(custID);
                         string _filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, custID);
-                        bool suceess = Utilities.Helper.DeleteDocumentLocal(_filePath);
+                        bool suceess = Utilities.ImageHelper.DeleteDocumentLocal(_filePath);
                         if (!suceess)
                             return false;
 
@@ -137,7 +137,7 @@ namespace SpindleSoft.Savers
                     try
                     {
                         string _filePath = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, staffID);
-                        bool success = Utilities.Helper.DeleteDocumentLocal(_filePath);
+                        bool success = Utilities.ImageHelper.DeleteDocumentLocal(_filePath);
                         Staff _staff = session.Get<Staff>(staffID);
                         if (!success)
                             return false;
@@ -161,7 +161,7 @@ namespace SpindleSoft.Savers
             string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, _ID);
             try
             {
-                return Utilities.Helper.UploadToLocal(image, filePath);
+                return Utilities.ImageHelper.UploadToLocal(image, filePath);
             }
             catch (Exception ex)
             {
@@ -170,27 +170,27 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static async Task<bool> SaveStaffDocumentWebAsync(List<SecurityDocument> docList, int _staffID)
-        {
-            if (docList.Count == 0) return true;
+        //public static async Task<bool> SaveStaffDocumentWebAsync(List<SecurityDocument> docList, int _staffID)
+        //{
+        //    if (docList.Count == 0) return true;
 
-            try
-            {
-                var docListTasks = await Task.WhenAll(docList.Select(_doc => Utilities.Helper.UploadToWebAsync(_doc.Image,
-                    string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type))));
+        //    try
+        //    {
+        //        var docListTasks = await Task.WhenAll(docList.Select(_doc => Utilities.ImageHelper.UploadToWebAsync(_doc.Image,
+        //            string.Format("/staffDocument/{0}_{1}.png", _staffID, _doc.Type))));
 
-                foreach (var docResult in docListTasks)
-                {
-                    if (docResult == false) return false;
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                return false;
-            }
-        }
+        //        foreach (var docResult in docListTasks)
+        //        {
+        //            if (docResult == false) return false;
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex);
+        //        return false;
+        //    }
+        //}
 
         public static bool SaveStaffDocumentLocal(List<SecurityDocument> docList, int _staffID)
         {
@@ -201,7 +201,7 @@ namespace SpindleSoft.Savers
                 foreach (var doc in docList)
                 {
                     string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, StaffDocImagePath, _staffID, doc.Type);
-                    bool success = Utilities.Helper.UploadToLocal(doc.Image, filePath);
+                    bool success = Utilities.ImageHelper.UploadToLocal(doc.Image, filePath);
                 }
                 return true;
             }
@@ -223,7 +223,7 @@ namespace SpindleSoft.Savers
                         Document doc = session.Get<Document>(_ID);
 
                         string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, StaffDocImagePath, _ID, doc.Type);
-                        bool suceess = Utilities.Helper.DeleteDocumentLocal(filePath);
+                        bool suceess = Utilities.ImageHelper.DeleteDocumentLocal(filePath);
                         if (!suceess)
                             return false;
                         session.Delete(doc);

@@ -43,7 +43,7 @@ namespace SpindleSoft.Savers
                             {
                                 if (doc.Image != null)
                                 {
-                                    results.Add(Utilities.Helper.UploadToLocal(doc.Image, string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type)));
+                                    results.Add(Utilities.ImageHelper.UploadToLocal(doc.Image, string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type)));
                                 }
                             }
                         }
@@ -65,20 +65,20 @@ namespace SpindleSoft.Savers
             }
         }
 
-        public static async Task<bool> SaveItemImage(Image image, int _ID)
-        {
-            if (image == null) return true;
-            string filePath = string.Format("/OrderItem_ProfilePictures/{0}.png", _ID);
-            try
-            {
-                return await Utilities.Helper.UploadToWebAsync(image, filePath);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                return false;
-            }
-        }
+        //public static async Task<bool> SaveItemImage(Image image, int _ID)
+        //{
+        //    if (image == null) return true;
+        //    string filePath = string.Format("/OrderItem_ProfilePictures/{0}.png", _ID);
+        //    try
+        //    {
+        //        return await Utilities.ImageHelper.UploadToLocal(image, filePath);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex);
+        //        return false;
+        //    }
+        //}
 
         public static bool DeleteOrder(int _orderID)
         {
@@ -117,7 +117,7 @@ namespace SpindleSoft.Savers
                         foreach (var doc in item.OrderItemDocuments)
                         {
                             var _filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type);
-                            result.Add(Utilities.Helper.DeleteDocumentLocal(_filePath));
+                            result.Add(Utilities.ImageHelper.DeleteDocumentLocal(_filePath));
                         }
 
                         if (result.Any(x => x == false))
@@ -146,7 +146,7 @@ namespace SpindleSoft.Savers
                         Document doc = session.Get<Document>(_ID);
 
                         string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, _ID, doc.Type);
-                        bool success = Utilities.Helper.DeleteDocumentLocal(filePath);
+                        bool success = Utilities.ImageHelper.DeleteDocumentLocal(filePath);
                         if (!success)
                             return false;
                         session.Delete(doc);

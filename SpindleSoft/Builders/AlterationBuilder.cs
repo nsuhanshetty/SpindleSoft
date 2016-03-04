@@ -8,6 +8,7 @@ using log4net;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using NHibernate;
+using System.Collections;
 
 namespace SpindleSoft.Builders
 {
@@ -22,7 +23,7 @@ namespace SpindleSoft.Builders
         /// <returns></returns>
         public static Alteration GetAlteration(int altId)
         {
-            using (var session = NHibernateHelper.OpenSession())    
+            using (var session = NHibernateHelper.OpenSession())
             {
                 Alteration alt = session.CreateCriteria<Alteration>()
                     .Add(Restrictions.IdEq(altId))
@@ -39,34 +40,40 @@ namespace SpindleSoft.Builders
         /// <param name="mobNo"></param>
         /// <param name="altId"></param>
         /// <returns></returns>
-        public static List<Alteration> GetAlterationList(string name = "", string mobNo = "", string altId = "")
+        public static IList GetAlterationList(string name = "", string mobNo = "", string altId = "")
         {
-            List<Alteration> altList = new List<Alteration>();
-            int id;
-            int.TryParse(altId, out id);
-
+            IList altList;
             using (var session = NHibernateHelper.OpenSession())
             {
                 if (mobNo == "" && name == "" && altId == "")
                 {
-                    altList = (from cust in session.Query<Customer>()
-                                 join alt in session.Query<Alteration>() on cust.ID equals alt.Customer.ID
-                                 orderby alt.PromisedDate descending
-                                 select alt).Take(25).ToList();
-                    return altList;
+                    return altList = (from cust in session.Query<Customer>()
+                                      join alt in session.Query<Alteration>() on cust.ID equals alt.Customer.ID
+                                      orderby alt.PromisedDate descending
+                                      select new
+                                      {
+                                          AlterationID = alt.ID,
+                                          CustomerName = cust.Name,
+                                          MobileNo = cust.Mobile_No,
+                                          alt.TotalPrice,
+                                          AmountPaid = alt.CurrentPayment,
+                                          PromisedDate = alt.PromisedDate.ToString("dd/MMM/yy")
+                                      }).Take(25).ToList();
                 }
                 else
                 {
-                    //todo : convert to Linq
-                    var sqlQuery = session.CreateSQLQuery("select a.ID,a.TotalPrice,a.CurrentPayment,a.PromisedDate from alteration a " +
-                                 "join customer c on c.ID = a.CustomerID " +
-                                 "where c.Name like :custname  and c.Mobile_No like :custMobNo and a.ID like :altID")
-                                 .SetParameter("custname", name + '%')
-                                 .SetParameter("custMobNo", mobNo + '%')
-                                 .SetParameter("altID", altId + '%')
-                                 .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Alteration)));
-
-                    return altList = sqlQuery.List<Alteration>() as List<Alteration>;
+                    return altList = (from alt in session.Query<Alteration>()
+                                      join cust in session.Query<Customer>() on alt.Customer.ID equals cust.ID
+                                      where (cust.Name.StartsWith(name) && cust.Mobile_No.StartsWith(mobNo) && alt.ID.ToString().StartsWith(altId))
+                                      select new
+                                      {
+                                          AlterationID = alt.ID,
+                                          CustomerName = cust.Name,
+                                          MobileNo = cust.Mobile_No,
+                                          alt.TotalPrice,
+                                          AmountPaid = alt.CurrentPayment,
+                                          PromisedDate = alt.PromisedDate.ToString("dd/MMM/yy")
+                                      }).Take(25).ToList();
                 }
             }
         }

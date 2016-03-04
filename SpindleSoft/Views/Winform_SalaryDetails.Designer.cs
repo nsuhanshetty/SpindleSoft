@@ -101,7 +101,8 @@
             this.dgvSalaryItems.ReadOnly = true;
             this.dgvSalaryItems.Size = new System.Drawing.Size(452, 156);
             this.dgvSalaryItems.TabIndex = 0;
-            this.dgvSalaryItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellContentClick);
+            this.dgvSalaryItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellClick);
+            this.dgvSalaryItems.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSalaryItem_PreviewKeyDown);
             // 
             // StaffName
             // 
@@ -163,7 +164,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 354);
-            this.ControlBox = false;
             this.Controls.Add(this.txtTotalSalaryPaid);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);

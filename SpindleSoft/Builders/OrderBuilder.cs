@@ -133,7 +133,7 @@ namespace SpindleSoft.Builders
                     {
                         foreach (var doc in item.OrderItemDocuments)
                         {
-                            doc.Image = Utilities.Helper.GetDocumentLocal(string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type));
+                            doc.Image = Utilities.ImageHelper.GetDocumentLocal(string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, item.ID, doc.Type));
                         }
                     }
                     return _order;

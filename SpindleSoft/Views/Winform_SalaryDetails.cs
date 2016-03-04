@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SpindleSoft.Model;
 using SpindleSoft.Savers;
@@ -29,17 +24,7 @@ namespace SpindleSoft.Views
 
             this._salary = salary;
             this.salaryList = this._salary.SalaryItemList.ToList();
-
-            foreach (var salItem in this.salaryList)
-            {
-                dgvSalaryItems.Rows.Add();
-
-                var _index = this.salaryList.IndexOf(salItem);
-                dgvSalaryItems.Rows[_index].Cells[0].Value = salItem.Staff.Name;
-                dgvSalaryItems.Rows[_index].Cells[1].Value = salItem.Amount;
-            }
-            CalculatePaymentDetails();
-        } 
+        }
         #endregion
 
         #region Custom
@@ -76,7 +61,7 @@ namespace SpindleSoft.Views
             }
 
             txtTotalSalaryPaid.Text = total.ToString();
-        } 
+        }
         #endregion
 
         #region Events
@@ -88,7 +73,6 @@ namespace SpindleSoft.Views
                 if (_dialogResult == DialogResult.No)
                     return;
             };
-
             this.Close();
         }
 
@@ -107,7 +91,6 @@ namespace SpindleSoft.Views
             this._salary.SalaryItemList = salaryList;
             this._salary.TotalSalaryAmount = decimal.Parse(txtTotalSalaryPaid.Text);
 
-            //todo: Add Expense along with Saving Salary
             bool sucess = ExpenseSaver.SaveSalary(_salary);
 
             if (sucess)
@@ -121,7 +104,7 @@ namespace SpindleSoft.Views
             }
         }
 
-        private void dgvOrderItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvOrderItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || dgvSalaryItems.Rows[e.RowIndex].IsNewRow == true) return;
 
@@ -131,7 +114,6 @@ namespace SpindleSoft.Views
                 if (dr == DialogResult.No) return;
 
                 bool success = false;
-
                 if (salaryList.Count != 0 && e.RowIndex + 1 <= salaryList.Count)
                 {
                     if (salaryList[e.RowIndex].ID != 0)
@@ -161,12 +143,29 @@ namespace SpindleSoft.Views
             if (_salary != null)
             {
                 dtpSalary.Value = _salary.DateOfSalary;
+                foreach (var salItem in this.salaryList)
+                {
+                    dgvSalaryItems.Rows.Add();
+
+                    var _index = this.salaryList.IndexOf(salItem);
+                    dgvSalaryItems.Rows[_index].Cells[0].Value = salItem.Staff.Name;
+                    dgvSalaryItems.Rows[_index].Cells[1].Value = salItem.Amount;
+                }
+                CalculatePaymentDetails();
             }
         }
 
         private void btnAddSalary_Click(object sender, EventArgs e)
         {
             new Winform_AddSalary(dgvSalaryItems.Rows.Count, null).ShowDialog();
+        }
+
+        private void dgvSalaryItem_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvOrderItems_CellClick(this, new DataGridViewCellEventArgs(dgvSalaryItems.CurrentCell.ColumnIndex, dgvSalaryItems.CurrentCell.RowIndex));
+            }
         }
         #endregion
     }

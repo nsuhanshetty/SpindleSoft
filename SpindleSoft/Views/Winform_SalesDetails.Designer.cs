@@ -48,6 +48,7 @@
             this.AddCustToolStrip = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvSearch = new System.Windows.Forms.DataGridView();
+            this.colCart = new System.Windows.Forms.DataGridViewButtonColumn();
             this.grpBxSearch = new System.Windows.Forms.GroupBox();
             this.txtDesc = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -63,12 +64,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.grpbxPayDet = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtAmntPaid = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtTotAmnt = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtBalanceAmnt = new System.Windows.Forms.TextBox();
+            this.txtTotAmnt = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grpBoxCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
@@ -77,6 +78,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSearch)).BeginInit();
             this.grpBxSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.grpbxPayDet.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpBoxCustomer
@@ -88,7 +91,7 @@
             this.grpBoxCustomer.Controls.Add(this.lblMobile);
             this.grpBoxCustomer.Controls.Add(this.label5);
             this.grpBoxCustomer.Controls.Add(this.txtPhoneNo);
-            this.grpBoxCustomer.Location = new System.Drawing.Point(385, 57);
+            this.grpBoxCustomer.Location = new System.Drawing.Point(467, 57);
             this.grpBoxCustomer.Name = "grpBoxCustomer";
             this.grpBoxCustomer.Size = new System.Drawing.Size(247, 111);
             this.grpBoxCustomer.TabIndex = 0;
@@ -178,13 +181,14 @@
             this.colPrice,
             this.colStock,
             this.colDelete});
-            this.dgvSaleItem.Location = new System.Drawing.Point(391, 193);
+            this.dgvSaleItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvSaleItem.Location = new System.Drawing.Point(3, 16);
             this.dgvSaleItem.Name = "dgvSaleItem";
             this.dgvSaleItem.ReadOnly = true;
-            this.dgvSaleItem.Size = new System.Drawing.Size(435, 252);
+            this.dgvSaleItem.Size = new System.Drawing.Size(435, 253);
             this.dgvSaleItem.TabIndex = 2;
             this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellClick);
-            this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellDoubleClick);
+//            this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellDoubleClick);
             // 
             // colName
             // 
@@ -246,7 +250,7 @@
             this.panel1.Controls.Add(this.grpBxSearch);
             this.panel1.Location = new System.Drawing.Point(5, 58);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(373, 388);
+            this.panel1.Size = new System.Drawing.Size(456, 388);
             this.panel1.TabIndex = 1;
             // 
             // dgvSearch
@@ -255,12 +259,21 @@
             this.dgvSearch.AllowUserToDeleteRows = false;
             this.dgvSearch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSearch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSearch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colCart});
             this.dgvSearch.Location = new System.Drawing.Point(5, 115);
             this.dgvSearch.Name = "dgvSearch";
             this.dgvSearch.ReadOnly = true;
-            this.dgvSearch.Size = new System.Drawing.Size(365, 273);
+            this.dgvSearch.Size = new System.Drawing.Size(442, 273);
             this.dgvSearch.TabIndex = 1;
-            this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellContentClick);
+            this.dgvSearch.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellClick);
+            //this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellDoubleClick);
+            // 
+            // colCart
+            // 
+            this.colCart.HeaderText = "Add to Cart";
+            this.colCart.Name = "colCart";
+            this.colCart.ReadOnly = true;
             // 
             // grpBxSearch
             // 
@@ -278,7 +291,7 @@
             this.grpBxSearch.Controls.Add(this.label9);
             this.grpBxSearch.Location = new System.Drawing.Point(4, 7);
             this.grpBxSearch.Name = "grpBxSearch";
-            this.grpBxSearch.Size = new System.Drawing.Size(366, 103);
+            this.grpBxSearch.Size = new System.Drawing.Size(443, 103);
             this.grpBxSearch.TabIndex = 0;
             this.grpBxSearch.TabStop = false;
             this.grpBxSearch.Text = "Search Details";
@@ -403,53 +416,50 @@
             // 
             // grpbxPayDet
             // 
-            this.grpbxPayDet.Location = new System.Drawing.Point(638, 58);
+            this.grpbxPayDet.Controls.Add(this.txtAmntPaid);
+            this.grpbxPayDet.Controls.Add(this.label2);
+            this.grpbxPayDet.Controls.Add(this.label3);
+            this.grpbxPayDet.Controls.Add(this.label7);
+            this.grpbxPayDet.Controls.Add(this.txtBalanceAmnt);
+            this.grpbxPayDet.Controls.Add(this.txtTotAmnt);
+            this.grpbxPayDet.Location = new System.Drawing.Point(720, 58);
             this.grpbxPayDet.Name = "grpbxPayDet";
             this.grpbxPayDet.Size = new System.Drawing.Size(188, 110);
             this.grpbxPayDet.TabIndex = 137;
             this.grpbxPayDet.TabStop = false;
             this.grpbxPayDet.Text = "Payment Details";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(661, 87);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
-            this.label2.TabIndex = 133;
-            this.label2.Text = "Paid Amount";
-            // 
             // txtAmntPaid
             // 
-            this.txtAmntPaid.Location = new System.Drawing.Point(734, 84);
+            this.txtAmntPaid.Location = new System.Drawing.Point(98, 28);
             this.txtAmntPaid.MaxLength = 10;
             this.txtAmntPaid.Name = "txtAmntPaid";
             this.txtAmntPaid.Size = new System.Drawing.Size(84, 20);
             this.txtAmntPaid.TabIndex = 3;
             this.txtAmntPaid.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtAmntPaid_KeyPress);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 31);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.TabIndex = 133;
+            this.label2.Text = "Paid Amount";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(658, 137);
+            this.label3.Location = new System.Drawing.Point(8, 81);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 134;
             this.label3.Text = "Total Amount";
             // 
-            // txtTotAmnt
-            // 
-            this.txtTotAmnt.Enabled = false;
-            this.txtTotAmnt.Location = new System.Drawing.Point(734, 134);
-            this.txtTotAmnt.MaxLength = 10;
-            this.txtTotAmnt.Name = "txtTotAmnt";
-            this.txtTotAmnt.Size = new System.Drawing.Size(84, 20);
-            this.txtTotAmnt.TabIndex = 5;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(643, 112);
+            this.label7.Location = new System.Drawing.Point(11, 58);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 13);
             this.label7.TabIndex = 135;
@@ -458,15 +468,25 @@
             // txtBalanceAmnt
             // 
             this.txtBalanceAmnt.Enabled = false;
-            this.txtBalanceAmnt.Location = new System.Drawing.Point(734, 109);
+            this.txtBalanceAmnt.Location = new System.Drawing.Point(98, 53);
             this.txtBalanceAmnt.MaxLength = 10;
             this.txtBalanceAmnt.Name = "txtBalanceAmnt";
             this.txtBalanceAmnt.Size = new System.Drawing.Size(84, 20);
             this.txtBalanceAmnt.TabIndex = 4;
             // 
+            // txtTotAmnt
+            // 
+            this.txtTotAmnt.Enabled = false;
+            this.txtTotAmnt.Location = new System.Drawing.Point(98, 78);
+            this.txtTotAmnt.MaxLength = 10;
+            this.txtTotAmnt.Name = "txtTotAmnt";
+            this.txtTotAmnt.Size = new System.Drawing.Size(84, 20);
+            this.txtTotAmnt.TabIndex = 5;
+            // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(385, 174);
+            this.groupBox1.Controls.Add(this.dgvSaleItem);
+            this.groupBox1.Location = new System.Drawing.Point(467, 174);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(441, 272);
             this.groupBox1.TabIndex = 138;
@@ -477,16 +497,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(831, 471);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(916, 471);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.txtBalanceAmnt);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtTotAmnt);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtAmntPaid);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.dgvSaleItem);
             this.Controls.Add(this.grpBoxCustomer);
             this.Controls.Add(this.grpbxPayDet);
             this.Controls.Add(this.groupBox1);
@@ -496,13 +508,6 @@
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.grpbxPayDet, 0);
             this.Controls.SetChildIndex(this.grpBoxCustomer, 0);
-            this.Controls.SetChildIndex(this.dgvSaleItem, 0);
-            this.Controls.SetChildIndex(this.label2, 0);
-            this.Controls.SetChildIndex(this.txtAmntPaid, 0);
-            this.Controls.SetChildIndex(this.label3, 0);
-            this.Controls.SetChildIndex(this.txtTotAmnt, 0);
-            this.Controls.SetChildIndex(this.label7, 0);
-            this.Controls.SetChildIndex(this.txtBalanceAmnt, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
             this.grpBoxCustomer.ResumeLayout(false);
             this.grpBoxCustomer.PerformLayout();
@@ -513,6 +518,9 @@
             this.grpBxSearch.ResumeLayout(false);
             this.grpBxSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.grpbxPayDet.ResumeLayout(false);
+            this.grpbxPayDet.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,6 +568,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStock;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.DataGridViewButtonColumn colCart;
 
     }
 }

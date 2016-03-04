@@ -27,15 +27,15 @@ namespace SpindleSoft.Builders
             return namesList;
         }
 
-        public static List<Expense> GetExpenses(DateTime fromExpenseDate, DateTime toExpenseDate)
+        public static IList GetExpenses(DateTime fromExpenseDate, DateTime toExpenseDate)
         {
-            var expenseList = new List<Expense>();
+            IList expenseList;
             using (var session = NHibernateHelper.OpenSession())
             {
                 expenseList = (from exp in session.Query<Expense>()
                                where exp.DateOfExpense.Date >= fromExpenseDate.Date &&
                                      exp.DateOfExpense.Date <= toExpenseDate.Date
-                               select exp).ToList();
+                               select new { ExpenseID = exp.ID, exp.DateOfExpense.Date, exp.TotalAmount }).ToList();
             }
             return expenseList;
         }
@@ -105,9 +105,9 @@ namespace SpindleSoft.Builders
                 try
                 {
                     return ((from sal in session.Query<Salary>()
-                            join salItem in session.Query<SalaryItem>() on sal equals salItem.Salary
-                            join staff in session.Query<Staff>() on salItem.Staff equals staff
-                            where (staff.Name.StartsWith(_name) && (salItem.Salary.DateOfSalary.Date >= fromDate.Date && salItem.Salary.DateOfSalary.Date <= toDate.Date))
+                             join salItem in session.Query<SalaryItem>() on sal equals salItem.Salary
+                             join staff in session.Query<Staff>() on salItem.Staff equals staff
+                             where (staff.Name.StartsWith(_name) && (salItem.Salary.DateOfSalary.Date >= fromDate.Date && salItem.Salary.DateOfSalary.Date <= toDate.Date))
                              select new { ID = sal.ID, sal.TotalSalaryAmount, sal.DateOfSalary.Date }).ToList()).GroupBy(x => x.ID).Select(y => y.First()).ToList();
                 }
                 catch (Exception ex)
@@ -138,6 +138,26 @@ namespace SpindleSoft.Builders
                 {
                     log.Error(ex);
                     return null;
+                }
+            }
+        }
+
+        public static decimal GetLastSalary(int _staffID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    var _salAmount = (from sal in session.Query<SalaryItem>()
+                                      where sal.Staff.ID == _staffID
+                                      orderby sal.ID descending
+                                      select sal.Amount).SingleOrDefault();
+                    return _salAmount == 0 ? 1 : _salAmount;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    throw;
                 }
             }
         }

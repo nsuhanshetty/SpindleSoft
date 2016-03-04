@@ -18,12 +18,16 @@ namespace SpindleSoft
     // using SpindleSoft.Views;
     using SpindleSoft.Views;
     using System.Collections;
+    using System.Configuration;
 
     public partial class Main : Form
     {
         ILog log = LogManager.GetLogger(typeof(Main));
         private enum SearchStates { Order, Customer, Alteration, Sales }
         private SearchStates searchState { get; set; }
+
+        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
 
         #region SearchTxt
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -120,12 +124,12 @@ namespace SpindleSoft
 
         private void addStaffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Winform_StaffDetails().ShowDialog();
+            new Winform_StaffDetails(null, true).ShowDialog();
         }
 
         private void addVendorToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            new Winform_VendorDetails().ShowDialog();
+            new Winform_VendorDetails(null, true).ShowDialog();
         }
 
         private void bulkSMSToolStripMenuItem_Click(object sender, EventArgs e)
@@ -346,22 +350,7 @@ namespace SpindleSoft
             }
         }
 
-        private void cmbSearch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if (String.IsNullOrEmpty(cmbSearch.Text))
-            //    return;
-
-            //Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(cmbSearch.Text);
-            //_cust.Image = PeoplePracticeBuilder.GetCustomerImage(cmbSearch.Text);
-
-            ////shouldnt happen but for safety.
-            ////todo: Let customer know that bad has happened
-            //if (_cust == null && _cust.Image == null) return;
-
-            //new WinForm_CustomerDetails(_cust).ShowDialog();
-        }
-
-        private async void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
             try
@@ -376,7 +365,8 @@ namespace SpindleSoft
                         if (String.IsNullOrEmpty(_ID)) return;
 
                         Customer _cust = PeoplePracticeBuilder.GetCustomerInfo(int.Parse(_ID));
-                        _cust.Image = await Utilities.Helper.GetDocumentWebAsync("/customer_ProfilePictures", _ID);
+                        string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
+                        _cust.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
 
                         if (_cust == null) return;
 

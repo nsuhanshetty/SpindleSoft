@@ -149,7 +149,8 @@
             this.dgvExpenseItem.ReadOnly = true;
             this.dgvExpenseItem.Size = new System.Drawing.Size(520, 176);
             this.dgvExpenseItem.TabIndex = 1;
-            this.dgvExpenseItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpenseItem_CellDoubleClick);
+            this.dgvExpenseItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpenseItem_CellClick);
+            this.dgvExpenseItem.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvExpenseItem_PreviewKeyDown);
             // 
             // colName
             // 
@@ -186,7 +187,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 378);
-            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtTotalAmount);
             this.Controls.Add(this.label2);
@@ -194,6 +194,7 @@
             this.Controls.Add(this.label4);
             this.Name = "Winform_ExpenseDetails";
             this.Text = "Expense Details";
+            this.Load += new System.EventHandler(this.Winform_ExpenseDetails_Load);
             this.Controls.SetChildIndex(this.label4, 0);
             this.Controls.SetChildIndex(this.dtpDeliveryDate, 0);
             this.Controls.SetChildIndex(this.label2, 0);

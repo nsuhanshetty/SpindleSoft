@@ -32,6 +32,40 @@ namespace SpindleSoft.Views
             if (e.RowIndex == -1) return;
 
             int custID = int.Parse(dgvCustomerRegister.Rows[e.RowIndex].Cells["ID"].Value.ToString());
+            Customer _cust = Builders.PeoplePracticeBuilder.GetCustomerInfo(int.Parse(custID.ToString()));
+
+            Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
+            if (orderDetails != null)
+            {
+                orderDetails.UpdateCustomerControl(_cust);
+                this.Close();
+                return;
+            }
+
+            WinForm_CustomerDetails custDetails = Application.OpenForms["WinForm_CustomerDetails"] as WinForm_CustomerDetails;
+            if (custDetails != null)
+            {
+                custDetails.UpdateCustomerControl(_cust);
+                this.Close();
+                return;
+            }
+
+            Winform_AlterationsDetails altDetails = Application.OpenForms["Winform_AlterationsDetails"] as Winform_AlterationsDetails;
+            if (altDetails != null)
+            {
+                altDetails.UpdateCustomerControl(_cust);
+                this.Close();
+                return;
+            }
+
+            Winform_SalesDetails saleDetails = Application.OpenForms["Winform_SalesDetails"] as Winform_SalesDetails;
+            if (saleDetails != null)
+            {
+                saleDetails.UpdateCustomerControl(_cust);
+                this.Close();
+                return;
+            }
+
             if (dgvCustomerRegister.Columns["colDelete"].Index == e.ColumnIndex)
             {
                 DialogResult dr = MessageBox.Show("Do you want to delete Customer " + dgvCustomerRegister.Rows[e.RowIndex].Cells["Name"].Value + "?", "Delete Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -58,8 +92,7 @@ namespace SpindleSoft.Views
                     _inEdit = true;
                 }
 
-                Customer _customer = PeoplePracticeBuilder.GetCustomerInfo(custID);
-                new WinForm_CustomerDetails(_customer, _inEdit).ShowDialog();
+                new WinForm_CustomerDetails(_cust, _inEdit).ShowDialog();
                 dgvCustomerRegister_ReloadRegister(this, new EventArgs());
             }
         }
@@ -67,8 +100,6 @@ namespace SpindleSoft.Views
         private void dgvCustomerRegister_ReloadRegister(object sender, EventArgs e)
         {
             UpdateStatus("Searching", 50);
-            var colEdit = dgvCustomerRegister.Columns["colEdit"];
-            var colDelete = dgvCustomerRegister.Columns["colDelete"];
 
             var custList = PeoplePracticeBuilder.GetCustomersList(txtName.Text, txtMobNo.Text, txtPhoneNo.Text);
             if (custList != null && custList.Count != 0)

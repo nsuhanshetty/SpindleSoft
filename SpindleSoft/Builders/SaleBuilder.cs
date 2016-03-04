@@ -6,6 +6,7 @@ using NHibernate.Linq;
 using log4net;
 using NHibernate.Criterion;
 using NHibernate.Transform;
+using System.Collections;
 
 namespace SpindleSoft.Builders
 {
@@ -79,33 +80,35 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static List<SKUItem> GetSKUItems(string name = "", string procode = "", string Desc = "", string color = "", string size = "",
-            string material = "", bool IsSelfMade = true, string vendName = "")
+        public static IList GetSKUItems(string _name = "", string _procode = "", string _desc = "",
+                                                string _color = "", string _size = "", string _material = "",
+                                                bool _IsSelfMade = true, string _vendName = "")
         {
             //todo : also add vendor name along with the list
-            List<SKUItem> _skuItem = new List<SKUItem>();
+            IList _itemList;
             using (var session = NHibernateHelper.OpenSession())
             {
                 try
                 {
-                    //todo: Tune the Query
-                    string query = "select s.Name,s.ProductCode,s.Color,s.Size,s.Material,s.Quantity from skuitem s " +
-                        //"inner join vendors v on v.ID = s.VendorID " +
-                                      "where (s.Name like :name) and (s.ProductCode like :procode) and (s.Description like :desc) and " +
-                                      "s.Color like :color and s.Size like :size and s.Material like :material " +
-                                      "and s.Quantity > 1 " +
-                                      "order by s.UpdatedTime desc";
+                    _color = _color == "All" ? "" : _color;
+                    _size = _size == "All" ? "" : _size;
+                    _material = _material == "All" ? "" : _material;
 
-                    NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
-                        .SetParameter("name", name + "%")
-                       .SetParameter("procode", procode + "%")
-                       .SetParameter("desc", "%" + Desc + "%")
-                       .SetParameter("color", (color == "All" ? "" : color) + "%")
-                       .SetParameter("size", (size == "All" ? "" : size) + "%")
-                       .SetParameter("material", (material == "All" ? "" : material) + "%"))
-                        //.SetParameter("vendName", vendName + "%"))
-                    .SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(SKUItem)));
-                    return _skuItem = sqlQuery.List<SKUItem>() as List<SKUItem>;
+                    if (string.IsNullOrEmpty(_name) && string.IsNullOrEmpty(_procode) && string.IsNullOrEmpty(_desc))
+                    {
+                        _itemList = (from sku in session.Query<SKUItem>()
+                                     orderby sku.ID descending
+                                     select new { sku.ID, ProductName = sku.Name, sku.ProductCode, sku.Color, sku.Size, sku.Material, sku.Quantity, sku.IsSelfMade })
+                                     .Distinct().Take(25).ToList();
+                    }
+                    else
+                        _itemList = (from sku in session.Query<SKUItem>()
+                                     //join v in session.Query<Vendor>() on sku.VendorID equals v.ID into gj
+                                     where (sku.Name.StartsWith(_name) && sku.ProductCode.StartsWith(_procode) && sku.Description.Contains(_desc) &&
+                                            sku.Color.StartsWith(_color) && sku.Color.StartsWith(_size) && sku.Color.StartsWith(_material) && sku.Quantity > 0)
+                                     orderby sku.ID descending
+                                     select new { sku.ID, ProductName = sku.Name, sku.ProductCode, sku.Color, sku.Size, sku.Material, sku.Quantity, sku.IsSelfMade }).ToList();
+                    return _itemList;
                 }
                 catch (Exception ex)
                 {
@@ -115,7 +118,7 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static SKUItem GetSkuItemInfo(string procode)
+        public static SKUItem GetSkuItemInfo(string _ID)
         {
             SKUItem _skuItem = new SKUItem();
             try
@@ -123,8 +126,13 @@ namespace SpindleSoft.Builders
                 using (var session = NHibernateHelper.OpenSession())
                 {
                     _skuItem = (from s in session.Query<SKUItem>()
-                                where s.ProductCode == procode
+                                where s.ID.ToString() == _ID
                                 select s).Single();
+
+                    _skuItem.SKUItemDocuments = (from doc in session.Query<SKUItemDocument>()
+                                             join s in session.Query<SKUItem>() on doc.skuItem.ID equals s.ID
+                                             where s.ID.ToString() == _ID
+                                             select doc).ToList();
                     return _skuItem;
                 }
             }
@@ -148,6 +156,16 @@ namespace SpindleSoft.Builders
                     log.Error(ex);
                     return 0;
                 }
+            }
+        }
+
+        public static List<string> GetSKUItemDocumentTypeList()
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                List<string> _docList = (from s in session.Query<SKUItemDocument>()
+                                         select s.Type).Distinct().ToList();
+                return _docList;
             }
         }
         #endregion SKUItems
@@ -238,45 +256,38 @@ namespace SpindleSoft.Builders
             }
         }
 
-        public static List<Sale> GetSalesList(string name = "", string procode = "", string mobNo = "", string saleID = "")
+        public static List<Sale> GetSalesList(string _name = "", string _procode = "", string _mobNo = "", string _saleID = "")
         {
             try
             {
                 using (var session = NHibernateHelper.OpenSession())
                 {
-                    //var query = "select distinct s.ID,s.TotalPrice,s.AmountPaid,s.DateOfSale from sale s " + /*c.Name,c.Mobile_No,*/
-                    //            "inner join customer c on c.ID = s.CustID " +
-                    //            "inner join saleitem i on i.SaleID  = s.ID " +
-                    //            "inner join skuitem k on k.ID = i.SKUID " +
-                    //            "where c.Name like :name and c.Mobile_No like :mobNo and s.ID like :saleID and k.ProductCode like :procode";
-
-                    //NHibernate.IQuery sqlQuery = (session.CreateSQLQuery(query)
-                    //.SetParameter("name", name + "%")
-                    //.SetParameter("procode", procode + "%")
-                    //.SetParameter("mobNo", mobNo + "%")
-                    //.SetParameter("saleID", saleID + "%"))
-                    //.SetResultTransformer(NHibernate.Transform.Transformers.AliasToBean(typeof(Sale)));
-                    //return sqlQuery.List<Sale>() as List<Sale>;
-
                     Sale saleAlias = null;
                     SaleItem saleItemAlias = null;
                     SKUItem skuItemAlias = null;
                     Customer custAlias = null;
 
-                    List<Sale> query = session.QueryOver<Sale>(() => saleAlias)
+                    List<Sale> saleList;
+                    if (string.IsNullOrEmpty(_name) && string.IsNullOrEmpty(_procode) && string.IsNullOrEmpty(_mobNo) && string.IsNullOrEmpty(_saleID))
+                    {
+                        saleList = session.QueryOver<Sale>(() => saleAlias)
                                                                     .JoinAlias(() => saleAlias.Customer, () => custAlias)
                                                                     .Left.JoinAlias(() => saleAlias.SaleItems, () => saleItemAlias)
                                                                     .Left.JoinAlias(() => saleItemAlias.SKUItem, () => skuItemAlias)
-                                                                    .Where(Restrictions.On(() => custAlias.Name).IsLike(name + "%"))
-                                                                    .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(procode + "%"))
-                                                                    .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(mobNo + "%"))
                                                                     .OrderBy(() => saleAlias.DateOfSale).Desc
-                                                                    .TransformUsing(Transformers.DistinctRootEntity)
-
-                        //.Where(() => saleAlias.ID == int.Parse(saleID))
-                         .List().ToList<Sale>();
-
-                    return query;
+                                                                    .TransformUsing(Transformers.DistinctRootEntity).Take(25).List().ToList<Sale>();
+                    }
+                    else
+                        saleList = session.QueryOver<Sale>(() => saleAlias)
+                                                                    .JoinAlias(() => saleAlias.Customer, () => custAlias)
+                                                                    .Left.JoinAlias(() => saleAlias.SaleItems, () => saleItemAlias)
+                                                                    .Left.JoinAlias(() => saleItemAlias.SKUItem, () => skuItemAlias)
+                                                                    .Where(Restrictions.On(() => custAlias.Name).IsLike(_name + "%"))
+                                                                    .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(_procode + "%"))
+                                                                    .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(_mobNo + "%"))
+                                                                    .OrderBy(() => saleAlias.DateOfSale).Desc
+                                                                    .TransformUsing(Transformers.DistinctRootEntity).List().ToList<Sale>();
+                    return saleList;
                 }
             }
             catch (Exception ex)
@@ -306,6 +317,42 @@ namespace SpindleSoft.Builders
             {
                 log.Error(ex);
                 return null;
+            }
+        }
+
+        public static IList GetSKUItemList(string _name = "", string _procode = "", string _desc = "",
+                                                string _color = "", string _size = "", string _material = "")
+        {
+            IList _itemList;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                try
+                {
+                    _color = _color == "All" ? "" : _color;
+                    _size = _size == "All" ? "" : _size;
+                    _material = _material == "All" ? "" : _material;
+
+                    if (string.IsNullOrEmpty(_name) && string.IsNullOrEmpty(_procode) && string.IsNullOrEmpty(_desc))
+                    {
+                        _itemList = (from sku in session.Query<SKUItem>()
+                                     orderby sku.ID descending
+                                     select new { sku.ID, ProductName = sku.Name, sku.ProductCode })
+                                     .Distinct().Take(25).ToList();
+                    }
+                    else
+                        _itemList = (from sku in session.Query<SKUItem>()
+                                     //join v in session.Query<Vendor>() on sku.VendorID equals v.ID into gj
+                                     where (sku.Name.StartsWith(_name) && sku.ProductCode.StartsWith(_procode) && sku.Description.Contains(_desc) &&
+                                            sku.Color.StartsWith(_color) && sku.Color.StartsWith(_size) && sku.Color.StartsWith(_material) && sku.Quantity > 0)
+                                     orderby sku.ID descending
+                                     select new { sku.ID, ProductName = sku.Name, sku.ProductCode }).ToList();
+                    return _itemList;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    return null;
+                }
             }
         }
         #endregion Sale

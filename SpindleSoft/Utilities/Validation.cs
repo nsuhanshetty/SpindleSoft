@@ -108,56 +108,7 @@ namespace SpindleSoft.Utilities
                 {
                     if ((ctrol is TabPage || ctrol is Panel || ctrol is GroupBox) && (!ExceptionControl.Contains(ctrol.Name)) && IsNullOrEmpty(ctrol, Recurse, ExceptionControl))
                         return true;
-
-
-                    //switch (ctrol.GetType().ToString())
-                    //{
-                    //    case "TabPage":
-                    //        TabPage tp = (TabPage)ctrol;
-                    //        if (IsNullOrEmpty(tp, Recurse, ExceptionControl) == true)
-                    //            return true;
-                    //        break;
-
-                    //    case "Panel":
-                    //        Panel pnl = (Panel)ctrol;
-                    //        if (IsNullOrEmpty(pnl, Recurse, ExceptionControl) == true)
-                    //            return true;
-                    //        break;
-
-                    //    case "GroupBox":
-                    //        GroupBox grbx = (GroupBox)ctrol;
-                    //        if (IsNullOrEmpty(grbx, Recurse, ExceptionControl) == true)
-                    //            return true;
-                    //        break;
-                    //}
                 }
-
-                //if (Recurse)
-                //{
-                //    if (ctrol is TabControl)
-                //    {
-                //        TabControl tc = (TabControl)ctrol;
-                //        if(isempty(tc, Recurse, ExceptionControl)==true)
-                //            return true;
-                //    }
-
-                //    if (ctrol is Panel)
-                //    {
-                //        Panel pnl = (Panel)ctrol;
-                //        if(isempty(pnl, Recurse, ExceptionControl)==true)
-                //            return true;
-                //    }
-
-                //    if (ctrol is GroupBox)
-                //    {
-                //        if (ctrol.Enabled == true)
-                //        {
-                //            GroupBox grbx = (GroupBox)ctrol;
-                //            if(isempty(grbx, Recurse, ExceptionControl)==true)
-                //                return true;
-                //        }
-                //    }
-                //}
             }
             return false;
         }

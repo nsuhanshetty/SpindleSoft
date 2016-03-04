@@ -75,6 +75,8 @@ namespace SpindleSoft.Views
             cmbStatus.SelectedIndex = 0;
             cmbStatus.Enabled = false;
             this.dtpDeliveryDate.MinDate = System.DateTime.Today;
+
+            InEdit = true;
         }
 
         public Winform_OrderDetails(Orders order, bool _inEdit = false)
@@ -104,7 +106,7 @@ namespace SpindleSoft.Views
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
             string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
-            pcbCustImage.Image = this._cust.Image = Utilities.Helper.GetDocumentLocal(filePath);
+            pcbCustImage.Image = this._cust.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
         }
 
         internal void UpdateOrderItemList(OrderItem _item, int _index)
@@ -221,9 +223,9 @@ namespace SpindleSoft.Views
 
         private void Winform_OrderDetails_Load(object sender, EventArgs e)
         {
+            this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
             if (order.ID != 0)
             {
-                this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
                 this.OrderItemsList = this.order.OrdersItems as List<OrderItem>;
                 dtpDeliveryDate.Value = order.PromisedDate;
                 cmbStatus.SelectedIndex = order.Status;
@@ -248,7 +250,7 @@ namespace SpindleSoft.Views
             }
 
             if (!InEdit)
-                dgvOrderItems.Columns["OrderDelete"].Visible = false;
+                OrderDelete.Visible = false;
         }
 
         private void dgvOrderItems_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -298,7 +300,7 @@ namespace SpindleSoft.Views
                 MessageBox.Show("Add Customer, as it is mandatory to edit Measurement details.", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            new Winform_MeasurementAdd(dgvOrderItems.Rows.Count, this._cust, null, true).ShowDialog();
+            new Winform_MeasurementAdd(dgvOrderItems.Rows.Count, this._cust, null, InEdit).ShowDialog();
         }
 
         private void txtAmntPaid_TextChanged(object sender, EventArgs e)

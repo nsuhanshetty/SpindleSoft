@@ -52,16 +52,9 @@ namespace SpindleSoft.Helpers
                     break;
                 case "Alteration":
                     {
-                        List<Alteration> altList = (AlterationBuilder.GetAlterationList("", "", searchText));
+                        IList altList = (AlterationBuilder.GetAlterationList("", "", searchText));
                         if (altList != null && altList.Count != 0)
-                            searchList = (from alt in altList
-                                          select new
-                                          {
-                                              alt.ID,
-                                              Total = alt.TotalPrice,
-                                              Paid = alt.CurrentPayment,
-                                              DueDate = alt.PromisedDate
-                                          }).ToList();
+                            searchList = altList;
                     }
                     break;
 

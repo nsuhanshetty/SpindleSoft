@@ -299,7 +299,7 @@ namespace SpindleSoft.Views
             {
                 string _filePath = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, _staff.ID);
                 //todo: Shift getting images to Builder function
-                pcbStaffImage.Image = _staff.Image = Utilities.Helper.GetDocumentLocal(_filePath);
+                pcbStaffImage.Image = _staff.Image = Utilities.ImageHelper.GetDocumentLocal(_filePath);
             }
         }
 

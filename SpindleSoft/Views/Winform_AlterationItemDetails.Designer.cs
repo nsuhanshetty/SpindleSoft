@@ -151,7 +151,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Winform_AlterationItemDetails";
             this.Text = "Add Alteration Item Details";
-            //this.Load += new System.EventHandler(this.Winform_AlterationItemDetails_Load);
+            this.Load += new System.EventHandler(this.Winform_AlterationItemDetails_Load);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.cmbClothType, 0);
             this.Controls.SetChildIndex(this.label2, 0);

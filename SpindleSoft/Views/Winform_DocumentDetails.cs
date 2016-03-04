@@ -49,6 +49,11 @@ namespace SpindleSoft.Views
             {
                 docTypeList = Builders.OrderBuilder.GetOrderItemDocumentTypeList();
             }
+            else if (Application.OpenForms["WinForm_SKUDetails"] as WinForm_SKUDetails != null)
+            {
+                docTypeList = Builders.SaleBuilder.GetSKUItemDocumentTypeList();
+            }
+
 
             if (document != null && docTypeList.IndexOf(document.Type) == -1)
                 docTypeList.Add(document.Type);
@@ -137,6 +142,16 @@ namespace SpindleSoft.Views
             if (measurementDetails != null)
             {
                 bool success = measurementDetails.UpdateDocumentItemList(document);
+                if (!success)
+                {
+                    MessageBox.Show("Cannot add new Document of type " + document.Type + " as it already exits.", "Document already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            WinForm_SKUDetails _skuDetails = Application.OpenForms["WinForm_SKUDetails"] as WinForm_SKUDetails;
+            if (_skuDetails != null)
+            {
+                bool success = _skuDetails.UpdateDocumentItemList(document);
                 if (!success)
                 {
                     MessageBox.Show("Cannot add new Document of type " + document.Type + " as it already exits.", "Document already exists", MessageBoxButtons.OK, MessageBoxIcon.Warning);

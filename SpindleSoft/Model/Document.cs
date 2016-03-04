@@ -25,4 +25,9 @@ namespace SpindleSoft.Model
     {
         public virtual OrderItem orderItem { get; set; }
     }
+
+    public class SKUItemDocument : Document
+    {
+        public virtual SKUItem skuItem { get; set; }
+    }
 }

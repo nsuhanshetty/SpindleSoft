@@ -31,6 +31,8 @@ namespace SpindleSoft.Model
         public virtual int Quantity { get; set; }
 
         public virtual bool IsSelfMade { get; set; }
+
+        public virtual IList<SKUItemDocument> SKUItemDocuments { get; set; }
     }
 
     public class Sale

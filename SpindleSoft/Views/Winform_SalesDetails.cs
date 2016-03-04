@@ -3,14 +3,10 @@ using SpindleSoft.Model;
 using SpindleSoft.Savers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SpindleSoft.Views
@@ -18,10 +14,11 @@ namespace SpindleSoft.Views
     public partial class Winform_SalesDetails : Winform_DetailsFormat
     {
         Customer _cust = new Customer();
-        List<SKUItem> sKUItems = new List<SKUItem>();
         Sale sale = new Sale();
         List<SaleItem> saleItems = new List<SaleItem>();
-        DataTable dt = new DataTable();
+        List<SKUItem> sKUItems = new List<SKUItem>();
+
+
 
         #region Property
         private int amntPaid = 0;
@@ -68,41 +65,39 @@ namespace SpindleSoft.Views
         }
         #endregion Property
 
+        #region ctor
         public Winform_SalesDetails()
         {
             InitializeComponent();
+            InEdit = true;
         }
 
         public Winform_SalesDetails(Sale _sale)
         {
             InitializeComponent();
-
-            //setting the controls
-            //UpdateCustomerControl(_sale.Customer);
-
-           for (int i = 0; i < _sale.SaleItems.Count; i++)
-			{
-                UpdateSaleListControl(_sale.SaleItems[i], i); ;
-			}
-
-           dgvSaleItem.Enabled = false;
-           dgvSearch.Enabled = false;
-
+            this.sale = _sale;
         }
+        #endregion
 
         #region Events
-        private async  void Winform_SalesDetails_Load(object sender, EventArgs e)
+        private void Winform_SalesDetails_Load(object sender, EventArgs e)
         {
             if (sale.ID != 0)
             {
                 _cust = PeoplePracticeBuilder.GetCustomer(sale.Customer.ID);
-                this._cust.Image = await Utilities.Helper.GetDocumentWebAsync("/customer_ProfilePictures", this._cust.ID.ToString());
                 UpdateCustomerControl(_cust);
+
+                for (int i = 0; i < sale.SaleItems.Count; i++)
+                {
+                    UpdateSaleListControl(sale.SaleItems[i], i); ;
+                }
+
+                dgvSaleItem.Enabled = false;
+                dgvSearch.Enabled = false;
             }
 
             this.toolStripParent.Items.Add(this.AddCustToolStrip);
 
-            //Load ComboBox
             var ComboBoxResults = SaleBuilder.GetVariationValues();
 
             //todo: Can we add Items in a better way
@@ -118,7 +113,7 @@ namespace SpindleSoft.Views
 
         private void AddCustToolStrip_Click(object sender, EventArgs e)
         {
-            new Winform_AddCustomer().ShowDialog();
+            new Winform_CustomerRegister().ShowDialog();
         }
 
         private void txtSrcName_TextChanged(object sender, EventArgs e)
@@ -129,28 +124,12 @@ namespace SpindleSoft.Views
                 return;
             }
 
-            dgvSearch.DataSource = (from sku in SaleBuilder.GetSKUItems(txtSrcName.Text, txtSrcProCode.Text, txtDesc.Text, cmbColor.Text, cmbSize.Text, cmbMaterial.Text)
-                                    select new { sku.Name, sku.ProductCode, sku.Quantity }).ToList();
-
-            UpdateStatus(dgvSearch.Rows.Count == 0 ? "No" : dgvSearch.Rows.Count.ToString() + " Results Found", 100);
-        }
-
-        private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1) return;
-
-            string _proname = dgvSearch.Rows[e.RowIndex].Cells["Name"].Value.ToString();
-
-            //Add SaleItem to Cart
-            string _proCode = dgvSearch.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString();
-            var skuItem = SaleBuilder.GetSkuItemInfo(_proCode);
-            if (skuItem != null && ((from s in sKUItems where s.ProductCode == skuItem.ProductCode select s).Count() == 0))
-            {
-                SaleItem _saleItem = new SaleItem(skuItem, 1, skuItem.SellingPrice);
-                saleItems.Add(_saleItem);
-            }
-
-            LoadDGVSale();
+            dgvSearch.DataSource = SaleBuilder.GetSKUItemList(txtSrcName.Text, txtSrcProCode.Text, txtDesc.Text, cmbColor.Text, cmbSize.Text, cmbMaterial.Text);
+            if (dgvSearch.DataSource != null)
+                colCart.DisplayIndex = dgvSearch.Columns.Count - 1;
+            else
+                colCart.Visible = false;
+            UpdateStatus(dgvSearch.Rows.Count == 0 ? "No" : dgvSearch.Rows.Count.ToString() + " Results Found");
         }
 
         private void txtAmntPaid_KeyPress(object sender, KeyEventArgs e)
@@ -177,85 +156,6 @@ namespace SpindleSoft.Views
             }
         }
 
-        //private void btnDelete_Click(object sender, EventArgs e)
-        //{
-        //    if (dgvSaleItem.Rows.Count < 1) return;
-
-        //    DialogResult dr = MessageBox.Show("Continue deleting selected Sale items", "Delete Sale Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-        //    if (dr == DialogResult.No) return;
-
-        //    foreach (DataGridViewRow item in dgvSaleItem.SelectedRows)
-        //    {
-        //        sKUItems.RemoveAt(item.Index);
-        //    }
-        //    LoadDGVSale();
-        //}
-
-        //private void dgvSaleItem_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    //if (dgvSaleItem.Columns[e.ColumnIndex].HeaderText == ("Quantity") || dgvSaleItem.Columns[e.ColumnIndex].HeaderText == ("Price"))
-        //    //{
-        //    //    var quantityCell = dgvSaleItem.Rows[e.RowIndex].Cells["Quantity"];
-        //    //    int price;
-        //    //    int.TryParse(dgvSaleItem.Rows[e.RowIndex].Cells["Price"].Value.ToString(), out price);
-
-        //    //    //check if quantity within the limits
-        //    //    int quantity;
-        //    //    int.TryParse(quantityCell.Value.ToString(), out quantity);
-        //    //    var limit = (from s in sKUItems
-        //    //                 where s.ProductCode == dgvSaleItem.Rows[e.RowIndex].Cells["ProductCode"].Value.ToString()
-        //    //                 select s.Quantity).Single();
-
-        //    //    quantityCell.ErrorText = (limit < quantity) || quantity == 0 ? "Quantity cannot exceed Limit OR Zero" : "";
-
-        //    //    //Update the total Amount as per quantity if quantity within limits
-        //    //    if (quantityCell.ErrorText == "")
-        //    //    {
-        //    //        //todo : Method to handle payment amount
-        //    //        int total = 0;
-        //    //        foreach (DataGridViewRow dr in dgvSaleItem.Rows)
-        //    //        {
-        //    //            int quant;
-        //    //            int.TryParse(dr.Cells["Quantity"].Value.ToString(), out quant);
-        //    //            total += (quant * int.Parse(dr.Cells["Price"].Value.ToString()));
-        //    //        }
-
-        //    //        txtTotAmnt.Text = total.ToString();
-        //    //        txtBalanceAmnt.Text = (total - int.Parse(txtAmntPaid.Text)).ToString();
-        //    //    }
-        //    //}
-
-        //    //if (dgvSaleItem.Columns["colDelete"].Index == e.ColumnIndex)
-        //    //{
-        //    //    if (e.ColumnIndex == dgvSaleItem.Columns["colDelete"].Index && dgvSaleItem.Rows[e.RowIndex].IsNewRow != true)
-        //    //    {
-        //    //        DialogResult dr = MessageBox.Show("Continue deleting selected Sale items?", "Delete Sale Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-        //    //        if (dr == DialogResult.No) return;
-
-        //    //        bool success = false;
-
-        //    //        if (sKUItems.Count != 0 && e.RowIndex + 1 <= sKUItems.Count)
-        //    //        {
-        //    //            if (sKUItems[e.RowIndex].ID != 0)
-        //    //                success = SalesSaver.DeleteSaleItems(sKUItems[e.RowIndex].ID);
-
-        //    //            if (success || sKUItems[e.RowIndex].ID == 0) // "ID == 0" => Not yet Added to the db 
-        //    //            {
-        //    //                sKUItems.RemoveAt(e.RowIndex);
-        //    //            }
-        //    //            else
-        //    //            {
-        //    //                MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
-        //    //                return;
-        //    //            }
-        //    //        }
-
-        //    //        dgvSaleItem.Rows.RemoveAt(e.RowIndex);
-        //    //        CalculatePaymentDetails();
-        //    //    }
-        //    //}
-        //}
-
         private void CalculatePaymentDetails()
         {
             //todo : Method to handle payment amount
@@ -278,7 +178,7 @@ namespace SpindleSoft.Views
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
-            List<string> exceptionlist = new List<string>() { "grpBxSearch", "pcbCustImage","txtPhoneNo" };
+            List<string> exceptionlist = new List<string>() { "grpBxSearch", "pcbCustImage", "txtPhoneNo" };
             bool exists = SpindleSoft.Utilities.Validation.IsNullOrEmpty(this, true, exceptionlist);
             if (exists) return;
             if (dgvSaleItem.Rows.Count == 0)
@@ -329,78 +229,12 @@ namespace SpindleSoft.Views
         {
             if (SpindleSoft.Utilities.Validation.controlIsInEdit(this, false))
             {
-                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Sale Details", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                var _dialogResult = MessageBox.Show("Do you want to Exit?", "Exit Sale Details", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
                 if (_dialogResult == DialogResult.No)
                     return;
             };
 
             this.Close();
-        }
-        #endregion Events
-
-        private void LoadDGVSale()
-        {
-            dgvSaleItem.DataSource = ToDataTable((from saleItem in saleItems
-                                                  select new { saleItem.SKUItem.Name, saleItem.SKUItem.ProductCode, saleItem.Quantity, Price = saleItem.Price, saleItem.ID }).ToList());
-            dgvSaleItem.Columns["ID"].Visible = false;
-
-            CalculatePaymentDetails();
-        }
-
-        public void UpdateCustomerControl(Customer customer)
-        {
-            if (customer == null) return;
-            this._cust = customer;
-
-            txtName.Text = _cust.Name;
-            txtMobNo.Text = _cust.Mobile_No;
-            txtPhoneNo.Text = _cust.Phone_No;
-            pcbCustImage.Image = _cust.Image;
-        }
-
-        public void UpdateSaleListControl(SaleItem _saleitem, int _index)
-        {
-            if (saleItems.Count == 0 || saleItems.Count < _index + 1)
-                saleItems.Add(_saleitem);
-            else
-                saleItems[_index] = _saleitem;
-
-            if (dgvSaleItem.Rows.Count < saleItems.Count)
-            {
-                dgvSaleItem.Rows.Add();
-                dgvSaleItem.Rows[_index].Cells["colName"].Value = _saleitem.SKUItem.Name;
-                dgvSaleItem.Rows[_index].Cells["colProductCode"].Value = _saleitem.SKUItem.ProductCode;
-            }
-
-            dgvSaleItem.Rows[_index].Cells["colPrice"].Value = _saleitem.Price;
-            dgvSaleItem.Rows[_index].Cells["colQuantity"].Value = _saleitem.Quantity;
-
-            CalculatePaymentDetails();
-        }
-
-        public static DataTable ToDataTable<T>(List<T> items)
-        {
-            DataTable dataTable = new DataTable(typeof(T).Name);
-
-            //Get all the properties
-            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (PropertyInfo prop in Props)
-            {
-                //Setting column names as Property names
-                dataTable.Columns.Add(prop.Name);
-            }
-            foreach (T item in items)
-            {
-                var values = new object[Props.Length];
-                for (int i = 0; i < Props.Length; i++)
-                {
-                    //inserting property values to datatable rows
-                    values[i] = Props[i].GetValue(item, null);
-                }
-                dataTable.Rows.Add(values);
-            }
-            //put a breakpoint here and check datatable
-            return dataTable;
         }
 
         private void dgvSaleItem_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -409,7 +243,7 @@ namespace SpindleSoft.Views
 
             if (dgvSaleItem.Columns["colDelete"].Index == e.ColumnIndex)
             {
-                if (e.ColumnIndex == dgvSaleItem.Columns["colDelete"].Index && dgvSaleItem.Rows[e.RowIndex].IsNewRow != true)
+                if (e.ColumnIndex == colDelete.Index && dgvSaleItem.Rows[e.RowIndex].IsNewRow != true)
                 {
                     DialogResult dr = MessageBox.Show("Continue deleting selected Sale items?", "Delete Sale Item", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (dr == DialogResult.No) return;
@@ -436,13 +270,86 @@ namespace SpindleSoft.Views
                     CalculatePaymentDetails();
                 }
             }
+            else
+            {
+                new Winform_SaleItemDetails(e.RowIndex, saleItems[e.RowIndex]).ShowDialog();
+                LoadDGVSale();
+            }
         }
 
-        private void dgvSaleItem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvSearch_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
 
-            new Winform_SaleItemDetails(e.RowIndex, saleItems[e.RowIndex]).ShowDialog();
+            string _ID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString();
+            var skuItem = SaleBuilder.GetSkuItemInfo(_ID);
+            if (colCart.Index == e.ColumnIndex)
+            {
+                bool _exits = saleItems.Any(x => (x.SKUItem.ID == int.Parse(_ID.ToString())));
+                if (_exits)
+                {
+                    MessageBox.Show("Selected SKU item is already added to cart, Update quantity if required.", "Duplicate SKU Item", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                else
+                {
+                    SaleItem _saleItem = new SaleItem(skuItem, 1, skuItem.SellingPrice);
+                    saleItems.Add(_saleItem);
+                    LoadDGVSale();
+                }
+            }
+            else
+            {
+                new WinForm_SKUDetails(skuItem, false).ShowDialog();
+            }
         }
+        #endregion Events
+
+        #region Custom
+        private void LoadDGVSale()
+        {
+            dgvSaleItem.DataSource = (from saleItem in saleItems
+                                      select new { saleItem.SKUItem.Name, saleItem.SKUItem.ProductCode, saleItem.Quantity, Price = saleItem.Price, saleItem.ID })
+                                      .ToList();
+            dgvSaleItem.Columns["ID"].Visible = false;
+            CalculatePaymentDetails();
+        }
+
+        public void UpdateCustomerControl(Customer customer)
+        {
+            if (customer == null) return;
+            this._cust = customer;
+
+            txtName.Text = _cust.Name;
+            txtMobNo.Text = _cust.Mobile_No;
+            txtPhoneNo.Text = _cust.Phone_No;
+
+            /*todo: Load the image from single source*/
+            string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+            string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+            string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
+            pcbCustImage.Image = this._cust.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
+        }
+
+        public void UpdateSaleListControl(SaleItem _saleitem, int _index)
+        {
+            if (saleItems.Count == 0 || saleItems.Count < _index + 1)
+                saleItems.Add(_saleitem);
+            else
+                saleItems[_index] = _saleitem;
+
+            if (dgvSaleItem.Rows.Count < saleItems.Count)
+            {
+                dgvSaleItem.Rows.Add();
+                dgvSaleItem.Rows[_index].Cells["colName"].Value = _saleitem.SKUItem.Name;
+                dgvSaleItem.Rows[_index].Cells["colProductCode"].Value = _saleitem.SKUItem.ProductCode;
+            }
+
+            dgvSaleItem.Rows[_index].Cells["colPrice"].Value = _saleitem.Price;
+            dgvSaleItem.Rows[_index].Cells["colQuantity"].Value = _saleitem.Quantity;
+
+            CalculatePaymentDetails();
+        }
+        #endregion
     }
 }

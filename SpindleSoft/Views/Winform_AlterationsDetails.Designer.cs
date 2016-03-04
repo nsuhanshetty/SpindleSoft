@@ -214,9 +214,8 @@
             this.dgvAlterationItems.ReadOnly = true;
             this.dgvAlterationItems.Size = new System.Drawing.Size(570, 146);
             this.dgvAlterationItems.TabIndex = 0;
-            this.dgvAlterationItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_CellContentClick);
-            this.dgvAlterationItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAlterationItems_DataError);
-            this.dgvAlterationItems.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvAlterationItems_EditingControlShowing);
+            this.dgvAlterationItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlterationItems_CellClick);
+            this.dgvAlterationItems.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvAlterationItems_PreviewKeyDown);
             // 
             // AltType
             // 
@@ -315,6 +314,7 @@
             this.dgvSearch.Size = new System.Drawing.Size(406, 224);
             this.dgvSearch.TabIndex = 0;
             this.dgvSearch.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearch_CellDoubleClick);
+            this.dgvSearch.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSearch_PreviewKeyDown);
             // 
             // grpbxPayDet
             // 
@@ -480,7 +480,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1018, 433);
-            this.ControlBox = false;
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
@@ -564,15 +563,15 @@
         //private System.Windows.Forms.ToolStripButton CancelToolStrip;
         //private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnAddItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AltType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AltPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AltQuantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AltComment;
-        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripButton CancelToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AltType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AltPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AltQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AltComment;
+        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
     }
 }

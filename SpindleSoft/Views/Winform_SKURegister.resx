@@ -117,23 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="colDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="NewVendToolStrip.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGOSURBVFhH3ZfLUcNADIbtpQFKoARKoARKoAQ6gBLSAXBg
-        dpMLdAAdQAehA0jWDMeg39F6ghGx9pUD/8w3E9t6bCxbWjexap1/JG74cFBr17e4xof1ZKx/Ppp3G+P8
-        0rjuaotf9ufoGpvVU1iAxGEWcOc/hoT0+8ex9e9sVkdm0V2EZKBxn+fg17kqWnSn+Ie7ybbPwbb+wznc
-        BbJlr3Jq5/56N1GfbFSCAGzZrZykBUglAAdbgFQCUGUBeADxmqkgW3b7R2pdNyOelMzYrZAeNsfjOk8B
-        H/bO17gBaSj6HODBkpLsA6Vg90zZrxMpgQb4cpR00Xt+KQXXAF8Oky7j1m9ScA3Grl44TKJoqEiBY8ga
-        THifpaAxZPWEnNsfwKzgcJESplwqjfVnHFUv7HKlYCkgFofVS9popEKNLG6vmNJ6p4hqzfjAkILkoP9o
-        SZh8WlQTssbtD6jKYO5Xr5JzCaZbc8bk07J/QtLFEt3vLxBbN6JhRJ0Q22v08mG3qygPbII9fPstOr4f
-        xMRN8w0Owvh0jOFGYQAAAABJRU5ErkJggg==
-</value>
-  </data>
+  <metadata name="colEdit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
   </metadata>

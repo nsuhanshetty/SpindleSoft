@@ -16,28 +16,24 @@ namespace SpindleSoft.Views
     public partial class Winform_AlterationItemDetails : Winform_DetailsFormat
     {
         int index;
-        AlterationItem item;
+        AlterationItem altItem = new AlterationItem();
         List<String> clothList;
 
-        public Winform_AlterationItemDetails(int _index, AlterationItem _item)
+        public Winform_AlterationItemDetails(int _index, AlterationItem _item, bool _inEdit = false)
         {
-            InitializeComponent();
             this.index = _index;
+            //if (item == null) return;
+            this.altItem = _item;
+            this.InEdit = _inEdit;
 
-            clothList = AlterationBuilder.GetListOfClothingTypes();
-
-            cmbClothType.DataSource = clothList;
-            cmbClothType.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            cmbClothType.AutoCompleteCustomSource.AddRange(clothList.ToArray());
-            cmbClothType.AutoCompleteMode = AutoCompleteMode.Suggest;
-
-            if (_item == null) return;
-            this.item = _item;
-
-            txtComment.Text = _item.Comment;
-            txtUnitPrice.Text = _item.Price.ToString();
-            nudQuantity.Value = _item.Quantity;
-            UpdateCmbType(_item.Name ?? cmbClothType.Text);
+            InitializeComponent();
+            if (!InEdit)
+            {
+                //var exList = new List<string>() { "dgvOrderItems", "groupBox2" };
+                WinFormControls_InEdit(this);
+                this.Enabled = true;
+                this.ControlBox = true;
+            }
         }
 
         private void UpdateCmbType(string value)
@@ -81,21 +77,45 @@ namespace SpindleSoft.Views
             }
             #endregion Validation
 
-            UpdateStatus("Saving..", 25);
-            AlterationItem altItem = new AlterationItem(cmbClothType.Text, int.Parse(nudQuantity.Value.ToString()), int.Parse(txtUnitPrice.Text), txtComment.Text);
+            if (altItem == null)
+                altItem = new AlterationItem(cmbClothType.Text, int.Parse(nudQuantity.Value.ToString()), int.Parse(txtUnitPrice.Text), txtComment.Text);
+            else
+            {
+                altItem.Quantity = int.Parse(nudQuantity.Value.ToString());
+                altItem.Price = int.Parse(txtUnitPrice.Text);
+                altItem.Comment = txtComment.Text;
+                altItem.Name = cmbClothType.Text;
+            }
 
-            UpdateStatus("Saving..", 50);
             Winform_AlterationsDetails altDetails = Application.OpenForms["Winform_AlterationsDetails"] as Winform_AlterationsDetails;
             if (altDetails != null)
                 altDetails.UpdateAlterationListControl(altItem, index);
 
-            UpdateStatus("Saving..", 100);
+            UpdateStatus("Saved.", 100);
             this.Close();
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Winform_AlterationItemDetails_Load(object sender, EventArgs e)
+        {
+            clothList = AlterationBuilder.GetListOfClothingTypes();
+
+            cmbClothType.DataSource = clothList;
+            cmbClothType.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            cmbClothType.AutoCompleteCustomSource.AddRange(clothList.ToArray());
+            cmbClothType.AutoCompleteMode = AutoCompleteMode.Suggest;
+
+            if (altItem != null)
+            {
+                txtComment.Text = altItem.Comment;
+                txtUnitPrice.Text = altItem.Price.ToString();
+                nudQuantity.Value = altItem.Quantity;
+                UpdateCmbType(altItem.Name ?? cmbClothType.Text);
+            }
         }
     }
 }

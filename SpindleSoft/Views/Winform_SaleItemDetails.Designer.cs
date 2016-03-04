@@ -139,6 +139,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Winform_SaleItemDetails";
             this.Text = "Add Sale Item Details";
+            this.Load += new System.EventHandler(this.Winform_SaleItemDetails_Load);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtUnitPrice, 0);

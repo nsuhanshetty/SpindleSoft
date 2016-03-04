@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Linq;
 using log4net;
+using System.Configuration;
+using SpindleSoft.Utilities;
 
 namespace SpindleSoft.Savers
 {
     public class SalesSaver
     {
         static ILog log = LogManager.GetLogger(typeof(SalesSaver));
+        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
 
         public static bool SaveSkuItemInfo(SKUItem skuItem)
         {
@@ -22,7 +25,23 @@ namespace SpindleSoft.Savers
                 {
                     try
                     {
+                        foreach (var item in skuItem.SKUItemDocuments)
+                        {
+                            item.skuItem =skuItem;
+                        }
                         session.SaveOrUpdate(skuItem);
+
+                        List<bool> results = new List<bool>();
+                        string _skuItemDocPath = ConfigurationManager.AppSettings["SKUItemDocs"];
+                        foreach (var doc in skuItem.SKUItemDocuments)
+                        {
+                            if (doc.Image != null)
+                                results.Add(ImageHelper.UploadToLocal(doc.Image, string.Format("{0}/{1}/{2}_{3}.png", baseDoc, _skuItemDocPath, skuItem.ID, doc.Type)));
+                        }
+                         
+                        if (results.Contains(false))
+                            return false;
+
                         transaction.Commit();
                         return true;
                     }
@@ -34,26 +53,22 @@ namespace SpindleSoft.Savers
                     }
                 }
             }
-
-
         }
 
         public static bool SaveSaleItemInfo(Sale sale)
         {
-
             using (var session = NHibernateHelper.OpenSession())
             {
                 using (var transaction = session.BeginTransaction())
                 {
                     try
                     {
-                        
+
                         foreach (SaleItem item in sale.SaleItems)
                         {
                             item.Sale = sale;
-                            //session.SaveOrUpdate(item);
                         }
-                       
+
                         //update SKU
                         foreach (SaleItem item in sale.SaleItems)
                         {
@@ -73,8 +88,53 @@ namespace SpindleSoft.Savers
                     }
                 }
             }
+        }
 
+        public static bool DeleteSkuItem(string _ID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    try
+                    {
+                        var _item = session.Get<SKUItem>(int.Parse(_ID));
+                        session.Delete(_item);
+                        trans.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        trans.Rollback();
+                        return false;
+                    }
+                }
+            }
+        }
 
+        public static bool CheckIfSKUItemSold(string ID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    try
+                    {
+                        bool _exists = session.Query<SaleItem>().Any(x => x.SKUItem.ID.ToString() == ID);
+                        if (_exists)
+                            return false;
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        trans.Rollback();
+                        return false;
+                    }
+
+                }
+            }
         }
 
         public static bool UpdateSKUList(List<SaleItem> saleItems)
@@ -155,6 +215,35 @@ namespace SpindleSoft.Savers
                 }
             }
             return success;
+        }
+
+        public static bool DeleteSKUItemDocument(int _ID)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    try
+                    {
+                        string OrderItemDocPath = ConfigurationManager.AppSettings["OrderItemDocs"];
+                        Document doc = session.Get<Document>(_ID);
+                        string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, _ID, doc.Type);
+
+                        bool success = ImageHelper.DeleteDocumentLocal(filePath);
+                        if (!success)
+                            return false;
+                        session.Delete(doc);
+                        tx.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        tx.Rollback();
+                        log.Error(ex);
+                        return false;
+                    }
+                }
+            }
         }
     }
 }

@@ -112,45 +112,6 @@ namespace SpindleSoft.Views
             this.Close();
         }
 
-        private void txtPrice_Validating(object sender, CancelEventArgs e)
-        {
-            var txtbox = (sender as TextBox);
-            if (txtbox.Text == String.Empty)
-                return;
-
-            //allow only signed int/ float
-            Match _match = Regex.Match(txtbox.Text, "^[0-9]+(\\.[0-9]+)?$");
-            string errorMsg = _match.Success ? "" : "Invalid Input for fields\n" +
-                                                    " For example '34.2'";
-            errorProvider1.SetError(txtbox, errorMsg);
-
-            if (errorMsg != "")
-            {
-                // Cancel the event and select the text to be corrected by the user.
-                e.Cancel = true;
-                txtbox.Select(0, txtbox.TextLength);
-            }
-        }
-
-        private void cmbType_Validating(object sender, CancelEventArgs e)
-        {
-            var value = (sender as ComboBox).Text;
-            if (string.IsNullOrEmpty(value)) return;
-
-            UpdateCmbType(value);
-        }
-
-        private void UpdateCmbType(string value)
-        {
-            if (this._orderTypeList.IndexOf(value) == -1)
-            {
-                this._orderTypeList.Add(value);
-                cmbType.DataSource = null;
-                cmbType.DataSource = _orderTypeList;
-            }
-            cmbType.SelectedItem = value;
-        }
-
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(cmbType.Text) && (_orderItem == new OrderItem() || cmbType.Text != _orderItem.Name))
@@ -170,7 +131,7 @@ namespace SpindleSoft.Views
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            new Winform_DocumentDetails().ShowDialog();
+            new Winform_DocumentDetails(null, InEdit).ShowDialog();
         }
 
         private void dgvOrderItemDoc_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -216,6 +177,36 @@ namespace SpindleSoft.Views
                     dgvOrderItemDoc.Rows.RemoveAt(e.RowIndex);
                 }
             }
+        }
+        #endregion
+
+        #region Validation
+        private void txtPrice_Validating(object sender, CancelEventArgs e)
+        {
+            var txtbox = (sender as TextBox);
+            if (txtbox.Text == String.Empty)
+                return;
+
+            //allow only signed int/ float
+            Match _match = Regex.Match(txtbox.Text, "^[0-9]+(\\.[0-9]+)?$");
+            string errorMsg = _match.Success ? "" : "Invalid Input for fields\n" +
+                                                    " For example '34.2'";
+            errorProvider1.SetError(txtbox, errorMsg);
+
+            if (errorMsg != "")
+            {
+                // Cancel the event and select the text to be corrected by the user.
+                e.Cancel = true;
+                txtbox.Select(0, txtbox.TextLength);
+            }
+        }
+
+        private void cmbType_Validating(object sender, CancelEventArgs e)
+        {
+            var value = (sender as ComboBox).Text;
+            if (string.IsNullOrEmpty(value)) return;
+
+            UpdateCmbType(value);
         }
         #endregion
 
@@ -286,6 +277,17 @@ namespace SpindleSoft.Views
                 if (!InEdit)
                     dgvOrderItemDoc.Columns["ColDelete"].Visible = false;
             }
+        }
+
+        private void UpdateCmbType(string value)
+        {
+            if (this._orderTypeList.IndexOf(value) == -1)
+            {
+                this._orderTypeList.Add(value);
+                cmbType.DataSource = null;
+                cmbType.DataSource = _orderTypeList;
+            }
+            cmbType.SelectedItem = value;
         }
         #endregion Custom
     }

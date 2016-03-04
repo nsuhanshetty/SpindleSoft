@@ -2,12 +2,6 @@
 using SpindleSoft.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SpindleSoft.Views
@@ -20,33 +14,19 @@ namespace SpindleSoft.Views
 
         public ExpenseItem ExpenseItem { get; set; }
 
-        public Winform_ExpenseItemDetails(int _index, ExpenseItem item = null)
+        public Winform_ExpenseItemDetails(int _index, ExpenseItem item = null, bool _inEdit = false)
         {
-            InitializeComponent();
-
             this.index = _index;
             this.ExpenseItem = item;
+            this.InEdit = _inEdit;
 
-            if (item != null) 
+            InitializeComponent();
+            if (!InEdit)
             {
-                if (item.Type == "Fixed")
-                    rdbFixed.Checked = true;
-                else
-                    rdbVariable.Checked = true;
-
-                if (namesList.IndexOf(this.ExpenseItem.Name) == -1)
-                    namesList.Add(this.ExpenseItem.Name);
-
-                nudAmount.Value = this.ExpenseItem.Amount;
-                txtComment.Text = this.ExpenseItem.Comment;
-                this.Expense = this.ExpenseItem.Expense;
+                WinFormControls_InEdit(this);
+                this.Enabled = true;
+                this.ControlBox = true;
             }
-            else
-            {
-                namesList = ExpenseBuilder.GetExpenseNames(rdbFixed.Checked);
-            }
-
-            LoadExpenseNames(namesList);
         }
 
         /// <summary>
@@ -56,7 +36,7 @@ namespace SpindleSoft.Views
         /// <param name="e"></param>
         private void rdbFixed_CheckedChanged(object sender, EventArgs e)
         {
-           
+
             namesList = ExpenseBuilder.GetExpenseNames(rdbFixed.Checked);
             LoadExpenseNames(namesList);
 
@@ -68,7 +48,7 @@ namespace SpindleSoft.Views
         {
             cmbName.DataSource = null;
             cmbName.DataSource = namesList;
-           
+
             AutoCompleteStringCollection namesListCol = new AutoCompleteStringCollection();
             namesListCol.AddRange(namesList.ToArray());
             cmbName.AutoCompleteCustomSource = namesListCol;
@@ -88,16 +68,25 @@ namespace SpindleSoft.Views
             }
 
             UpdateStatus("Saving Expenses", 25);
-            ExpenseItem expItem = new ExpenseItem(rdbFixed.Checked,
+            if (Expense == null)
+                ExpenseItem = new ExpenseItem(rdbFixed.Checked,
                                                   int.Parse(nudAmount.Value.ToString()),
                                                   cmbName.Text,
                                                   txtComment.Text,
                                                   this.Expense);
+            else
+            {
+                ExpenseItem.Comment = txtComment.Text;
+                ExpenseItem.Name = cmbName.Text;
+                ExpenseItem.Amount = int.Parse(nudAmount.Value.ToString());
+                ExpenseItem.Type = rdbFixed.Checked ? "Fixed" : "Variable";
+            }
+
             Winform_ExpenseDetails expenseDetails = Application.OpenForms["Winform_ExpenseDetails"] as Winform_ExpenseDetails;
             if (expenseDetails != null)
-                expenseDetails.UpdateExpenseItems(expItem, index);
+                expenseDetails.UpdateExpenseItems(ExpenseItem, index);
 
-            UpdateStatus("Saving Expenses", 100);
+            UpdateStatus("Expense Item Saved", 100);
             this.Close();
         }
 
@@ -117,6 +106,28 @@ namespace SpindleSoft.Views
             cmbName.Text = Utilities.Validation.ToTitleCase(cmbName.Text);
         }
 
+        private void Winform_ExpenseItemDetails_Load(object sender, EventArgs e)
+        {
+            if (ExpenseItem != null)
+            {
+                if (ExpenseItem.Type == "Fixed")
+                    rdbFixed.Checked = true;
+                else
+                    rdbVariable.Checked = true;
 
+                if (namesList.IndexOf(this.ExpenseItem.Name) == -1)
+                    namesList.Add(this.ExpenseItem.Name);
+
+                nudAmount.Value = this.ExpenseItem.Amount;
+                txtComment.Text = this.ExpenseItem.Comment;
+                this.Expense = this.ExpenseItem.Expense;
+            }
+            else
+            {
+                namesList = ExpenseBuilder.GetExpenseNames(rdbFixed.Checked);
+            }
+
+            LoadExpenseNames(namesList);
+        }
     }
 }

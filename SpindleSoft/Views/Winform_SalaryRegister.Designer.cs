@@ -31,10 +31,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Winform_SalaryRegister));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Winform_SalaryRegister));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtpToSalaryDate = new System.Windows.Forms.DateTimePicker();
             this.dtpFromSalaryDate = new System.Windows.Forms.DateTimePicker();
@@ -44,12 +44,11 @@
             this.lblName = new System.Windows.Forms.Label();
             this.dgvSalaryRegister = new System.Windows.Forms.DataGridView();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripBtnSearch = new System.Windows.Forms.ToolStripButton();
+            this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgvSalaryItem = new System.Windows.Forms.DataGridView();
+            this.toolStripBtnSearch = new System.Windows.Forms.ToolStripButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSalaryRegister)).BeginInit();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSalaryItem)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,7 +136,8 @@
             this.dgvSalaryRegister.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvSalaryRegister.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSalaryRegister.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDelete});
+            this.colDelete,
+            this.colEdit});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -146,7 +146,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvSalaryRegister.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvSalaryRegister.Location = new System.Drawing.Point(8, 124);
+            this.dgvSalaryRegister.Location = new System.Drawing.Point(8, 113);
             this.dgvSalaryRegister.Name = "dgvSalaryRegister";
             this.dgvSalaryRegister.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -158,10 +158,10 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvSalaryRegister.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvSalaryRegister.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvSalaryRegister.Size = new System.Drawing.Size(563, 155);
+            this.dgvSalaryRegister.Size = new System.Drawing.Size(563, 166);
             this.dgvSalaryRegister.TabIndex = 141;
-            this.dgvSalaryRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSalaryRegister_CellContentClick);
-            this.dgvSalaryRegister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSalaryRegister_CellDoubleClick);
+            this.dgvSalaryRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSalaryRegister_CellClick);
+            //this.dgvSalaryRegister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSalaryRegister_CellDoubleClick);
             this.dgvSalaryRegister.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSalaryRegister_PreviewKeyDown);
             // 
             // colDelete
@@ -173,28 +173,12 @@
             this.colDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.colDelete.Visible = false;
             // 
-            // toolStrip1
+            // colEdit
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripBtnSearch});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(583, 54);
-            this.toolStrip1.TabIndex = 142;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripBtnSearch
-            // 
-            this.toolStripBtnSearch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripBtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnSearch.Image")));
-            this.toolStripBtnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripBtnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnSearch.Name = "toolStripBtnSearch";
-            this.toolStripBtnSearch.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripBtnSearch.Size = new System.Drawing.Size(46, 51);
-            this.toolStripBtnSearch.Text = "&Search";
-            this.toolStripBtnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripBtnSearch.Click += new System.EventHandler(this.toolStripBtnSearch_Click);
+            this.colEdit.HeaderText = "Click to Edit";
+            this.colEdit.Name = "colEdit";
+            this.colEdit.ReadOnly = true;
+            this.colEdit.Visible = false;
             // 
             // dgvSalaryItem
             // 
@@ -233,26 +217,36 @@
             this.dgvSalaryItem.Size = new System.Drawing.Size(563, 130);
             this.dgvSalaryItem.TabIndex = 143;
             // 
+            // toolStripBtnSearch
+            // 
+            this.toolStripBtnSearch.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripBtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnSearch.Image")));
+            this.toolStripBtnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripBtnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnSearch.Name = "toolStripBtnSearch";
+            this.toolStripBtnSearch.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripBtnSearch.Size = new System.Drawing.Size(46, 51);
+            this.toolStripBtnSearch.Text = "&Search";
+            this.toolStripBtnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripBtnSearch.Click += new System.EventHandler(this.toolStripBtnSearch_Click);
+            // 
             // Winform_SalaryRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 438);
             this.Controls.Add(this.dgvSalaryItem);
-            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dgvSalaryRegister);
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_SalaryRegister";
             this.Text = "Salary Register";
+            this.Load += new System.EventHandler(this.Winform_SalaryRegister_Load);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.dgvSalaryRegister, 0);
-            this.Controls.SetChildIndex(this.toolStrip1, 0);
             this.Controls.SetChildIndex(this.dgvSalaryItem, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSalaryRegister)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSalaryItem)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -265,13 +259,13 @@
         internal System.Windows.Forms.TextBox txtName;
         internal System.Windows.Forms.Label lblName;
         private System.Windows.Forms.DataGridView dgvSalaryRegister;
-        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
         internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dtpToSalaryDate;
         private System.Windows.Forms.DateTimePicker dtpFromSalaryDate;
         internal System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripBtnSearch;
         private System.Windows.Forms.DataGridView dgvSalaryItem;
+        private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.DataGridViewButtonColumn colEdit;
+        private System.Windows.Forms.ToolStripButton toolStripBtnSearch;
     }
 }

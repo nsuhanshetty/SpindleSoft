@@ -171,10 +171,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(348, 282);
-            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Name = "Winform_ExpenseItemDetails";
             this.Text = "Add Expense Item Details";
+            this.Load += new System.EventHandler(this.Winform_ExpenseItemDetails_Load);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

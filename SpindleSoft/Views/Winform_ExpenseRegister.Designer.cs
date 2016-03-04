@@ -40,6 +40,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvExpense = new System.Windows.Forms.DataGridView();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -56,7 +57,7 @@
             this.groupBox1.Controls.Add(this.dtpToExpenseDate);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.dtpFromExpenseDate);
-            this.groupBox1.Location = new System.Drawing.Point(9, 12);
+            this.groupBox1.Location = new System.Drawing.Point(9, 63);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(531, 51);
             this.groupBox1.TabIndex = 136;
@@ -80,6 +81,7 @@
             this.dtpToExpenseDate.Name = "dtpToExpenseDate";
             this.dtpToExpenseDate.Size = new System.Drawing.Size(102, 20);
             this.dtpToExpenseDate.TabIndex = 134;
+            this.dtpToExpenseDate.ValueChanged += new System.EventHandler(this.dtpExpenseDate_ValueChanged);
             // 
             // label4
             // 
@@ -103,7 +105,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvFixedExpense);
-            this.groupBox2.Location = new System.Drawing.Point(9, 256);
+            this.groupBox2.Location = new System.Drawing.Point(9, 307);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(531, 108);
             this.groupBox2.TabIndex = 139;
@@ -126,7 +128,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dgvVariableExpense);
-            this.groupBox3.Location = new System.Drawing.Point(9, 366);
+            this.groupBox3.Location = new System.Drawing.Point(9, 417);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(531, 108);
             this.groupBox3.TabIndex = 140;
@@ -149,7 +151,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.dgvExpense);
-            this.groupBox4.Location = new System.Drawing.Point(9, 88);
+            this.groupBox4.Location = new System.Drawing.Point(9, 139);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(531, 162);
             this.groupBox4.TabIndex = 140;
@@ -163,7 +165,8 @@
             this.dgvExpense.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvExpense.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDelete});
+            this.colDelete,
+            this.colEdit});
             this.dgvExpense.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvExpense.Location = new System.Drawing.Point(3, 16);
             this.dgvExpense.Name = "dgvExpense";
@@ -171,7 +174,7 @@
             this.dgvExpense.Size = new System.Drawing.Size(525, 143);
             this.dgvExpense.TabIndex = 0;
             this.dgvExpense.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpense_CellClick);
-            this.dgvExpense.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpense_CellDoubleClick);
+            //this.dgvExpense.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpense_CellDoubleClick);
             this.dgvExpense.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvExpense_PreviewKeyDown);
             // 
             // colDelete
@@ -181,11 +184,18 @@
             this.colDelete.ReadOnly = true;
             this.colDelete.Visible = false;
             // 
+            // colEdit
+            // 
+            this.colEdit.HeaderText = "Click to Edit";
+            this.colEdit.Name = "colEdit";
+            this.colEdit.ReadOnly = true;
+            this.colEdit.Visible = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(18, 68);
+            this.label1.Location = new System.Drawing.Point(18, 119);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(184, 13);
             this.label1.TabIndex = 141;
@@ -195,7 +205,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(548, 499);
+            this.ClientSize = new System.Drawing.Size(548, 551);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -237,5 +247,6 @@
         internal System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpToExpenseDate;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
+        private System.Windows.Forms.DataGridViewButtonColumn colEdit;
     }
 }

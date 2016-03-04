@@ -24,9 +24,6 @@ namespace SpindleSoft.Views
         private void dgvSearch_ReloadRegister(object sender, EventArgs e)
         {
             UpdateStatus("Searching", 50);
-            var colEdit = dgvSearch.Columns["colEdit"];
-            var colDelete = dgvSearch.Columns["colDelete"];
-
             System.Collections.IList OrdersList = (OrderBuilder.GetOrdersList(txtName.Text, txtMobNo.Text, txtOrderId.Text));
             if (OrdersList != null && OrdersList.Count != 0)
             {

@@ -13,64 +13,19 @@ using System.Windows.Forms;
 
 namespace SpindleSoft.Views
 {
-    public partial class Winform_SalesRegister : Form
+    public partial class Winform_SalesRegister : winform_Register
     {
-        //private void LoadDGV()
-        //{
-        //    DataGridTableStyle myDataGridTableStyle = new DataGridTableStyle();
-        //    DataGridTextBoxColumn txtColSaleID = new DataGridTextBoxColumn();
-        //    DataGridTextBoxColumn txtColName = new DataGridTextBoxColumn();
-        //    DataGridTextBoxColumn txtColMobileNo = new DataGridTextBoxColumn();
-        //    DataGridTextBoxColumn txtColTotalPrice = new DataGridTextBoxColumn();
-        //    DataGridTextBoxColumn txtColAmountPaid = new DataGridTextBoxColumn();
-        //    DataGridTextBoxColumn txtColDateOfSale = new DataGridTextBoxColumn();
-
-        //    txtColName.MappingName = "Name";
-        //    txtColName.HeaderText = "Name";
-
-        //    txtColSaleID.MappingName = "ID";
-        //    txtColSaleID.HeaderText = "SaleID";
-
-        //    txtColMobileNo.MappingName = "Mobile_No";
-        //    txtColMobileNo.HeaderText = "MobileNo";
-
-        //    txtColTotalPrice.MappingName = "TotalPrice";
-        //    txtColTotalPrice.HeaderText = "TotalPrice";
-
-        //    txtColAmountPaid.MappingName = "AmountPaid";
-        //    txtColAmountPaid.HeaderText = "AmountPaid";
-
-        //    txtColDateOfSale.MappingName = "DateOfSale";
-        //    txtColDateOfSale.HeaderText = "DateOfSale";
-
-        //    myDataGridTableStyle.GridColumnStyles.Add(txtColSaleID);
-        //    myDataGridTableStyle.GridColumnStyles.Add(txtColName);
-        //    myDataGridTableStyle.GridColumnStyles.Add(txtColMobileNo);
-        //    myDataGridTableStyle.GridColumnStyles.Add(txtColTotalPrice);
-        //    myDataGridTableStyle.GridColumnStyles.Add(txtColAmountPaid);
-        //    myDataGridTableStyle.GridColumnStyles.Add(txtColDateOfSale);
-
-        //    DataGrid datagrid = new DataGrid();
-        //    datagrid.TableStyles.Add(myDataGridTableStyle);
-
-        //}
-
+        #region ctor
         public Winform_SalesRegister()
         {
             InitializeComponent();
         }
+        #endregion
 
-        private void txtMobNo_TextChanged(object sender, EventArgs e)
+        #region Events
+        private void dgvSearch_ReloadRegister(object sender, EventArgs e)
         {
-            dgvSearch.DataSource = null;
-            dgvSaleItemDetails.DataSource = null;
-            dgvSearch.Columns["colDelete"].Visible = false;
-
-            if (string.IsNullOrEmpty(txtMobNo.Text) && string.IsNullOrEmpty(txtName.Text) && string.IsNullOrEmpty(txtProCode.Text))
-            {
-                return;
-            }
-
+            UpdateStatus("Searching", 50);
             List<Sale> salesList = (SaleBuilder.GetSalesList(txtName.Text, txtProCode.Text, txtMobNo.Text));
             if (salesList != null && salesList.Count != 0)
             {
@@ -81,71 +36,46 @@ namespace SpindleSoft.Views
                                             SaleID = sale.ID,
                                             sale.TotalPrice,
                                             sale.AmountPaid,
-                                            sale.DateOfSale.Date
+                                            DateOfSale = sale.DateOfSale.Date.ToString("dd/MMM/yy")
                                         }).ToList();
 
-                dgvSearch.Columns["colDelete"].Visible = true;
-                dgvSearch.Columns["colDelete"].DisplayIndex = dgvSearch.Columns.Count - 1;
+                colDelete.Visible = true;
+                colDelete.DisplayIndex = dgvSearch.Columns.Count - 1;
             }
             else
             {
-                dgvSaleItemDetails.DataSource = null;
+                colDelete.Visible = false;
+                dgvSaleItemDetails.DataSource = dgvSearch.DataSource = null;
             }
-        }
-
-        private void dgvSearch_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1 || e.ColumnIndex == dgvSearch.Columns["colDelete"].Index) return;
-
-            //toolStrip_Label.Text = "Gathering Data..";
-            //toolStripProgressBar1.Value = 25;
-            //if (dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value == null) return;
-            //int saleID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
-
-            //toolStrip_Label.Text = "Gathering Data..";
-            //toolStripProgressBar1.Value = 50;
-
-            //Sale sale = SaleBuilder.GetSaleInfo(saleID);
-            //if (sale == null)
-            //{
-            //    toolStrip_Label.Text = "Error While Fetching Data..";
-            //    toolStripProgressBar1.Value = 100;
-            //    return;
-            //}
-            //toolStrip_Label.Text = "Setting Up Controls.";
-            //toolStripProgressBar1.Value = 100;
-            //new Winform_SalesDetails(sale).ShowDialog();
+            UpdateStatus((dgvSearch.RowCount == 0) ? "No Results Found" : dgvSearch.RowCount + " Results Found", 100);
         }
 
         private void dgvSearch_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
             int saleID = int.Parse(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
-
-            if (e.ColumnIndex == dgvSearch.Columns["colDelete"].Index)
+            if (e.ColumnIndex == colDelete.Index)
             {
                 DialogResult dr = MessageBox.Show("Do you want to Delete Sale No. " + saleID, "Delete Sale", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dr == DialogResult.No) return;
 
                 bool success = SpindleSoft.Savers.SalesSaver.DeleteSale(saleID);
-                if (success == true)
+                if (success)
                 {
-                    txtMobNo_TextChanged(this, new EventArgs());
-                    toolStrip_Label.Text = "Sale Deleted.";
+                    dgvSearch_ReloadRegister(this, new EventArgs());
+                    UpdateStatus("Sale Deleted.", 100);
                 }
-                return;
-            }
-
-            if (dgvSearch.Rows.Count == 0) return;
-            List<SKUItem> skuList = SaleBuilder.GetSalesItemList(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
-
-            if (skuList != null)
-            {
-                dgvSaleItemDetails.DataSource = (from s in skuList
-                                                 select new { s.Name, s.ProductCode, s.Color, s.Material, s.Size }).ToList();
+                else
+                {
+                    UpdateStatus("Error deleting Sale.", 100);
+                }
             }
             else
-                dgvSaleItemDetails.DataSource = null;
+            {
+                if (dgvSearch.Rows.Count == 0) return;
+                List<SKUItem> skuList = SaleBuilder.GetSalesItemList(dgvSearch.Rows[e.RowIndex].Cells["SaleID"].Value.ToString());
+                dgvSaleItemDetails.DataSource = (skuList == null) ? null : (from s in skuList select new { s.Name, s.ProductCode, s.Color, s.Material, s.Size }).ToList();
+            }
         }
 
         private void dgvSearch_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -156,5 +86,16 @@ namespace SpindleSoft.Views
             }
         }
 
+        private void Winform_SalesRegister_Load(object sender, EventArgs e)
+        {
+            dgvSearch_ReloadRegister(this, new EventArgs());
+        }
+
+        protected override void NewVendToolStrip_Click(object sender, EventArgs e)
+        {
+            new Winform_SalesDetails().ShowDialog();
+            dgvSearch_ReloadRegister(this, new EventArgs());
+        }
+        #endregion
     }
 }

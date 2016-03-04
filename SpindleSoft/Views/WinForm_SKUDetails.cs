@@ -6,40 +6,75 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Linq;
+using System.Configuration;
 
 namespace SpindleSoft.Views
 {
     public partial class WinForm_SKUDetails : Winform_DetailsFormat
     {
-        SKUItem saleItem = new SKUItem();
         Vendor vendor;
-        bool editMode = false;
+        SKUItem skuItem = new SKUItem();
+        List<SKUItemDocument> docList = new List<SKUItemDocument>();
 
+        #region ctor
         public WinForm_SKUDetails()
         {
             InitializeComponent();
+            InEdit = true;
         }
 
-        public WinForm_SKUDetails(SKUItem _saleItem)
+        public WinForm_SKUDetails(SKUItem _saleItem, bool _inEdit = false)
         {
+            this.skuItem = _saleItem;
+            this.InEdit = _inEdit;
+
             InitializeComponent();
+            if (!InEdit)
+            {
+                var exList = new List<string>() { "dgvItemSKUDoc", "groupBox6"};
+                WinFormControls_InEdit(this, exList);
+                this.Enabled = true;
+                this.ControlBox = true;
+            }
+        }
+        #endregion
 
-            UpdateStatus("Loading Values", 25);
-            this.saleItem = _saleItem;
-            txtName.Text = this.saleItem.Name;
-            txtCode.Text = this.saleItem.ProductCode;
-            txtDesc.Text = this.saleItem.Description;
-            txtQuantity.Text = this.saleItem.Quantity.ToString();
-            txtCP.Text = this.saleItem.CostPrice.ToString();
-            txtSP.Text = this.saleItem.SellingPrice.ToString();
+        #region Events
+        private void WinForm_Sale_Load(object sender, EventArgs e)
+        {
+            this.toolStripParent.Items.Add(this.NewVendToolStrip);
+            txtName.Text = this.skuItem.Name;
+            txtCode.Text = this.skuItem.ProductCode;
+            txtDesc.Text = this.skuItem.Description;
+            txtQuantity.Text = this.skuItem.Quantity.ToString();
+            txtCP.Text = this.skuItem.CostPrice.ToString();
+            txtSP.Text = this.skuItem.SellingPrice.ToString();
 
-            UpdateStatus("Loading Values", 50);
-            cmbColor.Text = this.saleItem.Color;
-            cmbMaterial.Text = this.saleItem.Material;
-            cmbSize.Text = this.saleItem.Size;
+            cmbColor.Text = this.skuItem.Color;
+            cmbMaterial.Text = this.skuItem.Material;
+            cmbSize.Text = this.skuItem.Size;
 
-            UpdateStatus("Loading Values", 75);
-            if (this.saleItem.IsSelfMade)
+            if (skuItem.SKUItemDocuments != null && skuItem.SKUItemDocuments.Count != 0)
+            {
+                string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+                string _skuItemDocPath = ConfigurationManager.AppSettings["SKUItemDocs"];
+                docList = this.skuItem.SKUItemDocuments.ToList();
+                foreach (SKUItemDocument doc in docList)
+                {
+                    int index = docList.IndexOf(doc);
+                    dgvItemSKUDoc.Rows.Add();
+                    dgvItemSKUDoc.Rows[index].Cells["colDocType"].Value = doc.Type;
+
+                    string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, _skuItemDocPath, skuItem.ID, doc.Type);
+                    doc.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
+                }
+            }
+
+            if (!InEdit)
+                dgvItemSKUDoc.Columns["ColDelete"].Visible = false;
+
+            if (this.skuItem.IsSelfMade)
             {
                 rdbSelfMade.Checked = true;
                 txtVendName.Text = "";
@@ -48,27 +83,17 @@ namespace SpindleSoft.Views
             else
             {
                 rdbVendorMade.Checked = true;
-                vendor = SaleBuilder.GetVendorsInfo(this.saleItem.VendorID);
-                txtVendMobile.Text = vendor.MobileNo;
-                txtVendName.Text = vendor.Name;
+                vendor = SaleBuilder.GetVendorsInfo(this.skuItem.VendorID);
+                if (vendor != null)
+                {
+                    txtVendMobile.Text = vendor.MobileNo;
+                    txtVendName.Text = vendor.Name;
+                }
             }
 
-            editMode = true;
-            UpdateStatus("Loading Values", 100);
-        }
-
-        #region Events
-        private void WinForm_Sale_Load(object sender, EventArgs e)
-        {
-            this.toolStripParent.Items.Add(this.NewVendToolStrip);
-
             var ComboBoxResults = SaleBuilder.GetVariationValues();
-
-            //load the combobox size
             cmbSize.Items.AddRange(ComboBoxResults[2].ToArray());
-            //load the combobox color
             cmbColor.Items.AddRange(ComboBoxResults[0].ToArray());
-            //load the combobox material
             cmbMaterial.Items.AddRange(ComboBoxResults[1].ToArray());
         }
 
@@ -94,20 +119,20 @@ namespace SpindleSoft.Views
 
             //todo: use delegate to cut overhead of UpdateStatus();
             UpdateStatus("Saving..", 25);
-            saleItem.Name = txtName.Text;
-            saleItem.Description = txtDesc.Text;
-            saleItem.CostPrice = string.IsNullOrEmpty(txtCP.Text) ? 0 : Convert.ToInt32(txtCP.Text);
-            saleItem.SellingPrice = string.IsNullOrEmpty(txtSP.Text) ? 0 : Convert.ToInt32(txtSP.Text);
-            saleItem.Size = cmbSize.Text;
-            saleItem.Color = cmbColor.Text;
-            saleItem.Material = cmbMaterial.Text;
-            saleItem.IsSelfMade = (rdbSelfMade.Checked) ? true : false;
-            saleItem.VendorID = (rdbSelfMade.Checked) ? (int?)null : this.vendor.ID;
-            saleItem.ProductCode = txtCode.Text;
-            saleItem.Quantity = Convert.ToInt32(txtQuantity.Text);
+            skuItem.Name = txtName.Text;
+            skuItem.Description = txtDesc.Text;
+            skuItem.CostPrice = string.IsNullOrEmpty(txtCP.Text) ? 0 : Convert.ToInt32(txtCP.Text);
+            skuItem.SellingPrice = string.IsNullOrEmpty(txtSP.Text) ? 0 : Convert.ToInt32(txtSP.Text);
+            skuItem.Size = cmbSize.Text;
+            skuItem.Color = cmbColor.Text;
+            skuItem.Material = cmbMaterial.Text;
+            skuItem.IsSelfMade = (rdbSelfMade.Checked) ? true : false;
+            skuItem.VendorID = (rdbSelfMade.Checked) ? (int?)null : this.vendor.ID;
+            skuItem.ProductCode = txtCode.Text;
+            skuItem.Quantity = Convert.ToInt32(txtQuantity.Text);
 
             UpdateStatus("Saving..", 75);
-            bool response = SalesSaver.SaveSkuItemInfo(saleItem);
+            bool response = SalesSaver.SaveSkuItemInfo(skuItem);
 
             if (response)
             {
@@ -115,17 +140,13 @@ namespace SpindleSoft.Views
 
                 Winform_SKURegister addSkuReg = Application.OpenForms["Winform_SKURegister"] as Winform_SKURegister;
                 if (addSkuReg != null)
-                    addSkuReg.txtName_TextChanged(this, new EventArgs());
+                    addSkuReg.dgvSearch_ReloadRegister(this, new EventArgs());
                 this.Close();
             }
             else
             {
                 UpdateStatus("Error Saving Sale", 100);
             }
-            editMode = false;
-
-
-
         }
 
         protected override void CancelToolStrip_Click(object sender, EventArgs e)
@@ -139,7 +160,6 @@ namespace SpindleSoft.Views
 
             this.Close();
         }
-
         #endregion Events
 
         #region Validation
@@ -149,7 +169,7 @@ namespace SpindleSoft.Views
             if (txtbox.Text == String.Empty)
                 return;
 
-            //allow only signed int/ float
+            /*allow only signed int/ float*/
             Match _match = Regex.Match(txtbox.Text, "^[0-9]*$");
             string errorMsg = _match.Success ? "" : "Invalid Input for fields\n" +
                                                     " For example '340'";
@@ -173,9 +193,6 @@ namespace SpindleSoft.Views
             if (txtbox.Text.Length < 3)
             {
                 errorMsg = "Product Name must have more than two characters.";
-                //bool exists = SaleBuilder.IsExistingName(txtName.Text);
-                //errorMsg = !exists ? "" : "Product Name already exists. Name needs to be unique";
-
                 errorProvider1.SetError(txtbox, errorMsg);
                 if (errorMsg != "")
                 {
@@ -188,8 +205,7 @@ namespace SpindleSoft.Views
 
         private void txtName_Validated(object sender, EventArgs e)
         {
-            //todo: must have an alternate approach
-            if (editMode == true) return;
+            if (!String.IsNullOrEmpty(txtCode.Text)) return;
 
             if (string.IsNullOrEmpty(cmbColor.Text) || string.IsNullOrEmpty(cmbMaterial.Text)
                 || string.IsNullOrEmpty(cmbSize.Text) || string.IsNullOrEmpty(txtName.Text))
@@ -236,13 +252,87 @@ namespace SpindleSoft.Views
         }
         #endregion Validation
 
+        #region Custom
+        internal bool UpdateDocumentItemList(Document _doc)
+        {
+            var docindex = docList.IndexOf(docList.Where(x => x.Type == _doc.Type).SingleOrDefault());
+            if (docList.Count == 0 || docindex == -1)
+            {
+                docList.Add(new SKUItemDocument
+                {
+                    Image = _doc.Image,
+                    Type = _doc.Type,
+                });
+                dgvItemSKUDoc.Rows.Add();
+                docindex = dgvItemSKUDoc.Rows.Count - 1;
+            }
+            else
+            {
+                docList[docindex].Image = _doc.Image;
+                docList[docindex].Type = _doc.Type;
+            }
+
+            dgvItemSKUDoc.Rows[docindex].Cells["colDocType"].Value = _doc.Type;
+            skuItem.SKUItemDocuments = docList;
+            return true;
+        }
+
         public void UpdateVendorDetails(Vendor vend)
         {
             this.vendor = vend;
             txtVendMobile.Text = vend.MobileNo;
             txtVendName.Text = vend.Name;
         }
+        #endregion
 
+        private void btnAddItem_Click(object sender, EventArgs e)
+        {
+            new Winform_DocumentDetails(null, InEdit).ShowDialog();
+        }
 
+        private void dgvOrderItemDoc_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            if (IsNullOrEmpty(dgvItemSKUDoc.Rows[e.RowIndex].Cells[0].Value))
+            {
+                MessageBox.Show("Document Type is Mandatory", "Enter Document Type", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (e.ColumnIndex == 0)
+            {
+                new Winform_DocumentDetails(docList[e.RowIndex], InEdit).ShowDialog();
+            }
+            else if (e.ColumnIndex == 1) //delete Document
+            {
+                if (IsNullOrEmpty(dgvItemSKUDoc.Rows[e.RowIndex].Cells[0].Value))
+                    return;
+
+                if (dgvItemSKUDoc.Columns["colDelete"].Index == e.ColumnIndex)
+                {
+                    DialogResult dres = MessageBox.Show("Continue deleting selected Document?", "Delete Document", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dres == DialogResult.No) return;
+
+                    if (docList.Count != 0 && e.RowIndex + 1 <= docList.Count)
+                    {
+                        bool success = false;
+                        if (docList[e.RowIndex].ID != 0)
+                            success = SpindleSoft.Savers.SalesSaver.DeleteSKUItemDocument(docList[e.RowIndex].ID);
+
+                        if (success || docList[e.RowIndex].ID == 0)
+                        {
+                            docList.RemoveAt(e.RowIndex);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Could not delete the Item. Something Nasty happened!!");
+                            return;
+                        }
+                    }
+                    dgvItemSKUDoc.Rows.RemoveAt(e.RowIndex);
+                }
+            }
+        }
     }
 }

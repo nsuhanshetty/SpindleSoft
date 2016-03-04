@@ -34,7 +34,6 @@ namespace SpindleSoft
                                 .Password("sshetty")))
                     //(c => c.FromAppSetting("ConnectionString")) // Modify your ConnectionString
                     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>())
-                    //.ExposeConfiguration(cfg => new NHibernate.Tool.hbm2ddl.SchemaExport(cfg).Create(true, true))
                     .BuildSessionFactory();
             }
             catch (Exception ex)
@@ -56,7 +55,6 @@ namespace SpindleSoft
                 log.Error(ex);
                 throw;
             }
-
         }
     }
 }
