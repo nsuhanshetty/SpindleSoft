@@ -28,7 +28,7 @@
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>49</ApplicationRevision>
+    <ApplicationRevision>50</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -172,13 +172,16 @@
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Builders\PeoplePracticeBuilder.cs" />
     <Compile Include="Builders\SaleBuilder.cs" />
+    <Compile Include="Builders\SettingsBuilder.cs" />
     <Compile Include="FluentMapping\SecurityDocumentMapping.cs" />
     <Compile Include="FluentMapping\ExpenseMapping.cs" />
     <Compile Include="FluentMapping\OrdersMapping.cs" />
     <Compile Include="FluentMapping\SaleMapping.cs" />
+    <Compile Include="FluentMapping\SettingMapping.cs" />
     <Compile Include="Model\Bank.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\SaleItem.cs" />
+    <Compile Include="Model\Setting.cs" />
     <Compile Include="Savers\AlterationSaver.cs" />
     <Compile Include="Savers\ExpenseSaver.cs" />
     <Compile Include="Savers\MainSaver.cs" />
@@ -196,6 +199,7 @@
     <Compile Include="Savers\FormUpload.cs" />
     <Compile Include="Savers\PeoplePracticeSaver.cs" />
     <Compile Include="Savers\SalesSaver.cs" />
+    <Compile Include="Savers\SettingSaver.cs" />
     <Compile Include="Utilities\BitmapImage.cs" />
     <Compile Include="Utilities\ImageHelper.cs" />
     <Compile Include="Utilities\Validation.cs" />
@@ -278,6 +282,12 @@
     </Compile>
     <Compile Include="Views\Winform_SalesRegister.Designer.cs">
       <DependentUpon>Winform_SalesRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_Settings.Designer.cs">
+      <DependentUpon>Winform_Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_SKURegister.cs">
       <SubType>Form</SubType>
@@ -468,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_SalesRegister.resx">
       <DependentUpon>Winform_SalesRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_Settings.resx">
+      <DependentUpon>Winform_Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_SKURegister.resx">
       <DependentUpon>Winform_SKURegister.cs</DependentUpon>

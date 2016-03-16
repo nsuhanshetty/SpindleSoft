@@ -81,6 +81,15 @@ namespace SpindleSoft
             InitializeComponent();
             UpdateOrderReadyDgv();
             UpdateAlterationReadyDgv();
+
+            Setting setting = null;
+            while (setting == null)
+            {
+                setting = SpindleSoft.Builders.SettingsBuilder.GetBaseImagePath();
+                if (setting == null)
+                    new Winform_Settings().ShowDialog();
+            }
+            ConfigurationManager.AppSettings["BaseDocDirectory"] = setting.Value;
         }
         #endregion ctor
 
@@ -450,6 +459,11 @@ namespace SpindleSoft
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Winform_About().ShowDialog();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_Settings().ShowDialog();
         }
 
     }

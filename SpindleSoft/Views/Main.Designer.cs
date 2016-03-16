@@ -66,6 +66,7 @@
             this.salesrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alterationSalesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sMSReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateSpindleSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -136,7 +137,7 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.sMSReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
@@ -453,38 +454,48 @@
             this.customerReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.customerReportToolStripMenuItem.Text = "Customer Report";
             // 
+            // sMSReportToolStripMenuItem
+            // 
+            this.sMSReportToolStripMenuItem.Name = "sMSReportToolStripMenuItem";
+            this.sMSReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.sMSReportToolStripMenuItem.Text = "SMS Report";
+            // 
             // settingToolStripMenuItem
             // 
             this.settingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.userManagerToolStripMenuItem,
             this.updateSpindleSoftToolStripMenuItem,
             this.backUpDataToolStripMenuItem,
-            this.restoreDataToolStripMenuItem});
-            this.settingToolStripMenuItem.Enabled = false;
+            this.restoreDataToolStripMenuItem,
+            this.settingsToolStripMenuItem});
             this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
             this.settingToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.settingToolStripMenuItem.Text = "Se&tting";
             // 
             // userManagerToolStripMenuItem
             // 
+            this.userManagerToolStripMenuItem.Enabled = false;
             this.userManagerToolStripMenuItem.Name = "userManagerToolStripMenuItem";
             this.userManagerToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.userManagerToolStripMenuItem.Text = "U&ser Manager";
             // 
             // updateSpindleSoftToolStripMenuItem
             // 
+            this.updateSpindleSoftToolStripMenuItem.Enabled = false;
             this.updateSpindleSoftToolStripMenuItem.Name = "updateSpindleSoftToolStripMenuItem";
             this.updateSpindleSoftToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.updateSpindleSoftToolStripMenuItem.Text = "&Update SpindleSoft";
             // 
             // backUpDataToolStripMenuItem
             // 
+            this.backUpDataToolStripMenuItem.Enabled = false;
             this.backUpDataToolStripMenuItem.Name = "backUpDataToolStripMenuItem";
             this.backUpDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.backUpDataToolStripMenuItem.Text = "&BackUp Data";
             // 
             // restoreDataToolStripMenuItem
             // 
+            this.restoreDataToolStripMenuItem.Enabled = false;
             this.restoreDataToolStripMenuItem.Name = "restoreDataToolStripMenuItem";
             this.restoreDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.restoreDataToolStripMenuItem.Text = "&Restore Data";
@@ -1180,11 +1191,12 @@
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
             // 
-            // sMSReportToolStripMenuItem
+            // settingsToolStripMenuItem
             // 
-            this.sMSReportToolStripMenuItem.Name = "sMSReportToolStripMenuItem";
-            this.sMSReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.sMSReportToolStripMenuItem.Text = "SMS Report";
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.settingsToolStripMenuItem.Text = "&Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1337,6 +1349,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sMSReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }
 
