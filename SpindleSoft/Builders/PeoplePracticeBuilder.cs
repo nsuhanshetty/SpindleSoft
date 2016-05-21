@@ -14,6 +14,7 @@ using System.IO;
 using Dropbox.Api.Files;
 using System.Collections;
 using System.Configuration;
+using SpindleSoft.Utilities;
 //using NHibernate;
 
 namespace SpindleSoft.Builders
@@ -25,10 +26,10 @@ namespace SpindleSoft.Builders
         //static string StaffImagePath = "d:\\StaffImages";
         //static string DocumentImagePath = "d:\\DocumentImages";
 
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
-        static string StaffImagePath = ConfigurationManager.AppSettings["StaffImages"];
-        static string StaffDocImagePath = ConfigurationManager.AppSettings["StaffDocImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
+        static string StaffImagePath = Secrets.FileLocation["StaffImages"];
+        static string StaffDocImagePath = Secrets.FileLocation["StaffDocImages"];
 
 
         static ILog log = LogManager.GetLogger(typeof(PeoplePracticeBuilder));
@@ -57,6 +58,29 @@ namespace SpindleSoft.Builders
             }
         }
 
+        public static IList GetCustomersQuickList(string name = "")
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                IList custList;
+                if (name == "")
+                {
+                    custList = (from c in session.Query<Customer>()
+                                join o in session.Query<Orders>() on c.ID equals o.Customer.ID
+                                where o.Status != 3 /* completed Orders*/
+                                orderby o.PromisedDate descending
+                                select new { c.ID, c.Name, c.Mobile_No }).Distinct().Take(25).ToList();
+                }
+                else
+                {
+                    custList = (from c in session.Query<Customer>()
+                                where (c.Name.StartsWith(name))
+                                select new { c.ID, c.Name, c.Mobile_No }).Take(25).ToList();
+                }
+                return custList;
+            }
+        }
+
         public static Customer GetCustomerInfo(string mobNo)
         {
             Customer _cust = new Customer();
@@ -70,9 +94,9 @@ namespace SpindleSoft.Builders
                 }
                 return _cust;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -168,9 +192,9 @@ namespace SpindleSoft.Builders
                     return staff;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -197,9 +221,9 @@ namespace SpindleSoft.Builders
                     return staff;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -214,9 +238,9 @@ namespace SpindleSoft.Builders
                     return bitmap;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: log4net
+                log.Error(ex);
                 return null;
             }
         }
@@ -241,8 +265,7 @@ namespace SpindleSoft.Builders
 
         public static async Task<IList<SecurityDocument>> GetDocumentListAsync(IList<SecurityDocument> docList)
         {
-            //todo: shift the key to passConfig
-            using (DropboxClient dbx = new DropboxClient("E-9ylJ5wcN0AAAAAAAAQKaAbks3oqnG3NwawDf3AsT9i8HZf0YeXHqd6p8fFjCYi"))
+            using (DropboxClient dbx = new DropboxClient("DropSecretNameHere"))
             {
                 try
                 {

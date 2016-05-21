@@ -66,7 +66,7 @@ namespace SpindleSoft
                     _inEdit = true;
                 }
 
-                var _Alteration = Builders.AlterationBuilder.GetAlteration(altID);
+                var _Alteration = Builders.AlterationBuilder.GetAlterationInfo(altID);
                 new Winform_AlterationsDetails(_Alteration, _inEdit).ShowDialog();
                 dgvSearch_ReloadRegister(this, new EventArgs());
             }

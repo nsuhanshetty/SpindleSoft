@@ -17,4 +17,28 @@ namespace SpindleSoft.FluentMapping
             Map(x => x.Value);
         }
     }
+
+    class BackUpLogMapping : ClassMap<BackUpLog>
+    {
+        public BackUpLogMapping()
+        {
+            Id(x => x.ID);
+            Map(x => x.FileName);
+            Map(x => x.DateOfUpdate);
+        }
+    }
+
+    class SMSLogMapping : ClassMap<SMSLog>
+    {
+        public SMSLogMapping()
+        {
+            Id(x => x.ID);
+            Map(x => x.Message);
+            References(x => x.Customer).Class<Customer>()
+                                       .Columns("CustomerID");
+            Map(x => x.SectionID);
+            Map(x => x.Status);
+            Map(x => x.DateOfUpdate);
+        }
+    }
 }

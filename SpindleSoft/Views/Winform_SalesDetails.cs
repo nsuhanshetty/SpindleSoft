@@ -1,6 +1,7 @@
 ﻿using SpindleSoft.Builders;
 using SpindleSoft.Model;
 using SpindleSoft.Savers;
+using SpindleSoft.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -100,7 +101,6 @@ namespace SpindleSoft.Views
 
             var ComboBoxResults = SaleBuilder.GetVariationValues();
 
-            //todo: Can we add Items in a better way
             cmbSize.Items.Add("All");
             cmbSize.Items.AddRange(ComboBoxResults[2].ToArray());
 
@@ -158,7 +158,6 @@ namespace SpindleSoft.Views
 
         private void CalculatePaymentDetails()
         {
-            //todo : Method to handle payment amount
             /*Calculate Total*/
             int total = 0;
             foreach (DataGridViewRow dr in dgvSaleItem.Rows)
@@ -176,7 +175,7 @@ namespace SpindleSoft.Views
             /*Calculate Total - end*/
         }
 
-        protected override void SaveToolStrip_Click(object sender, EventArgs e)
+        protected override async void SaveToolStrip_Click(object sender, EventArgs e)
         {
             List<string> exceptionlist = new List<string>() { "grpBxSearch", "pcbCustImage", "txtPhoneNo" };
             bool exists = SpindleSoft.Utilities.Validation.IsNullOrEmpty(this, true, exceptionlist);
@@ -217,7 +216,8 @@ namespace SpindleSoft.Views
                 DialogResult dr = MessageBox.Show("Send SMS to customer regarding the sale", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
-                    MessageBox.Show("Thanks for choosing our product. We lend free alternations within fours days from date of Delivery.");
+                    string message = "Your sale of #" + sale.ID + " has been delivered, of amount " + sale.TotalPrice + ".  We provide alteration within 4 days of delivery. Thanks for choosing Dee. Stay Beautiful.";
+                    await SpindleSoft.Utilities.SMSGateway.SendSMS(message, sale.Customer, 3);
                 }
                 this.Close();
             }
@@ -325,8 +325,8 @@ namespace SpindleSoft.Views
             txtPhoneNo.Text = _cust.Phone_No;
 
             /*todo: Load the image from single source*/
-            string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-            string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+            string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+            string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
             string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
             pcbCustImage.Image = this._cust.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
         }

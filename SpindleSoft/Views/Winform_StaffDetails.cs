@@ -11,6 +11,7 @@ using SpindleSoft.Builders;
 using Dropbox.Api;
 using System.Threading.Tasks;
 using System.Configuration;
+using SpindleSoft.Utilities;
 
 namespace SpindleSoft.Views
 {
@@ -18,8 +19,8 @@ namespace SpindleSoft.Views
     {
         Staff _staff = new Staff();
         List<SecurityDocument> docList = new List<SecurityDocument>();
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string StaffImagePath = ConfigurationManager.AppSettings["StaffImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string StaffImagePath = Secrets.FileLocation["StaffImages"];
 
         #region Ctor
         public Winform_StaffDetails()
@@ -35,7 +36,8 @@ namespace SpindleSoft.Views
             InitializeComponent();
             if (!InEdit)
             {
-                WinFormControls_InEdit(this);
+                var exList = new List<String> { "toolStripParent" };
+                WinFormControls_InEdit(this, exList);
                 this.Enabled = true;
                 this.ControlBox = true;
             }
@@ -230,41 +232,44 @@ namespace SpindleSoft.Views
         private void Winform_StaffDetails_Load(object sender, EventArgs e)
         {
             List<string> docTypeList = PeoplePracticeBuilder.GetSecurityDocumentTypeList();
-
+            this.EditToolStrip.Visible = true;
+            if (_staff != null)
             /*Load Controls*/
-            txtAddress.Text = _staff.Address;
-            txtMobNo.Text = _staff.Mobile_No;
-            txtName.Text = _staff.Name;
-            txtPhoneNo.Text = _staff.Phone_No;
-            txtDesignation.Text = _staff.Designation;
-
-            txtUserBankName.Text = _staff.BankUserName;
-            txtAccNo.Text = _staff.AccNo;
-            txtIFSCNo.Text = _staff.IfscCode;
-
-            if (_staff.Type == 1)
-                rdbPerm.Checked = true;
-            else if (_staff.Type == 2)
-                rdbTemp.Checked = true;
-            else
-                rdbOSrc.Checked = true;
-
-            if (_staff.PayCycle == 1)
-                rdbMonth.Checked = true;
-            else if (_staff.PayCycle == 2)
-                rdbWeek.Checked = true;
-            else
-                rdbDay.Checked = true;
-
-            if (_staff.SecurityDocuments != null && _staff.SecurityDocuments.Count != 0)
             {
-                docList = _staff.SecurityDocuments as List<SecurityDocument>;
-                foreach (SecurityDocument doc in _staff.SecurityDocuments)
-                {
-                    int index = _staff.SecurityDocuments.IndexOf(doc);
-                    dgvSecurityDoc.Rows.Add();
+                txtAddress.Text = _staff.Address;
+                txtMobNo.Text = _staff.Mobile_No;
+                txtName.Text = _staff.Name;
+                txtPhoneNo.Text = _staff.Phone_No;
+                txtDesignation.Text = _staff.Designation;
 
-                    dgvSecurityDoc.Rows[index].Cells["colDocType"].Value = doc.Type;
+                txtUserBankName.Text = _staff.BankUserName;
+                txtAccNo.Text = _staff.AccNo;
+                txtIFSCNo.Text = _staff.IfscCode;
+
+                if (_staff.Type == 1)
+                    rdbPerm.Checked = true;
+                else if (_staff.Type == 2)
+                    rdbTemp.Checked = true;
+                else
+                    rdbOSrc.Checked = true;
+
+                if (_staff.PayCycle == 1)
+                    rdbMonth.Checked = true;
+                else if (_staff.PayCycle == 2)
+                    rdbWeek.Checked = true;
+                else
+                    rdbDay.Checked = true;
+
+                if (_staff.SecurityDocuments != null && _staff.SecurityDocuments.Count != 0)
+                {
+                    docList = _staff.SecurityDocuments as List<SecurityDocument>;
+                    foreach (SecurityDocument doc in _staff.SecurityDocuments)
+                    {
+                        int index = _staff.SecurityDocuments.IndexOf(doc);
+                        dgvSecurityDoc.Rows.Add();
+
+                        dgvSecurityDoc.Rows[index].Cells["colDocType"].Value = doc.Type;
+                    }
                 }
             }
 
@@ -298,7 +303,6 @@ namespace SpindleSoft.Views
             if (_staff != null)
             {
                 string _filePath = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, _staff.ID);
-                //todo: Shift getting images to Builder function
                 pcbStaffImage.Image = _staff.Image = Utilities.ImageHelper.GetDocumentLocal(_filePath);
             }
         }
@@ -311,7 +315,7 @@ namespace SpindleSoft.Views
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            new Winform_DocumentDetails().ShowDialog();
+            new Winform_DocumentDetails(null, InEdit).ShowDialog();
         }
 
         private void txtDesignation_Validated(object sender, EventArgs e)

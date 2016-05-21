@@ -130,9 +130,9 @@ namespace SpindleSoft.Builders
                                 select s).Single();
 
                     _skuItem.SKUItemDocuments = (from doc in session.Query<SKUItemDocument>()
-                                             join s in session.Query<SKUItem>() on doc.skuItem.ID equals s.ID
-                                             where s.ID.ToString() == _ID
-                                             select doc).ToList();
+                                                 join s in session.Query<SKUItem>() on doc.skuItem.ID equals s.ID
+                                                 where s.ID.ToString() == _ID
+                                                 select doc).ToList();
                     return _skuItem;
                 }
             }
@@ -285,6 +285,45 @@ namespace SpindleSoft.Builders
                                                                     .Where(Restrictions.On(() => custAlias.Name).IsLike(_name + "%"))
                                                                     .Where(Restrictions.On(() => skuItemAlias.ProductCode).IsLike(_procode + "%"))
                                                                     .Where(Restrictions.On(() => custAlias.Mobile_No).IsLike(_mobNo + "%"))
+                                                                    .OrderBy(() => saleAlias.DateOfSale).Desc
+                                                                    .TransformUsing(Transformers.DistinctRootEntity).List().ToList<Sale>();
+                    return saleList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return null;
+            }
+        }
+
+        public static List<Sale> GetSalesListQuick(string _name = "")
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    Sale saleAlias = null;
+                    SaleItem saleItemAlias = null;
+                    SKUItem skuItemAlias = null;
+                    Customer custAlias = null;
+
+                    List<Sale> saleList;
+                    if (string.IsNullOrEmpty(_name))
+                    {
+                        saleList = session.QueryOver<Sale>(() => saleAlias)
+                                                                    .JoinAlias(() => saleAlias.Customer, () => custAlias)
+                                                                    .Left.JoinAlias(() => saleAlias.SaleItems, () => saleItemAlias)
+                                                                    .Left.JoinAlias(() => saleItemAlias.SKUItem, () => skuItemAlias)
+                                                                    .OrderBy(() => saleAlias.DateOfSale).Desc
+                                                                    .TransformUsing(Transformers.DistinctRootEntity).Take(25).List().ToList<Sale>();
+                    }
+                    else
+                        saleList = session.QueryOver<Sale>(() => saleAlias)
+                                                                    .JoinAlias(() => saleAlias.Customer, () => custAlias)
+                                                                    .Left.JoinAlias(() => saleAlias.SaleItems, () => saleItemAlias)
+                                                                    .Left.JoinAlias(() => saleItemAlias.SKUItem, () => skuItemAlias)
+                                                                    .Where(Restrictions.On(() => custAlias.Name).IsLike(_name + "%"))
                                                                     .OrderBy(() => saleAlias.DateOfSale).Desc
                                                                     .TransformUsing(Transformers.DistinctRootEntity).List().ToList<Sale>();
                     return saleList;

@@ -47,9 +47,8 @@ namespace SpindleSoft.FluentMapping
         public OrdersMapping()
         {
             Id(x => x.ID).GeneratedBy.Identity();
-            References(x => x.Customer)
-                .Class<Customer>()
-                .Columns("CustomerID");
+            References(x => x.Customer).Class<Customer>()
+                                       .Columns("CustomerID");
             Map(x => x.PromisedDate);
             Map(x => x.TotalPrice);
             Map(x => x.CurrentPayment);

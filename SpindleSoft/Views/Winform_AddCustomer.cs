@@ -31,12 +31,12 @@ namespace SpindleSoft.Views
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
 
-            DialogResult _dialogResult = MessageBox.Show("Do you want to Add Customer " +
-                                         Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value),
-                                         "Add Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                                         MessageBoxDefaultButton.Button2);
+            //DialogResult _dialogResult = MessageBox.Show("Do you want to Add Customer " +
+            //                             Convert.ToString(dgvSearch.Rows[e.RowIndex].Cells["Name"].Value),
+            //                             "Add Customer Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+            //                             MessageBoxDefaultButton.Button2);
 
-            if (_dialogResult == DialogResult.No) return;
+            //if (_dialogResult == DialogResult.No) return;
 
             this.Cursor = Cursors.WaitCursor;
             var ID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value;
@@ -83,6 +83,14 @@ namespace SpindleSoft.Views
             else
                 lblStatus.Text = dgvSearch.RowCount + " Results Found.";
             progBarStatus.Value = 100;
+        }
+
+        private void dgvSearch_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvSearch_CellContentClick(this, new DataGridViewCellEventArgs(dgvSearch.CurrentCell.ColumnIndex, dgvSearch.CurrentCell.RowIndex));
+            }
         }
     }
 }

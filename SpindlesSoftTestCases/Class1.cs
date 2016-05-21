@@ -115,7 +115,6 @@ namespace SpindleSoftTest
             //}
             //catch (WebException ex)
             //{
-            //    //todo: log in log4net
             //    //return false;
             //}
         }

@@ -14,7 +14,7 @@ namespace SpindleSoft.Savers
     public class SalesSaver
     {
         static ILog log = LogManager.GetLogger(typeof(SalesSaver));
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
 
         public static bool SaveSkuItemInfo(SKUItem skuItem)
         {
@@ -32,7 +32,7 @@ namespace SpindleSoft.Savers
                         session.SaveOrUpdate(skuItem);
 
                         List<bool> results = new List<bool>();
-                        string _skuItemDocPath = ConfigurationManager.AppSettings["SKUItemDocs"];
+                        string _skuItemDocPath = Secrets.FileLocation["SKUItemDocs"];
                         foreach (var doc in skuItem.SKUItemDocuments)
                         {
                             if (doc.Image != null)
@@ -225,7 +225,7 @@ namespace SpindleSoft.Savers
                 {
                     try
                     {
-                        string OrderItemDocPath = ConfigurationManager.AppSettings["OrderItemDocs"];
+                        string OrderItemDocPath = Secrets.FileLocation["OrderItemDocs"];
                         Document doc = session.Get<Document>(_ID);
                         string filePath = string.Format("{0}/{1}/{2}_{3}.png", baseDoc, OrderItemDocPath, _ID, doc.Type);
 

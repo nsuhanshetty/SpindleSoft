@@ -21,8 +21,8 @@ namespace SpindleSoft.Views
         Customer _cust = new Customer();
         Customer refCust = new Customer();
 
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
 
         #region Ctor
         public WinForm_CustomerDetails()
@@ -39,7 +39,8 @@ namespace SpindleSoft.Views
             InitializeComponent();
             if (!InEdit)
             {
-                WinFormControls_InEdit(this);
+                var exList = new List<string> { "toolStripParent"};
+                WinFormControls_InEdit(this, exList);
                 this.Enabled = true;
                 this.ControlBox = true;
             }
@@ -51,6 +52,7 @@ namespace SpindleSoft.Views
         {
             Cursor.Current = Cursors.WaitCursor;
             this.toolStripParent.Items.Add(this.AddReferralToolStrip);
+            this.EditToolStrip.Visible = true;
 
             /*Load Controls*/
             txtAddress.Text = _cust.Address;
@@ -113,11 +115,11 @@ namespace SpindleSoft.Views
             if (response)
             {
                 UpdateStatus("Customer Saved", 100);
-                DialogResult dr = MessageBox.Show("Send SMS to customer regarding the registration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.Yes)
-                {
-                    //todo: Send SMS
-                }
+                //DialogResult dr = MessageBox.Show("Send SMS to customer regarding the registration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //if (dr == DialogResult.Yes)
+                //{
+                //    //Send SMS
+                //}
                 this.Close();
             }
             else

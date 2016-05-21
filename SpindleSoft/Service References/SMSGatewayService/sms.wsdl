@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="FnGetStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="tokenno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ResUUID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FnGetStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnSendSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sender" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobilenos" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnSendSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FnSendSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnSendScheduledSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sender" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobilenos" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="scheduledOn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnSendScheduledSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FnSendScheduledSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSBalance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSBalanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FnGetSMSBalanceResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSSentCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSSentCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FnGetSMSSentCountResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMainAccountBalance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMainAccountBalanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMainAccountBalanceResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSHistory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="maxrecords" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sentfrom" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sentto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSHistoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FnGetSMSHistoryResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSHistoryNew">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="maxrecords" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sentfrom" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sentto" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FnGetSMSHistoryNewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FnGetSMSHistoryNewResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MyFnGetReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SMSJobId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MyFnGetReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MyFnGetReportResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="FnGetStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:FnGetStatus" />
+  </wsdl:message>
+  <wsdl:message name="FnGetStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:FnGetStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="FnSendSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:FnSendSMS" />
+  </wsdl:message>
+  <wsdl:message name="FnSendSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:FnSendSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="FnSendScheduledSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:FnSendScheduledSMS" />
+  </wsdl:message>
+  <wsdl:message name="FnSendScheduledSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:FnSendScheduledSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSBalanceSoapIn">
+    <wsdl:part name="parameters" element="tns:FnGetSMSBalance" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSBalanceSoapOut">
+    <wsdl:part name="parameters" element="tns:FnGetSMSBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSSentCountSoapIn">
+    <wsdl:part name="parameters" element="tns:FnGetSMSSentCount" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSSentCountSoapOut">
+    <wsdl:part name="parameters" element="tns:FnGetSMSSentCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMainAccountBalanceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMainAccountBalance" />
+  </wsdl:message>
+  <wsdl:message name="GetMainAccountBalanceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMainAccountBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSHistorySoapIn">
+    <wsdl:part name="parameters" element="tns:FnGetSMSHistory" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSHistorySoapOut">
+    <wsdl:part name="parameters" element="tns:FnGetSMSHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSHistoryNewSoapIn">
+    <wsdl:part name="parameters" element="tns:FnGetSMSHistoryNew" />
+  </wsdl:message>
+  <wsdl:message name="FnGetSMSHistoryNewSoapOut">
+    <wsdl:part name="parameters" element="tns:FnGetSMSHistoryNewResponse" />
+  </wsdl:message>
+  <wsdl:message name="MyFnGetReportSoapIn">
+    <wsdl:part name="parameters" element="tns:MyFnGetReport" />
+  </wsdl:message>
+  <wsdl:message name="MyFnGetReportSoapOut">
+    <wsdl:part name="parameters" element="tns:MyFnGetReportResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Service1Soap">
+    <wsdl:operation name="FnGetStatus">
+      <wsdl:input message="tns:FnGetStatusSoapIn" />
+      <wsdl:output message="tns:FnGetStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FnSendSMS">
+      <wsdl:input message="tns:FnSendSMSSoapIn" />
+      <wsdl:output message="tns:FnSendSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FnSendScheduledSMS">
+      <wsdl:input message="tns:FnSendScheduledSMSSoapIn" />
+      <wsdl:output message="tns:FnSendScheduledSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSBalance">
+      <wsdl:input message="tns:FnGetSMSBalanceSoapIn" />
+      <wsdl:output message="tns:FnGetSMSBalanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSSentCount">
+      <wsdl:input message="tns:FnGetSMSSentCountSoapIn" />
+      <wsdl:output message="tns:FnGetSMSSentCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMainAccountBalance">
+      <wsdl:input message="tns:GetMainAccountBalanceSoapIn" />
+      <wsdl:output message="tns:GetMainAccountBalanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSHistory">
+      <wsdl:input message="tns:FnGetSMSHistorySoapIn" />
+      <wsdl:output message="tns:FnGetSMSHistorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSHistoryNew">
+      <wsdl:input message="tns:FnGetSMSHistoryNewSoapIn" />
+      <wsdl:output message="tns:FnGetSMSHistoryNewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MyFnGetReport">
+      <wsdl:input message="tns:MyFnGetReportSoapIn" />
+      <wsdl:output message="tns:MyFnGetReportSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Service1Soap" type="tns:Service1Soap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="FnGetStatus">
+      <soap:operation soapAction="http://tempuri.org/FnGetStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnSendSMS">
+      <soap:operation soapAction="http://tempuri.org/FnSendSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnSendScheduledSMS">
+      <soap:operation soapAction="http://tempuri.org/FnSendScheduledSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSBalance">
+      <soap:operation soapAction="http://tempuri.org/FnGetSMSBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSSentCount">
+      <soap:operation soapAction="http://tempuri.org/FnGetSMSSentCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainAccountBalance">
+      <soap:operation soapAction="http://tempuri.org/GetMainAccountBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSHistory">
+      <soap:operation soapAction="http://tempuri.org/FnGetSMSHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSHistoryNew">
+      <soap:operation soapAction="http://tempuri.org/FnGetSMSHistoryNew" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MyFnGetReport">
+      <soap:operation soapAction="http://tempuri.org/MyFnGetReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Service1Soap12" type="tns:Service1Soap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="FnGetStatus">
+      <soap12:operation soapAction="http://tempuri.org/FnGetStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnSendSMS">
+      <soap12:operation soapAction="http://tempuri.org/FnSendSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnSendScheduledSMS">
+      <soap12:operation soapAction="http://tempuri.org/FnSendScheduledSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSBalance">
+      <soap12:operation soapAction="http://tempuri.org/FnGetSMSBalance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSSentCount">
+      <soap12:operation soapAction="http://tempuri.org/FnGetSMSSentCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainAccountBalance">
+      <soap12:operation soapAction="http://tempuri.org/GetMainAccountBalance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSHistory">
+      <soap12:operation soapAction="http://tempuri.org/FnGetSMSHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FnGetSMSHistoryNew">
+      <soap12:operation soapAction="http://tempuri.org/FnGetSMSHistoryNew" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MyFnGetReport">
+      <soap12:operation soapAction="http://tempuri.org/MyFnGetReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="Service1Soap" binding="tns:Service1Soap">
+      <soap:address location="http://service.a1logics.com/sms.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Service1Soap12" binding="tns:Service1Soap12">
+      <soap12:address location="http://service.a1logics.com/sms.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

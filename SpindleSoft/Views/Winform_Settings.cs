@@ -34,7 +34,7 @@ namespace SpindleSoft.Views
 
             string _baseImageFolder = txtFolderPath.Text;
             List<String> _imageFolderNames = new List<string> { "Customer_ProfilePictures", "Staff_ProfilePictures", 
-                                                               "Staff_SecurityDocuments", "Order_OrderItemDocuments", "SKUItem_SKUItemDocuments" };
+                                                               "Staff_SecurityDocuments", "Order_OrderItemDocuments", "SKUItem_SKUItemDocuments","DBBackUp_Path" };
             foreach (var item in _imageFolderNames)
             {
                 string path = _baseImageFolder + "\\" + item;

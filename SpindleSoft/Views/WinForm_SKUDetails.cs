@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Linq;
 using System.Configuration;
+using SpindleSoft.Utilities;
 
 namespace SpindleSoft.Views
 {
@@ -32,7 +33,7 @@ namespace SpindleSoft.Views
             InitializeComponent();
             if (!InEdit)
             {
-                var exList = new List<string>() { "dgvItemSKUDoc", "groupBox6"};
+                var exList = new List<string>() { "dgvItemSKUDoc", "groupBox6", "toolStripParent" };
                 WinFormControls_InEdit(this, exList);
                 this.Enabled = true;
                 this.ControlBox = true;
@@ -44,6 +45,9 @@ namespace SpindleSoft.Views
         private void WinForm_Sale_Load(object sender, EventArgs e)
         {
             this.toolStripParent.Items.Add(this.NewVendToolStrip);
+            this.NewVendToolStrip.Alignment = ToolStripItemAlignment.Right;
+            this.EditToolStrip.Visible = true;
+
             txtName.Text = this.skuItem.Name;
             txtCode.Text = this.skuItem.ProductCode;
             txtDesc.Text = this.skuItem.Description;
@@ -57,8 +61,8 @@ namespace SpindleSoft.Views
 
             if (skuItem.SKUItemDocuments != null && skuItem.SKUItemDocuments.Count != 0)
             {
-                string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-                string _skuItemDocPath = ConfigurationManager.AppSettings["SKUItemDocs"];
+                string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+                string _skuItemDocPath = Secrets.FileLocation["SKUItemDocs"];
                 docList = this.skuItem.SKUItemDocuments.ToList();
                 foreach (SKUItemDocument doc in docList)
                 {
@@ -221,8 +225,6 @@ namespace SpindleSoft.Views
             var varcode = "-" + cmbMaterial.Text.Substring(0, 3) + "-";
             varcode += cmbColor.Text.Substring(0, 1) + cmbColor.Text.Substring(cmbColor.Text.Length - 1, 1) + cmbSize.Text;
 
-            //todo: is it possible to do directly
-            //check if prodcode already exists
             int index = 0;
             bool exists = true;
             while (exists)

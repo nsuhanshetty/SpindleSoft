@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using log4net;
 using System.Drawing;
 using System.Configuration;
+using SpindleSoft.Utilities;
 
 namespace SpindleSoft.Savers
 {
@@ -14,8 +15,8 @@ namespace SpindleSoft.Savers
     class OrderSaver
     {
         static ILog log = LogManager.GetLogger(typeof(OrderSaver));
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string OrderItemDocPath = ConfigurationManager.AppSettings["OrderItemDocs"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string OrderItemDocPath = Secrets.FileLocation["OrderItemDocs"];
 
         public static bool SaveOrder(Orders order)
         {
@@ -25,6 +26,7 @@ namespace SpindleSoft.Savers
                 {
                     try
                     {
+
                         foreach (var item in order.OrdersItems)
                         {
                             item.Order = order;
@@ -33,7 +35,6 @@ namespace SpindleSoft.Savers
                                 doc.orderItem = item;
                             }
                         }
-
                         session.SaveOrUpdate(order);
 
                         List<bool> results = new List<bool>();

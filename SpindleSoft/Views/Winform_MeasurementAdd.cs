@@ -94,6 +94,9 @@ namespace SpindleSoft.Views
             _item.Comment = txtComment.Text;
             _item.DateUpdated = DateTime.Now;
 
+            if (_item.OrderItemDocuments == null)
+                _item.OrderItemDocuments = new List<OrderItemDocument>();
+
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
                 orderDetails.UpdateOrderItemList(_item, _index);
