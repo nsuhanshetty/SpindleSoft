@@ -119,6 +119,7 @@
             this.ClientSize = new System.Drawing.Size(512, 224);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grpbxRestore);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Winform_RestoreDB";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Restore Database";

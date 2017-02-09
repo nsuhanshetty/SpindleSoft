@@ -48,13 +48,11 @@ namespace SpindleSoft.Views
         private void dgvRestore_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex != dgvRestore.Columns["colButton"].Index) return;
-
             var dr = MessageBox.Show("Do you want to Restore Data?", "Restore DB", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == DialogResult.No) return;
+            if (dr == DialogResult.No) return;          
 
             try
             {
-                progBarRestore.Value = 25;
                 string file = bkList[e.RowIndex].FullName;
                 using (MySqlConnection conn = new MySqlConnection(constring))
                 {
@@ -63,7 +61,8 @@ namespace SpindleSoft.Views
                         using (MySqlBackup mb = new MySqlBackup(cmd))
                         {
                             cmd.Connection = conn;
-                            conn.Open();
+                            conn.Open();                            
+                            progBarRestore.Value = 25;
                             mb.ImportFromFile(file);
                             progBarRestore.Value = 50;
                             conn.Close();

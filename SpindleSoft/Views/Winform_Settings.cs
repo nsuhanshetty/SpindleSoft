@@ -4,11 +4,13 @@ using System.Windows.Forms;
 using System.IO;
 using SpindleSoft.Model;
 using SpindleSoft.Builders;
+using log4net;
 
 namespace SpindleSoft.Views
 {
     public partial class Winform_Settings : Winform_DetailsFormat
     {
+        ILog log = LogManager.GetLogger(typeof(Winform_Settings));
         Setting setting = new Setting();
         public Winform_Settings()
         {
@@ -54,8 +56,21 @@ namespace SpindleSoft.Views
             bool success = SpindleSoft.Savers.SettingSaver.UpdateBaseImagePath(setting);
             if (success)
             {
+                MessageBox.Show("Application will Restart to update the changes","Restart Application",MessageBoxButtons.OK);
                 UpdateStatus("Settings Updated", 100);
                 this.Close();
+
+                try
+                {
+                    //restart application
+                    System.Diagnostics.Process.Start(Application.ExecutablePath);
+                    //close this one
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
             }
             else
                 UpdateStatus("Error Updating Settings", 100);

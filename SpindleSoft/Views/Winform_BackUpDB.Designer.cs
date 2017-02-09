@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnBackup = new System.Windows.Forms.Button();
+            this.lblDateOfUpdateVal = new System.Windows.Forms.Label();
+            this.progBar = new System.Windows.Forms.ProgressBar();
             this.lblLastDate = new System.Windows.Forms.Label();
+            this.btnBackup = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvBackup = new System.Windows.Forms.DataGridView();
-            this.progBar = new System.Windows.Forms.ProgressBar();
-            this.lblDateOfUpdateVal = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBackup)).BeginInit();
@@ -53,15 +53,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "BackUp Data";
             // 
-            // btnBackup
+            // lblDateOfUpdateVal
             // 
-            this.btnBackup.Location = new System.Drawing.Point(240, 50);
-            this.btnBackup.Name = "btnBackup";
-            this.btnBackup.Size = new System.Drawing.Size(101, 30);
-            this.btnBackup.TabIndex = 1;
-            this.btnBackup.Text = "Take BackUp";
-            this.btnBackup.UseVisualStyleBackColor = true;
-            this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
+            this.lblDateOfUpdateVal.AutoSize = true;
+            this.lblDateOfUpdateVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDateOfUpdateVal.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.lblDateOfUpdateVal.Location = new System.Drawing.Point(120, 28);
+            this.lblDateOfUpdateVal.Name = "lblDateOfUpdateVal";
+            this.lblDateOfUpdateVal.Size = new System.Drawing.Size(0, 13);
+            this.lblDateOfUpdateVal.TabIndex = 4;
+            // 
+            // progBar
+            // 
+            this.progBar.Location = new System.Drawing.Point(19, 86);
+            this.progBar.Name = "progBar";
+            this.progBar.Size = new System.Drawing.Size(322, 11);
+            this.progBar.TabIndex = 3;
             // 
             // lblLastDate
             // 
@@ -73,6 +80,16 @@
             this.lblLastDate.Size = new System.Drawing.Size(98, 13);
             this.lblLastDate.TabIndex = 2;
             this.lblLastDate.Text = "Last BackUp Date:";
+            // 
+            // btnBackup
+            // 
+            this.btnBackup.Location = new System.Drawing.Point(240, 50);
+            this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Size = new System.Drawing.Size(101, 30);
+            this.btnBackup.TabIndex = 1;
+            this.btnBackup.Text = "Take BackUp";
+            this.btnBackup.UseVisualStyleBackColor = true;
+            this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
             // 
             // groupBox2
             // 
@@ -97,23 +114,6 @@
             this.dgvBackup.Size = new System.Drawing.Size(355, 129);
             this.dgvBackup.TabIndex = 0;
             // 
-            // progBar
-            // 
-            this.progBar.Location = new System.Drawing.Point(19, 86);
-            this.progBar.Name = "progBar";
-            this.progBar.Size = new System.Drawing.Size(322, 11);
-            this.progBar.TabIndex = 3;
-            // 
-            // lblDateOfUpdateVal
-            // 
-            this.lblDateOfUpdateVal.AutoSize = true;
-            this.lblDateOfUpdateVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDateOfUpdateVal.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.lblDateOfUpdateVal.Location = new System.Drawing.Point(120, 28);
-            this.lblDateOfUpdateVal.Name = "lblDateOfUpdateVal";
-            this.lblDateOfUpdateVal.Size = new System.Drawing.Size(0, 13);
-            this.lblDateOfUpdateVal.TabIndex = 4;
-            // 
             // Winform_BackUpDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -121,6 +121,7 @@
             this.ClientSize = new System.Drawing.Size(386, 293);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Winform_BackUpDB";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Database BackUp";

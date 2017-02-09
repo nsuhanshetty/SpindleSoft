@@ -63,6 +63,8 @@
             this.backUpDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -156,6 +158,7 @@
             this.expenseToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.settingToolStripMenuItem,
+            this.sMSToolStripMenuItem,
             this.exitToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -180,7 +183,7 @@
             this.addCustomerToolStripMenuItem1,
             this.customerRegisterToolStripMenuItem});
             this.addCustomerToolStripMenuItem.Name = "addCustomerToolStripMenuItem";
-            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.addCustomerToolStripMenuItem.Text = "&Customer";
             // 
             // addCustomerToolStripMenuItem1
@@ -203,20 +206,20 @@
             this.addStaffToolStripMenuItem,
             this.staffRegisterToolStripMenuItem});
             this.searchCustomerToolStripMenuItem.Name = "searchCustomerToolStripMenuItem";
-            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.searchCustomerToolStripMenuItem.Text = "&Staff";
             // 
             // addStaffToolStripMenuItem
             // 
             this.addStaffToolStripMenuItem.Name = "addStaffToolStripMenuItem";
-            this.addStaffToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addStaffToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.addStaffToolStripMenuItem.Text = "Add Staff";
             this.addStaffToolStripMenuItem.Click += new System.EventHandler(this.addStaffToolStripMenuItem_Click);
             // 
             // staffRegisterToolStripMenuItem
             // 
             this.staffRegisterToolStripMenuItem.Name = "staffRegisterToolStripMenuItem";
-            this.staffRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.staffRegisterToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.staffRegisterToolStripMenuItem.Text = "Staff Register";
             this.staffRegisterToolStripMenuItem.Click += new System.EventHandler(this.staffRegisterToolStripMenuItem_Click);
             // 
@@ -226,7 +229,7 @@
             this.addVendorToolStripMenuItem2,
             this.vendorRegisterToolStripMenuItem});
             this.addVendorToolStripMenuItem1.Name = "addVendorToolStripMenuItem1";
-            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.addVendorToolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
             this.addVendorToolStripMenuItem1.Text = "&Vendor";
             // 
             // addVendorToolStripMenuItem2
@@ -419,6 +422,22 @@
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.settingsToolStripMenuItem.Text = "&Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // sMSToolStripMenuItem
+            // 
+            this.sMSToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendSMSToolStripMenuItem});
+            this.sMSToolStripMenuItem.Enabled = false;
+            this.sMSToolStripMenuItem.Name = "sMSToolStripMenuItem";
+            this.sMSToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.sMSToolStripMenuItem.Text = "SMS";
+            // 
+            // sendSMSToolStripMenuItem
+            // 
+            this.sendSMSToolStripMenuItem.Name = "sendSMSToolStripMenuItem";
+            this.sendSMSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sendSMSToolStripMenuItem.Text = "Send SMS";
+            this.sendSMSToolStripMenuItem.Click += new System.EventHandler(this.sendSMSToolStripMenuItem_Click_1);
             // 
             // exitToolStripMenuItem
             // 
@@ -1255,6 +1274,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
         private System.Windows.Forms.DataGridViewButtonColumn colSendSMS;
+        private System.Windows.Forms.ToolStripMenuItem sMSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendSMSToolStripMenuItem;
     }
 }
 

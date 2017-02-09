@@ -47,6 +47,7 @@
             this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dgvSalaryItem = new System.Windows.Forms.DataGridView();
             this.toolStripBtnSearch = new System.Windows.Forms.ToolStripButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSalaryRegister)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSalaryItem)).BeginInit();
@@ -111,6 +112,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(115, 20);
             this.txtName.TabIndex = 96;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // lblName
             // 
@@ -146,7 +148,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvSalaryRegister.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvSalaryRegister.Location = new System.Drawing.Point(8, 113);
+            this.dgvSalaryRegister.Location = new System.Drawing.Point(8, 135);
             this.dgvSalaryRegister.Name = "dgvSalaryRegister";
             this.dgvSalaryRegister.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -158,10 +160,9 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvSalaryRegister.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvSalaryRegister.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvSalaryRegister.Size = new System.Drawing.Size(563, 166);
+            this.dgvSalaryRegister.Size = new System.Drawing.Size(563, 144);
             this.dgvSalaryRegister.TabIndex = 141;
             this.dgvSalaryRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSalaryRegister_CellClick);
-            //this.dgvSalaryRegister.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSalaryRegister_CellDoubleClick);
             this.dgvSalaryRegister.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvSalaryRegister_PreviewKeyDown);
             // 
             // colDelete
@@ -230,11 +231,22 @@
             this.toolStripBtnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripBtnSearch.Click += new System.EventHandler(this.toolStripBtnSearch_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label3.Location = new System.Drawing.Point(6, 117);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(165, 13);
+            this.label3.TabIndex = 144;
+            this.label3.Text = "Click on the Staff for more details.";
+            // 
             // Winform_SalaryRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 438);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.dgvSalaryItem);
             this.Controls.Add(this.dgvSalaryRegister);
             this.Controls.Add(this.groupBox1);
@@ -244,6 +256,7 @@
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.dgvSalaryRegister, 0);
             this.Controls.SetChildIndex(this.dgvSalaryItem, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSalaryRegister)).EndInit();
@@ -267,5 +280,6 @@
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
         private System.Windows.Forms.DataGridViewButtonColumn colEdit;
         private System.Windows.Forms.ToolStripButton toolStripBtnSearch;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -302,7 +302,7 @@ namespace SpindleSoft
             }
         }
 
-        private async void SendSMS(string dgvName, int _ID)
+        private void SendSMS(string dgvName, int _ID)
         {
             string smsMsg;
             string response = "";
@@ -311,13 +311,13 @@ namespace SpindleSoft
             {
                 var order = OrderBuilder.GetOrderInfo(_ID);
                 smsMsg = "Your order #" + order.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount Rs." + (order.TotalPrice - order.CurrentPayment).ToString() + ".";
-                response = await SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, order.Customer, 1);
+                response = SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, order.Customer, SMSLog.SectionType.Order);
             }
             else if (dgvName == "dgvAltR2C")
             {
                 var alt = AlterationBuilder.GetAlterationInfo(_ID);
                 smsMsg = "Your order #" + alt.ID + " has is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount Rs." + (alt.TotalPrice - alt.CurrentPayment).ToString() + ".";
-                response = await SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, alt.Customer, 2);
+                response = SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, alt.Customer, SMSLog.SectionType.Alteration);
             }
             MessageBox.Show(response);
         }
@@ -554,18 +554,23 @@ namespace SpindleSoft
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Do you want to Exit the Application", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult dr = MessageBox.Show("Do you want to Exit the Application with BackUp", "Exit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
                 new Winform_BackUpDB().ShowDialog();
             }
-            else
+            else if (dr == DialogResult.Cancel)
                 e.Cancel = true;
         }
 
         private void sMSReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Winform_SMSRegister().ShowDialog();
+        }
+
+        private void sendSMSToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            new Winform_SMSSend().ShowDialog();
         }
     }
 

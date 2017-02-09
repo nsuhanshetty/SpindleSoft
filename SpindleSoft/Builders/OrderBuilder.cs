@@ -235,6 +235,30 @@ namespace SpindleSoft.Builders
             }
         }
 
+        /// <summary>
+        /// Check if credit unpaid for a given Customer, where order has been delivered and amount not paid compeletly
+        /// </summary>
+        /// <param name="currentOrdID"></param>
+        /// <returns></returns>
+        public static List<Orders> GetCustomerOrderCredit(Orders currOrd = null)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    return (from ord in session.Query<Orders>()
+                            join cust in session.Query<Customer>() on currOrd.Customer.ID equals cust.ID
+                            where ord.ID != currOrd.ID && (ord.TotalPrice - ord.CurrentPayment) != 0 && ord.Status == 3
+                            select ord).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return null;
+            }
+        }
+
         #endregion OrderBuilder
     }
 }

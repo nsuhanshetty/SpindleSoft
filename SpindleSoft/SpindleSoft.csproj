@@ -28,7 +28,7 @@
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>56</ApplicationRevision>
+    <ApplicationRevision>61</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -56,10 +56,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D8E3BC88E864A000D18C1DC876032B4E5D7E3BFC</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1874C84B77E871A3D5416FE9681A9472349849D5</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SpindleSoft_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SpindleSoft_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -235,6 +235,12 @@
     </Compile>
     <Compile Include="Views\Winform_About.Designer.cs">
       <DependentUpon>Winform_About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForm_AddMultipleCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForm_AddMultipleCustomer.Designer.cs">
+      <DependentUpon>WinForm_AddMultipleCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_AlterationItemDetails.cs">
       <SubType>Form</SubType>
@@ -474,6 +480,9 @@
     <EmbeddedResource Include="Views\DesignControl.resx">
       <DependentUpon>DesignControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForm_AddMultipleCustomer.resx">
+      <DependentUpon>WinForm_AddMultipleCustomer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_AlterationItemDetails.resx">
       <DependentUpon>Winform_AlterationItemDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -601,6 +610,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Service References\SMSGatewayService\sms.wsdl" />
+    <None Include="SpindleSoft_1_TemporaryKey.pfx" />
     <None Include="SpindleSoft_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

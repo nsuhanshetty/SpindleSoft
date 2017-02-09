@@ -108,8 +108,17 @@ namespace SpindleSoft.Views
 
         private void rdbSelfMade_CheckedChanged(object sender, EventArgs e)
         {
-            this.NewVendToolStrip.Enabled = rdbSelfMade.Checked ? false : true;
+            if (rdbSelfMade.Checked)
+            {
+                UpdateVendorDetails();
+                this.NewVendToolStrip.Enabled = false;
+            }
+            else
+            {
+                this.NewVendToolStrip.Enabled = true;
+            }
         }
+
 
         protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
@@ -279,11 +288,19 @@ namespace SpindleSoft.Views
             return true;
         }
 
-        public void UpdateVendorDetails(Vendor vend)
+        public void UpdateVendorDetails(Vendor vend = null)
         {
             this.vendor = vend;
-            txtVendMobile.Text = vend.MobileNo;
-            txtVendName.Text = vend.Name;
+            if (vend != null)
+            {
+                txtVendMobile.Text = vend.MobileNo;
+                txtVendName.Text = vend.Name;
+            }
+            else
+            {
+                txtVendMobile.Text = string.Empty;
+                txtVendName.Text = string.Empty;
+            }
         }
         #endregion
 

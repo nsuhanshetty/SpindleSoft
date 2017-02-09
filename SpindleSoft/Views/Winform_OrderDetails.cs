@@ -102,11 +102,14 @@ namespace SpindleSoft.Views
             if (customer == null) return;
 
             this._cust = customer;
+            this.order.Customer = customer;
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
             string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
             pcbCustImage.Image = this._cust.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
+
+
         }
 
         internal void UpdateOrderItemList(OrderItem _item, int _index)
@@ -140,7 +143,7 @@ namespace SpindleSoft.Views
             this.Close();
         }
 
-        protected override async void SaveToolStrip_Click(object sender, EventArgs e)
+        protected override void SaveToolStrip_Click(object sender, EventArgs e)
         {
             UpdateStatus("Saving..");
             ProcessTabKey(true);
@@ -180,12 +183,12 @@ namespace SpindleSoft.Views
                         string _orderMessage = string.Empty;
                         if (order.Status == 0)
                             _orderMessage = "Your order #" + order.ID + " of amount " + order.TotalPrice + " has been placed with delivery date on " + order.PromisedDate.Date.ToString("dd/MMMM/yyyy") + ". Thanks for choosing Dee. Stay Beautiful.";
-                        else 
-                        if (order.Status == 2)
-                            _orderMessage = "Your order #" + order.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount " + (order.TotalPrice - order.CurrentPayment).ToString() + ".";
-                        else if (order.Status == 3)
-                            _orderMessage = "Your order #" + order.ID + " has been delivered. We provide alteration within 4 days of delivery. Thanks for choosing Dee. Stay Beautiful.";
-                        await SMSGateway.SendSMS(_orderMessage, order.Customer,1);
+                        else
+                            if (order.Status == 2)
+                                _orderMessage = "Your order #" + order.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount " + (order.TotalPrice - order.CurrentPayment).ToString() + ".";
+                            else if (order.Status == 3)
+                                _orderMessage = "Your order #" + order.ID + " has been delivered. We provide alteration within 4 days of delivery. Thanks for choosing Dee. Stay Beautiful.";
+                        SMSGateway.SendSMS(_orderMessage, order.Customer, SMSLog.SectionType.Order);
                     }
                 }
                 this.Close();
@@ -197,6 +200,25 @@ namespace SpindleSoft.Views
         private void AddCustomerToolStrip_Click(object sender, EventArgs e)
         {
             new Winform_AddCustomer(this._cust).ShowDialog();
+            GetExistingCredit();
+        }
+
+        private void GetExistingCredit()
+        {
+            //customer not added OR is an exisiting order
+            if (this.order.ID != 0 || this._cust.ID == 0) return;
+
+            //get customer credit amount
+            var ordList = OrderBuilder.GetCustomerOrderCredit(this.order);
+            foreach (var ord in ordList)
+            {
+                var dr = MessageBox.Show("An Earlier credit exists. Do you want to pay it now?", "Order Credit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //dr = MessageBox.Show("An Earlier credit exists with Order #" + ord.ID + ". Do you want to pay it now?", "Order Credit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No) return;
+
+                var ordTemp = OrderBuilder.GetOrderInfo(ord.ID);
+                new Winform_OrderDetails(ordTemp).ShowDialog();
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -248,6 +270,7 @@ namespace SpindleSoft.Views
 
                 _cust = PeoplePracticeBuilder.GetCustomer(order.Customer.ID);
                 UpdateCustomerControl(_cust);
+                GetExistingCredit();
             }
 
             if (OrderItemsList != null && OrderItemsList.Count != 0)

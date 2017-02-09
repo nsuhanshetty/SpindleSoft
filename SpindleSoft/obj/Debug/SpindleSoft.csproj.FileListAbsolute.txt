@@ -1,14 +1,16 @@
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Dropbox.Api.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\FluentNHibernate.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\log4net.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\MySql.Data.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Newtonsoft.Json.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\NHibernate.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe.config
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe.manifest
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.application
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.exe
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.pdb
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Dropbox.Api.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Equin.ApplicationFramework.BindingListView.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\FluentNHibernate.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Iesi.Collections.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\log4net-loggly.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\log4net.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Microsoft.Expression.Encoder.Api2.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Microsoft.Expression.Encoder.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Microsoft.Expression.Encoder.Types.dll
@@ -16,10 +18,7 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Microsoft.Threading.Tasks.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\MySql.Data.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\MySqlBackup.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Newtonsoft.Json.dll
-C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\NHibernate.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\WCC.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\WhatsAppApi.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\Dropbox.Api.xml
@@ -39,6 +38,7 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Main.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Properties.Resources.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.DesignControl.resources
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.WinForm_AddMultipleCustomer.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_AlterationItemDetails.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_BackUpDB.resources
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.Views.Winform_DocumentDetails.resources
@@ -81,4 +81,5 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleS
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.application
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.exe
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.pdb
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\bin\Debug\SpindleSoft.pdb
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\obj\Debug\SpindleSoft.csprojResolveAssemblyReference.cache

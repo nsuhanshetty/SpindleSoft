@@ -68,7 +68,7 @@
             this.groupBox1.Size = new System.Drawing.Size(339, 56);
             this.groupBox1.TabIndex = 126;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Base Image Path";
+            this.groupBox1.Text = "Base Path Details";
             // 
             // Winform_Settings
             // 

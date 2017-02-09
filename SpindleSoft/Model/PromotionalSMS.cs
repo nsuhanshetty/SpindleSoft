@@ -4,13 +4,21 @@ namespace SpindleSoft.Model
 {
     public class SMSLog
     {
+        public enum SectionType
+        {
+            Customer = 0,
+            Order,
+            Alteration,
+            Sales
+        }
+
         public virtual int ID { get; set; }
 
         public virtual Customer Customer { get; set; }
 
         public virtual string Message { get; set; }
 
-        public virtual int SectionID { get; set; }
+        public virtual SectionType SectionID { get; set; }
 
         public virtual string Status { get; set; }
 
@@ -18,7 +26,7 @@ namespace SpindleSoft.Model
 
         public SMSLog() { }
 
-        public SMSLog(Customer cust, string msg, int sectID, string status)
+        public SMSLog(Customer cust, string msg, SectionType sectID, string status)
         {
             this.Customer = cust;
             this.Message = msg;

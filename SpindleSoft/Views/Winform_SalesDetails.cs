@@ -217,7 +217,7 @@ namespace SpindleSoft.Views
                 if (dr == DialogResult.Yes)
                 {
                     string message = "Your sale of #" + sale.ID + " has been delivered, of amount " + sale.TotalPrice + ".  We provide alteration within 4 days of delivery. Thanks for choosing Dee. Stay Beautiful.";
-                    await SpindleSoft.Utilities.SMSGateway.SendSMS(message, sale.Customer, 3);
+                    SpindleSoft.Utilities.SMSGateway.SendSMS(message, sale.Customer, SMSLog.SectionType.Sales);
                 }
                 this.Close();
             }

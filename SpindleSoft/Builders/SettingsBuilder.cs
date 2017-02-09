@@ -95,12 +95,12 @@ namespace SpindleSoft.Builders
                 {
                     using (var transaction = session.BeginTransaction())
                     {
-                        int count = 1;
+                        //int SI = 1;
                         SMSLogList = (from s in session.Query<SMSLog>()
                                       join c in session.Query<Customer>() on s.Customer.ID equals c.ID
                                       where s.Customer.Name.StartsWith(custName) && (s.DateOfUpdate.Date >= fromDate && s.DateOfUpdate.Date <= toDate)
                                       orderby s.ID descending
-                                      select new { SI = count + 1, c.Name, s.Message, s.Status }).ToList();
+                                      select new { c.Name, s.Message, s.Status }).ToList();
                         return SMSLogList;
                     }
                 }

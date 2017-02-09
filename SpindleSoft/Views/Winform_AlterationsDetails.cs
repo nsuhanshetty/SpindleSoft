@@ -168,6 +168,13 @@ namespace SpindleSoft.Views
                 return;
             }
 
+            if (this._cust.ID == 0)
+            {
+                UpdateStatus("Updating Customer Details");
+                this._cust = Builders.PeoplePracticeBuilder.GetCustomer(orderItemList[0].Order.Customer.ID);
+                UpdateCustomerControl(this._cust);
+                cmbOrder.Text = _orderID.ToString();
+            }
             UpdateStatus("Updating Grid View..");
             dgvSearch.DataSource = (from oitem in orderItemList
                                     select new
@@ -182,12 +189,7 @@ namespace SpindleSoft.Views
 
             dgvSearch.Columns["ID"].Visible = false;
 
-            if (this._cust.ID == 0)
-            {
-                UpdateStatus("Updating Customer Details");
-                this._cust = Builders.PeoplePracticeBuilder.GetCustomer(orderItemList[0].Order.Customer.ID);
-                UpdateCustomerControl(this._cust);
-            }
+
             UpdateStatus();
         }
         #endregion Validation
@@ -249,7 +251,7 @@ namespace SpindleSoft.Views
                         _orderMessage = "Your alteration #" + _alteration.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount " + (_alteration.TotalPrice - _alteration.CurrentPayment).ToString();
                     else if (_alteration.Status == 3)
                         _orderMessage = "Your alteration #" + _alteration.ID + " has been delivered. We provide alteration within 4 days of delivery. Thanks for choosing Dee. Stay Beautiful.";
-                    await SMSGateway.SendSMS(_orderMessage, _alteration.Customer,2);
+                    SMSGateway.SendSMS(_orderMessage, _alteration.Customer, SMSLog.SectionType.Order);
                 }
                 this.Close();
             }
