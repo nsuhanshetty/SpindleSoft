@@ -37,13 +37,9 @@
             this.searchCustomerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.staffRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.salaryRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addVendorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addVendorToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.vendorRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,16 +58,13 @@
             this.salaryDetailsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.salaryRegisterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ordersReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.salesrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.alterationSalesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customerReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sMSReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.userManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateSpindleSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backUpDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendSMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -137,7 +130,6 @@
             this.colOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClickShift = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pnlSearch.SuspendLayout();
@@ -166,6 +158,7 @@
             this.expenseToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.settingToolStripMenuItem,
+            this.sMSToolStripMenuItem,
             this.exitToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -179,8 +172,7 @@
             this.customerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCustomerToolStripMenuItem,
             this.searchCustomerToolStripMenuItem,
-            this.addVendorToolStripMenuItem1,
-            this.groupsToolStripMenuItem});
+            this.addVendorToolStripMenuItem1});
             this.customerToolStripMenuItem.Name = "customerToolStripMenuItem";
             this.customerToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
             this.customerToolStripMenuItem.Text = "&People Practice";
@@ -212,8 +204,7 @@
             // 
             this.searchCustomerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addStaffToolStripMenuItem,
-            this.staffRegisterToolStripMenuItem,
-            this.salaryRegisterToolStripMenuItem});
+            this.staffRegisterToolStripMenuItem});
             this.searchCustomerToolStripMenuItem.Name = "searchCustomerToolStripMenuItem";
             this.searchCustomerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.searchCustomerToolStripMenuItem.Text = "&Staff";
@@ -221,24 +212,16 @@
             // addStaffToolStripMenuItem
             // 
             this.addStaffToolStripMenuItem.Name = "addStaffToolStripMenuItem";
-            this.addStaffToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.addStaffToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.addStaffToolStripMenuItem.Text = "Add Staff";
             this.addStaffToolStripMenuItem.Click += new System.EventHandler(this.addStaffToolStripMenuItem_Click);
             // 
             // staffRegisterToolStripMenuItem
             // 
             this.staffRegisterToolStripMenuItem.Name = "staffRegisterToolStripMenuItem";
-            this.staffRegisterToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.staffRegisterToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.staffRegisterToolStripMenuItem.Text = "Staff Register";
             this.staffRegisterToolStripMenuItem.Click += new System.EventHandler(this.staffRegisterToolStripMenuItem_Click);
-            // 
-            // salaryRegisterToolStripMenuItem
-            // 
-            this.salaryRegisterToolStripMenuItem.Enabled = false;
-            this.salaryRegisterToolStripMenuItem.Name = "salaryRegisterToolStripMenuItem";
-            this.salaryRegisterToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.salaryRegisterToolStripMenuItem.Text = "Salary Register";
-            this.salaryRegisterToolStripMenuItem.Click += new System.EventHandler(this.salaryRegisterToolStripMenuItem_Click);
             // 
             // addVendorToolStripMenuItem1
             // 
@@ -262,29 +245,6 @@
             this.vendorRegisterToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.vendorRegisterToolStripMenuItem.Text = "&Vendor Register";
             this.vendorRegisterToolStripMenuItem.Click += new System.EventHandler(this.vendorRegisterToolStripMenuItem_Click);
-            // 
-            // groupsToolStripMenuItem
-            // 
-            this.groupsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addGroupsToolStripMenuItem,
-            this.groupRegisterToolStripMenuItem});
-            this.groupsToolStripMenuItem.Enabled = false;
-            this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.groupsToolStripMenuItem.Text = "&Groups";
-            // 
-            // addGroupsToolStripMenuItem
-            // 
-            this.addGroupsToolStripMenuItem.Name = "addGroupsToolStripMenuItem";
-            this.addGroupsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addGroupsToolStripMenuItem.Text = "Add Groups";
-            this.addGroupsToolStripMenuItem.Click += new System.EventHandler(this.addGroupsToolStripMenuItem_Click);
-            // 
-            // groupRegisterToolStripMenuItem
-            // 
-            this.groupRegisterToolStripMenuItem.Name = "groupRegisterToolStripMenuItem";
-            this.groupRegisterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.groupRegisterToolStripMenuItem.Text = "Group Register";
             // 
             // ordersToolStripMenuItem
             // 
@@ -420,51 +380,21 @@
             // reportsToolStripMenuItem
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ordersReportToolStripMenuItem,
-            this.salesrToolStripMenuItem,
-            this.alterationSalesToolStripMenuItem,
-            this.customerReportToolStripMenuItem,
             this.sMSReportToolStripMenuItem});
-            this.reportsToolStripMenuItem.Enabled = false;
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.reportsToolStripMenuItem.Text = "&Reports";
             // 
-            // ordersReportToolStripMenuItem
-            // 
-            this.ordersReportToolStripMenuItem.Name = "ordersReportToolStripMenuItem";
-            this.ordersReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.ordersReportToolStripMenuItem.Text = "Orders Report";
-            // 
-            // salesrToolStripMenuItem
-            // 
-            this.salesrToolStripMenuItem.Name = "salesrToolStripMenuItem";
-            this.salesrToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.salesrToolStripMenuItem.Text = "Sales Report";
-            // 
-            // alterationSalesToolStripMenuItem
-            // 
-            this.alterationSalesToolStripMenuItem.Name = "alterationSalesToolStripMenuItem";
-            this.alterationSalesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.alterationSalesToolStripMenuItem.Text = "Alteration Report";
-            // 
-            // customerReportToolStripMenuItem
-            // 
-            this.customerReportToolStripMenuItem.Name = "customerReportToolStripMenuItem";
-            this.customerReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.customerReportToolStripMenuItem.Text = "Customer Report";
-            // 
             // sMSReportToolStripMenuItem
             // 
             this.sMSReportToolStripMenuItem.Name = "sMSReportToolStripMenuItem";
-            this.sMSReportToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.sMSReportToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.sMSReportToolStripMenuItem.Text = "SMS Report";
+            this.sMSReportToolStripMenuItem.Click += new System.EventHandler(this.sMSReportToolStripMenuItem_Click);
             // 
             // settingToolStripMenuItem
             // 
             this.settingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.userManagerToolStripMenuItem,
-            this.updateSpindleSoftToolStripMenuItem,
             this.backUpDataToolStripMenuItem,
             this.restoreDataToolStripMenuItem,
             this.settingsToolStripMenuItem});
@@ -472,33 +402,42 @@
             this.settingToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.settingToolStripMenuItem.Text = "Se&tting";
             // 
-            // userManagerToolStripMenuItem
-            // 
-            this.userManagerToolStripMenuItem.Enabled = false;
-            this.userManagerToolStripMenuItem.Name = "userManagerToolStripMenuItem";
-            this.userManagerToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.userManagerToolStripMenuItem.Text = "U&ser Manager";
-            // 
-            // updateSpindleSoftToolStripMenuItem
-            // 
-            this.updateSpindleSoftToolStripMenuItem.Enabled = false;
-            this.updateSpindleSoftToolStripMenuItem.Name = "updateSpindleSoftToolStripMenuItem";
-            this.updateSpindleSoftToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.updateSpindleSoftToolStripMenuItem.Text = "&Update SpindleSoft";
-            // 
             // backUpDataToolStripMenuItem
             // 
-            this.backUpDataToolStripMenuItem.Enabled = false;
             this.backUpDataToolStripMenuItem.Name = "backUpDataToolStripMenuItem";
-            this.backUpDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.backUpDataToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.backUpDataToolStripMenuItem.Text = "&BackUp Data";
+            this.backUpDataToolStripMenuItem.Click += new System.EventHandler(this.backUpDataToolStripMenuItem_Click);
             // 
             // restoreDataToolStripMenuItem
             // 
-            this.restoreDataToolStripMenuItem.Enabled = false;
             this.restoreDataToolStripMenuItem.Name = "restoreDataToolStripMenuItem";
-            this.restoreDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.restoreDataToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.restoreDataToolStripMenuItem.Text = "&Restore Data";
+            this.restoreDataToolStripMenuItem.Click += new System.EventHandler(this.restoreDataToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.settingsToolStripMenuItem.Text = "&Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // sMSToolStripMenuItem
+            // 
+            this.sMSToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendSMSToolStripMenuItem});
+            this.sMSToolStripMenuItem.Enabled = false;
+            this.sMSToolStripMenuItem.Name = "sMSToolStripMenuItem";
+            this.sMSToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.sMSToolStripMenuItem.Text = "SMS";
+            // 
+            // sendSMSToolStripMenuItem
+            // 
+            this.sendSMSToolStripMenuItem.Name = "sendSMSToolStripMenuItem";
+            this.sendSMSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sendSMSToolStripMenuItem.Text = "Send SMS";
+            this.sendSMSToolStripMenuItem.Click += new System.EventHandler(this.sendSMSToolStripMenuItem_Click_1);
             // 
             // exitToolStripMenuItem
             // 
@@ -560,6 +499,7 @@
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Days Summary";
+            this.groupBox4.Visible = false;
             // 
             // label12
             // 
@@ -1106,7 +1046,7 @@
             // dataGridViewButtonColumn1
             // 
             this.dataGridViewButtonColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewButtonColumn1.HeaderText = "Click To Shift";
+            this.dataGridViewButtonColumn1.HeaderText = "Shift to SIP";
             this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
             this.dataGridViewButtonColumn1.ReadOnly = true;
             // 
@@ -1191,19 +1131,12 @@
             this.colClickShift.Name = "colClickShift";
             this.colClickShift.ReadOnly = true;
             // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.settingsToolStripMenuItem.Text = "&Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1354, 613);
+            this.ClientSize = new System.Drawing.Size(1362, 630);
             this.Controls.Add(this.pnlDeliveryStatus);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.statusStrip1);
@@ -1213,6 +1146,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SpindleSoft - Boutique Management System";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -1257,7 +1191,6 @@
         private System.Windows.Forms.ToolStripMenuItem searchAlterationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addExpensesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem userManagerToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem viewExpenseToolStripMenuItem;
         private System.Windows.Forms.Panel pnlSearch;
@@ -1270,14 +1203,6 @@
         private System.Windows.Forms.ToolStripMenuItem customerRegisterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addStaffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem staffRegisterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem salaryRegisterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem groupsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addGroupsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ordersReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem salesrToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem alterationSalesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem customerReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updateSpindleSoftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.ToolStripMenuItem SalesRegisterToolStripMenuItem;
@@ -1295,7 +1220,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblOrdCollectCount;
         private System.Windows.Forms.Label lblAltCollectCount;
-        private System.Windows.Forms.ToolStripMenuItem groupRegisterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem inventoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stockCheckToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem addVendorToolStripMenuItem1;
@@ -1319,10 +1243,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblOrdSIPCount;
         private System.Windows.Forms.Label lblAltAIPCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
-        private System.Windows.Forms.DataGridViewButtonColumn colSendSMS;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn3;
@@ -1350,6 +1270,12 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sMSReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
+        private System.Windows.Forms.DataGridViewButtonColumn colSendSMS;
+        private System.Windows.Forms.ToolStripMenuItem sMSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendSMSToolStripMenuItem;
     }
 }
 

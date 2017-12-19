@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using SpindleSoft.Model;
 using System.Configuration;
+using SpindleSoft.Utilities;
 
 namespace SpindleSoft.Views
 {
@@ -87,8 +88,8 @@ namespace SpindleSoft.Views
             txtMobNo.Text = _staff.Mobile_No;
             txtPhoneNo.Text = _staff.Phone_No;
 
-            string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-            string StaffImagePath = ConfigurationManager.AppSettings["StaffImages"];
+            string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+            string StaffImagePath = Secrets.FileLocation["StaffImages"];
             string _fileName = string.Format("{0}/{1}/{2}.png", baseDoc, StaffImagePath, _staff.ID);
             pcbCustImage.Image = Utilities.ImageHelper.GetDocumentLocal(_fileName);
 

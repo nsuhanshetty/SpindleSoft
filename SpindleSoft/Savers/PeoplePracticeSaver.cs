@@ -2,6 +2,7 @@
 using Dropbox.Api.Files;
 using log4net;
 using SpindleSoft.Model;
+using SpindleSoft.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,10 +18,10 @@ namespace SpindleSoft.Savers
     {
         static ILog log = LogManager.GetLogger(typeof(PeoplePracticeSaver));
 
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
-        static string StaffImagePath = ConfigurationManager.AppSettings["StaffImages"];
-        static string StaffDocImagePath = ConfigurationManager.AppSettings["StaffDocImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
+        static string StaffImagePath = Secrets.FileLocation["StaffImages"];
+        static string StaffDocImagePath = Secrets.FileLocation["StaffDocImages"];
 
         #region Customer
         public static bool SaveCustomerInfo(Customer _customer)

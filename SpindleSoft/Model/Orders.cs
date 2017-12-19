@@ -126,51 +126,5 @@ namespace SpindleSoft.Model
 
             this.Comment = comment;
         }
-    }
-
-    //todo: Remove if not used
-    //public class OrderType
-    //{
-    //    public virtual int ID { get; set; }
-    //    public virtual string Name { get; set; }
-    //    public virtual int Price { get; set; }
-    //    public virtual bool IsBasicMeasurement { get; set; }
-    //    public virtual bool IsBottomMeasurement { get; set; }
-    //    public virtual bool IsSleeveMeasurement { get; set; }
-
-    //    public OrderType()
-    //    {
-
-    //    }
-
-    //    public OrderType(string name, string price, bool isbasicMeasure = true, bool isbottomMeasure = false, bool issleeveMeasure = false)
-    //    {
-    //        // this.ID = id;
-    //        this.Name = name;
-    //        this.Price = Convert.ToInt32(price);
-    //        this.IsBasicMeasurement = isbasicMeasure;
-    //        this.IsBottomMeasurement = isbottomMeasure;
-    //        this.IsSleeveMeasurement = issleeveMeasure;
-    //    }
-    //}
-
-    //todo: Remove if not used
-    //public class Product
-    //{
-    //    public int ProductId { get; set; }
-
-    //    public string ProductType { get; set; }
-
-    //    public string ProductName { get; set; }
-
-    //    public string ProductOptionID { get; set; }
-
-    //    public string ProductOptionName { get; set; }
-
-    //    /*audit*/
-
-    //    public DateTime CreatedDate { get; set; }
-
-    //    public DateTime ModifieddDate { get; set; }
-    //}
+    }    
 }

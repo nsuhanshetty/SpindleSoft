@@ -14,6 +14,8 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\Spindles
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\WCC.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Microsoft.Expression.Encoder.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Dropbox.Api.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\MySql.Data.dll
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\MySqlBackup.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Microsoft.Expression.Encoder.Utilities.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Iesi.Collections.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Microsoft.Expression.Encoder.Types.dll

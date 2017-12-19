@@ -94,6 +94,9 @@ namespace SpindleSoft.Views
             _item.Comment = txtComment.Text;
             _item.DateUpdated = DateTime.Now;
 
+            if (_item.OrderItemDocuments == null)
+                _item.OrderItemDocuments = new List<OrderItemDocument>();
+
             Winform_OrderDetails orderDetails = Application.OpenForms["Winform_OrderDetails"] as Winform_OrderDetails;
             if (orderDetails != null)
                 orderDetails.UpdateOrderItemList(_item, _index);
@@ -260,10 +263,13 @@ namespace SpindleSoft.Views
             txtComment.Text = this._orderItem.Comment;
 
             UpdateCmbType(this._orderItem.Name ?? cmbType.Text);
-            nudQuantity.Value = this._orderItem.Quantity == 0 ? 1 : this._orderItem.Quantity;
-            txtPrice.Text = this._orderItem.Price.ToString();
+            if (_orderItem.ID != 0)
+            {
+                nudQuantity.Value = this._orderItem.Quantity == 0 ? 1 : this._orderItem.Quantity;
+                txtPrice.Text = this._orderItem.Price.ToString();
+            }
 
-            if (_orderItem != null && _orderItem.OrderItemDocuments != null && _orderItem.OrderItemDocuments.Count != 0)
+            if (_orderItem != null && _orderItem.OrderItemDocuments != null && _orderItem.OrderItemDocuments.Count != 0 && _orderItem.ID != 0)
             {
                 docList = _orderItem.OrderItemDocuments as List<OrderItemDocument>;
                 foreach (OrderItemDocument doc in _orderItem.OrderItemDocuments)

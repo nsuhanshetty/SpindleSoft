@@ -148,10 +148,11 @@ namespace SpindleSoft.Builders
             {
                 try
                 {
-                    var _salAmount = (from sal in session.Query<SalaryItem>()
-                                      where sal.Staff.ID == _staffID
-                                      orderby sal.ID descending
-                                      select sal.Amount).SingleOrDefault();
+                    //var _salAmount = (from sal in session.Query<SalaryItem>()
+                    //                  where sal.Staff.ID == _staffID
+                    //                  orderby sal.ID descending
+                    //                  select sal.Amount).SingleOrDefault();
+                    var _salAmount = session.Query<SalaryItem>().Where(x => x.Staff.ID == _staffID).Select(x => x.Amount).SingleOrDefault();
                     return _salAmount == 0 ? 1 : _salAmount;
                 }
                 catch (Exception ex)

@@ -22,5 +22,34 @@ namespace SpindleSoft.Savers
                 }
             }
         }
+
+        public static bool SaveBackUpLog(BackUpLog bkLog)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(bkLog);
+                    transaction.Commit();
+                    return true;
+                }
+            }
+        }
+    }
+
+    static class SMSSaver
+    {
+        public static bool SaveSMSLog(SMSLog sms)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(sms);
+                    transaction.Commit();
+                    return true;
+                }
+            }
+        }
     }
 }

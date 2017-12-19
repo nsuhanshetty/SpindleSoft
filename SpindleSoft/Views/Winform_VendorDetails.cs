@@ -23,7 +23,8 @@ namespace SpindleSoft.Views
             InitializeComponent();
             if (!InEdit)
             {
-                WinFormControls_InEdit(this);
+                var exList = new List<string> { "toolStripParent" };
+                WinFormControls_InEdit(this, exList);
                 this.Enabled = true;
                 this.ControlBox = true;
             }
@@ -154,19 +155,22 @@ namespace SpindleSoft.Views
         private void Winform_VendorDetails_Load(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+            this.EditToolStrip.Visible = true;
+            if (_vendor != null)
+            {
+                //load Controls
+                txtName.Text = _vendor.Name;
+                txtMobNo.Text = _vendor.MobileNo;
+                txtAddress.Text = _vendor.Address;
 
-            //load Controls
-            txtName.Text = _vendor.Name;
-            txtMobNo.Text = _vendor.MobileNo;
-            txtAddress.Text = _vendor.Address;
-
-            txtBankUserName.Text = _vendor.BankUserName;
-            txtIfscNo.Text = _vendor.IFSCCode;
-            txtAccNo.Text = _vendor.AccNo;
-            if (_vendor.IsProduct)
-                rdbProd.Checked = true;
-            else
-                rdnServ.Checked = true;
+                txtBankUserName.Text = _vendor.BankUserName;
+                txtIfscNo.Text = _vendor.IFSCCode;
+                txtAccNo.Text = _vendor.AccNo;
+                if (_vendor.IsProduct)
+                    rdbProd.Checked = true;
+                else
+                    rdnServ.Checked = true;
+            }
 
             List<Bank> BankList = PeoplePracticeBuilder.GetBankNames();
             cmbBankName.DataSource = BankList;

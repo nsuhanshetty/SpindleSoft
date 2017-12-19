@@ -114,7 +114,7 @@
             this.dgvOrderItems.Size = new System.Drawing.Size(586, 156);
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellClick);
-            //this.dgvOrderItems.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvOrderItems_DataError);
+            this.dgvOrderItems.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvOrderItems_PreviewKeyDown);
             // 
             // OrderType
             // 
@@ -372,7 +372,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(604, 450);
-            this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grpBoxCustomer);
             this.Controls.Add(this.groupBox2);
@@ -405,6 +404,7 @@
         private System.Windows.Forms.GroupBox grpBoxCustomer;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         internal System.Windows.Forms.ToolStripButton AddReferralToolStrip;
+        //internal System.Windows.Forms.ToolStripButton EditToolStrip;
         
         //Toolstrip Add
         internal System.Windows.Forms.ToolStripButton AddCustomerToolStrip;

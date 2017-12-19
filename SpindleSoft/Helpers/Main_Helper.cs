@@ -9,11 +9,17 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
+using MySql.Data.MySqlClient;
 
 namespace SpindleSoft.Helpers
 {
     class Main_Helper
     {
+
+        static ILog log = LogManager.GetLogger(typeof(Main_Helper));
+        //static string constring = "server=localhost;user=sa;pwd=sshetty;database=spindlesoftdb;Convert Zero Datetime=True;";
+
         /// <summary>
         /// getdatsource - based on the searchstate and seatch text appropriate list must be selected.
         /// </summary>
@@ -27,32 +33,30 @@ namespace SpindleSoft.Helpers
             {
                 case "Customer":
                     //List<Customer> _custList = PeoplePracticeBuilder.GetCustomersList("", searchText, "");
-                    var _custList = PeoplePracticeBuilder.GetCustomersList("", searchText, "");
+                    var _custList = PeoplePracticeBuilder.GetCustomersQuickList(searchText);
                     if (_custList != null && _custList.Count != 0)
                     {
-                        //searchList = (from cust in _custList
-                        //              select new { cust.ID, cust.Name, cust.Mobile_No }).ToList();
                         searchList = _custList;
                     }
                     break;
                 case "Sales":
                     {
-                        List<Sale> salesList = (SaleBuilder.GetSalesList("", "", "", searchText));
+                        List<Sale> salesList = (SaleBuilder.GetSalesListQuick(searchText));
                         if (salesList != null && salesList.Count != 0)
                             searchList = (from sale in salesList
-                                          select new { sale.TotalPrice, sale.AmountPaid, sale.DateOfSale }).ToList();
+                                          select new { sale.Customer.Name, Total = sale.TotalPrice, SaleDate = sale.DateOfSale.ToString("dd/MM/yyyy") }).ToList();
                     }
                     break;
                 case "Order":
                     {
-                        IList ordersList = (OrderBuilder.GetOrdersList("", "", searchText));
+                        IList ordersList = (OrderBuilder.GetOrdersQuickList(searchText));
                         if (ordersList != null && ordersList.Count != 0)
                             searchList = ordersList;
                     }
                     break;
                 case "Alteration":
                     {
-                        IList altList = (AlterationBuilder.GetAlterationList("", "", searchText));
+                        IList altList = (AlterationBuilder.GetAlterationQuickList(searchText));
                         if (altList != null && altList.Count != 0)
                             searchList = altList;
                     }
@@ -79,5 +83,32 @@ namespace SpindleSoft.Helpers
             }
             return datalist == null ? 0 : datalist.Count;
         }
+
+        //public static bool BackupData()
+        //{
+        //    try
+        //    {
+        //        string file = "d:\\backup.sql";
+        //        using (MySqlConnection conn = new MySqlConnection(constring))
+        //        {
+        //            using (MySqlCommand cmd = new MySqlCommand())
+        //            {
+        //                using (MySqlBackup mb = new MySqlBackup(cmd))
+        //                {
+        //                    cmd.Connection = conn;
+        //                    conn.Open();
+        //                    mb.ExportToFile(file);
+        //                    conn.Close();
+        //                }
+        //            }
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex);
+        //        return false; ;
+        //    }
+        //}
     }
 }

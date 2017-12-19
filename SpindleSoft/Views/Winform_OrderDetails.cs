@@ -9,6 +9,7 @@ using log4net;
 using SpindleSoft.Savers;
 using System.Threading.Tasks;
 using System.Configuration;
+using SpindleSoft.Utilities;
 
 namespace SpindleSoft.Views
 {
@@ -20,8 +21,8 @@ namespace SpindleSoft.Views
         List<OrderItem> OrderItemsList = new List<OrderItem>();
         private enum OrderStatus { ReadyToStitch, ReadyToCollect, Delivered };
 
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
 
         #region Property
         private int amntPaid = 0;
@@ -87,7 +88,7 @@ namespace SpindleSoft.Views
             InitializeComponent();
             if (!InEdit)
             {
-                var exList = new List<string>() { "dgvOrderItems", "groupBox2" };
+                var exList = new List<string>() { "dgvOrderItems", "groupBox2", "toolStripParent", "EditToolStrip" };
                 WinFormControls_InEdit(this, exList);
                 this.Enabled = true;
                 this.ControlBox = true;
@@ -96,17 +97,19 @@ namespace SpindleSoft.Views
         #endregion ctor
 
         #region Custom
-        //todo: Add it in the generic 
         public void UpdateCustomerControl(Customer customer)
         {
             if (customer == null) return;
 
             this._cust = customer;
+            this.order.Customer = customer;
             txtName.Text = _cust.Name;
             txtMobNo.Text = _cust.Mobile_No;
             txtPhoneNo.Text = _cust.Phone_No;
             string filePath = string.Format("{0}/{1}/{2}.png", baseDoc, CustomerImagePath, _cust.ID);
             pcbCustImage.Image = this._cust.Image = Utilities.ImageHelper.GetDocumentLocal(filePath);
+
+
         }
 
         internal void UpdateOrderItemList(OrderItem _item, int _index)
@@ -172,12 +175,22 @@ namespace SpindleSoft.Views
             if (success)
             {
                 UpdateStatus("Order Saved.", 100);
-                DialogResult dr = MessageBox.Show("Send SMS to customer regarding the order", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.Yes)
+                if (order.Status == 0 || order.Status == 2 || order.Status == 3)
                 {
-                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                    DialogResult dr = MessageBox.Show("Send SMS to customer regarding the order", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.Yes)
+                    {
+                        string _orderMessage = string.Empty;
+                        if (order.Status == 0)
+                            _orderMessage = "Your order #" + order.ID + " of amount " + order.TotalPrice + " has been placed with delivery date on " + order.PromisedDate.Date.ToString("dd/MMMM/yyyy") + ". Thanks for choosing Dee. Stay Beautiful.";
+                        else
+                            if (order.Status == 2)
+                                _orderMessage = "Your order #" + order.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount " + (order.TotalPrice - order.CurrentPayment).ToString() + ".";
+                            else if (order.Status == 3)
+                                _orderMessage = "Your order #" + order.ID + " has been delivered. We provide alteration within 4 days of delivery. Thanks for choosing Dee. Stay Beautiful.";
+                        SMSGateway.SendSMS(_orderMessage, order.Customer, SMSLog.SectionType.Order);
+                    }
                 }
-
                 this.Close();
             }
             else
@@ -187,6 +200,25 @@ namespace SpindleSoft.Views
         private void AddCustomerToolStrip_Click(object sender, EventArgs e)
         {
             new Winform_AddCustomer(this._cust).ShowDialog();
+            GetExistingCredit();
+        }
+
+        private void GetExistingCredit()
+        {
+            //customer not added OR is an exisiting order
+            if (this.order.ID != 0 || this._cust.ID == 0) return;
+
+            //get customer credit amount
+            var ordList = OrderBuilder.GetCustomerOrderCredit(this.order);
+            foreach (var ord in ordList)
+            {
+                var dr = MessageBox.Show("An Earlier credit exists. Do you want to pay it now?", "Order Credit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //dr = MessageBox.Show("An Earlier credit exists with Order #" + ord.ID + ". Do you want to pay it now?", "Order Credit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No) return;
+
+                var ordTemp = OrderBuilder.GetOrderInfo(ord.ID);
+                new Winform_OrderDetails(ordTemp).ShowDialog();
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -224,6 +256,9 @@ namespace SpindleSoft.Views
         private void Winform_OrderDetails_Load(object sender, EventArgs e)
         {
             this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
+            this.AddCustomerToolStrip.Alignment = ToolStripItemAlignment.Right;
+            this.EditToolStrip.Visible = true;
+
             if (order.ID != 0)
             {
                 this.OrderItemsList = this.order.OrdersItems as List<OrderItem>;
@@ -235,6 +270,7 @@ namespace SpindleSoft.Views
 
                 _cust = PeoplePracticeBuilder.GetCustomer(order.Customer.ID);
                 UpdateCustomerControl(_cust);
+                GetExistingCredit();
             }
 
             if (OrderItemsList != null && OrderItemsList.Count != 0)
@@ -314,6 +350,14 @@ namespace SpindleSoft.Views
             if (main != null)
                 main.UpdateOrderReadyDgv();
         }
+
+        private void dgvOrderItems_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dgvOrderItems_CellClick(this, new DataGridViewCellEventArgs(dgvOrderItems.CurrentCell.ColumnIndex, dgvOrderItems.CurrentCell.RowIndex));
+            }
+        }
         #endregion Events
 
         #region _Validations
@@ -344,5 +388,7 @@ namespace SpindleSoft.Views
             }
         }
         #endregion _Validations
+
+
     }
 }

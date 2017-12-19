@@ -94,6 +94,7 @@
             this.EditToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("EditToolStrip.Image")));
             this.EditToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.EditToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EditToolStrip.Margin = new System.Windows.Forms.Padding(5, 1, 0, 2);
             this.EditToolStrip.Name = "EditToolStrip";
             this.EditToolStrip.Size = new System.Drawing.Size(36, 51);
             this.EditToolStrip.Text = "&Edit";
@@ -156,6 +157,6 @@
         protected System.Windows.Forms.StatusStrip statusStrip1;
         protected System.Windows.Forms.ToolStripStatusLabel toolStrip_Label;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripButton EditToolStrip;
+        protected System.Windows.Forms.ToolStripButton EditToolStrip;
     }
 }

@@ -68,13 +68,13 @@
             this.groupBox1.Size = new System.Drawing.Size(339, 56);
             this.groupBox1.TabIndex = 126;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Base Image Path";
+            this.groupBox1.Text = "Base Path Details";
             // 
             // Winform_Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 147);
+            this.ClientSize = new System.Drawing.Size(359, 142);
             this.Controls.Add(this.btnPath);
             this.Controls.Add(this.txtFolderPath);
             this.Controls.Add(this.label1);

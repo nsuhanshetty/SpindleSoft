@@ -24,8 +24,8 @@ namespace SpindleSoft.Views
         List<OrderItem> orderItemList = new List<OrderItem>();
         List<AlterationItem> _altItemList = new List<AlterationItem>();
 
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
 
         #region Property
         private int amntPaid = 0;
@@ -91,13 +91,13 @@ namespace SpindleSoft.Views
             InitializeComponent();
             if (!InEdit)
             {
-                var exList = new List<string>() { "dgvAlterationItems", "groupBox2" };
+                var exList = new List<string>() { "dgvAlterationItems", "groupBox2", "toolStripParent", "EditToolStrip" };
                 WinFormControls_InEdit(this, exList);
                 this.Enabled = true;
                 this.ControlBox = true;
             }
         }
-        #endregion ctor
+        #endregion ctor-
 
         #region Validation
 
@@ -168,6 +168,13 @@ namespace SpindleSoft.Views
                 return;
             }
 
+            if (this._cust.ID == 0)
+            {
+                UpdateStatus("Updating Customer Details");
+                this._cust = Builders.PeoplePracticeBuilder.GetCustomer(orderItemList[0].Order.Customer.ID);
+                UpdateCustomerControl(this._cust);
+                cmbOrder.Text = _orderID.ToString();
+            }
             UpdateStatus("Updating Grid View..");
             dgvSearch.DataSource = (from oitem in orderItemList
                                     select new
@@ -182,12 +189,7 @@ namespace SpindleSoft.Views
 
             dgvSearch.Columns["ID"].Visible = false;
 
-            if (this._cust.ID == 0)
-            {
-                UpdateStatus("Updating Customer Details");
-                this._cust = Builders.PeoplePracticeBuilder.GetCustomer(orderItemList[0].Order.Customer.ID);
-                UpdateCustomerControl(this._cust);
-            }
+
             UpdateStatus();
         }
         #endregion Validation
@@ -206,7 +208,7 @@ namespace SpindleSoft.Views
             this.Close();
         }
 
-        protected override void SaveToolStrip_Click(object sender, EventArgs e)
+        protected override async void SaveToolStrip_Click(object sender, EventArgs e)
         {
             #region validation
             string errorMsg = string.Empty;
@@ -242,8 +244,14 @@ namespace SpindleSoft.Views
                 DialogResult dr = MessageBox.Show("Send SMS to customer regarding the alteration", "Send SMS", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes)
                 {
-                    //todo: Replace with SMS funtion.
-                    MessageBox.Show("Thanks for choosing our Product. We lend free alternations within fours days from date of Delivery.");
+                    string _orderMessage = string.Empty;
+                    if (_alteration.Status == 0)
+                        _orderMessage = "Your alteration #" + _alteration.ID + " of amount " + _alteration.TotalPrice + " has been placed with delivery date on " + _alteration.PromisedDate.Date.ToString("dd/MMMM/yyyy") + ". Thanks for choosing Dee. Stay Beautiful.";
+                    else if (_alteration.Status == 2)
+                        _orderMessage = "Your alteration #" + _alteration.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount " + (_alteration.TotalPrice - _alteration.CurrentPayment).ToString();
+                    else if (_alteration.Status == 3)
+                        _orderMessage = "Your alteration #" + _alteration.ID + " has been delivered. We provide alteration within 4 days of delivery. Thanks for choosing Dee. Stay Beautiful.";
+                    SMSGateway.SendSMS(_orderMessage, _alteration.Customer, SMSLog.SectionType.Order);
                 }
                 this.Close();
             }
@@ -275,6 +283,9 @@ namespace SpindleSoft.Views
         private void Winform_AlterationsDetails_Load(object sender, System.EventArgs e)
         {
             this.toolStripParent.Items.Add(this.AddCustomerToolStrip);
+            this.AddCustomerToolStrip.Alignment = ToolStripItemAlignment.Right;
+            this.EditToolStrip.Visible = true;
+
             if (_alteration.ID != 0)
             {
                 _cust = PeoplePracticeBuilder.GetCustomer(_alteration.Customer.ID);
@@ -385,13 +396,13 @@ namespace SpindleSoft.Views
             }
             else
             {
-                new Winform_AlterationItemDetails(e.RowIndex, _altItemList[e.RowIndex],InEdit).ShowDialog();
+                new Winform_AlterationItemDetails(e.RowIndex, _altItemList[e.RowIndex], InEdit).ShowDialog();
             }
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            new Winform_AlterationItemDetails(dgvAlterationItems.Rows.Count, null,InEdit).ShowDialog();
+            new Winform_AlterationItemDetails(dgvAlterationItems.Rows.Count, null, InEdit).ShowDialog();
         }
 
         public void UpdateAlterationListControl(AlterationItem _item, int _index)

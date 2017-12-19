@@ -8,6 +8,7 @@ using NHibernate.Linq;
 using log4net;
 using System.Collections;
 using System.Configuration;
+using SpindleSoft.Utilities;
 
 namespace SpindleSoft.Builders
 {
@@ -40,14 +41,16 @@ namespace SpindleSoft.Builders
             {
                 try
                 {
-                    var ordList = from ordItem in session.Query<OrderItem>()
-                                  join ord in session.Query<Orders>() on ordItem.Order.ID equals ord.ID
-                                  join cust in session.Query<Customer>() on ord.Customer.ID equals cust.ID
-                                  where (cust.ID == custID && ordItem.Name == productName)
-                                  orderby ordItem.ID descending
-                                  select ordItem;
+                    OrderItem item = (from ordItem in session.Query<OrderItem>()
+                                      join ord in session.Query<Orders>() on ordItem.Order.ID equals ord.ID
+                                      join cust in session.Query<Customer>() on ord.Customer.ID equals cust.ID
+                                      where (cust.ID == custID && ordItem.Name == productName)
+                                      orderby ordItem.ID descending
+                                      select ordItem).ToList<OrderItem>().FirstOrDefault();
 
-                    OrderItem item = ordList.ToList<OrderItem>().FirstOrDefault();
+                    item.OrderItemDocuments = (from doc in session.Query<OrderItemDocument>()
+                                               where doc.orderItem.ID == item.ID
+                                               select doc).ToList();
                     return item;
                 }
                 catch (Exception ex)
@@ -103,18 +106,65 @@ namespace SpindleSoft.Builders
             }
         }
 
+        public static IList GetOrdersQuickList(string orderId = "")
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    IList orderList;
+                    if (orderId == "")
+                    {
+                        orderList = (from cust in session.Query<Customer>()
+                                     join ord in session.Query<Orders>() on cust.ID equals ord.Customer.ID
+                                     orderby ord.PromisedDate descending
+                                     select new
+                                     {
+                                         OrderID = ord.ID,
+                                         cust.Name,
+                                         ord.TotalPrice,
+                                         AmountPaid = ord.CurrentPayment,
+                                         PromisedDate = ord.PromisedDate
+                                     }).Take(25).ToList();
+                    }
+                    else
+                    {
+                        orderList = (from cust in session.Query<Customer>()
+                                     join ord in session.Query<Orders>() on cust.ID equals ord.Customer.ID
+                                     where (ord.ID.ToString().StartsWith(orderId))
+                                     select new
+                                     {
+                                         OrderID = ord.ID,
+                                         cust.Name,
+                                         ord.TotalPrice
+                                     }).Take(25).ToList();
+                    }
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+        }
+
         public static Orders GetOrderInfo(int orderID)
         {
-            string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-            string OrderItemDocPath = ConfigurationManager.AppSettings["OrderItemDocs"];
+            string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+            string OrderItemDocPath = Secrets.FileLocation["OrderItemDocs"];
 
             using (var session = NHibernateHelper.OpenSession())
             {
                 try
                 {
-                    Orders _order = (from ord in session.Query<Orders>()
-                                     where ord.ID == orderID
-                                     select ord).SingleOrDefault();
+                    //Orders _order = (from ord in session.Query<Orders>()
+                    //                 where ord.ID == orderID
+                    //                 select ord).SingleOrDefault();
+
+                    Orders _order = (session.QueryOver<Orders>()
+                                     .Where(x => x.ID == orderID)
+                                     .Fetch(x => x.Customer).Eager).SingleOrDefault();
 
                     _order.OrdersItems = session.QueryOver<OrderItem>()
                         .Where(x => x.Order.ID == orderID)
@@ -176,6 +226,30 @@ namespace SpindleSoft.Builders
                     List<string> _docList = (from s in session.Query<OrderItemDocument>()
                                              select s.Type).Distinct().ToList();
                     return _docList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Check if credit unpaid for a given Customer, where order has been delivered and amount not paid compeletly
+        /// </summary>
+        /// <param name="currentOrdID"></param>
+        /// <returns></returns>
+        public static List<Orders> GetCustomerOrderCredit(Orders currOrd = null)
+        {
+            try
+            {
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    return (from ord in session.Query<Orders>()
+                            join cust in session.Query<Customer>() on currOrd.Customer.ID equals cust.ID
+                            where ord.ID != currOrd.ID && (ord.TotalPrice - ord.CurrentPayment) != 0 && ord.Status == 3
+                            select ord).ToList();
                 }
             }
             catch (Exception ex)

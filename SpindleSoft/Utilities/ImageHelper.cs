@@ -8,8 +8,8 @@ namespace SpindleSoft.Utilities
 {
     class ImageHelper
     {
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
 
         static ILog log = LogManager.GetLogger(typeof(ImageHelper));
 

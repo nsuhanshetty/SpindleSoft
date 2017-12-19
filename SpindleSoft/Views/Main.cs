@@ -15,6 +15,7 @@ namespace SpindleSoft
     using SpindleSoft.Helpers;
     using SpindleSoft.Model;
     using SpindleSoft.Savers;
+    using SpindleSoft.Utilities;
     // using SpindleSoft.Views;
     using SpindleSoft.Views;
     using System.Collections;
@@ -26,8 +27,8 @@ namespace SpindleSoft
         private enum SearchStates { Order, Customer, Alteration, Sales }
         private SearchStates searchState { get; set; }
 
-        static string baseDoc = ConfigurationManager.AppSettings["BaseDocDirectory"];
-        static string CustomerImagePath = ConfigurationManager.AppSettings["CustomerImages"];
+        static string baseDoc = Secrets.FileLocation["BaseDocDirectory"];
+        static string CustomerImagePath = Secrets.FileLocation["CustomerImages"];
 
         #region SearchTxt
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -40,7 +41,7 @@ namespace SpindleSoft
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSearchText("Search Customer Mobile No.");
+            UpdateSearchText("Search by Customer Name.");
             this.searchState = SearchStates.Customer;
 
             RefreshDgvSearch();
@@ -48,7 +49,7 @@ namespace SpindleSoft
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSearchText("Search Alteration No.");
+            UpdateSearchText("Search by Alteration No.");
             this.searchState = SearchStates.Alteration;
 
             RefreshDgvSearch();
@@ -56,7 +57,7 @@ namespace SpindleSoft
 
         private void rdbSales_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSearchText("Search Sale No.");
+            UpdateSearchText("Search by Customer Name.");
             this.searchState = SearchStates.Sales;
 
             RefreshDgvSearch();
@@ -89,7 +90,7 @@ namespace SpindleSoft
                 if (setting == null)
                     new Winform_Settings().ShowDialog();
             }
-            ConfigurationManager.AppSettings["BaseDocDirectory"] = setting.Value;
+            Secrets.FileLocation["BaseDocDirectory"] = setting.Value;
         }
         #endregion ctor
 
@@ -158,9 +159,8 @@ namespace SpindleSoft
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Do you want to Exit the Application", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (dr == DialogResult.Yes)
-                this.Close();
+            //new Winform_BackUpDB().ShowDialog();
+            this.Close();
         }
 
         private void importCustomersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -221,7 +221,7 @@ namespace SpindleSoft
         }
         #endregion Toolstrip_Click
 
-        #region Alteration
+        #region StatusWidget
         private void dgvOrdR2S_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -241,28 +241,52 @@ namespace SpindleSoft
                             status = 1;
                             break;
                         case "dgvOrdSIP":
-                            message = "Shift selected Order to Ready To Stitch";
-                            status = 0;
+                            if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                            {
+                                message = "Shift selected Order to Ready To Collect";
+                                status = 2;
+                            }
+                            else
+                            {
+                                message = "Shift selected Order to Ready To Stitch";
+                                status = 0;
+                            }
                             break;
                         case "dgvOrdR2C":
-                            message = "Shift selected Order to Stitch In Progress";
-                            status = 1;
+                            if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                            {
+                                this.Cursor = Cursors.WaitCursor;
+                                SendSMS("dgvOrdR2C", _orderID);
+                                this.Cursor = Cursors.Default;
+                            }
+                            else
+                            {
+                                message = "Shift selected Order to Stitch In Progress";
+                                status = 1;
+                            }
                             break;
                         default:
                             break;
                     }
 
-                    if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
-                    {
-                        message = "Shift selected Order to Ready To Collect";
-                        status = 2;
-                    }
+                    //if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                    //{
+                    //    if (dgv.Name == "dgvOrdSIP")
+                    //    {
+                    //        message = "Shift selected Order to Ready To Collect";
+                    //        status = 2;
+                    //    }
+                    //    else if (dgv.Name == "dgvOrdR2C")
+                    //    {
+                    //        SendSMS("dgvOrdR2C", _orderID);
+                    //    }
+                    //}
                     if (string.IsNullOrEmpty(message) || status == -1) return;
-
-                    DialogResult dr = MessageBox.Show(message, "Shift Order", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dr == DialogResult.No) return;
-
-                    //update ord status in db
+                    if (message != string.Empty)
+                    {
+                        DialogResult dr = MessageBox.Show(message, "Shift Order", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (dr == DialogResult.No) return;
+                    }
 
                     MainSaver.UpdateOrderStatus(_orderID, status);
                     UpdateOrderReadyDgv();
@@ -276,6 +300,26 @@ namespace SpindleSoft
             {
                 log.Error(ex);
             }
+        }
+
+        private void SendSMS(string dgvName, int _ID)
+        {
+            string smsMsg;
+            string response = "";
+
+            if (dgvName == "dgvOrdR2C")
+            {
+                var order = OrderBuilder.GetOrderInfo(_ID);
+                smsMsg = "Your order #" + order.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount Rs." + (order.TotalPrice - order.CurrentPayment).ToString() + ".";
+                response = SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, order.Customer, SMSLog.SectionType.Order);
+            }
+            else if (dgvName == "dgvAltR2C")
+            {
+                var alt = AlterationBuilder.GetAlterationInfo(_ID);
+                smsMsg = "Your order #" + alt.ID + " has is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount Rs." + (alt.TotalPrice - alt.CurrentPayment).ToString() + ".";
+                response = SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, alt.Customer, SMSLog.SectionType.Alteration);
+            }
+            MessageBox.Show(response);
         }
 
         private void dgvAltR2A_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -297,22 +341,45 @@ namespace SpindleSoft
                             status = 1;
                             break;
                         case "dgvAltSIP":
-                            message = "Shift selected Alteration to Ready To Alter";
-                            status = 0;
+                            //message = "Shift selected Alteration to Ready To Alter";
+                            //status = 0;
+                            //break;
+                            if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                            {
+                                message = "Shift selected Alteration to Ready To Collect";
+                                status = 2;
+                            }
+                            else
+                            {
+                                message = "Shift selected Alteration to Ready To Stitch";
+                                status = 0;
+                            }
                             break;
                         case "dgvAltR2C":
-                            message = "Shift selected Alteration to Alteration In Progress";
-                            status = 1;
+                            //message = "Shift selected Alteration to Alteration In Progress";
+                            //status = 1;
+                            //break;
+                            if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                            {
+                                this.Cursor = Cursors.WaitCursor;
+                                SendSMS("dgvAltR2C", _altID);
+                                this.Cursor = Cursors.Default;
+                            }
+                            else
+                            {
+                                message = "Shift selected Alteration to Stitch In Progress";
+                                status = 1;
+                            }
                             break;
                         default:
                             break;
                     }
 
-                    if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
-                    {
-                        message = "Shift selected Alteration to Ready To Collect";
-                        status = 2;
-                    }
+                    //if (dgv.Columns.Count > 3 && e.ColumnIndex == dgv.Columns[3].Index)
+                    //{
+                    //    message = "Shift selected Alteration to Ready To Collect";
+                    //    status = 2;
+                    //}
                     if (string.IsNullOrEmpty(message) || status == -1) return;
 
                     DialogResult dr = MessageBox.Show(message, "Shift Alteration", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -325,7 +392,7 @@ namespace SpindleSoft
                 }
                 else
                 {
-                    new Winform_AlterationsDetails(AlterationBuilder.GetAlteration(_altID)).ShowDialog();
+                    new Winform_AlterationsDetails(AlterationBuilder.GetAlterationInfo(_altID)).ShowDialog();
                     UpdateAlterationReadyDgv();
                 }
             }
@@ -334,7 +401,7 @@ namespace SpindleSoft
                 log.Error(ex);
             }
         }
-        #endregion Order
+        #endregion StatusWidget
 
         #region Event
         private void btnAdd_Click(object sender, EventArgs e)
@@ -361,7 +428,7 @@ namespace SpindleSoft
 
         private void dgvSearch_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
+            if (e.RowIndex == -1) return;
             try
             {
                 this.Cursor = Cursors.WaitCursor;
@@ -383,14 +450,23 @@ namespace SpindleSoft
 
                         break;
                     case "Order":
-                        var orderID = dgvSearch.Rows[e.RowIndex].Cells["ID"].Value.ToString();
+                        var orderID = dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString();
                         if (String.IsNullOrEmpty(orderID)) return;
 
                         Orders order = OrderBuilder.GetOrderInfo(int.Parse(orderID));
                         if (order == null) return;
                         new Winform_OrderDetails(order).ShowDialog();
                         break;
+                    case "Alteration":
+                        //var orderID = dgvSearch.Rows[e.RowIndex].Cells["OrderID"].Value.ToString();
+                        //if (String.IsNullOrEmpty(orderID)) return;
 
+                        //Orders order = OrderBuilder.GetOrderInfo(int.Parse(orderID));
+                        //if (order == null) return;
+                        //new Winform_OrderDetails(order).ShowDialog();
+                        break;
+                    case "Sales":
+                        break;
                     default:
                         MessageBox.Show("Invalid Search State.Try again");
                         break;
@@ -466,6 +542,36 @@ namespace SpindleSoft
             new Winform_Settings().ShowDialog();
         }
 
+        private void backUpDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_BackUpDB().ShowDialog();
+        }
+
+        private void restoreDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_RestoreDB().ShowDialog();
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Do you want to Exit the Application with BackUp", "Exit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                new Winform_BackUpDB().ShowDialog();
+            }
+            else if (dr == DialogResult.Cancel)
+                e.Cancel = true;
+        }
+
+        private void sMSReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Winform_SMSRegister().ShowDialog();
+        }
+
+        private void sendSMSToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            new Winform_SMSSend().ShowDialog();
+        }
     }
 
 }

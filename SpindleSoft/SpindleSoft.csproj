@@ -28,7 +28,7 @@
     <SuiteName>SpindleSoft</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>50</ApplicationRevision>
+    <ApplicationRevision>61</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -56,10 +56,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D8E3BC88E864A000D18C1DC876032B4E5D7E3BFC</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1874C84B77E871A3D5416FE9681A9472349849D5</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SpindleSoft_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SpindleSoft_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -130,9 +130,12 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\Connector NET 6.8.3\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySqlBackup, Version=2.0.9.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySqlBackup.NET.2.0.9.4\lib\net45\MySqlBackup.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -148,6 +151,8 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -178,6 +183,7 @@
     <Compile Include="FluentMapping\OrdersMapping.cs" />
     <Compile Include="FluentMapping\SaleMapping.cs" />
     <Compile Include="FluentMapping\SettingMapping.cs" />
+    <Compile Include="Model\BackUpLog.cs" />
     <Compile Include="Model\Bank.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\SaleItem.cs" />
@@ -200,8 +206,15 @@
     <Compile Include="Savers\PeoplePracticeSaver.cs" />
     <Compile Include="Savers\SalesSaver.cs" />
     <Compile Include="Savers\SettingSaver.cs" />
+    <Compile Include="Service References\SMSGatewayService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\BitmapImage.cs" />
     <Compile Include="Utilities\ImageHelper.cs" />
+    <Compile Include="Utilities\Secrets.cs" />
+    <Compile Include="Utilities\SMSGateway.cs" />
     <Compile Include="Utilities\Validation.cs" />
     <Compile Include="Views\Main.cs">
       <SubType>Form</SubType>
@@ -223,11 +236,23 @@
     <Compile Include="Views\Winform_About.Designer.cs">
       <DependentUpon>Winform_About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForm_AddMultipleCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForm_AddMultipleCustomer.Designer.cs">
+      <DependentUpon>WinForm_AddMultipleCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Winform_AlterationItemDetails.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\Winform_AlterationItemDetails.Designer.cs">
       <DependentUpon>Winform_AlterationItemDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_BackUpDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_BackUpDB.Designer.cs">
+      <DependentUpon>Winform_BackUpDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_DocumentDetails.cs">
       <SubType>Form</SubType>
@@ -246,6 +271,12 @@
     </Compile>
     <Compile Include="Views\winform_Register.Designer.cs">
       <DependentUpon>winform_Register.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Winform_RestoreDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Winform_RestoreDB.Designer.cs">
+      <DependentUpon>Winform_RestoreDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_SalaryDetails.cs">
       <SubType>Form</SubType>
@@ -449,8 +480,14 @@
     <EmbeddedResource Include="Views\DesignControl.resx">
       <DependentUpon>DesignControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForm_AddMultipleCustomer.resx">
+      <DependentUpon>WinForm_AddMultipleCustomer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_AlterationItemDetails.resx">
       <DependentUpon>Winform_AlterationItemDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_BackUpDB.resx">
+      <DependentUpon>Winform_BackUpDB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_DocumentDetails.resx">
       <DependentUpon>Winform_DocumentDetails.cs</DependentUpon>
@@ -460,6 +497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\winform_Register.resx">
       <DependentUpon>winform_Register.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Winform_RestoreDB.resx">
+      <DependentUpon>Winform_RestoreDB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Winform_SalaryDetails.resx">
       <DependentUpon>Winform_SalaryDetails.cs</DependentUpon>
@@ -558,6 +598,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -567,6 +609,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\SMSGatewayService\sms.wsdl" />
+    <None Include="SpindleSoft_1_TemporaryKey.pfx" />
     <None Include="SpindleSoft_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -608,6 +652,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\addCustomer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\file_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SMSGatewayService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSGatewayService\sms.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSGatewayService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSGatewayService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SMSGatewayService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

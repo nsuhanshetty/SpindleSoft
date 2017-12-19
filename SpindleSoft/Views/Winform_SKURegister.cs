@@ -48,7 +48,6 @@ namespace SpindleSoft.Views
             //Load ComboBox
             var ComboBoxResults = SaleBuilder.GetVariationValues();
 
-            //todo: Can we add Items in a better way
             cmbSize.Items.Add("All");
             cmbSize.Items.AddRange(ComboBoxResults[2].ToArray());
 

@@ -564,6 +564,7 @@
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(94, 20);
             this.txtPrice.TabIndex = 2;
+            this.txtPrice.Text = "0";
             this.txtPrice.Validating += new System.ComponentModel.CancelEventHandler(this.txtPrice_Validating);
             // 
             // label16

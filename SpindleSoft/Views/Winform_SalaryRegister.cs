@@ -110,5 +110,26 @@ namespace SpindleSoft.Views
             this.toolStrip1.Items.Add(this.toolStripBtnSearch);
         }
         #endregion
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            UpdateStatus("Searching", 50);
+            IList salList = ExpenseBuilder.GetSalaryList(dtpFromSalaryDate.Value.Date, dtpToSalaryDate.Value.Date, txtName.Text);
+
+            if (salList.Count == 0)
+            {
+                dgvSalaryRegister.DataSource = dgvSalaryItem.DataSource = null;
+                colDelete.Visible = colEdit.Visible = false;
+            }
+            else
+            {
+                dgvSalaryRegister.DataSource = salList;
+                dgvSalaryRegister.Columns["ID"].Visible = false;
+                colDelete.DisplayIndex = colEdit.DisplayIndex = dgvSalaryRegister.Columns.Count - 1;
+                colDelete.Visible = colEdit.Visible = true;
+                dgvSalaryItem.DataSource = null;
+            }
+            UpdateStatus((dgvSalaryRegister.RowCount == 0) ? "No Results Found" : dgvSalaryRegister.RowCount + " Results Found", 100);
+        }
     }
 }

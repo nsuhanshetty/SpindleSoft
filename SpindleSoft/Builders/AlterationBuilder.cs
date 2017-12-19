@@ -19,15 +19,25 @@ namespace SpindleSoft.Builders
         /// </summary>
         /// <param name="altId"></param>
         /// <returns></returns>
-        public static Alteration GetAlteration(int altId)
+        public static Alteration GetAlterationInfo(int altId)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
-                Alteration alt = session.CreateCriteria<Alteration>()
-                    .Add(Restrictions.IdEq(altId))
-                    .SetFetchMode("AlterationItems", FetchMode.Eager)
-                    .UniqueResult<Alteration>();
-                return alt;
+                //Alteration _alt = (from alt in session.Query<Alteration>()
+                //                   join altItem in session.Query<AlterationItem>() on alt.ID equals altItem.Alteration.ID
+                //                   join cust in session.Query<Customer>() on alt.Customer.ID equals cust.ID
+                //                   where alt.ID == altId
+                //                   select alt).FirstOrDefault();
+
+                Alteration _alt = (session.QueryOver<Alteration>()
+                                     .Where(x => x.ID == altId)
+                                     .Fetch(x => x.Customer).Eager).SingleOrDefault();
+                _alt.AlterationItems = session.QueryOver<AlterationItem>()
+                       .Where(x => x.Alteration.ID == altId)
+                       .Fetch(o => o.Alteration).Eager
+                       .Future().ToList();
+
+                return _alt;
             }
         }
 
@@ -71,6 +81,41 @@ namespace SpindleSoft.Builders
                                           alt.TotalPrice,
                                           AmountPaid = alt.CurrentPayment,
                                           PromisedDate = alt.PromisedDate.ToString("dd/MMM/yy")
+                                      }).Take(25).ToList();
+                }
+            }
+        }
+
+        public static IList GetAlterationQuickList(string altId = "")
+        {
+            IList altList;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                if (altId == "")
+                {
+                    return altList = (from cust in session.Query<Customer>()
+                                      join alt in session.Query<Alteration>() on cust.ID equals alt.Customer.ID
+                                      orderby alt.PromisedDate descending
+                                      select new
+                                      {
+                                          AlterationID = alt.ID,
+                                          CustomerName = cust.Name,
+                                          MobileNo = cust.Mobile_No,
+                                          alt.TotalPrice,
+                                          AmountPaid = alt.CurrentPayment,
+                                          PromisedDate = alt.PromisedDate.ToString("dd/MMM/yy")
+                                      }).Take(25).ToList();
+                }
+                else
+                {
+                    return altList = (from alt in session.Query<Alteration>()
+                                      join cust in session.Query<Customer>() on alt.Customer.ID equals cust.ID
+                                      where (alt.ID.ToString().StartsWith(altId))
+                                      select new
+                                      {
+                                          AlterationID = alt.ID,
+                                          cust.Name,
+                                          alt.TotalPrice
                                       }).Take(25).ToList();
                 }
             }
