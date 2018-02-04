@@ -86,6 +86,7 @@
             this.dgvOrderItemDoc = new System.Windows.Forms.DataGridView();
             this.colDocType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnPrint = new System.Windows.Forms.Button();
             this.grpBxMeasurements.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -103,14 +104,15 @@
             // grpBxMeasurements
             // 
             this.grpBxMeasurements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.grpBxMeasurements.Controls.Add(this.btnPrint);
             this.grpBxMeasurements.Controls.Add(this.groupBox2);
             this.grpBxMeasurements.Controls.Add(this.groupBox4);
             this.grpBxMeasurements.Controls.Add(this.groupBox1);
             this.grpBxMeasurements.Controls.Add(this.groupBox3);
             this.grpBxMeasurements.Controls.Add(this.groupBox5);
-            this.grpBxMeasurements.Location = new System.Drawing.Point(0, 63);
+            this.grpBxMeasurements.Location = new System.Drawing.Point(12, 57);
             this.grpBxMeasurements.Name = "grpBxMeasurements";
-            this.grpBxMeasurements.Size = new System.Drawing.Size(373, 370);
+            this.grpBxMeasurements.Size = new System.Drawing.Size(373, 401);
             this.grpBxMeasurements.TabIndex = 3;
             this.grpBxMeasurements.TabStop = false;
             this.grpBxMeasurements.Text = "Measurement Details";
@@ -589,7 +591,7 @@
             // 
             this.groupBox6.Controls.Add(this.btnAddItem);
             this.groupBox6.Controls.Add(this.dgvOrderItemDoc);
-            this.groupBox6.Location = new System.Drawing.Point(6, 439);
+            this.groupBox6.Location = new System.Drawing.Point(12, 464);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(604, 161);
             this.groupBox6.TabIndex = 109;
@@ -641,11 +643,20 @@
             this.ColDelete.ReadOnly = true;
             this.ColDelete.Width = 77;
             // 
+            // btnPrint
+            // 
+            this.btnPrint.Location = new System.Drawing.Point(261, 367);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(105, 23);
+            this.btnPrint.TabIndex = 5;
+            this.btnPrint.Text = "Print";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            // 
             // Winform_MeasurementAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 627);
+            this.ClientSize = new System.Drawing.Size(622, 651);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.grbxProdDetails);
             this.Controls.Add(this.grpBoxCustMeasure);
@@ -745,5 +756,6 @@
         private System.Windows.Forms.DataGridView dgvOrderItemDoc;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDocType;
         private System.Windows.Forms.DataGridViewButtonColumn ColDelete;
+        private System.Windows.Forms.Button btnPrint;
     }
 }

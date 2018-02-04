@@ -1,0 +1,145 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".html" #> 
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+
+<html>
+	<head>
+		<style>
+			table {
+				font-family: arial, sans-serif;
+				border-collapse: collapse;
+				width: 45%;
+				margin: 5px;
+			}
+
+			td, th {
+				border: 1px solid #dddddd;
+				text-align: left;
+				padding: 8px;
+				width: 50%
+			}
+			
+		</style>
+	</head>
+	<body onload="PrintMeasurement()"> 
+	<table style="float:right;margin-top:3.5%">
+			<tr>
+				<th colspan="2">Customer Profile</th>
+			</tr>
+			<tr>
+				<td>Customer Name </td>  
+				<# { #> <td><#= this._cust.Name #> </td><# }  #>
+			</tr> 
+			<tr> 
+				<td>Order Name </td>  
+				<# { #> <td><#= this._orderItem.Name #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Quantity</td>  						
+				<# { #> <td><#= this._orderItem.Quantity #> </td><# }  #>
+			</tr>				
+		</table> 
+	<div class="MeasureTable">
+		<h2>Measurements</h2> 
+		<table>
+			<tr>
+				<th colspan="2">Basic Measurement</th>
+			</tr>
+			<tr>
+				<td>Length </td>  
+				<# { #> <td><#= this._orderItem.Length #> </td><# }  #>
+			</tr> 
+			<tr> 
+				<td>Waist </td>  
+				<# { #> <td><#= this._orderItem.Waist #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Chest </td>  						
+				<# { #> <td><#= this._orderItem.Chest #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Hip </td>  						
+				<# { #> <td><#= this._orderItem.Hip #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Front </td>  						
+				<# { #> <td><#= this._orderItem.Front #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Back </td>  						
+				<# { #> <td><#= this._orderItem.Back #> </td><# }  #>
+			</tr>
+		</table>   		
+		<table>
+			<tr>
+				<th colspan="2">Sleeve Measurement</th>
+			</tr>
+			<tr>
+				<td>ArmHole </td>  
+				<# { #> <td><#= this._orderItem.SleeveArmHole #> </td><# }  #>
+			</tr> 
+			<tr> 
+				<td>Length </td>  
+				<# { #> <td><#= this._orderItem.SleeveLength #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Loose </td>  						
+				<# { #> <td><#= this._orderItem.SleeveLoose #> </td><# }  #>
+			</tr>
+		</table>   		
+		<table>
+			<tr>
+				<th colspan="2">Shoulder Measurement</th>
+			</tr>
+			<tr>
+				<td>Shoulder </td>  
+				<# { #> <td><#= this._orderItem.Shoulder #> </td><# }  #>
+			</tr> 
+			<tr> 
+				<td>D </td>  
+				<# { #> <td><#= this._orderItem.D #> </td><# }  #>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<th colspan="2">Bottom Measurement</th>
+			</tr>
+			<tr>
+				<td>Hip</td>  
+				<# { #> <td><#= this._orderItem.BottomHip #> </td><# }  #>
+			</tr> 
+			<tr> 
+				<td>Waist</td>  
+				<# { #> <td><#= this._orderItem.BottomWaist #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Length</td>  						
+				<# { #> <td><#= this._orderItem.BottomLength #> </td><# }  #>
+			</tr>
+			<tr>
+				<td>Loose</td>  						
+				<# { #> <td><#= this._orderItem.BottomLoose #> </td><# }  #>
+			</tr>
+		</table>	
+		
+		<table style="width:100%">
+			<tr>
+				<th colspan="2">Comments</th>
+			</tr>
+			<tr>
+				<# { #> <td><#= this._orderItem.Comment #> </td><# }  #>
+			</tr> 			
+		</table>	
+	</div>
+	</body>
+<script>
+		function PrintMeasurement() {
+			window.onfocus = function () { setTimeout(function () { window.close(); }, 500); }
+		}
+		setTimeout(function () { window.print(); }, 500);       
+</script>
+</html>

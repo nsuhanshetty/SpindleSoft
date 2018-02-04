@@ -39,3 +39,6 @@ C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\Spindles
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\obj\Debug\SpindlesSoftTestCases.csprojResolveAssemblyReference.cache
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\obj\Debug\SpindlesSoftTestCases.dll
 C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\obj\Debug\SpindlesSoftTestCases.pdb
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\SpindleSoft.exe.config
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\bin\Debug\Microsoft.Expression.Encoder.dll.config
+C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindlesSoftTestCases\obj\Debug\SpindlesSoftTestCases.csproj.CoreCompileInputs.cache

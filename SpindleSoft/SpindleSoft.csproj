@@ -56,10 +56,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1874C84B77E871A3D5416FE9681A9472349849D5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>CE7E4E4DAF20DC23156D434D991752D7BDD716E5</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SpindleSoft_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -216,6 +217,7 @@
     <Compile Include="Utilities\Secrets.cs" />
     <Compile Include="Utilities\SMSGateway.cs" />
     <Compile Include="Utilities\Validation.cs" />
+    <Compile Include="Views\Code_MeasurementReport.cs" />
     <Compile Include="Views\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -229,6 +231,11 @@
     </Compile>
     <Compile Include="Views\DesignControl.Designer.cs">
       <DependentUpon>DesignControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MeasurementReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MeasurementReport.tt</DependentUpon>
     </Compile>
     <Compile Include="Views\Winform_About.cs">
       <SubType>Form</SubType>
@@ -679,6 +686,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MeasurementReport.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MeasurementReport.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

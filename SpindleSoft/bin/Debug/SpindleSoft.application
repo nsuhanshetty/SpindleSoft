@@ -14,14 +14,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="SpindleSoft.exe.manifest" size="16690">
+    <dependentAssembly dependencyType="install" codebase="SpindleSoft.exe.manifest" size="17094">
       <assemblyIdentity name="SpindleSoft.exe" version="1.0.0.61" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>A086/CeQu5ii3KS7ibFUO40dXghYQEnRCtnfdrLF4Zg=</dsig:DigestValue>
+        <dsig:DigestValue>GtargEg7Oi3GzOkqVFsDHUQ9om3E+sgpk64bywPjAn0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

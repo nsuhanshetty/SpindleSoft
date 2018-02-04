@@ -319,7 +319,19 @@ namespace SpindleSoft.Views
                 dgvOrderItems.Rows.RemoveAt(e.RowIndex);
                 CalculateTotalPaymentDetails();
             }
-
+            else if (e.ColumnIndex == dgvOrderItems.Columns["MeasurePrint"].Index && dgvOrderItems.Rows[e.RowIndex].IsNewRow != true)
+            {
+                if (OrderItemsList.Count != 0 && e.RowIndex + 1 <= OrderItemsList.Count)
+                {
+                    if (OrderItemsList[e.RowIndex].ID != 0)
+                    {
+                        MeasurementReport page = new MeasurementReport(OrderItemsList[e.RowIndex], this._cust);
+                        String pageContent = page.TransformText();
+                        System.IO.File.WriteAllText("MeasurementReport.html", pageContent);
+                        System.Diagnostics.Process.Start("MeasurementReport.html");
+                    }                    
+                }               
+            }
             else
             {
                 this.Cursor = Cursors.WaitCursor;
@@ -388,7 +400,5 @@ namespace SpindleSoft.Views
             }
         }
         #endregion _Validations
-
-
     }
 }

@@ -248,14 +248,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpindleSoft.exe" size="653320">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpindleSoft.exe" size="663728">
       <assemblyIdentity name="SpindleSoft" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4nCFCvgW2pHNLsXcRz2/egMO+Ju91doeq1k4l9MNwKE=</dsig:DigestValue>
+        <dsig:DigestValue>U1/2lPCf6JHgwPODdolPrbQlR6lGAycPnhgS85dh6yM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -290,6 +290,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>V6iNcRh/xiWcHn2nAfw6alpINI+l/aZt80gmVls68Oc=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Views\MeasurementReport.tt" size="3510">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>/9xyejaRHWPUUVKj+Rb8Al18dnWcNSUGeYsYa1zlnkY=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

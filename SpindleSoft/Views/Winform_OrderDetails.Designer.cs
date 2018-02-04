@@ -34,10 +34,6 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvOrderItems = new System.Windows.Forms.DataGridView();
-            this.OrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnAddItem = new System.Windows.Forms.Button();
             this.grpBoxCustomer = new System.Windows.Forms.GroupBox();
             this.txtMobNo = new System.Windows.Forms.TextBox();
@@ -60,6 +56,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.OrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.MeasurePrint = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCustImage)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).BeginInit();
@@ -107,7 +108,8 @@
             this.OrderType,
             this.OrderQuantity,
             this.OrderPrice,
-            this.OrderDelete});
+            this.OrderDelete,
+            this.MeasurePrint});
             this.dgvOrderItems.Location = new System.Drawing.Point(3, 51);
             this.dgvOrderItems.Name = "dgvOrderItems";
             this.dgvOrderItems.ReadOnly = true;
@@ -115,39 +117,6 @@
             this.dgvOrderItems.TabIndex = 0;
             this.dgvOrderItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrderItems_CellClick);
             this.dgvOrderItems.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.dgvOrderItems_PreviewKeyDown);
-            // 
-            // OrderType
-            // 
-            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrderType.HeaderText = "Clothing Type";
-            this.OrderType.Name = "OrderType";
-            this.OrderType.ReadOnly = true;
-            this.OrderType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.OrderType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // OrderQuantity
-            // 
-            this.OrderQuantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrderQuantity.HeaderText = "Quantity";
-            this.OrderQuantity.Name = "OrderQuantity";
-            this.OrderQuantity.ReadOnly = true;
-            // 
-            // OrderPrice
-            // 
-            this.OrderPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrderPrice.HeaderText = "Price\\ Item";
-            this.OrderPrice.Name = "OrderPrice";
-            this.OrderPrice.ReadOnly = true;
-            // 
-            // OrderDelete
-            // 
-            this.OrderDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.OrderDelete.HeaderText = "Click To Delete";
-            this.OrderDelete.Name = "OrderDelete";
-            this.OrderDelete.ReadOnly = true;
-            this.OrderDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.OrderDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.OrderDelete.Width = 96;
             // 
             // btnAddItem
             // 
@@ -367,6 +336,47 @@
             this.label7.TabIndex = 140;
             this.label7.Text = "Order Status";
             // 
+            // OrderType
+            // 
+            this.OrderType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderType.HeaderText = "Clothing Type";
+            this.OrderType.Name = "OrderType";
+            this.OrderType.ReadOnly = true;
+            this.OrderType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.OrderType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // OrderQuantity
+            // 
+            this.OrderQuantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderQuantity.HeaderText = "Quantity";
+            this.OrderQuantity.Name = "OrderQuantity";
+            this.OrderQuantity.ReadOnly = true;
+            // 
+            // OrderPrice
+            // 
+            this.OrderPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrderPrice.HeaderText = "Price\\ Item";
+            this.OrderPrice.Name = "OrderPrice";
+            this.OrderPrice.ReadOnly = true;
+            // 
+            // OrderDelete
+            // 
+            this.OrderDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.OrderDelete.HeaderText = "Click To Delete";
+            this.OrderDelete.Name = "OrderDelete";
+            this.OrderDelete.ReadOnly = true;
+            this.OrderDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.OrderDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.OrderDelete.Width = 96;
+            // 
+            // MeasurePrint
+            // 
+            this.MeasurePrint.HeaderText = "Print Measurement";
+            this.MeasurePrint.Name = "MeasurePrint";
+            this.MeasurePrint.ReadOnly = true;
+            this.MeasurePrint.Text = "Print";
+            this.MeasurePrint.UseColumnTextForButtonValue = true;
+            // 
             // Winform_OrderDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -430,5 +440,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderQuantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderPrice;
         private System.Windows.Forms.DataGridViewButtonColumn OrderDelete;
+        private System.Windows.Forms.DataGridViewButtonColumn MeasurePrint;
     }
 }
