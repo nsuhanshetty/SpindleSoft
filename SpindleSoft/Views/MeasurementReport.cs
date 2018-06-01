@@ -51,199 +51,222 @@ namespace SpindleSoft.Views
 		</style>
 	</head>
 	<body onload=""PrintMeasurement()""> 
-	<table style=""float:right;margin-top:3.5%"">
+	<h2>Measurements</h2> 
+	<hr/>
+	<table style=""float:right; margin-top:0px"">
 			<tr>
 				<th colspan=""2"">Customer Profile</th>
-			</tr>
+			</tr>			
 			<tr>
-				<td>Customer Name </td>  
+				<td>Order No.</td>  						
 				");
             
-            #line 35 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 37 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 35 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 37 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.ID));
+            
+            #line default
+            #line hidden
+            this.Write(" </td>");
+            
+            #line 37 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+ }  
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Customer Name </td>  \r\n\t\t\t\t");
+            
+            #line 41 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+ { 
+            
+            #line default
+            #line hidden
+            this.Write(" <td>");
+            
+            #line 41 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._cust.Name));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 35 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 41 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr> \r\n\t\t\t<tr> \r\n\t\t\t\t<td>Order Name </td>  \r\n\t\t\t\t");
             
-            #line 39 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 45 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 39 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 45 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Name));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 39 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 45 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Quantity</td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 43 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 49 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 43 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 49 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Quantity));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 43 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 49 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
-            this.Write("\t\t\t</tr>\t\t\t\t\r\n\t\t</table> \r\n\t<div class=\"MeasureTable\">\r\n\t\t<h2>Measurements</h2> \r" +
-                    "\n\t\t<table>\r\n\t\t\t<tr>\r\n\t\t\t\t<th colspan=\"2\">Basic Measurement</th>\r\n\t\t\t</tr>\r\n\t\t\t<t" +
-                    "r>\r\n\t\t\t\t<td>Length </td>  \r\n\t\t\t\t");
+            this.Write("\t\t\t</tr>\t\t\t\t\r\n\t\t</table> \r\n\t<div class=\"MeasureTable\">\r\n\t\r\n\t\t<table>\r\n\t\t\t<tr>\r\n\t\t" +
+                    "\t\t<th colspan=\"2\">Basic Measurement</th>\r\n\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Length </td" +
+                    ">  \r\n\t\t\t\t");
             
-            #line 54 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 60 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 54 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 60 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Length));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 54 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 60 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr> \r\n\t\t\t<tr> \r\n\t\t\t\t<td>Waist </td>  \r\n\t\t\t\t");
             
-            #line 58 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 64 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 58 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 64 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Waist));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 58 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 64 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Chest </td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 62 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 68 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 62 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 68 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Chest));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 62 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 68 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Hip </td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 66 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 72 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 66 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 72 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Hip));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 66 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 72 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Front </td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 70 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 76 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 70 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 76 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Front));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 70 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 76 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Back </td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 74 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 80 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 74 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 80 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Back));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 74 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 80 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
@@ -251,63 +274,63 @@ namespace SpindleSoft.Views
             this.Write("\t\t\t</tr>\r\n\t\t</table>   \t\t\r\n\t\t<table>\r\n\t\t\t<tr>\r\n\t\t\t\t<th colspan=\"2\">Sleeve Measure" +
                     "ment</th>\r\n\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>ArmHole </td>  \r\n\t\t\t\t");
             
-            #line 83 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 89 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 83 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 89 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.SleeveArmHole));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 83 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 89 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr> \r\n\t\t\t<tr> \r\n\t\t\t\t<td>Length </td>  \r\n\t\t\t\t");
             
-            #line 87 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 93 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 87 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 93 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.SleeveLength));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 87 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 93 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Loose </td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 91 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 97 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 91 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 97 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.SleeveLoose));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 91 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 97 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
@@ -315,42 +338,42 @@ namespace SpindleSoft.Views
             this.Write("\t\t\t</tr>\r\n\t\t</table>   \t\t\r\n\t\t<table>\r\n\t\t\t<tr>\r\n\t\t\t\t<th colspan=\"2\">Shoulder Measu" +
                     "rement</th>\r\n\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Shoulder </td>  \r\n\t\t\t\t");
             
-            #line 100 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 106 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 100 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 106 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Shoulder));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 100 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 106 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr> \r\n\t\t\t<tr> \r\n\t\t\t\t<td>D </td>  \r\n\t\t\t\t");
             
-            #line 104 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 110 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 104 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 110 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.D));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 104 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 110 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
@@ -358,84 +381,84 @@ namespace SpindleSoft.Views
             this.Write("\t\t\t</tr>\r\n\t\t</table>\r\n\t\t<table>\r\n\t\t\t<tr>\r\n\t\t\t\t<th colspan=\"2\">Bottom Measurement<" +
                     "/th>\r\n\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Hip</td>  \r\n\t\t\t\t");
             
-            #line 113 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 119 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 113 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 119 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.BottomHip));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 113 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 119 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr> \r\n\t\t\t<tr> \r\n\t\t\t\t<td>Waist</td>  \r\n\t\t\t\t");
             
-            #line 117 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 123 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 117 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 123 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.BottomWaist));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 117 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 123 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Length</td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 121 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 127 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 121 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 127 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.BottomLength));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 121 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 127 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
             #line hidden
             this.Write("\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<td>Loose</td>  \t\t\t\t\t\t\r\n\t\t\t\t");
             
-            #line 125 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 131 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 125 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 131 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.BottomLoose));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 125 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 131 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default
@@ -443,21 +466,21 @@ namespace SpindleSoft.Views
             this.Write("\t\t\t</tr>\r\n\t\t</table>\t\r\n\t\t\r\n\t\t<table style=\"width:100%\">\r\n\t\t\t<tr>\r\n\t\t\t\t<th colspan" +
                     "=\"2\">Comments</th>\r\n\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t");
             
-            #line 134 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 140 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  { 
             
             #line default
             #line hidden
             this.Write(" <td>");
             
-            #line 134 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 140 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this._orderItem.Comment));
             
             #line default
             #line hidden
             this.Write(" </td>");
             
-            #line 134 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
+            #line 140 "C:\Users\NSuhanShetty\Documents\Visual Studio 2013\Projects\SpindleSoft\SpindleSoft\Views\MeasurementReport.tt"
  }  
             
             #line default

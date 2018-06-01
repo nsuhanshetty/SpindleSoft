@@ -62,15 +62,13 @@ namespace SpindleSoft.Utilities
             }
             catch (System.ServiceModel.EndpointNotFoundException endPointEx)
             {
-                log.Error(endPointEx);
-                System.Windows.Forms.MessageBox.Show("Oops, Error occured in SMS Gateway. Check if Internet is Connected.");
-                return "";
+                log.Error(endPointEx);                
+                return "Oops, Error occured in SMS Gateway. Check if Internet is Connected." ;
             }
             catch (Exception ex)
             {
                 log.Error(ex);
-                System.Windows.Forms.MessageBox.Show("Oops, Error occured in SMS Gateway. Contact Technical Assistance if error persists.");
-                return "";
+                return "Oops, Error occured in SMS Gateway. Contact Technical Assistance if error persists.";
             }
         }
 

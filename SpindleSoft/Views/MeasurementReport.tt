@@ -26,9 +26,15 @@
 		</style>
 	</head>
 	<body onload="PrintMeasurement()"> 
-	<table style="float:right;margin-top:3.5%">
+	<h2>Measurements</h2> 
+	<hr/>
+	<table style="float:right; margin-top:0px">
 			<tr>
 				<th colspan="2">Customer Profile</th>
+			</tr>			
+			<tr>
+				<td>Order No.</td>  						
+				<# { #> <td><#= this._orderItem.ID #> </td><# }  #>
 			</tr>
 			<tr>
 				<td>Customer Name </td>  
@@ -44,7 +50,7 @@
 			</tr>				
 		</table> 
 	<div class="MeasureTable">
-		<h2>Measurements</h2> 
+	
 		<table>
 			<tr>
 				<th colspan="2">Basic Measurement</th>

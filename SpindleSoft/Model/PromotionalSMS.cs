@@ -18,7 +18,7 @@ namespace SpindleSoft.Model
 
         public virtual string Message { get; set; }
 
-        public virtual SectionType SectionID { get; set; }
+        public virtual int SectionID { get; set; }
 
         public virtual string Status { get; set; }
 
@@ -30,7 +30,7 @@ namespace SpindleSoft.Model
         {
             this.Customer = cust;
             this.Message = msg;
-            this.SectionID = sectID;
+            this.SectionID = (int)sectID;
             this.Status = status;
             this.DateOfUpdate = System.DateTime.Now.Date;
         }

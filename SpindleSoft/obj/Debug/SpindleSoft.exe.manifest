@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="SpindleSoft.exe" version="1.0.0.61" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="SpindleSoft.exe" version="1.0.0.62" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:publisher="SpindleSoft" co.v1:suiteName="SpindleSoft" asmv2:product="SpindleSoft" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -255,7 +255,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>U1/2lPCf6JHgwPODdolPrbQlR6lGAycPnhgS85dh6yM=</dsig:DigestValue>
+        <dsig:DigestValue>PuRWyB2eQpDUF1ok91a5B+63/S91Ry7SGXxxT4gDtVI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -283,22 +283,22 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="SpindleSoft.exe.config" size="3930">
+  <file name="SpindleSoft.exe.config" size="4901">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>V6iNcRh/xiWcHn2nAfw6alpINI+l/aZt80gmVls68Oc=</dsig:DigestValue>
+      <dsig:DigestValue>9je6CX/mUy7lQ66ndpO1j/8vDqb9LFLOW17mreYnmHw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Views\MeasurementReport.tt" size="3510">
+  <file name="Views\MeasurementReport.tt" size="3631">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>/9xyejaRHWPUUVKj+Rb8Al18dnWcNSUGeYsYa1zlnkY=</dsig:DigestValue>
+      <dsig:DigestValue>mo2jDfsAMO0idwdG3LXv4YEJTJ/zvqzjQmhJ3hZNgd8=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -427,7 +427,6 @@
             // 
             this.sMSToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sendSMSToolStripMenuItem});
-            this.sMSToolStripMenuItem.Enabled = false;
             this.sMSToolStripMenuItem.Name = "sMSToolStripMenuItem";
             this.sMSToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.sMSToolStripMenuItem.Text = "SMS";

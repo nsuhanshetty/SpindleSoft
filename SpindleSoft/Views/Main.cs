@@ -311,15 +311,18 @@ namespace SpindleSoft
             {
                 var order = OrderBuilder.GetOrderInfo(_ID);
                 smsMsg = "Your order #" + order.ID + " is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount Rs." + (order.TotalPrice - order.CurrentPayment).ToString() + ".";
-                response = SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, order.Customer, SMSLog.SectionType.Order);
+                response = SMSGateway.SendSMS(smsMsg, order.Customer, SMSLog.SectionType.Order);
             }
             else if (dgvName == "dgvAltR2C")
             {
                 var alt = AlterationBuilder.GetAlterationInfo(_ID);
                 smsMsg = "Your order #" + alt.ID + " has is ready to be Collected. Thanks for choosing Dee. Stay Beautiful. Pending Amount Rs." + (alt.TotalPrice - alt.CurrentPayment).ToString() + ".";
-                response = SpindleSoft.Utilities.SMSGateway.SendSMS(smsMsg, alt.Customer, SMSLog.SectionType.Alteration);
+                response = SMSGateway.SendSMS(smsMsg, alt.Customer, SMSLog.SectionType.Alteration);
             }
-            MessageBox.Show(response);
+            if (!string.IsNullOrEmpty(response))
+            {
+                MessageBox.Show(response);
+            }
         }
 
         private void dgvAltR2A_CellContentClick(object sender, DataGridViewCellEventArgs e)
